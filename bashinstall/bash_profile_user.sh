@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #bash_profile user
 
-function bash-restore() {
+function bash-install() {
   #detect ubuntu or MINW64
   homepath=${HOME:0:6}
   if [ "$homepath" == "/home/" ]; then
