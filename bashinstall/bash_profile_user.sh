@@ -9,7 +9,7 @@ function bash-install() {
     platform="ubuntu"
     wwwroot="/var/www"
   else
-    username=${HOME:8}
+    username=${HOME:9}
     platform="windows"
     wwwroot="/c/Users/$username/www"
   fi
@@ -21,6 +21,7 @@ function bash-install() {
   fi
   cat $wwwroot/html/serveradmin/_cli/bash/bash_profile_user.sh >>~/.bash_profile
   cat $wwwroot/html/serveradmin/_cli/bash/bash_profile_foot.sh >>~/.bash_profile
+  echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
   echo "Restarting shell ..."
   read -t 5 input
   head -20 ~/.bash_profile
@@ -301,7 +302,7 @@ function git-add() {
 function git-reset-all() {
   git-reset-repo "DD_laraview"
   git-reset-repo "DD_libwww"
-  git-reset-repo "DD_libmedia"
+  #git-reset-repo "DD_libmedia"
   git-reset-repo "DD_laravelAp"
   git-reset-repo "$www_sitefocus"
 }
@@ -313,8 +314,8 @@ function git-reset() {
   echo ""
   echo "1: DD_libwww"
   echo "2: DD_laravelAp"
-  echo "3: DD_libmedia"
-  echo "4: DD_laraview"
+  #echo "3: DD_libmedia"
+  echo "3: DD_laraview"
   echo "or hit enter for everything"
   read option
   if [ "$option" == "1" ]; then
@@ -322,8 +323,6 @@ function git-reset() {
   elif [ "$option" == "2" ]; then
     git-reset-repo "DD_laravelAp"
   elif [ "$option" == "3" ]; then
-    git-reset-repo "DD_libmedia"
-  elif [ "$option" == "4" ]; then
     git-reset-repo "DD_laraview"
   else
     git-reset-all
@@ -351,11 +350,11 @@ function git-reset-repo() {
   echo-h1 "$gitreponame"
   echo "to $gitrepopath/$gitreponame;"
   cd $gitrepopath/$gitreponame
-  git remote set-url origin git@github.com:datadimension/$gitreponame
+  #git remote set-url origin git@github.com:datadimension/$gitreponame
   git fetch --all
-  branchname=$(date +%Y%m%d%I%M)
+  # branchname=$(date +%Y%m%d%I%M)
   echo "Reseting to $gitreponame$branchname"
-  git branch "reset$gitreponame$branchname"
+  # git branch "reset$gitreponame$branchname"
   git reset --hard origin/master
 }
 
@@ -485,7 +484,7 @@ function git-pull() {
 
 function bash-push() {
   echo-h1 "pushing bash repo"
-  cd $wwwroot/html/serveradmin
+  cd ~/bashtools;
   git add -A
   git commit -a -m update
   git push
