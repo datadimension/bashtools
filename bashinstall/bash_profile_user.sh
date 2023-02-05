@@ -23,7 +23,7 @@ function bash-install() {
   cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
   echo "Restarting shell ..."
-  read -t 5 input
+  read -t 2 input
   head -20 ~/.bash_profile
   source ~/.bash_profile
 }
