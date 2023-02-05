@@ -493,7 +493,7 @@ function bash-push() {
 
 function bash-pull() {
   echo-h1 "pulling bash repo"
-  cd $wwwroot/html/serveradmin
+  cd ~/bashtools
   git pull
   ~www
   bash-start
