@@ -15,12 +15,12 @@ function bash-install() {
   fi
   echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
   rm ~/.bash_profile
-  cp $wwwroot/html/serveradmin/_cli/bash/bash_profile_head.sh ~/.bash_profile
+  cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile
   if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
-    cat $wwwroot/html/serveradmin/_cli/bash/bash_profile_sudo.sh >>~/.bash_profile
+    cat ~/bashtools/bashinstall/bash_profile_sudo.sh >>~/.bash_profile
   fi
-  cat $wwwroot/html/serveradmin/_cli/bash/bash_profile_user.sh >>~/.bash_profile
-  cat $wwwroot/html/serveradmin/_cli/bash/bash_profile_foot.sh >>~/.bash_profile
+  cat ~/bashtools/bashinstall/bash_profile_user.sh >>~/.bash_profile
+  cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
   echo "Restarting shell ..."
   read -t 5 input
