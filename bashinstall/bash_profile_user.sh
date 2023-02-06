@@ -579,5 +579,5 @@ function logv() {
 }
 
 function bash-help() {
-  php $wwwroot/html/serveradmin/_cli/php/helpers/bash-help.php
+  php ~/bashtools/php/bash-help.php
 }
