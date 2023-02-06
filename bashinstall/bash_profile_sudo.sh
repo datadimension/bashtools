@@ -9,9 +9,16 @@ function bash-sudoers(){
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function bash-secure() {
+  echo "Setting file ownership";
 sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus
+
+  echo "Setting file permissions";
 sudo find $wwwroot/html/$www_sitefocus -type f -exec chmod 644 {} \;
+
+  echo "Setting directory permissions";
 sudo find $wwwroot/html/$www_sitefocus -type d -exec chmod 755 {} \;
+
+  echo "Setting laravel permissions";
 sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
 
 
