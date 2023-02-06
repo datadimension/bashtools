@@ -495,8 +495,7 @@ function bash-pull() {
   echo-h1 "pulling bash repo"
   cd ~/bashtools
   git pull
-  ~www
-  bash-start
+  bash-install
 }
 
 function ls-i() {
