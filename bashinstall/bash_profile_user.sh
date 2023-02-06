@@ -213,8 +213,8 @@ function www-switch() {
 }
 
 function ~www() {
-  cd $wwwroot/html/$www_sitefocus;
-  ls;
+  cd $wwwroot/html/$www_sitefocus
+  ls
 }
 
 function ~home() {
@@ -305,6 +305,13 @@ function git-reset-all() {
   #git-reset-repo "DD_libmedia"
   git-reset-repo "DD_laravelAp"
   git-reset-repo "$www_sitefocus"
+  if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
+    echo "Reset file and directory permissions ? [y/n]"
+    read input
+    if [ "$input" == "y" ]; then
+      bash-secure
+    fi
+  fi
 }
 
 function git-reset() {
@@ -475,7 +482,7 @@ function git-pull() {
 
 function bash-push() {
   echo-h1 "pushing bash repo"
-  cd ~/bashtools;
+  cd ~/bashtools
   git add -A
   git commit -a -m update
   git push

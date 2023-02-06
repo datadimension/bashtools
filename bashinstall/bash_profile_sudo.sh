@@ -9,22 +9,27 @@ function bash-sudoers(){
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function bash-secure() {
-    sudo find /path/to/your/laravel/root/directory -type f -exec chmod 644 {} \;
-    sudo find /path/to/your/laravel/root/directory -type d -exec chmod 755 {} \;
+sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus
+sudo find $wwwroot/html/$www_sitefocus -type f -exec chmod 644 {} \;
+sudo find $wwwroot/html/$www_sitefocus -type d -exec chmod 755 {} \;
+sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
 
-    sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
-    sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
-    sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/calendartoken.json
-    sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-    sudo chmod -R 770 $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-    sudo chmod -R ug+rwx $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-    sudo chmod -R 775 $wwwroot/html/$www_sitefocus/bootstrap/cache
 
-    sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/public/downloads
-    sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
 
-    sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/storage
-    sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
+#legacy
+    #sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
+    #sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
+    #sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/calendartoken.json
+    #sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
+    #sudo chmod -R 770 $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
+    #sudo chmod -R ug+rwx $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
+    #sudo chmod -R 775 $wwwroot/html/$www_sitefocus/bootstrap/cache
+
+    #sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/public/downloads
+    #sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
+
+    #sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/storage
+    #sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
     #sudo chown -R $USER $HOME/.composer;#https://askubuntu.com/questions/1077879/cannot-create-cache-directory-home-user-composer-cache-repo-https-packagi
 }
 
