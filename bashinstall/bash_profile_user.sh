@@ -361,7 +361,6 @@ function git-reset-repo() {
 function git-push-all() {
   git-push-repo "DD_laraview"
   git-push-repo "DD_libwww"
-  git-push-repo "DD_libmedia"
   git-push-repo "DD_laravelAp"
   git-push-repo "$www_sitefocus"
 }
@@ -373,8 +372,7 @@ function git-push() {
   echo ""
   echo "1: DD_libwww"
   echo "2: DD_laravelAp"
-  echo "3: DD_libmedia"
-  echo "4: DD_laraview"
+  echo "3: DD_laraview"
   echo "or hit enter for everything"
   read option
   if [ "$option" == "1" ]; then
@@ -384,9 +382,6 @@ function git-push() {
     git-push-repo "DD_laravelAp"
     git-pull-repo "DD_laravelAp"
   elif [ "$option" == "3" ]; then
-    git-push-repo "DD_libmedia"
-    git-pull-repo "DD_libmedia"
-  elif [ "$option" == "4" ]; then
     git-push-repo "DD_laraview"
     git-pull-repo "DD_laraview"
   else
@@ -450,7 +445,6 @@ function git-pull-repo() {
 function git-pull-all() {
   git-pull-repo "DD_laraview"
   git-pull-repo "DD_libwww"
-  git-pull-repo "DD_libmedia"
   git-pull-repo "DD_laravelAp"
   git-pull-repo "$www_sitefocus"
 }
@@ -464,8 +458,7 @@ function git-pull() {
   echo ""
   echo "1: DD_libwww"
   echo "2: DD_laravelAp"
-  echo "3: DD_libmedia"
-  echo "4: DD_laraview"
+  echo "3: DD_laraview"
   echo "or hit enter for everything"
   read option
   if [ "$option" == "1" ]; then
@@ -473,8 +466,6 @@ function git-pull() {
   elif [ "$option" == "2" ]; then
     git-pull-repo "DD_laravelAp"
   elif [ "$option" == "3" ]; then
-    git-pull-repo "DD_libmedia"
-  elif [ "$option" == "4" ]; then
     git-pull-repo "DD_laraview"
   else
     git-pull-all

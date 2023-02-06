@@ -9,7 +9,6 @@ function bash-sudoers(){
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function bash-secure() {
-
     sudo find /path/to/your/laravel/root/directory -type f -exec chmod 644 {} \;
     sudo find /path/to/your/laravel/root/directory -type d -exec chmod 755 {} \;
 
