@@ -213,8 +213,8 @@ function www-switch() {
 }
 
 function ~www() {
-  cd $wwwroot/html/$www_sitefocus
-  ls -al
+  cd $wwwroot/html/$www_sitefocus;
+  ls;
 }
 
 function ~home() {
