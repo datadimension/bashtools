@@ -20,7 +20,7 @@ sudo find $wwwroot/html/$www_sitefocus -type d -exec chmod 755 {} \;
 
   echo "Setting laravel permissions";
 sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
-
+sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
 
 
 #legacy
@@ -33,7 +33,7 @@ sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
     #sudo chmod -R 775 $wwwroot/html/$www_sitefocus/bootstrap/cache
 
     #sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/public/downloads
-    #sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
+    #
 
     #sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/storage
     #sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
@@ -170,7 +170,7 @@ function www-envinstall() {
 }
 
 function www-update() {
-    sudo-bash-secure
+    bash-secure;
     cd $wwwroot/html/$www_sitefocus
     #dev versions follow in comments
     #composer dump-autoload;# php 71 `which composer` dump-autoload;
