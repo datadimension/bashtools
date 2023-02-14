@@ -173,7 +173,7 @@ function www-update() {
     bash-secure;
     cd $wwwroot/html/$www_sitefocus
     #dev versions follow in comments
-    #composer dump-autoload;# php 71 `which composer` dump-autoload;
+    composer dump-autoload;# php 71 `which composer` dump-autoload;
 
     #need to detect php version here and if statements (bash switch?) to perform updates as system might be multi php
 
