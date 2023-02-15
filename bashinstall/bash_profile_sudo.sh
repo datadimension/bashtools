@@ -171,6 +171,7 @@ function www-envinstall() {
 
 function www-update() {
     bash-secure;
+    echo "update composer";
     cd $wwwroot/html/$www_sitefocus
     #dev versions follow in comments
     composer dump-autoload;# php 71 `which composer` dump-autoload;

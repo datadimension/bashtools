@@ -257,6 +257,12 @@ function ~log() {
   ls
 }
 
+function cd~(){
+  dir=$1;
+  cd $dir;
+  ls;
+}
+
 function ~log-sys() {
   echo "/var/log"
   ls -al /var/log
