@@ -78,11 +78,6 @@ function laravel-version() {
   php artisan --version
 }
 
-function bash-writesettings() {
-  echo "${wwwsites[0]},${wwwsites[1]},${wwwsites[2]}" >~/bashtoolscfg/wwwsites
-  echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
-}
-
 function bash-readsettings() {
   wwwsites=$(<~/bashtoolscfg/wwwsites)
   IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
