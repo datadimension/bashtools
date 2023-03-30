@@ -81,14 +81,7 @@ function laravel-version() {
 function bash-readsettings() {
   wwwsites=$(<~/bashtoolscfg/wwwsites)
   IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
-
   csv=$(<~/.bash_cfg)
-  wwwsites=$(<~/bashtoolscfg/wwwsites)
-  IFS=', ' read -r -a values <<<"$wwwsites" #read back in same order as written
-  wwwsite1=${values[0]}
-  wwwsite2=${values[1]}
-  wwwsite3=${values[2]}
-
   IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
   environment=${values[0]}
   www_sitefocus=${values[1]}
