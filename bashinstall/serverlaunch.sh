@@ -137,7 +137,10 @@ function bashinstall(){
   sudo cp /var/www/html/serveradmin/_cli/templates/.bash_cfg ~/.bash_cfg;
   sudo chown ubuntu:ubuntu ~/.bash_cfg;
   bash-setwelcome;
-  bash-envsetwwwroot;
+  bash-envsetwwwroo
+
+
+  t;
   bash-start;
 }
 

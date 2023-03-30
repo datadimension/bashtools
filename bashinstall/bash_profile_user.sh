@@ -28,7 +28,6 @@ function bash-install() {
   done
   echo $csv;
   echo "$csv" >~/bashtoolscfg/wwwsites
-  echo "${wwwsites[0]},${wwwsites[1]},${wwwsites[2]}" >~/bashtoolscfg/wwwsites
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
   echo "Restarting shell ..."
   read -t 2 input
