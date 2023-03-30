@@ -21,6 +21,8 @@ function bash-install() {
   fi
   cat ~/bashtools/bashinstall/bash_profile_user.sh >>~/.bash_profile
   cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
+  mkdir ~/bashtoolscfg;
+  echo "$wwwsite1,$wwwsite2,$wwwsite3" >~/bashtoolscfg/wwwsites
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
   echo "Restarting shell ..."
   read -t 2 input
@@ -36,6 +38,7 @@ function bash-restart() {
 }
 
 function bash-writesettings() {
+  echo   echo "$wwwsite1,$wwwsite2,$wwwsite3" >~/.bash_cfg
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
 }
 
@@ -67,14 +70,17 @@ function laravel-version() {
 
 function bash-readsettings() {
   csv=$(<~/.bash_cfg)
+  wwwsites=$(<~/bashtoolscfg/wwwsites)
+  IFS=', ' read -r -a values <<<"$wwwsites" #read back in same order as written
+  wwwsite1=${values[0]}
+  wwwsite2=${values[1]}
+  wwwsite3=${values[2]}
+
   IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
   environment=${values[0]}
   www_sitefocus=${values[1]}
   ssh1=${values[2]}
   ssh2=${values[3]}
-  wwwsite1=${values[4]}
-  wwwsite2=${values[5]}
-  wwwsite3=${values[6]}
   gituname=${values[7]}
   phpNo=${values[8]}
   ipgateway=${values[9]}
@@ -584,3 +590,4 @@ function logv() {
 function bash-help() {
   php ~/bashtools/php/bash-help.php
 }
+
