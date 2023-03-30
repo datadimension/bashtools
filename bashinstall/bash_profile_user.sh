@@ -21,11 +21,6 @@ function bash-install() {
   fi
   cat ~/bashtools/bashinstall/bash_profile_user.sh >>~/.bash_profile
   cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
-<<<<<<< HEAD
-  mkdir ~/bashtoolscfg;
-  echo "$wwwsite1,$wwwsite2,$wwwsite3" >~/bashtoolscfg/wwwsites
-  echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
-=======
   mkdir -p ~/bashtoolscfg
   csv="";
   for i in {0..9}; do
@@ -35,7 +30,6 @@ function bash-install() {
   echo "$csv" >~/bashtoolscfg/wwwsites
   echo "${wwwsites[0]},${wwwsites[1]},${wwwsites[2]}" >~/bashtoolscfg/wwwsites
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
->>>>>>> d6aaf4735c2498ff68c0fa4d5b3223f04a886f7d
   echo "Restarting shell ..."
   read -t 2 input
   head -20 ~/.bash_profile
@@ -50,10 +44,6 @@ function bash-restart() {
 }
 
 function bash-writesettings() {
-<<<<<<< HEAD
-  echo   echo "$wwwsite1,$wwwsite2,$wwwsite3" >~/.bash_cfg
-  echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
-=======
   csv="";
   for i in {0..9}; do
     csv+="${wwwsites[$i]},";
@@ -61,7 +51,6 @@ function bash-writesettings() {
   echo $csv;
   echo "$csv" >~/bashtoolscfg/wwwsites
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
->>>>>>> d6aaf4735c2498ff68c0fa4d5b3223f04a886f7d
 }
 
 function bash-start() {

@@ -126,28 +126,9 @@ ClientAliveCountMax 180
 }
 
 function serverinstall(){
-<<<<<<< HEAD
-  sudo mkdir -p /var/www/html/;
-	sudo mv ~/serveradmin /var/www/html/;
-	cd  /var/www/html/serveradmin/_cli/bash;
-  source /var/www/html/serveradmin/_cli/bash/serverlaunch.sh;
-  ubuntu_update;
-  installphp;
-  bashinstall;
-}
-
-function additional(){
-        echo "Copy another user certificate"
-        read input
-        if [ "$input" == "y" ]; then
-            sudo php $wwwroot/html/serveradmin/_cli/bash/helpers/bash-start.php
-            nginx-start
-        fi
-=======
   sudo mkdir -p /var/www/html;
 	sudo mv ~/downloads/serverlaunch /var/www/html/serveradmin;#a bit of a roundabout way due to permissions
   source /var/www/html/serveradmin/_cli/bash/serverlaunch.sh;
->>>>>>> 228aa2b24f09456a3a64620a9d764f0c37e065b3
 }
 
 function bashinstall(){
@@ -160,9 +141,6 @@ function bashinstall(){
   bash-start;
 }
 
-<<<<<<< HEAD
-function ubuntu_update(){
-=======
 function addsuperuser(){
             echo "Create new sudo user and remove default ? y/n"
         read input
@@ -193,7 +171,6 @@ function osupdate(){
 	sudo chown $USER:www-data /var/www/html;
  sudo chmod -R 775 /var/www/html;
     #force utc timezone
->>>>>>> 228aa2b24f09456a3a64620a9d764f0c37e065b3
     sudo rm -f /etc/localtime;# Delete the current time zone file
     sudo ln -s /usr/share/zoneinfo/UTC /etc/localtime;# Set it to the new value
 	sudo apt-get -y update;
