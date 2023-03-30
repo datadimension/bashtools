@@ -21,7 +21,15 @@ function bash-install() {
   fi
   cat ~/bashtools/bashinstall/bash_profile_user.sh >>~/.bash_profile
   cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
-  echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
+  mkdir -p ~/bashtoolscfg
+  csv="";
+  for i in {0..9}; do
+    csv+="${wwwsites[$i]},";
+  done
+  echo $csv;
+  echo "$csv" >~/bashtoolscfg/wwwsites
+  echo "${wwwsites[0]},${wwwsites[1]},${wwwsites[2]}" >~/bashtoolscfg/wwwsites
+  echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
   echo "Restarting shell ..."
   read -t 2 input
   head -20 ~/.bash_profile
@@ -36,7 +44,13 @@ function bash-restart() {
 }
 
 function bash-writesettings() {
-  echo "$environment,$www_sitefocus,$ssh1,$ssh2,$wwwsite1,$wwwsite2,$wwwsite3,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
+  csv="";
+  for i in {0..9}; do
+    csv+="${wwwsites[$i]},";
+  done
+  echo $csv;
+  echo "$csv" >~/bashtoolscfg/wwwsites
+  echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
 }
 
 function bash-start() {
@@ -65,16 +79,21 @@ function laravel-version() {
   php artisan --version
 }
 
+function bash-writesettings() {
+  echo "${wwwsites[0]},${wwwsites[1]},${wwwsites[2]}" >~/bashtoolscfg/wwwsites
+  echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
+}
+
 function bash-readsettings() {
+  wwwsites=$(<~/bashtoolscfg/wwwsites)
+  IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
+
   csv=$(<~/.bash_cfg)
   IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
   environment=${values[0]}
   www_sitefocus=${values[1]}
   ssh1=${values[2]}
   ssh2=${values[3]}
-  wwwsite1=${values[4]}
-  wwwsite2=${values[5]}
-  wwwsite3=${values[6]}
   gituname=${values[7]}
   phpNo=${values[8]}
   ipgateway=${values[9]}
@@ -168,11 +187,11 @@ function bash-logout() {
 
 function www-showsites() {
   echo ""
-  echo "Current sites:"
+  echo "Current sites are:"
   echo ""
-  echo "1: $wwwsite1"
-  echo "2: $wwwsite2"
-  echo "3: $wwwsite3"
+  for i in {0..9}; do
+      echo "$((i + 1)): ${wwwsites[$i]}"
+  done
   echo ""
 }
 
@@ -183,14 +202,9 @@ function www-setsites() {
   www-showsites
   echo "Enter site number to change"
   read sitenumber
+  sitenumber=$((sitenumber - 1))
   echo "Enter site root directory name to set against site $sitenumber"
-  if [ "$sitenumber" == "1" ]; then
-    read wwwsite1
-  elif [ "$sitenumber" == "2" ]; then
-    read wwwsite2
-  elif [ "$sitenumber" == "3" ]; then
-    read wwwsite3
-  fi
+  read wwwsites[$sitenumber]
   www-switch
   bash-writesettings
 }
@@ -198,15 +212,9 @@ function www-setsites() {
 function www-switch() {
   www-showsites
   echo "Please select a site number to chose for operations"
-  read site
-  if [ "$site" == "2" ]; then
-    site=$wwwsite2
-  elif [ "$site" == "3" ]; then
-    site=$wwwsite3
-  else
-    site=$wwwsite1
-  fi
-  www_sitefocus=$site
+  read sitenumber
+  sitenumber=$((sitenumber - 1))
+  www_sitefocus=${wwwsites[sitenumber]}
   cd "$wwwroot/html/$www_sitefocus"
   echo "setting site to $www_sitefocus"
   bash-writesettings
@@ -257,10 +265,10 @@ function ~log() {
   ls
 }
 
-function cd~(){
-  dir=$1;
-  cd $dir;
-  ls;
+function cd~() {
+  dir=$1
+  cd $dir
+  ls
 }
 
 function ~log-sys() {

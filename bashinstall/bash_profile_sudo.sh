@@ -46,7 +46,7 @@ function nginx-start() {
     if [ "$input" == "y" ]; then
         clear
         echo-h1 "Closing Nginx / PHP"
-        ps aux | grep php
+
         sudo service nginx stop
         sudo service php7.4-fpm stop
         sudo pkill php-fpm
