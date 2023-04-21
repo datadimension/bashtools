@@ -390,12 +390,13 @@ function git-push-all() {
 function git-push() {
   clear
   curpwd=$(pwd)
+    echo-h1 "Pushing from $www_sitefocus";
   echo "Enter a repo name"
   echo ""
   echo "1: DD_libwww"
   echo "2: DD_laravelAp"
   echo "3: DD_laraview"
-  echo "or hit enter for everything"
+  echo "or wait / hit enter for everything"
   read -t 3 option
   if [ "$option" == "1" ]; then
     git-push-repo "DD_libwww"
@@ -475,13 +476,13 @@ function git-pull() {
   clear
   echo-hr
   curpwd=$(pwd)
-
+  echo-h1 "Pulling to $www_sitefocus";
   echo "Enter a repo name"
   echo ""
   echo "1: DD_libwww"
   echo "2: DD_laravelAp"
   echo "3: DD_laraview"
-  echo "or hit enter for everything"
+  echo "or wait / hit enter for everything"
   read -t 3 option
   if [ "$option" == "1" ]; then
     git-pull-repo "DD_libwww"
