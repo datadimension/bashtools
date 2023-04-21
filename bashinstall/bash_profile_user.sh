@@ -206,11 +206,19 @@ function www-switch() {
   www-showsites
   echo "Please select a site number to chose for operations"
   read sitenumber
+    echo "Git sync ? n y/n"
+  read -t 3 input
+  if [ "$input" == "y" ]; then
+    git-push;
+  fi
   sitenumber=$((sitenumber - 1))
   www_sitefocus=${wwwsites[sitenumber]}
   cd "$wwwroot/html/$www_sitefocus"
   echo "setting site to $www_sitefocus"
   bash-writesettings
+    if [ "$input" == "y" ]; then
+    git-pull;
+  fi
 }
 
 function ~www() {
