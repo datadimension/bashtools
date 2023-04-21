@@ -206,7 +206,7 @@ function www-switch() {
   www-showsites
   echo "Please select a site number to chose for operations"
   read sitenumber
-    echo "Git sync ? n y/n"
+    echo "Git will auto sync. Enter 'n' to prevent this"
   read -t 3 input
   if [ "$input" != "n" ]; then
     git-push;
