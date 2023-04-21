@@ -396,7 +396,7 @@ function git-push() {
   echo "2: DD_laravelAp"
   echo "3: DD_laraview"
   echo "or hit enter for everything"
-  read option
+  read -t 3 option
   if [ "$option" == "1" ]; then
     git-push-repo "DD_libwww"
     git-pull-repo "DD_libwww"
@@ -482,7 +482,7 @@ function git-pull() {
   echo "2: DD_laravelAp"
   echo "3: DD_laraview"
   echo "or hit enter for everything"
-  read option
+  read -t 3 option
   if [ "$option" == "1" ]; then
     git-pull-repo "DD_libwww"
   elif [ "$option" == "2" ]; then
