@@ -208,7 +208,7 @@ function www-switch() {
   read sitenumber
     echo "Git sync ? n y/n"
   read -t 3 input
-  if [ "$input" == "y" ]; then
+  if [ "$input" != "n" ]; then
     git-push;
   fi
   sitenumber=$((sitenumber - 1))
@@ -216,7 +216,7 @@ function www-switch() {
   cd "$wwwroot/html/$www_sitefocus"
   echo "setting site to $www_sitefocus"
   bash-writesettings
-    if [ "$input" == "y" ]; then
+    if [ "$input" != "n" ]; then
     git-pull;
   fi
 }
