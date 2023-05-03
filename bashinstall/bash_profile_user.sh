@@ -44,7 +44,7 @@ function bash-restart() {
 
 function bash-sshcheck(){
   echo 'Current sessions are:';
-    ps -A | grep ssh
+    ps -ef | grep ssh;
 }
 
 function bash-writesettings() {
