@@ -45,6 +45,7 @@ function bash-restart() {
 function bash-sshcheck(){
   echo 'Current sessions are:';
     ps -ef | grep ssh;
+    echo "use sudo kill -9 <processid />" to end it;
 }
 
 function bash-writesettings() {
