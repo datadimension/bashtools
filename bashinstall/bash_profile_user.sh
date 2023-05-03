@@ -42,6 +42,11 @@ function bash-restart() {
   bash-start
 }
 
+function bash-sshcheck(){
+  echo 'Current sessions are:';
+    ps -A | grep ssh
+}
+
 function bash-writesettings() {
   csv="";
   for i in {0..9}; do
