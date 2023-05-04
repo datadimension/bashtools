@@ -46,10 +46,11 @@ function bash-sshcheck(){
   echo 'Current sessions are:';
     ps -ef | grep ssh;
     echo "use sudo kill -9 <processid />" to end it;
-    echo "or enter 'ok' to kill all ssh - including this one";
+    echo "or enter 'ok' to kill all ssh - including this one and reboot server";
       read option
   if [ "$option" == "ok" ]; then
-        pkill ssh;
+        sudo pkill ssh;
+        sudo reboot;
   fi
 }
 
