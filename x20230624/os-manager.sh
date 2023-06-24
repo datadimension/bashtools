@@ -1,87 +1,99 @@
 #note this is for generating ssh key for your own repo
 
-function os-installer(){
-  lastoption=$1;
-  clear;
-    echo "Please enter option to install";
-            if [ "$lastoption" != "" ]; then
-echo "You previously picked $lastoption:";
-              fi
-    echo "1: System Update"
-    echo "2: PHP";
-    echo "3: Composer";
-    echo "4: MySQL";
-    echo "5: Access Security";
-    echo "10: VPN client"
-    echo "x: Exit";
-read option;
+function devicesetup(){
+  registryfile=/.device_cfg
+  if test -f "$registryfile"; then
+        echo "registry exists."
+  else
+        echo "Lets set up this device";
+        sudo touch $registryfile;
+        sudo chmod 777 $registryfile;
+        csv="";
+        sudo echo "$csv" > $registryfile;
+    fi
+    device_readregistry;
+
+    echo "Please enter the device type [currently '$devicetype']:";
+    echo "1:PC development machine";
+    echo "2:AWS EC2 Ubuntu";
+    echo "3:Dedicated ubuntu server";
+    read option;
     if [ "$option" == "1" ]; then
-      sudo apt -y update;
-      sudo apt -y upgrade;
+        option="pcdev"
     elif [ "$option" == "2" ]; then
-      install-php;
+        option="ec2"
     elif [ "$option" == "3" ]; then
-install-composer;
-    elif [ "$option" == "4" ]; then
-      installmysql;
-    elif [ "$option" == "5" ]; then
-      install-accesssecurity
-    elif [ "$option" == "10" ]; then
-      sudo apt-get -y install network-manager-openconnect-gnome;
+        option="ubuntu"
     else
         option="undefined"
     fi
-        if [ "$option" != "X" ]; then
-          echo "";
-          echo "Finished, press any key to continue";
-          read $wait;
-      os-installer $option;
-      fi
+    echo "Set value as: "$option;
+    devicetype=$option;
+    device_writeregistry;
+
+
+    device_readregistry;
 }
 
-function install-php(){
-          sudo apt -y install php;
-    sudo apt -y install php-fpm;
-    php -v;
-    echo ""
-            echo "We need to amend the ini file, please enter the php version to 1 decimal place shown above eg 7.1 or 8.1";
-            read phpv;
-    echo "We will edit /etc/php/$phpv/fpm/php.ini";
-    echo "And for security change line to be";
-    echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
-    read wait;
-    sudo nano +801 /etc/php/$phpv/fpm/php.ini;
-      sudo apt -y install php-zip;
-    #https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
-    sudo apt -y install php-soap;
-    sudo apt -y install php-curl;
-    sudo apt -y install php-bcmath;
-    sudo apt -y install php-bz2;
-    sudo apt -y install php-intl;
-    sudo apt -y install php-mbstring;
-    sudo apt -y install php-mysql;
-    sudo apt -y install php-readline;
- sudo apt -y install php-xml;
+function testawsubuntu(){
+    awsuser=/home/ubuntu
+  if test -f "$awsuser"; then
+        echo "aws user ubuntu exists."
+        fi
 }
 
-function install-accesssecurity(){
-      echo "Edit ssh to remove root - PermitRootLogi no"
-      sudo nano +34 /etc/ssh/sshd_config
-      echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root";
-      sudo sudo service ssh restart;
+function device_readregistry(){
+    registryfilecsv=$(</.device_cfg)
+    IFS=', ' read -r -a values <<<"$registryfilecsv" #read back in same order as written
+    devicetype=${values[0]}
+    initialsecured=${values[1]}
+    spare=${values[2]}
+    spare=${values[3]}
+    spare=${values[4]}
+    spare=${values[5]}
+    spare=${values[6]}
+    spare=${values[7]}
+    spare=${values[8]}]
+    spare=${values[9]}
+    spare=${values[10]}
+    spare=${values[11]}
+   spare=${values[10]}
+    spare=${values[11]}
+   spare=${values[12]}
+    spare=${values[13]}
+   spare=${values[14]}
+    spare=${values[15]}
+   spare=${values[16]}
+    spare=${values[17]}
+   spare=${values[18]}
+    spare=${values[19]}
 }
 
-function install-composer(){
-  cd ~/;
-  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-  php composer-setup.php
-  php -r "unlink('composer-setup.php');"
-  sudo mv composer.phar /usr/local/bin/composer;
-  composer global require laravel/installer;
+function device_writeregistry(){
+      sudo echo "$devicetype,$spare">/.device_cfg
 }
 
-############# legacy
-
+function gitlaunch(){
+#use this: https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
+	sudo apt-get -y install git;
+	echo "Enter email for git ssh keygen.";
+	read sshemail;
+	echo "";
+	echo "Generating, press ENTER to accept defaults";
+	echo "";
+	ssh-keygen -t rsa -b 4096 -C $sshemail;
+	eval "$(ssh-agent -s)";
+	ssh-add ~/.ssh/id_rsa;history
+	echo "Done, now add to GIT account at https://github.com/settings/keys";
+	echo "";
+	tail -1000 ~/.ssh/id_rsa.pub;
+	echo "";
+	echo "more info: https://help.github.com/en/enterprise/2.16/user/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account";
+	git config --global user.email $sshemail;
+	git config --global user.name "admin_name_notset";
+	git config --global user.email "undefined@dundefined.undefined";
+	git config --global user.name "undefined";
+}
 
 #we need to change sudo access away from root as its an easy target
 #so we will create a user
@@ -115,7 +127,18 @@ ClientAliveCountMax 180
 
 
 
+function bashinstall(){
+  sudo cp /var/www/html/serveradmin/_cli/bash/bash_profile.sh ~/.bash_profile;
+  source ~/.bash_profile;
+  sudo cp /var/www/html/serveradmin/_cli/templates/.bash_cfg ~/.bash_cfg;
+  sudo chown ubuntu:ubuntu ~/.bash_cfg;
+  bash-setwelcome;
+  bash-envsetwwwroo
 
+
+  t;
+  bash-start;
+}
 
 function addsuperuser(){
             echo "Create new sudo user and remove default ? y/n"
@@ -167,6 +190,34 @@ function osupdate(){
   sudo apt-get install -y whois;
   	cp /var/www/html/serveradmin/_cli/bash/templates/.bash_cfg ~/.bash_cfg;
 
+}
+
+function x20230110osupdate(){
+	sudo apt-get -y install zip unzip php-zip;
+	cp /var/www/html/serveradmin/_cli/bash/templates/.bash_cfg ~/.bash_cfg;
+	cp /var/www/html/serveradmin/_cli/bash/bash_profile.sh ~/.bash_profile;
+	cp /var/www/html/serveradmin/_cli/bash/bash_logout.sh ~/.bash_logout;
+	sudo mkdir /var/www/html;
+	sudo chown $USER:www-data /var/www/html;
+ sudo chmod -R 775 /var/www/html;
+    #force utc timezone
+
+  installcomposer;
+
+	echo "something is breaking DNS / ping / apt-get update with ufw here";
+	echo "press enter to run ufw disable";
+	read pause;
+	sudo ufw enable;
+	sudo ufw allow 22;
+		sudo ufw allow 80;
+sudo ufw allow 443;
+  #20201214 sudo add-apt-repository ppa:certbot/certbot;#for self signed certification https://www.digitalocean.com/community/tutorials/how-to-set-up-let-s-encrypt-with-nginx-server-blocks-on-ubuntu-16-04
+	echo "System updated";
+
+}
+
+function installvpn(){
+  sudo apt-get -y install network-manager-openconnect-gnome;
 }
 
 function installftp(){
@@ -226,6 +277,22 @@ function installPHPmyAdmin(){
     sudo apt install -y phpmyadmin php-gettext;
 }
 
+#install current latest supported php
+function installphp(){
+    sudo apt -y install software-properties-common;
+    sudo add-apt-repository ppa:ondrej/php;
+    sudo apt update;
+    #20201226 sudo apt install -y php7.4;
+    #20201226 sudo apt install -y php7.4-dev
+    sudo apt install -y php7.4 php7.4-dev php7.4-soap php7.4-fpm php7.4-curl php7.4-bcmath php7.4-bz2 php7.4-curl php7.4-intl php7.4-mbstring php7.4-mysql php7.4-readline php7.4-xml php7.4-zip;
+    echo "Press ENTER to open";
+    echo "/etc/php/7.4/fpm/php.ini";
+    echo "And for security change line to be";
+    echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
+    read wait;
+    sudo nano +798 /etc/php/7.4/fpm/php.ini;
+    #https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
+}
 
 function installxdebug(){
 clear;
@@ -255,6 +322,17 @@ echo "see http://stackoverflow.com/questions/42656135/xdebug-breakpoint-fail for
 echo "Press Enter to restart webserver";
 read wait;
 nginx-start;
+}
+
+function installcomposer(){
+	  # do not use sudo apt-get -y install composer; -- needs to be via phar
+	  # https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos
+	  cd ~/downloads;
+	  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php composer-setup.php
+    php -r "unlink('composer-setup.php');";
+    sudo mv composer.phar /usr/local/bin/composer;
+	  composer global require laravel/installer;
 }
 
 function addsshuser(){
@@ -342,6 +420,25 @@ FLUSH PRIVILEGES;
 # for private vpn
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-an-openvpn-server-on-ubuntu-16-04
 
+function installvpnconnect(){
+sudo apt-get -y install network-manager-openconnect-gnome;
+}
+
+function wslprep(){
+	mkdir /mnt/c/www;
+	sudo ln -s /mnt/c/www /var/www;
+	cp /mnt/c/Windows/System32/drivers/etc/hosts /mnt/c/www/hosts;
+	    sudo chmod 777 /var/www/hosts;
+	        mkdir ~/downloads;
+	    echo "Open on Windows command prompt as Administrator";
+    echo "del C:\Windows\System32\drivers\etc\hosts";
+    echo "then create symlink";
+    echo "mklink C:\Windows\System32\drivers\etc\hosts C:\www\hosts";
+}
+
+function productionprep(){
+  echo "productionprep not implemented";
+}
 
 #gitlaunch;
 #setsudo;
@@ -349,6 +446,7 @@ FLUSH PRIVILEGES;
 #installssh;
 #installftp;
 #installnginx;
+#installphp740;
 #installxdebug;
 #installhttpscert;
 #installcomposer;
