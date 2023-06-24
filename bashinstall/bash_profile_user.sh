@@ -78,6 +78,11 @@ function laravel-version() {
   php artisan --version
 }
 
+function bash-sshcheck(){
+  echo 'Current sessions are:';
+    ps -A | grep ssh
+}
+
 function bash-readsettings() {
   wwwsites=$(<~/bashtoolscfg/wwwsites)
   IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written

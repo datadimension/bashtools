@@ -302,3 +302,8 @@ function nginx-edit() {
     sudo nano /etc/nginx/sites-enabled/$www_sitefocus
     nginx-start
 }
+
+function os-install(){
+  source os-manager.sh;
+  os-installer;
+}
