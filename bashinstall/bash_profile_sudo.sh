@@ -304,6 +304,6 @@ function nginx-edit() {
 }
 
 function os-manage(){
-  source os-manager.sh;
+  source ~/bashtools/bash_modules/os-manager.sh;
   os-main;
 }
