@@ -303,7 +303,7 @@ function nginx-edit() {
     nginx-start
 }
 
-function os-install(){
+function os-manage(){
   source os-manager.sh;
-  os-installer;
+  os-main;
 }

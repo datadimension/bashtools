@@ -78,6 +78,7 @@ function bash-start() {
 function bash-showsettings() {
   echo-hr
   ipaddr=$(hostname --all-ip-addresses)
+  cat /etc/lsb-release;
   echo "IP : $ipaddr  |  Gateway: $ipgateway  |  PHP Version: $phpNo | GIT username: $gituname"
   echo "www root: $wwwroot"
   echo "Available SSH (bash-ssh): $ssh1 | $ssh2"

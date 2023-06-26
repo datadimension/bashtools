@@ -1,5 +1,12 @@
 #note this is for generating ssh key for your own repo
 
+function os-main(){
+  echo "only available management is os-installer";
+  echo "any key to continue";
+  read wait;
+  os-installer;
+}
+
 function os-installer(){
   lastoption=$1;
   clear;
@@ -65,10 +72,21 @@ function install-php(){
 }
 
 function install-accesssecurity(){
-      echo "Edit ssh to remove root - PermitRootLogi no"
-      sudo nano +34 /etc/ssh/sshd_config
+      echo "any key to edit ssh to remove root - set";
+       echo "PermitRootLogin no";
+      read wait;
+      sudo nano +36 /etc/ssh/sshd_config
+      echo "Edit ssh to remove password access";
+      echo "******* ONLY IF YOU HAVE SETUP AND TESTED SSH CERTIFICATION LOGIN ***** set";
+       echo "PasswordAuthentication no";
+       read wait;
+      sudo nano +60 /etc/ssh/sshd_config;
+      echo "PubkeyAuthentication yes";
+       read wait;
+      sudo nano +41 /etc/ssh/sshd_config
       echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root";
-      sudo sudo service ssh restart;
+      read wait;
+      sudo sudo service ssh reload;
 }
 
 function install-composer(){
