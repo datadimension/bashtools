@@ -56,7 +56,7 @@ function nginx-start() {
         echo "we need to autodetect fpm version here";
         read wait
         sudo service php8.1-fpm start
-        sudo service nginx start
+          sudo service nginx start
         sudo /etc/init.d/cron start
         ps aux | grep php
         echo ""
