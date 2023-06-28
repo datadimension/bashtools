@@ -145,7 +145,7 @@ function env-about(){
     clear;
     echo-h1 "About this system";
     if [ "$platform" == "ubuntu" ]; then
-      echo "Current Environment (dev/ Production):$environment";
+      echo "Current Environment (development/ production):$environment";
       ipaddr=$(hostname --all-ip-addresses)
       cat /etc/lsb-release;
       echo "IP : $ipaddr";
@@ -159,7 +159,12 @@ function env-about(){
 
 function env-attributerequire(){
   varname=$1;
-  if [ "$varname" == "phpNo" ]; then
+  if [ "$varname" == "environment" ]; then
+       if [ "$environment" == "" ]; then
+          env-setservertype;
+       fi
+  fi
+  elif [ "$varname" == "phpNo" ]; then
     if [ "$phpNo" == "" ]; then
       echo ""
       echo "PHP check:";
@@ -170,11 +175,32 @@ function env-attributerequire(){
       read phpNo
       bash-writesettings;
     fi
-  elif [ "$varname" == "welcomemsg" ]; then
-        if [ "$welcomemsg" == "" ]; then
+    elif [ "$varname" == "welcomemsg" ]; then
+       if [ "$welcomemsg" == "" ]; then
           bash-setwelcome
-        fi
+       fi
+    fi
+
+}
+
+#for per machine settings that do not change
+function env-setservertype() {
+  #bash-envsetwwwroot
+  echo "Enter environment (production / development)"
+  read environment
+  if [ "$environment" == "development" ]; then
+    environment="development"
+  else
+    environment="production"
   fi
+  echo "Environment set to $environment"
+  bash-writesettings
+  #echo "Enter dev site project names ? y/n"
+  #read doset
+ # if [ "$doset" = "y" ]; then
+ #   www-setsites
+ # fi
+ # cd $wwwroot
 }
 
 function env-setattribute(){
@@ -185,27 +211,6 @@ function env-setattribute(){
     bash-writesettings;
     env-attributerequire $varname;
   fi
-}
-
-#for per machine settings that do not change
-function bash-envset() {
-  bash-envsetwwwroot
-  bash-envsetphp
-  echo "Enter environment (production / development)"
-  read environment
-  if [ "$environment" == "development" ]; then
-    environment="development"
-  else
-    environment="production"
-  fi
-  echo "Environment set to $environment"
-  bash-writesettings
-  echo "Enter dev site project names ? y/n"
-  read doset
-  if [ "$doset" = "y" ]; then
-    www-setsites
-  fi
-  cd $wwwroot
 }
 
 function bash-ssh() {
