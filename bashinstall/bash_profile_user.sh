@@ -141,6 +141,9 @@ bash-envsetphp() {
 }
 
 function env-about(){
+    echo "Current Platform: "$platform
+  echo "Current Environment: "$environment
+  echo ""
   ipaddr=$(hostname --all-ip-addresses)
   cat /etc/lsb-release;
   echo "IP : $ipaddr  |  Gateway: $ipgateway  |  PHP Version: $phpNo | GIT username: $gituname"
@@ -328,9 +331,6 @@ function ~log-sys() {
 }
 
 function www-showcfg() {
-  echo "Current Platform: "$platform
-  echo "Current Environment: "$environment
-  echo ""
   www-showsites
   echo "Current Selected Site for operations: $www_sitefocus"
   echo ""
