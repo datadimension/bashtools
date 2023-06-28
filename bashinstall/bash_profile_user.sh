@@ -124,12 +124,12 @@ function bash-who() {
   echo-h1 $welcomemsg
 }
 
-env-envsetwwwroot() {
+env-setwwwroot() {
   echo "Please set www root directory"
   echo "or just enter for default of '/var/www'"
   read wwwroot
   if [ "$wwwroot" == "" ]; then
-    wwwroot="/var/www"
+    #wwwroot="/var/www"
   fi
   bash-writesettings
 }
