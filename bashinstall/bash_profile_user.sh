@@ -346,8 +346,9 @@ function ~log-sys() {
 function www-showcfg() {
   www-showsites
   echo "Current Selected Site for operations: $www_sitefocus"
-  echo ""
-  ls
+  echo "";
+  #cd $www_sitefocus;
+  #ls
   echo-hr
 }
 
