@@ -72,6 +72,7 @@ function bash-start() {
   # sudo /etc/init.d/cron start;
   www-showcfg
   bash-showsettings
+  echo "Use 'env-about' for more info";
   cd "$wwwroot/html/$www_sitefocus"
 }
 
@@ -141,12 +142,19 @@ bash-envsetphp() {
 }
 
 function env-about(){
-    echo "Current Platform: "$platform
-  echo "Current Environment: "$environment
-  echo ""
-  ipaddr=$(hostname --all-ip-addresses)
-  cat /etc/lsb-release;
-  echo "IP : $ipaddr  |  Gateway: $ipgateway  |  PHP Version: $phpNo | GIT username: $gituname"
+    clear;
+    echo-h1 "About this system";
+    if [ "$platform" == "ubuntu" ]; then
+      echo "Current Environment (dev/ Production):$environment";
+      ipaddr=$(hostname --all-ip-addresses)
+      cat /etc/lsb-release;
+      echo "IP : $ipaddr";
+      # echo |  Gateway: $ipgateway  |
+      echo "PHP Version: $phpNo";
+      echo "GIT username: $gituname";
+    else
+        echo $platform;
+    fi
 }
 
 function env-attributerequire(){
