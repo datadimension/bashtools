@@ -143,7 +143,7 @@ bash-envsetphp() {
 
 }
 
-function bash-envrequire(){
+function env-attributerequire(){
   varname=$1;
   if [ "$varname" == "phpNo" ]; then
     if [ "$phpNo" == "" ]; then
@@ -163,13 +163,13 @@ function bash-envrequire(){
   fi
 }
 
-function bash-env_resetval(){
+function env-setattribute(){
   varname=$1;
   echo "Attempting to reset $varname";
   if [ "$varname" == "phpNo" ]; then
     phpNo="";
     bash-writesettings;
-    bash-envrequire $varname;
+    env-attributerequire $varname;
   fi
 }
 

@@ -81,7 +81,7 @@ function os-upgrade(){
 function install-php(){
     sudo apt -y install php;
     sudo apt -y install php-fpm;
-    bash-envrequire phpNo;
+    env-attributerequire phpNo;
     echo "We will edit /etc/php/$phpNo/fpm/php.ini";
     echo "And for security change line to be";
     echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
