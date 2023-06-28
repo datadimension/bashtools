@@ -128,10 +128,11 @@ env-setwwwroot() {
   echo "Please set www root directory"
   echo "or just enter for default of '/var/www'"
   read wwwroot
-  if [ "$wwwroot" == "" ]; then
+  #if [ "$wwwroot" == "" ]; then
     #wwwroot="/var/www"
-  fi
+  #fi
   bash-writesettings
+    env-attributerequire "wwwroot"
 }
 
 bash-envsetphp() {
