@@ -115,7 +115,7 @@ function bash-who() {
     echo-h1 $welcomemsg
 }
 
-bash-envsetwwwroot() {
+x20230629bash-envsetwwwroot() {
     echo "Please set www root directory"
     echo "or just enter for default of '/var/www'"
     read wwwroot
@@ -136,7 +136,7 @@ bash-envsetphp() {
 }
 
 #for per machine settings that do not change
-function bash-envset() {
+function x20230629bash-envset() {
     bash-envsetwwwroot
     bash-envsetphp
     echo "Enter environment (production / development)"

@@ -70,6 +70,7 @@ function bash-start() {
   echo-h1 $welcomemsg
   echo-now
   env-attributerequire "environment"
+  env-attributerequire "wwwroot"
   # sudo /etc/init.d/cron start;
   www-showcfg
   bash-showsettings
@@ -123,7 +124,7 @@ function bash-who() {
   echo-h1 $welcomemsg
 }
 
-bash-envsetwwwroot() {
+env-envsetwwwroot() {
   echo "Please set www root directory"
   echo "or just enter for default of '/var/www'"
   read wwwroot
@@ -163,6 +164,10 @@ function env-attributerequire(){
   if [ "$varname" == "environment" ]; then
        if [ "$environment" == "" ]; then
           env-setservertype;
+       fi
+  elif [ "$varname" == "wwwroot" ]; then
+       if [ "$wwwroot" == "" ]; then
+          env-setwwwroot;
        fi
   elif [ "$varname" == "phpNo" ]; then
     if [ "$phpNo" == "" ]; then
@@ -348,7 +353,7 @@ function www-showcfg() {
   echo "Current Selected Site for operations: $www_sitefocus"
   echo "";
   #cd $www_sitefocus;
-  #ls
+  ls $wwwroot/$www_sitefocus;
   echo-hr
 }
 
