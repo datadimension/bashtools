@@ -139,9 +139,38 @@ bash-envsetphp() {
   echo "Please enter php version to 1 decimal place eg 7.4"
   read phpNo
   bash-writesettings
-
   #bash-sets
 
+}
+
+function bash-envrequire(){
+  varname=$1;
+  if [ "$varname" == "phpNo" ]; then
+    if [ "$phpNo" == "" ]; then
+      echo ""
+      echo "PHP check:";
+      php -v;
+      echo ""
+      echo ""
+      echo "Please confirm the php version to 1 decimal place shown above eg 7.1 or 8.1";
+      read phpNo
+      bash-writesettings;
+    fi
+  elif [ "$varname" == "welcomemsg" ]; then
+        if [ "$welcomemsg" == "" ]; then
+          bash-setwelcome
+        fi
+  fi
+}
+
+function bash-env_resetval(){
+  varname=$1;
+  echo "Attempting to reset $varname";
+  if [ "$varname" == "phpNo" ]; then
+    phpNo="";
+    bash-writesettings;
+    bash-envrequire $varname;
+  fi
 }
 
 #for per machine settings that do not change

@@ -52,10 +52,9 @@ function nginx-start() {
         #sudo service php-fpm stop;
         sudo logrotate -f /etc/logrotate.d/nginx
         clear
-        echo-h1 "Starting Nginx / PHP8.1-fpm"
-        echo "we need to autodetect fpm version here";
-        read wait
-        sudo service php8.1-fpm start
+        echo-h1 "Starting Nginx / PHP-fpm";
+        bash-envrequire phpNo;
+        sudo service php$phpNo-fpm start
           sudo service nginx start
         sudo /etc/init.d/cron start
         ps aux | grep php

@@ -79,18 +79,15 @@ function os-upgrade(){
 }
 
 function install-php(){
-          sudo apt -y install php;
+    sudo apt -y install php;
     sudo apt -y install php-fpm;
-    php -v;
-    echo ""
-            echo "We need to amend the ini file, please enter the php version to 1 decimal place shown above eg 7.1 or 8.1";
-            read phpv;
-    echo "We will edit /etc/php/$phpv/fpm/php.ini";
+    bash-envrequire phpNo;
+    echo "We will edit /etc/php/$phpNo/fpm/php.ini";
     echo "And for security change line to be";
     echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
     read wait;
-    sudo nano +801 /etc/php/$phpv/fpm/php.ini;
-      sudo apt -y install php-zip;
+    sudo nano +801 /etc/php/$phpNo/fpm/php.ini;
+    sudo apt -y install php-zip;
     #https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
     sudo apt -y install php-soap;
     sudo apt -y install php-curl;
