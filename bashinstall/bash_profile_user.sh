@@ -163,7 +163,6 @@ function env-attributerequire(){
        if [ "$environment" == "" ]; then
           env-setservertype;
        fi
-  fi
   elif [ "$varname" == "phpNo" ]; then
     if [ "$phpNo" == "" ]; then
       echo ""
