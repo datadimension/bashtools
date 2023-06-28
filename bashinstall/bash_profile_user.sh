@@ -69,6 +69,7 @@ function bash-start() {
   bash-readsettings
   echo-h1 $welcomemsg
   echo-now
+  env-attributerequire "environment"
   # sudo /etc/init.d/cron start;
   www-showcfg
   bash-showsettings
@@ -145,7 +146,7 @@ function env-about(){
     clear;
     echo-h1 "About this system";
     if [ "$platform" == "ubuntu" ]; then
-      echo "Current Environment (development/ production):$environment";
+      echo "Current Environment (development/ production):$environment use 'env-setservertype' to change";
       ipaddr=$(hostname --all-ip-addresses)
       cat /etc/lsb-release;
       echo "IP : $ipaddr";
