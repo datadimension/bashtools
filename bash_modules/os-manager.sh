@@ -110,14 +110,11 @@ function install-nginx(){
 
   #copy nginx test package into html directory
   sudo cp -R ~/bashtools/templates/nginx/nginxtestwww  /var/www/html;
-  sudo mv /var/www/html/nginxtestwww/nginxtestblockssl  /etc/nginx/sites-available/nginxtest;
-
-  #add in test nginx block
-  #move nginxtest package to /var/www/html/nginxtest/
-  #move nginxtest package to /var/www/html/nginxtest/
-
-
-  sudo ln -s /etc/nginx/sites-available/nginxtestblock /etc/nginx/sites-enabled/nginxtestblock;
+  #move test block so nginx can read it
+  sudo mv /var/www/html/nginxtestwww/nginxtestblockssl  /etc/nginx/sites-enabled/nginxtest;
+echo "Add self signed cert ? So dev server can run HTTPS (y/n)";
+read input;
+ if [ "$input" != "y" ]; then
 
 #self signed certificate#######################################################
   # https://linuxize.com/post/redirect-http-to-https-in-nginx/
@@ -128,8 +125,9 @@ function install-nginx(){
     sudo mkdir /etc/nginx;
     sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
     sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096;
- sudo cp /var/www/html/serveradmin/_cli/templates/nginx/ssl-params.conf /etc/nginx/snippets/ssl-params.conf;
+    sudo cp /var/www/html/serveradmin/_cli/templates/nginx/ssl-params.conf /etc/nginx/snippets/ssl-params.conf;
  sudo cp /var/www/html/serveradmin/_cli/templates/nginx/self-signed.conf /etc/nginx/snippets/self-signed.conf;
+fi
  	cp /var/www/html/serveradmin/_cli/bash/templates/.bash_cfg ~/.bash_cfg;
 	cp /var/www/html/serveradmin/_cli/bash/bash_profile.sh ~/.bash_profile;
 	cp /var/www/html/serveradmin/_cli/bash/bash_logout.sh ~/.bash_logout;
@@ -276,20 +274,6 @@ function addsuperuser(){
                 sudo chmod 700 /home/$username/.ssh;
             echo "Now log in with new account and remove any unwanted users with 'removeuser'";
         fi
-}
-
-
-function installftp(){
-#serversetup of FTP https://help.ubuntu.com/lts/serverguide/ftp-server.html
-	sudo apt-get -y install vsftpd;
-	sudo adduser sftp_user;
-	echo "Allow uploads by uncommenting #write_enable hit enter to change config file";
-	read wait;
-	sudo nano +31 /etc/vsftpd.conf;
-	sudo service vsftpd restart;
-  echo "for SFTP see service http://wiki.vpslink.com/Configuring_vsftpd_for_secure_connections_(TLS/SSL/SFTP)";
-  echo "for TFTP http://askubuntu.com/questions/201505/how-do-i-install-and-run-a-tftp-server";
-  echo "SSH https://gist.github.com/magnetikonline/48ce1d1dca53b44666ba9332bc41c698";
 }
 
 function installPHPmyAdmin(){
