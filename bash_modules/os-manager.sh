@@ -103,18 +103,19 @@ function install-php(){
 
 function install-nginx(){
   sudo apt -y install nginx
-
-  #move nginxtest package to /var/www/html/nginxtest/
-
-  sudo cp -r /var/www/html/serveradmin/_cli/templates/nginx/nginxtestwww /var/www/html;
-    #move nginxtest package to /var/www/html/nginxtest/
-  sudo apt install -y nginx;
+  #clear default files
   sudo rm /etc/nginx/sites-enabled/default;
   sudo rm /etc/nginx/sites-available/default;
   sudo rm /var/www/html/index.nginx-debian.html;
 
-  sudo cp /var/www/html/serveradmin/_cli/templates/nginx/nginxtestblock /etc/nginx/sites-available/nginxtestblock;
-  sudo cp /var/www/html/serveradmin/_cli/templates/nginx/nginxtestblock /etc/nginx/sites-available/nginxtestblock;
+  #copy nginx test package into html directory
+  sudo cp -R ~/bashtools/templates/nginx/nginxtestwww  /var/www/html;
+  sudo mv /var/www/html/nginxtestwww/nginxtestblockssl  /etc/nginx/sites-available/nginxtest;
+
+  #add in test nginx block
+  #move nginxtest package to /var/www/html/nginxtest/
+  #move nginxtest package to /var/www/html/nginxtest/
+
 
   sudo ln -s /etc/nginx/sites-available/nginxtestblock /etc/nginx/sites-enabled/nginxtestblock;
 
