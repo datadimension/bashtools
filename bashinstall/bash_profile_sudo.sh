@@ -47,13 +47,15 @@ function nginx-start() {
         clear
         echo-h1 "Closing Nginx / PHP"
 
-        sudo service nginx stop
-        sudo service php7.4-fpm stop
-        sudo pkill php-fpm
+        sudo service nginx stop;
+        sudo pkill php-fpm;
+        #sudo service php-fpm stop;
         sudo logrotate -f /etc/logrotate.d/nginx
         clear
-        echo-h1 "Starting Nginx / PHP"
-        sudo service php7.4-fpm start
+        echo-h1 "Starting Nginx / PHP8.1-fpm"
+        echo "we need to autodetect fpm version here";
+        read wait
+        sudo service php8.1-fpm start
         sudo service nginx start
         sudo /etc/init.d/cron start
         ps aux | grep php

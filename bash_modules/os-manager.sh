@@ -74,6 +74,8 @@ function os-upgrade(){
   sudo apt-get install -y nodejs;
   sudo apt install net-tools;
   sudo apt-get install -y whois;
+  		sudo mkdir /var/www/html;
+
 }
 
 function install-php(){
@@ -101,22 +103,8 @@ function install-php(){
  sudo apt -y install php-xml;
 }
 
-function install-nginx(){
-  sudo apt -y install nginx
-  #clear default files
-  sudo rm /etc/nginx/sites-enabled/default;
-  sudo rm /etc/nginx/sites-available/default;
-  sudo rm /var/www/html/index.nginx-debian.html;
-
-  #copy nginx test package into html directory
-  sudo cp -R ~/bashtools/templates/nginx/nginxtestwww  /var/www/html;
-  #move test block so nginx can read it
-  sudo mv /var/www/html/nginxtestwww/nginxtestblockssl  /etc/nginx/sites-enabled/nginxtest;
-echo "Add self signed cert ? So dev server can run HTTPS (y/n)";
-read input;
- if [ "$input" != "y" ]; then
-
-#self signed certificate#######################################################
+function install-newselfsignedcert(){
+  #self signed certificate#######################################################
   # https://linuxize.com/post/redirect-http-to-https-in-nginx/
 #also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
     #https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
@@ -125,19 +113,34 @@ read input;
     sudo mkdir /etc/nginx;
     sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
     sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096;
-    sudo cp /var/www/html/serveradmin/_cli/templates/nginx/ssl-params.conf /etc/nginx/snippets/ssl-params.conf;
- sudo cp /var/www/html/serveradmin/_cli/templates/nginx/self-signed.conf /etc/nginx/snippets/self-signed.conf;
+}
+
+function install-nginx(){
+  sudo apt -y install nginx
+  #clear default files
+  sudo rm /etc/nginx/sites-enabled/default;
+  sudo rm /etc/nginx/sites-available/default;
+  sudo rm /var/www/html/index.nginx-debian.html;
+
+  #copy nginx test package into html directory
+  sudo cp -R ~/bashtools/templates/nginx/nginxtest  /var/www/html;
+  #move test block so nginx can read it
+  sudo  cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl  /etc/nginx/sites-enabled/nginxtest;
+  sudo mkdir /etc/nginx;
+
+echo "Copy self signed cert ? So dev server can run  HTTPS (y/n) - note this is an insecure certificate and will not be valid on live server";
+read input;
+if [ "$input" != "y" ]; then
+  sudo cp ~/bashtools/templates/nginx/nginxsetup/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
+  sudo cp ~/bashtools/templates/nginx/nginxsetup/dhparam.pem /etc/nginx/dhparam.pem
+    sudo cp ~/bashtools/templates/nginx/nginxsetup/ssl-params.conf /etc/nginx/snippets/ssl-params.conf;
+    sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf;
 fi
- 	cp /var/www/html/serveradmin/_cli/bash/templates/.bash_cfg ~/.bash_cfg;
-	cp /var/www/html/serveradmin/_cli/bash/bash_profile.sh ~/.bash_profile;
-	cp /var/www/html/serveradmin/_cli/bash/bash_logout.sh ~/.bash_logout;
-	sudo mkdir /var/www/html;
+
 	  	#cp /var/www/html/serveradmin/_cli/bash/templates/.bash_cfg ~/.bash_cfg;
     # #20230113
     # sudo cp /etc/nginx/snippets/phpmyadmin.conf /var/www/html/serveradmin/_cli/bash/templates/phpmyadminnginxsnippet;
-
-  sudo service nginx stop;
-  sudo service nginx start;
+nginx-start;
   echo "Now go to hosts file (we moved it to C:\www";
   echo "and add lines as appropriate for local browser address entry";
   echo "127.0.0.1    nginxtest";

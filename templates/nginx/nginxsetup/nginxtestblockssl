@@ -2,7 +2,7 @@ server {
         listen 80 default_server;
         listen [::]:80 default_server;
         server_name 127.0.0.1 nginxtest;
-        root /var/www/html/nginxtestwww;
+        root /var/www/html/nginxtest;
         index index.php index.html index.htm index.nginx-debian.html;
         location / {
                 try_files $uri $uri/ =404;
@@ -27,7 +27,7 @@ server {
     	ssl_stapling off;#switch to on if real cert
         ssl_stapling_verify off;#switch to on if real cert
         server_name 127.0.0.1 nginxtest;
-        root /var/www/html/nginxtestwww;
+        root /var/www/html/nginxtest;
         index index.php index.html index.htm index.nginx-debian.html;
         location / {
                 try_files $uri $uri/ =404;
