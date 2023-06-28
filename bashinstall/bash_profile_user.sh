@@ -246,7 +246,7 @@ function bash-logout() {
 
 function www-showsites() {
   echo ""
-  echo "Current sites are:"
+  echo "Current $environment sites are:"
   echo ""
   for i in {0..9}; do
       echo "$((i + 1)): ${wwwsites[$i]}"
