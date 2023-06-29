@@ -267,12 +267,11 @@ function bash-logout() {
 
 function www-showsites() {
   echo ""
-  echo "Current $environment sites are:"
+  echo "Current $environment sites are :    (use www-setsites to configure)";
   echo ""
   for i in {0..9}; do
       echo "$((i + 1)): ${wwwsites[$i]}"
   done
-  echo "Use www-setsites to configure";
   echo ""
 }
 
