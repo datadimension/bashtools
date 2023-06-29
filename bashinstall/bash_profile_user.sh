@@ -76,7 +76,11 @@ function bash-start() {
   echo "Use 'bash-help' for more functions";
   www-showcfg
   #bash-showsettings
-  cd "$wwwroot/html/$www_sitefocus"
+  echo "Setting directory for operations:"
+  cd $wwwroot/$www_sitefocus/html;
+  echo "Files here:";
+  echo-hr;
+  ls;
 }
 
 function x20230629bash-showsettings() {
@@ -354,8 +358,6 @@ function ~log-sys() {
 
 function www-showcfg() {
   www-showsites
-  echo "Setting directory for operations:"
-  ls $wwwroot/$www_sitefocus;
 }
 
 function www-routes() {
