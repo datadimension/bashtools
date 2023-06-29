@@ -72,8 +72,6 @@ function bash-showsettings() {
     echo-hr
     ipaddr=$(hostname --all-ip-addresses)
     echo "IP : $ipaddr  |  Gateway: $ipgateway  |  PHP Version: $phpNo | GIT username: $gituname"
-    echo "www root: $wwwroot"
-    echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
     echo-hr
 }
 

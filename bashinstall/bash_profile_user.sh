@@ -75,11 +75,11 @@ function bash-start() {
   echo "Use 'env-about' for more info";
   echo "Use 'bash-help' for more functions";
   www-showcfg
-  bash-showsettings
+  #bash-showsettings
   cd "$wwwroot/html/$www_sitefocus"
 }
 
-function bash-showsettings() {
+function x20230629bash-showsettings() {
   echo-hr
   echo "www root: $wwwroot"
   echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
@@ -157,6 +157,10 @@ function env-about(){
     else
         echo $platform;
     fi
+      echo-hr
+  echo "www root: $wwwroot"
+  echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
+  echo-hr
 }
 
 function env-attributerequire(){
