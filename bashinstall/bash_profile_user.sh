@@ -80,7 +80,6 @@ function bash-start() {
   echo "Setting directory for operations:";
   cd $startdir;
   echo "";
-  echo "Files here:";
   file-showdir $startdir;
 }
 
@@ -90,7 +89,7 @@ file-showdir(){
   echo $directory;
   echo-hr;
   ls $directory;
-  echo hr;
+  echo-hr;
   echo "";
 }
 
