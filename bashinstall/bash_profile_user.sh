@@ -76,11 +76,16 @@ function bash-start() {
   echo "Use 'bash-help' for more functions";
   www-showcfg
   #bash-showsettings
-  echo "Setting directory for operations:"
-  cd $wwwroot/$www_sitefocus/html;
+  startdir="$wwwroot/html/$www_sitefocus";
+  echo "Setting directory for operations:";
+  echo $startdir;
+  cd $startdir;
+  echo "";
   echo "Files here:";
   echo-hr;
   ls;
+  echo-hr;
+  echo "";
 }
 
 function x20230629bash-showsettings() {
