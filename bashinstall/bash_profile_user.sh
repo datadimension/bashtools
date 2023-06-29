@@ -67,6 +67,7 @@ function bash-writesettings() {
 function bash-start() {
   clear
   bash-readsettings
+  echo "Welcome to";
   echo-h1 $welcomemsg
   env-attributerequire "environment"
   env-attributerequire "wwwroot"
