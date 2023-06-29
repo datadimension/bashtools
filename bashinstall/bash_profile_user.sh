@@ -272,6 +272,7 @@ function www-showsites() {
   for i in {0..9}; do
       echo "$((i + 1)): ${wwwsites[$i]}"
   done
+  echo "Use www-setsites to configure";
   echo ""
 }
 
