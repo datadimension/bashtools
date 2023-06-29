@@ -86,8 +86,6 @@ file-showdir(){
   echo-hr;
   echo "$directory";
   echo-hr;
-  echo "Files:"
-  echo "";
   ls $directory;
   echo-hr;
   echo "";
