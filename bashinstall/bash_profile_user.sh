@@ -77,7 +77,6 @@ function bash-start() {
   www-showcfg
   #bash-showsettings
   startdir="$wwwroot/html/$www_sitefocus";
-  echo "Directory for operations:";
   cd $startdir;
   file-showdir $startdir;
 }
@@ -85,9 +84,10 @@ function bash-start() {
 file-showdir(){
   directory=$1;
   echo-hr;
-  echo "Directory: $directory";
+  echo "$directory";
   echo-hr;
   echo "Files:"
+  echo "";
   ls $directory;
   echo-hr;
   echo "";
