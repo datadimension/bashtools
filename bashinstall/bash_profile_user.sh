@@ -354,9 +354,7 @@ function ~log-sys() {
 
 function www-showcfg() {
   www-showsites
-  echo "Current Selected directory for operations: $www_sitefocus"
-  echo "";
-  #cd $www_sitefocus;
+  echo "Setting directory for operations:"
   ls $wwwroot/$www_sitefocus;
 }
 
