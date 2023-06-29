@@ -78,13 +78,19 @@ function bash-start() {
   #bash-showsettings
   startdir="$wwwroot/html/$www_sitefocus";
   echo "Setting directory for operations:";
-  echo $startdir;
   cd $startdir;
   echo "";
   echo "Files here:";
+  file-showdir $startdir;
+}
+
+file-showdir(){
+  directory=$1;
   echo-hr;
-  ls;
+  echo $directory;
   echo-hr;
+  ls $directory;
+  echo hr;
   echo "";
 }
 
