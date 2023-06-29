@@ -576,7 +576,8 @@ function bash-push() {
 }
 
 function bash-pull() {
-  echo-h1 "pulling bash repo"
+  clear;
+  echo-h1 "Updating BASH"
   cd ~/bashtools
   git pull
   bash-install
