@@ -85,8 +85,9 @@ function bash-start() {
 file-showdir(){
   directory=$1;
   echo-hr;
-  echo $directory;
+  echo "Directory: $directory";
   echo-hr;
+  echo "Files:"
   ls $directory;
   echo-hr;
   echo "";
