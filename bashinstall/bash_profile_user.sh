@@ -59,7 +59,7 @@ function bash-writesettings() {
   for i in {0..9}; do
     csv+="${wwwsites[$i]},";
   done
-  echo $csv;
+  #20230629echo $csv;
   echo "$csv" >~/bashtoolscfg/wwwsites
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
 }
@@ -68,13 +68,14 @@ function bash-start() {
   clear
   bash-readsettings
   echo-h1 $welcomemsg
-  echo-now
   env-attributerequire "environment"
   env-attributerequire "wwwroot"
+  echo "";
   # sudo /etc/init.d/cron start;
+  echo "Use 'env-about' for more info";
+  echo "Use 'bash-help' for more functions";
   www-showcfg
   bash-showsettings
-  echo "Use 'env-about' for more info";
   cd "$wwwroot/html/$www_sitefocus"
 }
 
@@ -126,13 +127,9 @@ function bash-who() {
 
 env-setwwwroot() {
   echo "Please set www root directory"
-  echo "or just enter for default of '/var/www'"
   read wwwroot
-  #if [ "$wwwroot" == "" ]; then
-    #wwwroot="/var/www"
-  #fi
   bash-writesettings
-    env-attributerequire "wwwroot"
+  env-attributerequire "wwwroot"
 }
 
 bash-envsetphp() {
@@ -147,6 +144,8 @@ bash-envsetphp() {
 function env-about(){
     clear;
     echo-h1 "About this system";
+    echo "System Time:";
+      echo-now
     if [ "$platform" == "ubuntu" ]; then
       echo "Current Environment (development/ production):$environment use 'env-setservertype' to change";
       ipaddr=$(hostname --all-ip-addresses)
@@ -355,7 +354,6 @@ function www-showcfg() {
   echo "";
   #cd $www_sitefocus;
   ls $wwwroot/$www_sitefocus;
-  echo-hr
 }
 
 function www-routes() {
