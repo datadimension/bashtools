@@ -306,6 +306,7 @@ function www-switch() {
     if [ "$input" != "n" ]; then
     git-pull;
   fi
+  bash-start;
 }
 
 function ~www() {
