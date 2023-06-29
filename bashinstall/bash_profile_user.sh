@@ -72,14 +72,12 @@ function bash-start() {
   env-attributerequire "wwwroot"
   echo "";
   # sudo /etc/init.d/cron start;
-  echo "Use 'env-about' for more info";
-  echo "Use 'bash-help' for more functions";
+  echo "Use 'env-about' for more info, 'bash-help' for more functions";
   www-showcfg
   #bash-showsettings
   startdir="$wwwroot/html/$www_sitefocus";
   echo "Setting directory for operations:";
   cd $startdir;
-  echo "";
   file-showdir $startdir;
 }
 
