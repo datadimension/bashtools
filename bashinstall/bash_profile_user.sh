@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #bash_profile user
-
+#test
 function bash-install() {
   #detect ubuntu or MINW64
   homepath=${HOME:0:6}
@@ -621,6 +621,8 @@ function bash-push() {
   git add -A
   git commit -a -m update
   git push
+  echo "Any key to return to current project";
+  read input;
   ~www
 }
 
