@@ -620,6 +620,7 @@ function bash-push() {
   git push
   echo "Any key to return to current project"
   read input
+  bash-pull;
   ~www
 }
 
