@@ -1,5 +1,7 @@
 <?php
-
+/**
+used by shel script bash-help
+ */
 $home = getenv('HOME');
 $bashprof = file_get_contents($home . "/.bash_profile");
 $functions = explode("function ", $bashprof);
