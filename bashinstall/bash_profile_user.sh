@@ -22,11 +22,11 @@ function bash-install() {
   cat ~/bashtools/bashinstall/bash_profile_user.sh >>~/.bash_profile
   cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
   mkdir -p ~/bashtoolscfg
-  csv="";
+  csv=""
   for i in {0..9}; do
-    csv+="${wwwsites[$i]},";
+    csv+="${wwwsites[$i]},"
   done
-  echo $csv;
+  echo $csv
   echo "$csv" >~/bashtoolscfg/wwwsites
   echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
   echo "Restarting shell ..."
@@ -42,22 +42,22 @@ function bash-restart() {
   bash-start
 }
 
-function bash-sshcheck(){
-  echo 'Current sessions are:';
-    ps -ef | grep ssh;
-    echo "use sudo kill -9 <processid />" to end it;
-    echo "or enter 'ok' to kill all ssh - including this one and reboot server";
-      read option
+function bash-sshcheck() {
+  echo 'Current sessions are:'
+  ps -ef | grep ssh
+  echo "use sudo kill -9 <processid />" to end it
+  echo "or enter 'ok' to kill all ssh - including this one and reboot server"
+  read option
   if [ "$option" == "ok" ]; then
-        sudo pkill ssh;
-        sudo reboot;
+    sudo pkill ssh
+    sudo reboot
   fi
 }
 
 function bash-writesettings() {
-  csv="";
+  csv=""
   for i in {0..9}; do
-    csv+="${wwwsites[$i]},";
+    csv+="${wwwsites[$i]},"
   done
   #20230629echo $csv;
   echo "$csv" >~/bashtoolscfg/wwwsites
@@ -70,26 +70,26 @@ function bash-start() {
   env-attributerequire "welcomemsg"
   env-attributerequire "environment"
   env-attributerequire "wwwroot"
-  echo "Welcome to";
+  echo "Welcome to"
   echo-h1 $welcomemsg
-  echo "";
+  echo ""
   # sudo /etc/init.d/cron start;
-  echo "Use 'env-about' for more info, 'bash-help' for more functions";
+  echo "Use 'env-about' for more info, 'bash-help' for more functions"
   www-showcfg
   #bash-showsettings
-  startdir="$wwwroot/html/$www_sitefocus";
-  cd $startdir;
-  file-showdir $startdir;
+  startdir="$wwwroot/html/$www_sitefocus"
+  cd $startdir
+  file-showdir $startdir
 }
 
-file-showdir(){
-  directory=$1;
-  echo-hr;
-  echo "$directory";
-  echo-hr;
-  ls $directory;
-  echo-hr;
-  echo "";
+file-showdir() {
+  directory=$1
+  echo-hr
+  echo "$directory"
+  echo-hr
+  ls $directory
+  echo-hr
+  echo ""
 }
 
 function x20230629bash-showsettings() {
@@ -105,9 +105,9 @@ function laravel-version() {
   php artisan --version
 }
 
-function bash-sshcheck(){
-  echo 'Current sessions are:';
-    ps -A | grep ssh
+function bash-sshcheck() {
+  echo 'Current sessions are:'
+  ps -A | grep ssh
 }
 
 function bash-readsettings() {
@@ -125,12 +125,6 @@ function bash-readsettings() {
   welcomemsg=${values[10]}
   wwwroot=${values[11]}
   platform=${values[12]}
-}
-
-function bash-setwelcome() {
-  echo "Please enter Welcome Message"
-  read welcomemsg
-  bash-writesettings
 }
 
 function bash-who() {
@@ -154,60 +148,62 @@ bash-envsetphp() {
 
 }
 
-function env-about(){
-    clear;
-    echo-h1 "About this system";
-    echo "System Time:";
-      echo-now
-    if [ "$platform" == "ubuntu" ]; then
-      echo "Current Environment (development/ production):$environment use 'env-setservertype' to change";
-      ipaddr=$(hostname --all-ip-addresses)
-      cat /etc/lsb-release;
-      echo "IP : $ipaddr";
-      # echo |  Gateway: $ipgateway  |
-      echo "PHP Version: $phpNo";
-      echo "GIT username: $gituname";
-    else
-        echo $platform;
-    fi
-      echo-hr
+function env-about() {
+  clear
+  echo-h1 "About this system"
+  echo "System Time:"
+  echo-now
+  if [ "$platform" == "ubuntu" ]; then
+    echo "Current Environment (development/ production):$environment use 'env-setservertype' to change"
+    ipaddr=$(hostname --all-ip-addresses)
+    cat /etc/lsb-release
+    echo "IP : $ipaddr"
+    # echo |  Gateway: $ipgateway  |
+    echo "PHP Version: $phpNo"
+    echo "GIT username: $gituname"
+  else
+    echo $platform
+  fi
+  echo-hr
   echo "www root: $wwwroot"
   echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
   echo-hr
 }
 
-function env-attributerequire(){
-  varname=$1;
+function env-attributerequire() {
+  varname=$1
   if [ "$varname" == "environment" ]; then
-       if [ "$environment" == "" ]; then
-          env-setservertype;
-       fi
+    if [ "$environment" == "" ]; then
+      env-setservertype
+    fi
   elif [ "$varname" == "gituname" ]; then
-       if [ "$gituname" == "" ]; then
-        echo "Please enter your git username and ensure you have set up ssh access";
-        read gituname;
-        bash-writesettings;
-       fi
+    if [ "$gituname" == "" ]; then
+      echo "Please enter your git username and ensure you have set up ssh access"
+      read gituname
+      bash-writesettings
+    fi
   elif [ "$varname" == "wwwroot" ]; then
-       if [ "$wwwroot" == "" ]; then
-          env-setwwwroot;
-       fi
+    if [ "$wwwroot" == "" ]; then
+      env-setwwwroot
+    fi
   elif [ "$varname" == "phpNo" ]; then
     if [ "$phpNo" == "" ]; then
       echo ""
-      echo "PHP check:";
-      php -v;
+      echo "PHP check:"
+      php -v
       echo ""
       echo ""
-      echo "Please confirm the php version to 1 decimal place shown above eg 7.1 or 8.1";
+      echo "Please confirm the php version to 1 decimal place shown above eg 7.1 or 8.1"
       read phpNo
-      bash-writesettings;
+      bash-writesettings
     fi
-    elif [ "$varname" == "welcomemsg" ]; then
-       if [ "$welcomemsg" == "" ]; then
-          bash-setwelcome
-       fi
+  elif [ "$varname" == "welcomemsg" ]; then
+    if [ "$welcomemsg" == "" ]; then
+      echo "Please enter Welcome Message / server name"
+      read welcomemsg
+      bash-writesettings
     fi
+  fi
 }
 
 #for per machine settings that do not change
@@ -224,19 +220,19 @@ function env-setservertype() {
   bash-writesettings
   #echo "Enter dev site project names ? y/n"
   #read doset
- # if [ "$doset" = "y" ]; then
- #   www-setsites
- # fi
- # cd $wwwroot
+  # if [ "$doset" = "y" ]; then
+  #   www-setsites
+  # fi
+  # cd $wwwroot
 }
 
-function env-setattribute(){
-  varname=$1;
-  echo "Attempting to reset $varname";
+function env-setattribute() {
+  varname=$1
+  echo "Attempting to reset $varname"
   if [ "$varname" == "phpNo" ]; then
-    phpNo="";
-    bash-writesettings;
-    env-attributerequire $varname;
+    phpNo=""
+    bash-writesettings
+    env-attributerequire $varname
   fi
 }
 
@@ -273,40 +269,40 @@ function bash-logout() {
 
 function www-showsites() {
   echo ""
-  echo "Current $environment sites are (run 'www-setsites' to configure) :";
+  echo "Current $environment sites are (run 'www-setsites' to configure) :"
   echo ""
   for i in {0..9}; do
-      echo "$((i + 1)): ${wwwsites[$i]}"
+    echo "$((i + 1)): ${wwwsites[$i]}"
   done
   echo ""
 }
 
 function www-setsites() {
   echo-hr
-  echo "Available site directories:";
+  echo "Available site directories:"
   ls $wwwroot/html
   www-showsites
-  echo "Enter site number to change";
-  read option;
+  echo "Enter site number to change"
+  read option
   sitenumber=$(($option - 1))
   echo "Enter site root directory name to set against site $option"
-  read dir;
-  wwwsites[$sitenumber]=$dir;
+  read dir
+  wwwsites[$sitenumber]=$dir
   if [ -d "$dir" ]; then #just change option if repo exists
-  echo "Setting $option to $dir";
-else # need to set up repo
-  echo "Directory $dir not found.";
-  env-attributerequire gituname;
-  echo "Will install under $wwwroot/html/$dir";
-  echo "Please enter the git reponame to put here";
-  read reponame;
-  echo "Installing '$reponame' under $wwwroot/html/$dir";
-  sudo mkdir $wwwroot/html/$dir;
-  sudo chown $USER:www-data $wwwroot/html/$dir;
-  git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir;
-  git-deploysubrepos;
-fi
-  www_sitefocus=$dir;
+    echo "Setting $option to $dir"
+  else # need to set up repo
+    echo "Directory $dir not found."
+    env-attributerequire gituname
+    echo "Will install under $wwwroot/html/$dir"
+    echo "Please enter the git reponame to put here"
+    read reponame
+    echo "Installing '$reponame' under $wwwroot/html/$dir"
+    sudo mkdir $wwwroot/html/$dir
+    sudo chown $USER:www-data $wwwroot/html/$dir
+    git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir
+    git-deploysubrepos
+  fi
+  www_sitefocus=$dir
   cd "$wwwroot/html/$www_sitefocus"
   echo "setting site to $www_sitefocus"
   bash-writesettings
@@ -317,20 +313,20 @@ function www-switch() {
   www-showsites
   echo "Please select a site number to chose for operations"
   read sitenumber
-    echo "Git will auto sync. Enter 'n' to prevent this"
+  echo "Git will auto sync. Enter 'n' to prevent this"
   read -t 3 input
   if [ "$input" != "n" ]; then
-    git-push;
+    git-push
   fi
   sitenumber=$((sitenumber - 1))
   www_sitefocus=${wwwsites[sitenumber]}
   cd "$wwwroot/html/$www_sitefocus"
   echo "setting site to $www_sitefocus"
   bash-writesettings
-    if [ "$input" != "n" ]; then
-    git-pull;
+  if [ "$input" != "n" ]; then
+    git-pull
   fi
-  bash-start;
+  bash-start
 }
 
 function ~www() {
@@ -411,18 +407,18 @@ function git-deploysubrepos() {
 }
 
 function git-deploysubrepo() {
-    subrepopath=$1
-    subreponame=$2
-    subrepopath="$wwwroot/html/$subrepopath"
-    rm -R $subrepopath/$subreponame
-    echo-hr
-    echo-h1 "cloning subrepo $subreponame"
-    echo ""
-    git clone git@github.com:$gituname/$subreponame.git $subrepopath/$subreponame
-    echo ""
-    echo "subrepo deployment of $subreponame finished at:"
-    echo-now
-    echo-hr
+  subrepopath=$1
+  subreponame=$2
+  subrepopath="$wwwroot/html/$subrepopath"
+  rm -R $subrepopath/$subreponame
+  echo-hr
+  echo-h1 "cloning subrepo $subreponame"
+  echo ""
+  git clone git@github.com:$gituname/$subreponame.git $subrepopath/$subreponame
+  echo ""
+  echo "subrepo deployment of $subreponame finished at:"
+  echo-now
+  echo-hr
 }
 
 function git-add() {
@@ -510,7 +506,7 @@ function git-push-all() {
 function git-push() {
   clear
   curpwd=$(pwd)
-    echo-h1 "Pushing from $www_sitefocus";
+  echo-h1 "Pushing from $www_sitefocus"
   echo "Enter a repo name"
   echo ""
   echo "1: DD_libwww"
@@ -596,7 +592,7 @@ function git-pull() {
   clear
   echo-hr
   curpwd=$(pwd)
-  echo-h1 "Pulling to $www_sitefocus";
+  echo-h1 "Pulling to $www_sitefocus"
   echo "Enter a repo name"
   echo ""
   echo "1: DD_libwww"
@@ -622,13 +618,13 @@ function bash-push() {
   git add -A
   git commit -a -m update
   git push
-  echo "Any key to return to current project";
-  read input;
+  echo "Any key to return to current project"
+  read input
   ~www
 }
 
 function bash-pull() {
-  clear;
+  clear
   echo-h1 "Updating BASH"
   cd ~/bashtools
   git pull
@@ -717,4 +713,3 @@ function logv() {
 function bash-help() {
   php ~/bashtools/php/bash-help.php
 }
-
