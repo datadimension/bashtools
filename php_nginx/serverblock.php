@@ -7,5 +7,5 @@ $blocktemplate = file_get_contents( getenv('HOME')."/bashtools/templates/nginx/d
 $blocktemplate=str_replace("<servername />",$args["servername"],$blocktemplate);
 $blocktemplate=str_replace("<wwwroot />",$wwwroot,$blocktemplate);
 $blocktemplate=str_replace("<phpNo />",$phpNo,$blocktemplate);
-sudo file_put_contents("/etc/nginx/sites-enabled/".$args["servername"], $blocktemplate);
+file_put_contents("/etc/nginx/sites-enabled/".$args["servername"], $blocktemplate);
 
