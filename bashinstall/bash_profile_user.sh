@@ -301,7 +301,7 @@ function www-setsites() {
 		sudo chown $USER:www-data $wwwroot/html/$dir
 		git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir phpNp=$phpNo
 		git-deploysubrepos
-		php -f ~/bashtools/php_nginx/serverblock.php  wwwroot=$wwwroot servername=$dir
+		php ~/bashtools/php_nginx/serverblock.php  wwwroot=$wwwroot servername=$dir
 	fi
 	www_sitefocus=$dir
 	cd "$wwwroot/html/$www_sitefocus"
@@ -620,7 +620,7 @@ function bash-push() {
 	git commit -a -m update
 	git push
 	echo "Any key to return to current project"
-	read input
+	read -t 3 input
 	bash-pull
 	~www
 }
@@ -713,5 +713,5 @@ function logv() {
 }
 
 function bash-help() {
-	php ~/bashtools/php/php_bash/bash-help.php
+	php ~/bashtools/php_bash/bash-help.php
 }

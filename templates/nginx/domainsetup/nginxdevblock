@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name sc.triton300.com;
+    server_name <rootdir />;
     return 301 https://<rootdir />$request_uri;
 }
 
