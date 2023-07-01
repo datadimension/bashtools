@@ -67,10 +67,11 @@ function bash-writesettings() {
 function bash-start() {
   clear
   bash-readsettings
-  echo "Welcome to";
-  echo-h1 $welcomemsg
+  env-attributerequire "welcomemsg"
   env-attributerequire "environment"
   env-attributerequire "wwwroot"
+  echo "Welcome to";
+  echo-h1 $welcomemsg
   echo "";
   # sudo /etc/init.d/cron start;
   echo "Use 'env-about' for more info, 'bash-help' for more functions";
