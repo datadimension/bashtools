@@ -512,21 +512,6 @@ function git-deploysubrepos() {
     git-deploysubrepo "$www_sitefocus/resources/views" "DD_laraview"
 }
 
-function git-deploysubrepo() {
-    subrepopath=$1
-    subreponame=$2
-    subrepopath="$wwwroot/html/$subrepopath"
-    sudo rm -R $subrepopath/$subreponame
-    echo-hr
-    echo-h1 "cloning subrepo $subreponame"
-    echo ""
-    git clone git@github.com:$gituname/$subreponame.git $subrepopath/$subreponame
-    echo ""
-    echo "subrepo deployment of $subreponame finished at:"
-    echo-now
-    echo-hr
-}
-
 function git-add() {
     git status -uno
     git add -A

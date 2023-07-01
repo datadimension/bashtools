@@ -181,6 +181,12 @@ function env-attributerequire(){
        if [ "$environment" == "" ]; then
           env-setservertype;
        fi
+  elif [ "$varname" == "gituname" ]; then
+       if [ "$gituname" == "" ]; then
+        echo "Please enter your git username and ensure you have set up ssh access";
+        read gituname;
+        bash-writesettings;
+       fi
   elif [ "$varname" == "wwwroot" ]; then
        if [ "$wwwroot" == "" ]; then
           env-setwwwroot;
@@ -201,7 +207,6 @@ function env-attributerequire(){
           bash-setwelcome
        fi
     fi
-
 }
 
 #for per machine settings that do not change
@@ -267,7 +272,7 @@ function bash-logout() {
 
 function www-showsites() {
   echo ""
-  echo "Current $environment sites are :    (use www-setsites to configure)";
+  echo "Current $environment sites are (run 'www-setsites' to configure) :";
   echo ""
   for i in {0..9}; do
       echo "$((i + 1)): ${wwwsites[$i]}"
@@ -277,16 +282,34 @@ function www-showsites() {
 
 function www-setsites() {
   echo-hr
-  echo "Available sites:"
+  echo "Available site directories:";
   ls $wwwroot/html
   www-showsites
-  echo "Enter site number to change"
-  read sitenumber
-  sitenumber=$((sitenumber - 1))
-  echo "Enter site root directory name to set against site $sitenumber"
-  read wwwsites[$sitenumber]
-  www-switch
+  echo "Enter site number to change";
+  read option;
+  sitenumber=$(($option - 1))
+  echo "Enter site root directory name to set against site $option"
+  read dir;
+  wwwsites[$sitenumber]=$dir;
+  if [ -d "$dir" ]; then #just change option if repo exists
+  echo "Setting $option to $dir";
+else # need to set up repo
+  echo "Directory $dir not found.";
+  env-attributerequire gituname;
+  echo "Will install under $wwwroot/html/$dir";
+  echo "Please enter the git reponame to put here";
+  read reponame;
+  echo "Installing '$reponame' under $wwwroot/html/$dir";
+  sudo mkdir $wwwroot/html/$dir;
+  sudo chown $USER:www-data $wwwroot/html/$dir;
+  git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir;
+  git-deploysubrepos;
+fi
+  www_sitefocus=$dir;
+  cd "$wwwroot/html/$www_sitefocus"
+  echo "setting site to $www_sitefocus"
   bash-writesettings
+  www-switch
 }
 
 function www-switch() {
@@ -381,9 +404,24 @@ function git-setup() {
 
 function git-deploysubrepos() {
   git-deploysubrepo "$www_sitefocus/public" "DD_libwww"
-  git-deploysubrepo "$www_sitefocus/public" "DD_libmedia"
+  #20230701 this has its own repo now git-deploysubrepo "$www_sitefocus/public" "DD_libmedia"
   git-deploysubrepo "$www_sitefocus/app" "DD_laravelAp"
   git-deploysubrepo "$www_sitefocus/resources/views" "DD_laraview"
+}
+
+function git-deploysubrepo() {
+    subrepopath=$1
+    subreponame=$2
+    subrepopath="$wwwroot/html/$subrepopath"
+    rm -R $subrepopath/$subreponame
+    echo-hr
+    echo-h1 "cloning subrepo $subreponame"
+    echo ""
+    git clone git@github.com:$gituname/$subreponame.git $subrepopath/$subreponame
+    echo ""
+    echo "subrepo deployment of $subreponame finished at:"
+    echo-now
+    echo-hr
 }
 
 function git-add() {
