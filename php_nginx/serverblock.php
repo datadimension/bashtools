@@ -11,6 +11,5 @@ include("../php_bash/bash.env.php");
 //echo "\n";
 //echo $_GET["servername"];
 $blocktemplate = file_get_contents( "../templates/nginx/domainsetup/nginxdevblock");
-
-
+$blocktemplate=str_replace("<rootdir />",$wwwroot)
 echo $blocktemplate;

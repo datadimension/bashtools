@@ -290,7 +290,9 @@ function www-setsites() {
 	wwwsites[$sitenumber]=$dir
 	if [ -d "$dir" ]; then #just change option if repo exists
 		echo "Setting $option to $dir"
+		www_sitefocus=$dir
 	else # need to set up repo
+		set -e;#stop everything if there is a failure
 		echo "Directory $dir not found."
 		env-attributerequire gituname
 		echo "Will install under $wwwroot/html/$dir"
@@ -299,11 +301,11 @@ function www-setsites() {
 		echo "Installing '$reponame' under $wwwroot/html/$dir"
 		sudo mkdir $wwwroot/html/$dir
 		sudo chown $USER:www-data $wwwroot/html/$dir
-		git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir phpNp=$phpNo
+		git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir
+		php ~/bashtools/php_nginx/serverblock.php  servername=$dir
+		www_sitefocus=$dir#only do this now in case setting the repo dir and cloning it causes error
 		git-deploysubrepos
-		php ~/bashtools/php_nginx/serverblock.php  wwwroot=$wwwroot servername=$dir
 	fi
-	www_sitefocus=$dir
 	cd "$wwwroot/html/$www_sitefocus"
 	echo "setting site to $www_sitefocus"
 	bash-writesettings
