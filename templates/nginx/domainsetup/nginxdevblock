@@ -1,38 +1,38 @@
 server {
     listen 80;
-    server_name <server_name />;
-    return 301 https://<server_name />$request_uri;
+    server_name sc.triton300.com;
+    return 301 https://<rootdir />$request_uri;
 }
 
 server {
         listen 443 ssl;
         listen [::]:443 ssl;
-        server_name <server_name />;
-	root /var/www/html/<server_root />/public/;
+        server_name <rootdir />;
+        root /var/www/html/<rootdir />/public/;
 
-	#<ssl_certs>
+        #<ssl_certs>
         include snippets/self-signed.conf;
         include snippets/ssl-params.conf;
         ssl_stapling off;#switch to on if real cert
         ssl_stapling_verify off;#switch to on if real cert
-	#</ssl_certs>
+        #</ssl_certs>
 
-	fastcgi_buffers 16 16k;
-	fastcgi_buffer_size 32k;
- 	index index.php index.html index.htm;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        index index.php index.html index.htm;
 
-	location / {
-		try_files $uri $uri/ /index.php?$query_string;
-	}
+        location / {
+                try_files $uri $uri/ /index.php?$query_string;
+        }
 
-	location ~ \.php$ {
+        location ~ \.php$ {
                 try_files $uri /index.php =404;
-                fastcgi_buffering <fastcgi_buffering />;# important - set as off for WSL dev environment
+                fastcgi_buffering on;# important - set as off for WSL dev environment
                 fastcgi_split_path_info ^(.+\.php)(/.+)$;
                 fastcgi_pass unix:/run/php/php7.4-fpm.sock;
                 fastcgi_index index.php;
                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
                 fastcgi_read_timeout 60;
                 include fastcgi_params;
-	}
+        }
 }

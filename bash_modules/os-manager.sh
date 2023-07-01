@@ -324,23 +324,24 @@ function addsshuser(){
         fi
 }
 
-function addsshsudouser(){
-            echo "Create new sudo user and remove default ? y/n"
-        read input
-        if [ "$input" == "y" ]; then
-            echo "Enter new user name";
-            read username;
-            sudo adduser $username;
-            sudo usermod -aG sudo $username;
-            sudo cp -R /home/ubuntu/.ssh /home/$username/.ssh
-            sudo chown -R $username:$username /home/$username/.ssh
-            sudo cp /home/ubuntu/.bash_profile /home/$username/.bash_profile;
-            sudo cp /home/ubuntu/.bash_cfg /home/$username/.bash_cfg;
-            sudo chown -R $username:www-data /var/www
-            echo "now log in under '$username' and run";
-            echo "sudo rm -R /home/ubuntu/.ssh";
-        fi
-}
+#20230701
+#function addsshsudouser(){
+ #           echo "Create new sudo user and remove default ? y/n"
+  #      read input
+   #     if [ "$input" == "y" ]; then
+    #        echo "Enter new user name";
+     #       read username;
+      #      sudo adduser $username;
+       #     sudo usermod -aG sudo $username;
+        #    sudo cp -R /home/ubuntu/.ssh /home/$username/.ssh
+         #   sudo chown -R $username:$username /home/$username/.ssh
+          #  sudo cp /home/ubuntu/.bash_profile /home/$username/.bash_profile;
+           # sudo cp /home/ubuntu/.bash_cfg /home/$username/.bash_cfg;
+#            sudo chown -R $username:www-data /var/www
+ #           echo "now log in under '$username' and run";
+  #          echo "sudo rm -R /home/ubuntu/.ssh";
+   #     fi
+#}*/
 
 
 #need to allow input of new user to create

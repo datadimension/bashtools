@@ -28,7 +28,7 @@ function bash-install() {
 	done
 	echo $csv
 	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
+	echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 	echo "Restarting shell ..."
 	read -t 2 input
 	head -20 ~/.bash_profile
@@ -61,7 +61,7 @@ function bash-writesettings() {
 	done
 	#20230629echo $csv;
 	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/.bash_cfg
+	echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 }
 
 function bash-start() {
@@ -113,7 +113,7 @@ function bash-sshcheck() {
 function bash-readsettings() {
 	wwwsites=$(<~/bashtoolscfg/wwwsites)
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
-	csv=$(<~/.bash_cfg)
+	csv=$(<~/bashtoolscfg/bash.env)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
 	environment=${values[0]}
 	www_sitefocus=${values[1]}
@@ -299,9 +299,9 @@ function www-setsites() {
 		echo "Installing '$reponame' under $wwwroot/html/$dir"
 		sudo mkdir $wwwroot/html/$dir
 		sudo chown $USER:www-data $wwwroot/html/$dir
-		git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir
+		git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir phpNp=$phpNo
 		git-deploysubrepos
-
+		php -f ~/bashtools/php_nginx/serverblock.php  wwwroot=$wwwroot servername=$dir
 	fi
 	www_sitefocus=$dir
 	cd "$wwwroot/html/$www_sitefocus"
@@ -694,7 +694,7 @@ function pshell() {
 	read -t 3 input
 	if [ "$input" == "y" ]; then
 		mkdir -p ~/.bu
-		cp -p ~/.bash_cfg ~/.bu/.bash_cfg
+		cp -p ~/bashtoolscfg/bash.env ~/.bu/bashtoolscfg/bash.env
 		echo ""
 		"POWERSHELL STARTED"
 		echo ""
