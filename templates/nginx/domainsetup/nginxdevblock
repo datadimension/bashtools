@@ -9,6 +9,7 @@ server {
         listen [::]:443 ssl;
         server_name <servername />;
         root <wwwroot />/html/<servername />/public/;
+        #access_log /var
 
         #<ssl_certs>
         include snippets/self-signed.conf;
