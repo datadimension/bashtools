@@ -292,7 +292,7 @@ function nginx-edit() {
 	nginx-start
 }
 
-function os-manage() {
+function os-() {
 	source ~/bashtools/bash_modules/os-manager.sh
 	os-main
 }
