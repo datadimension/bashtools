@@ -73,15 +73,6 @@ function bash-sshcheck() {
 	fi
 }
 
-function bash-writesettings() {
-	csv=""
-	for i in {0..9}; do
-		csv+="${wwwsites[$i]},"
-	done
-	#20230629echo $csv;
-	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
-}
 
 
 function bash-sshcheck() {
@@ -89,11 +80,23 @@ function bash-sshcheck() {
 	ps -A | grep ssh
 }
 
+function bash-writesettings() {
+	csv=""
+	for i in {0..9}; do
+		csv+="${wwwsites[$i]},"
+	done
+	#20230629echo $csv;
+	echo "$csv" >~/bashtoolscfg/wwwsites
+	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$servername,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
+}
+
+
 function bash-readsettings() {
 	wwwsites=$(<~/bashtoolscfg/wwwsites)
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
 	csv=$(<~/bashtoolscfg/bash.env)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
+	servername=${values[5]}
 	environment=${values[0]}
 	www_sitefocus=${values[1]}
 	ssh1=${values[2]}
@@ -118,7 +121,6 @@ bash-envsetphp() {
 	read phpNo
 	bash-writesettings
 	#bash-sets
-
 }
 
 

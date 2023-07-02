@@ -5,6 +5,12 @@ function env-attributerequire() {
 		if [ "$environment" == "" ]; then
 			env-setservertype
 		fi
+	elif [ "$varname" == "servername" ]; then
+		if [ "$servername" == "" ]; then
+			echo "Please enter name of this server"
+			read gituname
+			bash-servername
+		fi
 	elif [ "$varname" == "gituname" ]; then
 		if [ "$gituname" == "" ]; then
 			echo "Please enter your git username and ensure you have set up ssh access"

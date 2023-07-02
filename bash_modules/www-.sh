@@ -24,18 +24,31 @@ function www-setsites() {
 		echo "Setting $option to $dir"
 		www_sitefocus=$dir
 	else    # need to set up repo
-		set -e #stop everything if there is a failure
+		#set -e #stop everything if there is a failure
 		echo "Directory $dir not found."
 		echo "Will install under $wwwroot/html/$dir"
 		echo "Please enter the git reponame to put here"
 		read reponame
 		echo "Installing '$reponame' under $wwwroot/html/$dir"
 		git-installrepo $dir $reponame
+		www-envinstall $dir $reponame;
 	fi
 	cd "$wwwroot/html/$www_sitefocus"
 	echo "setting site to $www_sitefocus"
 	bash-writesettings
 	www-switch
+}
+
+function www-envinstall(){
+	env-attributerequire databaseIP
+	dir=$1;
+	appname=$2;
+	echo "Installing new .env file in project root $wwwroot/html/$dir";
+	echo "first some information please:"
+	read -p "Google Client ID:" googleclient_id;
+	read -p "Google Client Secret:" googleclient_id;
+	read -p "Database Password: " googleclient_id;
+	php ~/bashtools/php_laravel/envinstall.php dir=$dir appname=$appname;
 }
 
 function www-switch() {
@@ -56,13 +69,6 @@ function www-switch() {
 		git-pull
 	fi
 	bash-start
-}
-
-function www-setenv(){
-	env-attributerequire databaseIP
-
-	#php ~/bashtools/php_nginx/serverblock.php servername=$dir
-
 }
 
 function www-routes() {

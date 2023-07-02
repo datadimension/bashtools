@@ -21,5 +21,4 @@ function git-installrepo() {
 	sudo touch $wwwroot/html/$dir/storage/logs/apperror.log
 	sudo mkdir -p $wwwroot/html/$dir/bootstrap/cache
 	sudo mkdir -p $wwwroot/html/$dir/public/downloads/
-	www-setenv
 }
