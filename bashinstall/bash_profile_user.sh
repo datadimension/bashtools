@@ -66,17 +66,19 @@ function bash-writesettings() {
 
 function bash-start() {
   	source ~/bashtools/bash_modules/os-.sh
+  	source ~/bashtools/bash_modules/www-.sh
+
 	clear
 	bash-readsettings
 	env-attributerequire "welcomemsg"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
-	echo "Welcome to"
+	echo "Welcome to the jungle"
 	echo-h1 $welcomemsg
 	echo ""
 	# sudo /etc/init.d/cron start;
 	echo "Use 'env-about' for more info, 'bash-help' for more functions"
-	www-showcfg
+	www-showsites
 	#bash-showsettings
 	startdir="$wwwroot/html/$www_sitefocus"
 	cd $startdir
@@ -268,16 +270,6 @@ function bash-logout() {
 	source ~/.bash_profile
 }
 
-function www-showsites() {
-	echo ""
-	echo "Current $environment sites are (run 'www-setsites' to configure) :"
-	echo ""
-	for i in {0..9}; do
-		echo "$((i + 1)): ${wwwsites[$i]}"
-	done
-	echo ""
-}
-
 function www-setsites() {
 	echo-hr
 	echo "Available site directories:"
@@ -412,10 +404,6 @@ function cd~() {
 function ~log-sys() {
 	echo "/var/log"
 	ls -al /var/log
-}
-
-function www-showcfg() {
-	www-showsites
 }
 
 function www-routes() {
