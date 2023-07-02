@@ -67,6 +67,7 @@ function bash-writesettings() {
 function bash-start() {
   	source ~/bashtools/bash_modules/os-.sh
   	source ~/bashtools/bash_modules/www-.sh
+  	source ~/bashtools/bash_modules/bash-.sh
 
 	clear
 	bash-readsettings
