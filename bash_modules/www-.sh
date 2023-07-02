@@ -31,7 +31,6 @@ function www-setsites() {
 		read reponame
 		echo "Installing '$reponame' under $wwwroot/html/$dir"
 		git-installrepo $dir $reponame
-
 	fi
 	cd "$wwwroot/html/$www_sitefocus"
 	echo "setting site to $www_sitefocus"
@@ -57,6 +56,13 @@ function www-switch() {
 		git-pull
 	fi
 	bash-start
+}
+
+function www-setenv{
+	env-attributerequire databaseip
+
+	#php ~/bashtools/php_nginx/serverblock.php servername=$dir
+
 }
 
 function www-routes() {

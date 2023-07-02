@@ -22,6 +22,7 @@ function os-installer() {
 	echo "4: MySQL"
 	echo "5: Access Security"
 	echo "6: OS Additional"
+	echo "7: Install Nginx"
 	echo "10: VPN client"
 	echo "anything else to Exit"
 	read option
@@ -37,6 +38,8 @@ function os-installer() {
 		os-access
 	elif [ "$option" == "6" ]; then
 		os-additional
+	elif [ "$option" == "7" ]; then
+		os-install-nginx
 	elif [ "$option" == "10" ]; then
 		sudo apt-get -y install network-manager-openconnect-gnome
 	else
@@ -47,7 +50,7 @@ function os-installer() {
 		echo "Finished, press any key to continue"
 		read $wait
 		os-installer $option
-		else
+	else
 		bash-start
 	fi
 }

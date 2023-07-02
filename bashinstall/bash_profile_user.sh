@@ -5,6 +5,7 @@ function bash-start() {
   	source ~/bashtools/bash_modules/os-.sh
   	source ~/bashtools/bash_modules/www-.sh
   	source ~/bashtools/bash_modules/bash-.sh
+  	source ~/bashtools/bash_modules/git-.sh
 
 	clear
 	bash-readsettings
@@ -70,42 +71,6 @@ function env-about() {
 	echo-hr
 }
 
-function env-attributerequire() {
-	varname=$1
-	if [ "$varname" == "environment" ]; then
-		if [ "$environment" == "" ]; then
-			env-setservertype
-		fi
-	elif [ "$varname" == "gituname" ]; then
-		if [ "$gituname" == "" ]; then
-			echo "Please enter your git username and ensure you have set up ssh access"
-			read gituname
-			bash-writesettings
-		fi
-	elif [ "$varname" == "wwwroot" ]; then
-		if [ "$wwwroot" == "" ]; then
-			env-setwwwroot
-		fi
-	elif [ "$varname" == "phpNo" ]; then
-		if [ "$phpNo" == "" ]; then
-			echo ""
-			echo "PHP check:"
-			php -v
-			echo ""
-			echo ""
-			echo "Please confirm the php version to 1 decimal place shown above eg 7.1 or 8.1"
-			read phpNo
-			bash-writesettings
-		fi
-	elif [ "$varname" == "welcomemsg" ]; then
-		if [ "$welcomemsg" == "" ]; then
-			echo "Please enter Welcome Message / server name"
-			read welcomemsg
-			bash-writesettings
-		fi
-	fi
-}
-
 #for per machine settings that do not change
 function env-setservertype() {
 	#bash-envsetwwwroot
@@ -136,34 +101,7 @@ function env-setattribute() {
 	fi
 }
 
-function git-installrepo() {
-	env-attributerequire gituname
-	dir=$1
-	reponame=$2
-	user=$USER
-	sudo mkdir $wwwroot/html/$dir
-	sudo chown $user:www-data $wwwroot/html/$dir
-	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir
-	sudo touch /etc/nginx/sites-enabled/$dir
-	sudo chown $user:www-data /etc/nginx/sites-enabled/$dir
-	php ~/bashtools/php_nginx/serverblock.php servername=$dir
-	www_sitefocus=$dir #only do this now in case setting the repo dir and cloning it causes error
-	git-deploysubrepos
-	sudo mkdir -p $wwwroot/html/$dir/storage/framework/views/
-	sudo mkdir -p $wwwroot/html/$dir/storage/framework/sessions/
-	sudo mkdir -p $wwwroot/html/$dir/storage/framework/cache/
-	sudo mkdir -p $wwwroot/html/$dir/storage/app/cache/
-	sudo mkdir -p $wwwroot/html/$dir/storage/logs/
-	sudo touch $wwwroot/html/$dir/storage/logs/cronresult.log
-	sudo touch $wwwroot/html/$dir/storage/logs/apperror.log
-	sudo mkdir -p $wwwroot/html/$dir/bootstrap/cache
-	sudo mkdir -p $wwwroot/html/$dir/public/downloads/
-	echo "Please paste a .env file if you wish to set this, or hit enter";
-	read dotenv;
-		if [ "$dotenv" != "" ]; then
-		  echo "dotenv";
-	fi
-}
+
 
 function ~www() {
 	cd $wwwroot/html/$www_sitefocus
