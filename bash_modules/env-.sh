@@ -8,8 +8,8 @@ function env-attributerequire() {
 	elif [ "$varname" == "servername" ]; then
 		if [ "$servername" == "" ]; then
 			echo "Please enter name of this server"
-			read gituname
-			bash-servername
+			read servername
+			bash-writesettings
 		fi
 	elif [ "$varname" == "gituname" ]; then
 		if [ "$gituname" == "" ]; then
@@ -58,6 +58,7 @@ function env-setwwwroot() {
 function env-about() {
 	clear
 	echo-h1 "About this system"
+	echo "Server name: $servername";
 	echo "System Time:"
 	echo-now
 	if [ "$platform" == "ubuntu" ]; then
