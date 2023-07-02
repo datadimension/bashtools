@@ -574,16 +574,6 @@ function git-pull() {
 	cd $curpwd
 }
 
-
-
-function bash-pull() {
-	clear
-	echo-h1 "Updating BASH"
-	cd ~/bashtools
-	git pull
-	bash-install
-}
-
 function ls-i() {
 	ls -al
 	echo "File count:"

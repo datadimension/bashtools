@@ -10,3 +10,11 @@ function bash-push() {
 	bash-pull
 	~www
 }
+
+function bash-pull() {
+	clear
+	echo-h1 "Updating BASH shell"
+	cd ~/bashtools
+	git pull
+	bash-install
+}
