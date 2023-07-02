@@ -5,10 +5,10 @@ function env-attributerequire() {
 		if [ "$environment" == "" ]; then
 			env-setservertype
 		fi
-	elif [ "$varname" == "servername" ]; then
-		if [ "$servername" == "" ]; then
+	elif [ "$varname" == "serverid" ]; then
+		if [ "$serverid" == "" ]; then
 			echo "Please enter name of this server"
-			read servername
+			read serverid;
 			bash-writesettings
 		fi
 	elif [ "$varname" == "gituname" ]; then
@@ -39,7 +39,7 @@ function env-attributerequire() {
 			bash-writesettings
 		fi
 	elif [ "$varname" == "welcomemsg" ]; then
-		if [ "$welcomemsg" == "" ]; then
+		if [ "$welcomemsg" != "" ]; then
 			echo "Please enter Welcome Message / server name"
 			read welcomemsg
 			bash-writesettings

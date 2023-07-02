@@ -10,11 +10,11 @@ function bash-start() {
 
 	clear
 	bash-readsettings
-	env-attributerequire "servername"
+	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
 	echo "Welcome to";
-	echo-h1 $servername;
+	echo-h1 $serverid;
 	echo-h1 $welcomemsg
 	echo ""
 	# sudo /etc/init.d/cron start;

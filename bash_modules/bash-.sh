@@ -87,7 +87,7 @@ function bash-writesettings() {
 	done
 	#20230629echo $csv;
 	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$servername,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
+	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 }
 
 
@@ -96,7 +96,7 @@ function bash-readsettings() {
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
 	csv=$(<~/bashtoolscfg/bash.env)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
-	servername=${values[5]}
+	serverid=${values[5]}
 	environment=${values[0]}
 	www_sitefocus=${values[1]}
 	ssh1=${values[2]}
