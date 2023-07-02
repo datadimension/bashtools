@@ -80,7 +80,7 @@ function bash-writesettings() {
 	done
 	#20230629echo $csv;
 	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
+	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 }
 
 
@@ -98,6 +98,7 @@ function bash-readsettings() {
 	www_sitefocus=${values[1]}
 	ssh1=${values[2]}
 	ssh2=${values[3]}
+	databaseIP=${values[4]}
 	gituname=${values[7]}
 	phpNo=${values[8]}
 	ipgateway=${values[9]}

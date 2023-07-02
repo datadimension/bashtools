@@ -41,65 +41,6 @@ function laravel-version() {
 	php artisan --version
 }
 
-env-setwwwroot() {
-	echo "Please set www root directory"
-	read wwwroot
-	bash-writesettings
-	env-attributerequire "wwwroot"
-}
-
-function env-about() {
-	clear
-	echo-h1 "About this system"
-	echo "System Time:"
-	echo-now
-	if [ "$platform" == "ubuntu" ]; then
-		echo "Current Environment (development/ production):$environment use 'env-setservertype' to change"
-		ipaddr=$(hostname --all-ip-addresses)
-		cat /etc/lsb-release
-		echo "IP : $ipaddr"
-		# echo |  Gateway: $ipgateway  |
-		echo "PHP Version: $phpNo"
-		echo "GIT username: $gituname"
-	else
-		echo $platform
-	fi
-	echo-hr
-	echo "www root: $wwwroot"
-	echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
-	echo-hr
-}
-
-#for per machine settings that do not change
-function env-setservertype() {
-	#bash-envsetwwwroot
-	echo "Enter environment (production / development)"
-	read environment
-	if [ "$environment" == "development" ]; then
-		environment="development"
-	else
-		environment="production"
-	fi
-	echo "Environment set to $environment"
-	bash-writesettings
-	#echo "Enter dev site project names ? y/n"
-	#read doset
-	# if [ "$doset" = "y" ]; then
-	#   www-setsites
-	# fi
-	# cd $wwwroot
-}
-
-function env-setattribute() {
-	varname=$1
-	echo "Attempting to reset $varname"
-	if [ "$varname" == "phpNo" ]; then
-		phpNo=""
-		bash-writesettings
-		env-attributerequire $varname
-	fi
-}
-
 function ~www() {
 	cd $wwwroot/html/$www_sitefocus
 	ls
