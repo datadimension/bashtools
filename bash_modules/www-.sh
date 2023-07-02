@@ -58,7 +58,7 @@ function www-switch() {
 	bash-start
 }
 
-function www-setenv{
+function www-setenv(){
 echo "hello";
 	#env-attributerequire databaseip
 
