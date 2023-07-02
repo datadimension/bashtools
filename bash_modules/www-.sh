@@ -60,7 +60,7 @@ function www-switch() {
 
 function www-setenv{
 echo "hello";
-	env-attributerequire databaseip
+	#env-attributerequire databaseip
 
 	#php ~/bashtools/php_nginx/serverblock.php servername=$dir
 

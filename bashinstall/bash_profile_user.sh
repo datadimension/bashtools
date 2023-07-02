@@ -2,10 +2,11 @@
 #bash_profile user
 #test
 function bash-start() {
-  	source ~/bashtools/bash_modules/os-.sh
-  	source ~/bashtools/bash_modules/www-.sh
-  	source ~/bashtools/bash_modules/bash-.sh
-  	source ~/bashtools/bash_modules/git-.sh
+	source ~/bashtools/bash_modules/os-.sh
+	source ~/bashtools/bash_modules/www-.sh
+	source ~/bashtools/bash_modules/env-.sh
+	source ~/bashtools/bash_modules/bash-.sh
+	source ~/bashtools/bash_modules/git-.sh
 
 	clear
 	bash-readsettings
@@ -34,7 +35,6 @@ file-showdir() {
 	echo ""
 }
 
-
 function laravel-version() {
 	echo "for all laravel functions we are going to site focus root (~www)"
 	cd "$wwwroot/html/$www_sitefocus"
@@ -47,7 +47,6 @@ env-setwwwroot() {
 	bash-writesettings
 	env-attributerequire "wwwroot"
 }
-
 
 function env-about() {
 	clear
@@ -100,8 +99,6 @@ function env-setattribute() {
 		env-attributerequire $varname
 	fi
 }
-
-
 
 function ~www() {
 	cd $wwwroot/html/$www_sitefocus
