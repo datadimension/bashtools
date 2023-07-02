@@ -66,7 +66,7 @@ function env-about() {
 		echo $platform
 	fi
 	echo-hr
-	echo "Main Database IP: databaseIP";
+	echo "Main Database IP: $databaseIP";
 	echo "www root: $wwwroot"
 	echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
 	echo-hr
