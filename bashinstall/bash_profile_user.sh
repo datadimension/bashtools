@@ -73,7 +73,7 @@ function bash-start() {
 	env-attributerequire "welcomemsg"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
-	echo "Welcome to the jungle"
+	echo "Welcome to the jungle "
 	echo-h1 $welcomemsg
 	echo ""
 	# sudo /etc/init.d/cron start;
