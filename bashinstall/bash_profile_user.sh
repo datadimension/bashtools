@@ -65,7 +65,7 @@ function bash-writesettings() {
 }
 
 function bash-start() {
-  	source ~/bashtools/bash_modules/os-manager.sh
+  	source ~/bashtools/bash_modules/os-.sh
 	clear
 	bash-readsettings
 	env-attributerequire "welcomemsg"
