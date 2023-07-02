@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 function bash-push() {
-	echo-h1 "pushing bash repo"
+	echo-h1 "pushing a bash repo"
 	cd ~/bashtools
 	git add -A
 	git commit -a -m update
