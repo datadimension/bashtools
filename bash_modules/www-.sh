@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 function www-showsites() {
-	echo "new www"
+	echo ""
 	echo "Current $environment sites are (run 'www-setsites' to configure) :"
 	echo ""
 	for i in {0..9}; do
