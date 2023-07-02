@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #note this is for generating ssh key for your own repo
 
-function os-main() {
+function os-() {
 	# at some point we could have a list of options here
 
 	#echo "only available management is os-installer"
@@ -35,7 +35,7 @@ function os-installer() {
 	elif [ "$option" == "4" ]; then
 		installmysql
 	elif [ "$option" == "5" ]; then
-		install-accesssecurity
+		os-access
 	elif [ "$option" == "6" ]; then
 		os-additional
 	elif [ "$option" == "10" ]; then
@@ -152,7 +152,7 @@ function install-nginx() {
 	$()
 }
 
-function install-accesssecurity() {
+function os-access() {
 	echo "any key to edit ssh to remove root - set"
 	echo "PermitRootLogin no"
 	read wait

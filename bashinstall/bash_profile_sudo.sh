@@ -291,8 +291,3 @@ function nginx-edit() {
 	sudo nano /etc/nginx/sites-enabled/$www_sitefocus
 	nginx-start
 }
-
-function os-() {
-	source ~/bashtools/bash_modules/os-manager.sh
-	os-main
-}
