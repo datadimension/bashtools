@@ -270,8 +270,6 @@ function bash-logout() {
 	source ~/.bash_profile
 }
 
-
-
 function git-installrepo() {
 	env-attributerequire gituname
 	dir=$1
@@ -576,17 +574,7 @@ function git-pull() {
 	cd $curpwd
 }
 
-function bash-push() {
-	echo-h1 "pushing bash repo"
-	cd ~/bashtools
-	git add -A
-	git commit -a -m update
-	git push
-	echo "Any key to return to current project"
-	read -t 3 input
-	bash-pull
-	~www
-}
+
 
 function bash-pull() {
 	clear
