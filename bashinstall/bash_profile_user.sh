@@ -13,13 +13,15 @@ function bash-start() {
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
+	#env-attributerequire "welcomemsg"
+
 	echo "Welcome to";
 	echo-h1 $serverid;
-	echo-h1 $welcomemsg
+	echo $welcomemsg
 	echo ""
 	# sudo /etc/init.d/cron start;
 	echo "Use 'env-about' for more info, 'bash-help' for more functions"
-	www-showsites
+	www-siteshow
 	#bash-showsettings
 	startdir="$wwwroot/html/$www_sitefocus"
 	cd $startdir

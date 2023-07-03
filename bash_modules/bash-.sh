@@ -41,13 +41,14 @@ function bash-install() {
 	cat ~/bashtools/bashinstall/bash_profile_user.sh >>~/.bash_profile
 	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
 	mkdir -p ~/bashtoolscfg
-	csv=""
-	for i in {0..9}; do
-		csv+="${wwwsites[$i]},"
-	done
-	echo $csv
-	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
+	bash-writesettings;
+	#csv=""
+	#for i in {0..9}; do
+		#csv+="${wwwsites[$i]},"
+	#done
+	#echo $csv
+	#echo "$csv" >~/bashtoolscfg/wwwsites
+	#echo "$environment,$www_sitefocus,$ssh1,$ssh2,,,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 	echo "Restarting shell ..."
 	read -t 2 input
 	head -20 ~/.bash_profile
