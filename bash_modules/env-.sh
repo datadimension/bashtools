@@ -8,7 +8,7 @@ function env-attributerequire() {
 	elif [ "$varname" == "serverid" ]; then
 		if [ "$serverid" == "" ]; then
 			echo "Please enter name of this server"
-			read serverid;
+			read serverid
 			bash-writesettings
 		fi
 	elif [ "$varname" == "gituname" ]; then
@@ -47,7 +47,6 @@ function env-attributerequire() {
 	fi
 }
 
-
 function env-setwwwroot() {
 	echo "Please set www root directory"
 	read wwwroot
@@ -58,7 +57,7 @@ function env-setwwwroot() {
 function env-about() {
 	clear
 	echo-h1 "About this system"
-	echo "Server name: $servername";
+	echo "Server name: $servername"
 	echo "System Time:"
 	echo-now
 	if [ "$platform" == "ubuntu" ]; then
@@ -73,7 +72,7 @@ function env-about() {
 		echo $platform
 	fi
 	echo-hr
-	echo "Main Database IP: $databaseIP";
+	echo "Main Database IP: $databaseIP"
 	echo "www root: $wwwroot"
 	echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
 	echo-hr
@@ -105,7 +104,9 @@ function env-setattribute() {
 	if [ "$varname" == "phpNo" ]; then
 		phpNo=""
 		bash-writesettings
-		env-attributerequire $varname
+	elif [ "$varname" == "gituname" ]; then
+		gituname=""
+		bash-writesettings
 	fi
+	env-attributerequire $varname
 }
-

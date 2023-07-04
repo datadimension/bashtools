@@ -10,7 +10,7 @@ function git-installrepo() {
 	sudo touch /etc/nginx/sites-enabled/$dir
 	sudo chown $user:www-data /etc/nginx/sites-enabled/$dir
 	php ~/bashtools/php_nginx/serverblock.php servername=$dir
-	www_sitefocus=$dir #only do this now in case setting the repo dir and cloning it causes error
+	www_sitefocus=$dir #do not this until now in case setting the repo dir and cloning it causes error
 	git-deploysubrepos
 	sudo mkdir -p $wwwroot/html/$dir/storage/framework/views/
 	sudo mkdir -p $wwwroot/html/$dir/storage/framework/sessions/
