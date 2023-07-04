@@ -1,4 +1,32 @@
 #!/usr/bin/env bash
+function bash-start() {
+	source ~/bashtools/bash_modules/os-.sh
+	source ~/bashtools/bash_modules/www-.sh
+	source ~/bashtools/bash_modules/env-.sh
+	source ~/bashtools/bash_modules/bash-.sh
+	source ~/bashtools/bash_modules/git-.sh
+
+	clear
+	bash-readsettings
+	env-attributerequire "osupdate"
+	env-attributerequire "serverid"
+	env-attributerequire "environment"
+	env-attributerequire "wwwroot"
+	#env-attributerequire "welcomemsg"
+
+	echo "Welcome to";
+	echo-h1 $serverid;
+	echo $welcomemsg
+	echo ""
+	# sudo /etc/init.d/cron start;
+	echo "Use 'env-about' for more info, 'bash-help' for more functions"
+	www-siteshow
+	#bash-showsettings
+	startdir="$wwwroot/html/$www_sitefocus"
+	cd $startdir
+	file-showdir $startdir
+}
+
 function bash-push() {
 	echo-h1 "pushing bash repo"
 	cd ~/bashtools
@@ -88,7 +116,7 @@ function bash-writesettings() {
 	done
 	#20230629echo $csv;
 	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
+	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$osupdate,$sshsecure" >~/bashtoolscfg/bash.env
 }
 
 
@@ -97,6 +125,8 @@ function bash-readsettings() {
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
 	csv=$(<~/bashtoolscfg/bash.env)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
+	osupdate=${values[13]}
+	sshsecure=${values[14]}
 	serverid=${values[5]}
 	environment=${values[0]}
 	www_sitefocus=${values[1]}

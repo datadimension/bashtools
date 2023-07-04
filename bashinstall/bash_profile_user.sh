@@ -1,34 +1,12 @@
 #!/usr/bin/env bash
 #bash_profile user
 #test
-function bash-start() {
-	source ~/bashtools/bash_modules/os-.sh
-	source ~/bashtools/bash_modules/www-.sh
-	source ~/bashtools/bash_modules/env-.sh
-	source ~/bashtools/bash_modules/bash-.sh
-	source ~/bashtools/bash_modules/git-.sh
 
-	clear
-	bash-readsettings
-	env-attributerequire "serverid"
-	env-attributerequire "environment"
-	env-attributerequire "wwwroot"
-	#env-attributerequire "welcomemsg"
-
-	echo "Welcome to";
-	echo-h1 $serverid;
-	echo $welcomemsg
-	echo ""
-	# sudo /etc/init.d/cron start;
-	echo "Use 'env-about' for more info, 'bash-help' for more functions"
-	www-siteshow
-	#bash-showsettings
-	startdir="$wwwroot/html/$www_sitefocus"
-	cd $startdir
-	file-showdir $startdir
+function sessionstarrt(){
+  bash-start;
 }
 
-file-showdir() {
+function file-showdir() {
 	directory=$1
 	echo-hr
 	echo "Files at";
