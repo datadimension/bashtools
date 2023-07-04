@@ -82,7 +82,6 @@ function os-installadditional() {
 	sudo apt install net-tools
 	sudo apt-get install -y whois
 	sudo mkdir /var/www/html
-
 }
 
 function install-php() {

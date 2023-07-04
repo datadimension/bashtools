@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 function env-attributerequire() {
 	varname=$1
+		if [ "$varname" == "osupdate" ]; then
+		if [ "$osupdate" != "" ]; then
+		  os-installadditional
+		fi
 	if [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
 			env-setservertype
