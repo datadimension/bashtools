@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 function bash-start() {
 	source ~/bashtools/bash_modules/os-.sh
-	source ~/bashtools/bash_modules/www-.sh
 	source ~/bashtools/bash_modules/env-.sh
-	source ~/bashtools/bash_modules/bash-.sh
+	source ~/bashtools/bash_modules/php-.sh
+	source ~/bashtools/bash_modules/www-.sh
 	source ~/bashtools/bash_modules/git-.sh
-
 	clear
 	bash-readsettings
-	env-attributerequire os_status
+	env-attributerequire "os_status"
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
@@ -112,7 +111,7 @@ function bash-writesettings() {
 	done
 	#20230629echo $csv;
 	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status.env
+	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
 	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 }
 
@@ -120,7 +119,7 @@ function bash-readsettings() {
 	wwwsites=$(<~/bashtoolscfg/wwwsites)
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
 
-	csv=$(<~/bashtoolscfg/os_status.env)
+	csv=$(<~/bashtoolscfg/os_status)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
 	os_status=${values[0]}
 	sshsecure=${values[1]}

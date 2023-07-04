@@ -58,11 +58,8 @@ function os-installer() {
 function os-upgrade() {
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
-	#sudo apt-get -f install;
-	#sudo apt-get -y install build-essential;
-	#sudo add-apt-repository -y universe;
 }
-function os-installadditional() {
+function os-installdependancies() {
 	os-upgrade
 	#force utc timezone
 	sudo rm -f /etc/localtime                         # Delete the current time zone file
@@ -82,30 +79,8 @@ function os-installadditional() {
 	sudo apt install net-tools
 	sudo apt-get install -y whois
 	sudo mkdir /var/www/html
+	php-install;
 }
-
-function install-php() {
-	sudo apt -y install php
-	sudo apt -y install php-fpm
-	env-attributerequire phpNo
-	echo "We will edit /etc/php/$phpNo/fpm/php.ini"
-	echo "And for security change line to be"
-	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
-	read wait
-	sudo nano +801 /etc/php/$phpNo/fpm/php.ini
-	sudo apt -y install php-zip
-	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
-	sudo apt -y install php-soap
-	sudo apt -y install php-curl
-	sudo apt -y install php-bcmath
-	sudo apt -y install php-bz2
-	sudo apt -y install php-intl
-	sudo apt -y install php-mbstring
-	sudo apt -y install php-mysql
-	sudo apt -y install php-readline
-	sudo apt -y install php-xml
-}
-
 function install-newselfsignedcert() {
 	#self signed certificate#######################################################
 	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
@@ -168,7 +143,12 @@ function os-access() {
 	sudo nano +41 /etc/ssh/sshd_config
 	echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root"
 	read wait
-	sudo sudo service ssh reload
+	sudo sudo service ssh reload;
+		echo "We will edit /etc/php/$phpNo/fpm/php.ini"
+	echo "And for security change line to be"
+	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
+	read wait
+	sudo nano +801 /etc/php/$phpNo/fpm/php.ini
 }
 
 function install-composer() {

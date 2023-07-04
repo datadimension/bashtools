@@ -2,6 +2,7 @@
 /**
  * reads the bash cli variables into php
  */
+parse_str(implode('&', array_slice($argv, 1)), $args);
 $csv = file_get_contents(getenv('HOME') . "/bashtoolscfg/bash.env");
 $csv = explode(",", $csv);
 
@@ -17,3 +18,4 @@ $ipgateway = $csv[9];
 $welcomemsg = $csv[10];
 $wwwroot = $csv[11];
 $platform = $csv[12];
+

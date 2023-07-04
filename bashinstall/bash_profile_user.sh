@@ -2,14 +2,15 @@
 #bash_profile user
 #test
 
-function sessionstart(){
-  bash-start;
+function sessionstart() {
+	source ~/bashtools/bash_modules/bash-.sh
+	bash-start
 }
 
 function file-showdir() {
 	directory=$1
 	echo-hr
-	echo "Files at";
+	echo "Files at"
 	echo "$directory"
 	echo-hr
 	ls $directory
