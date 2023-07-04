@@ -96,7 +96,7 @@ function hist() {
 	if [ "$search" == "" ]; then
 		history
 	else
-		history | grep $search 
+		history | grep $search
 	fi
 }
 ###############################################################

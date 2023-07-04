@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 function env-attributerequire() {
 	varname=$1
-		if [ "$varname" == "osupdate" ]; then
+	echo "checking $varname";
+	read wait;
+	  if [ "$varname" == "osupdate" ]; then
 		if [ "$osupdate" != "" ]; then
 		  os-installadditional
 		fi
