@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 function env-attributerequire() {
 	varname=$1
-	echo "checking $varname";
-	read wait;
-	  if [ "$varname" == "osupdate" ]; then
-		if [ "$osupdate" != "" ]; then
-		  os-installadditional
+	if [ "$varname" == "os_status" ]; then
+		if [ "$os_status" != "" ]; then
+			os-installadditional
+			os_status="done"
+			bash-writesettings
 		fi
-	if [ "$varname" == "environment" ]; then
+	elif [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
 			env-setservertype
 		fi

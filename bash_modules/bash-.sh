@@ -8,14 +8,14 @@ function bash-start() {
 
 	clear
 	bash-readsettings
-	env-attributerequire "osupdate"
+	env-attributerequire os_status
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
 	#env-attributerequire "welcomemsg"
 
-	echo "Welcome to";
-	echo-h1 $serverid;
+	echo "Welcome to"
+	echo-h1 $serverid
 	echo $welcomemsg
 	# sudo /etc/init.d/cron start;
 	echo "Use 'env-about' for more info, 'bash-help' for more functions"
@@ -46,7 +46,6 @@ function bash-pull() {
 	bash-install
 }
 
-
 function bash-install() {
 	#detect ubuntu or MINW64
 	homepath=${HOME:0:6}
@@ -68,10 +67,10 @@ function bash-install() {
 	cat ~/bashtools/bashinstall/bash_profile_user.sh >>~/.bash_profile
 	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
 	mkdir -p ~/bashtoolscfg
-	bash-writesettings;
+	bash-writesettings
 	#csv=""
 	#for i in {0..9}; do
-		#csv+="${wwwsites[$i]},"
+	#csv+="${wwwsites[$i]},"
 	#done
 	#echo $csv
 	#echo "$csv" >~/bashtoolscfg/wwwsites
@@ -101,8 +100,6 @@ function bash-sshcheck() {
 	fi
 }
 
-
-
 function bash-sshcheck() {
 	echo 'Current sessions are:'
 	ps -A | grep ssh
@@ -115,17 +112,21 @@ function bash-writesettings() {
 	done
 	#20230629echo $csv;
 	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$osupdate,$sshsecure" >~/bashtoolscfg/bash.env
+	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status.env
+	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 }
-
 
 function bash-readsettings() {
 	wwwsites=$(<~/bashtoolscfg/wwwsites)
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
+
+	csv=$(<~/bashtoolscfg/os_status.env)
+	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
+	os_status=${values[0]}
+	sshsecure=${values[1]}
+
 	csv=$(<~/bashtoolscfg/bash.env)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
-	osupdate=${values[13]}
-	sshsecure=${values[14]}
 	serverid=${values[5]}
 	environment=${values[0]}
 	www_sitefocus=${values[1]}
@@ -152,7 +153,6 @@ bash-envsetphp() {
 	bash-writesettings
 	#bash-sets
 }
-
 
 function bash-ssh() {
 	echo "Enter server to access:"
@@ -187,4 +187,3 @@ function bash-logout() {
 function bash-help() {
 	php ~/bashtools/php_bash/bash-help.php
 }
-
