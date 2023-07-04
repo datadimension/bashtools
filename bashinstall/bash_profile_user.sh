@@ -2,7 +2,7 @@
 #bash_profile user
 #test
 
-function sessionstarrt(){
+function sessionstart(){
   bash-start;
 }
 
