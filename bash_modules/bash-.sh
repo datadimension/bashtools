@@ -185,7 +185,9 @@ function bash-h() {
 		read search
 	fi
 	clear
-	echo "history search: $search:"
+	echo "history search:";
+	echo-hr;
+	echo "$search"
 	echo-hr;
 	if [ "$search" == "" ]; then
 		history
