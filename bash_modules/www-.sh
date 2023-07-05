@@ -66,8 +66,8 @@ function www-siteset() {
 		read reponame
 		echo "Installing '$reponame' under $wwwroot/html/$dir"
 		git-installrepo $dir $reponame
-		#sudo touch $wwwroot/html/$dir/.env;
-		#sudo chown $user:www-data $wwwroot/html/$dir/.env;
+		sudo touch $wwwroot/html/$dir/.env
+		sudo chown $user:www-data $wwwroot/html/$dir/.env
 		www-envinstall $dir $reponame
 		www-siteconfigupdate
 		nginx-start
@@ -79,6 +79,8 @@ function www-siteset() {
 }
 
 function www-envinstall() {
+  	sudo rm $wwwroot/html/$www_sitefocus/.env
+	sudo touch $wwwroot/html/$www_sitefocus/.env
 	echo-h1 ".env file install"
 	env-attributerequire databaseIP
 	dir=$1
@@ -143,12 +145,6 @@ function www-routes() {
 function www-create() {
 	composer require twilio/sdk
 	#20201119composer require clicksend/clicksend-php;
-}
-
-function www-envinstall() {
-	sudo rm $wwwroot/html/$www_sitefocus/.env
-	sudo nano $wwwroot/html/$www_sitefocus/.env
-	nginx-start
 }
 
 function www-siteconfigupdate() {
