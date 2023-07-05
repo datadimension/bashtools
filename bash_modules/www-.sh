@@ -81,7 +81,7 @@ function www-siteset() {
 function www-envinstall() {
 	rm $wwwroot/html/$www_sitefocus/.env
 	touch $wwwroot/html/$www_sitefocus/.env
-	chown $USER:www-data $wwwroot/html/$www_sitefocus/.env;
+	chown $USER:www-data $wwwroot/html/$www_sitefocus/.env
 	echo-h1 ".env file install"
 	env-attributerequire databaseIP
 	dir=$1
