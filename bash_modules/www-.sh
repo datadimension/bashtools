@@ -79,8 +79,8 @@ function www-siteset() {
 }
 
 function www-envinstall() {
-  	sudo rm $wwwroot/html/$www_sitefocus/.env
-	sudo touch $wwwroot/html/$www_sitefocus/.env
+	rm $wwwroot/html/$www_sitefocus/.env
+	touch $wwwroot/html/$www_sitefocus/.env
 	echo-h1 ".env file install"
 	env-attributerequire databaseIP
 	dir=$1
@@ -97,7 +97,7 @@ function www-envinstall() {
 	read -p "Google Client Secret:" gclient_secret
 	clear
 	php ~/bashtools/php_laravel/envinstall.php api_emai=$api_emai api_emailpwd=$api_emailpwd dir=$dir appname=$appname dbpword=$dbpword gclient_id=$gclient_id gclient_secret=$gclient_secret
-	echo "Will now generate code to run in mysql"
+	echo "Will now generate user creation code to run in mysql  to use if you have not already done so"
 	www-sitesqluserinstall $appname $dbpword
 }
 
