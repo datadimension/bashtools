@@ -192,4 +192,5 @@ function bash-h() {
 	else
 		history | grep $search
 	fi
+	echo-hr
 }
