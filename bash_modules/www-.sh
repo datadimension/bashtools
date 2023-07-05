@@ -81,6 +81,7 @@ function www-siteset() {
 function www-envinstall() {
 	rm $wwwroot/html/$www_sitefocus/.env
 	touch $wwwroot/html/$www_sitefocus/.env
+	chown $USER:www-data $wwwroot/html/$www_sitefocus/.env;
 	echo-h1 ".env file install"
 	env-attributerequire databaseIP
 	dir=$1
@@ -95,6 +96,7 @@ function www-envinstall() {
 	echo ""
 	read -p "Google Client ID:" gclient_id
 	read -p "Google Client Secret:" gclient_secret
+	read -p "GOOGLE_JAVASCRIPT_APIKEY:" google_jskey
 	clear
 	php ~/bashtools/php_laravel/envinstall.php api_emai=$api_emai api_emailpwd=$api_emailpwd dir=$dir appname=$appname dbpword=$dbpword gclient_id=$gclient_id gclient_secret=$gclient_secret
 	echo "Will now generate user creation code to run in mysql  to use if you have not already done so"

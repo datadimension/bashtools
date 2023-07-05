@@ -11,6 +11,7 @@ DEFAULT_TIMEZONE=Europe/London
 
 GOOGLE_CLIENT_ID=<googleclient_id /># for api use
 GOOGLE_CLIENT_SECRET=<googleclient_secret />
+GOOGLE_JAVASCRIPT_APIKEY=<google_jskey />
 
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.googlemail.com
