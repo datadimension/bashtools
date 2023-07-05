@@ -177,6 +177,19 @@ function bash-logout() {
 	clear
 	source ~/.bash_profile
 }
-function bash-help() {
-	php ~/bashtools/php_bash/bash-help.php
+
+function bash-h() {
+	search=$1
+	if [ "$search" == "" ]; then
+		echo "enter search text"
+		read search
+	fi
+	clear
+	echo "history search: $search:"
+	echo-hr;
+	if [ "$search" == "" ]; then
+		history
+	else
+		history | grep $search
+	fi
 }

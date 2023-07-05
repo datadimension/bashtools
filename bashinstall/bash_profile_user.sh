@@ -7,31 +7,12 @@ function sessionstart() {
 	bash-start
 }
 
-function file-showdir() {
-	directory=$1
-	echo-hr
-	echo "Files at"
-	echo "$directory"
-	echo-hr
-	ls $directory
-	echo-hr
-	echo ""
-}
-
 function laravel-version() {
 	echo "for all laravel functions we are going to site focus root (~www)"
 	cd "$wwwroot/html/$www_sitefocus"
 	php artisan --version
 }
 
-function hist() {
-	search=$1
-	if [ "$search" == "" ]; then
-		history
-	else
-		history | grep $search
-	fi
-}
 ###############################################################
 
 #TOP LEVEL FUNCTIONS - move elsewhere when we can compile bash from different files
@@ -43,7 +24,9 @@ function echo-h1() {
 		figlet $textoutput
 	fi
 }
-
+function help-() {
+	php ~/bashtools/php_bash/bash-help.php
+}
 function echo-hr() {
 	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 }
