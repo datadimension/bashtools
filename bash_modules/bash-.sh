@@ -186,7 +186,6 @@ function bash-h() {
 	fi
 	clear
 	echo "history search:";
-	echo-hr;
 	echo "$search"
 	echo-hr;
 	if [ "$search" == "" ]; then

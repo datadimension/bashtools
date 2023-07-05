@@ -128,6 +128,11 @@ function install-nginx() {
 	$()
 }
 
+function os-secureaccess(){
+  echo "secure access"
+  read wait;
+}
+
 function os-access() {
 	echo "any key to edit ssh to remove root - set"
 	echo "PermitRootLogin no"

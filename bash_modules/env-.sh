@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 function env-attributerequire() {
-	varname=$1;
+	varname=$1
 	if [ "$varname" == "os_status" ]; then
 		if [ "$os_status" == "" ]; then
-		  	echo "$os_status";
+			echo "$os_status"
 			os-installdependancies
-			os_status="basic"
-			bash-writesettings
+			os_status="1"
+			bash-restart;
+		elif [ "$os_status" == "1" ]; then
+			os-secureaccess
+			#os_status="2"
+			bash-restart;
 		fi
 	elif [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
@@ -52,7 +56,7 @@ function env-attributerequire() {
 			bash-writesettings
 		fi
 	fi
-	clear;
+	clear
 }
 
 function env-setwwwroot() {
@@ -83,7 +87,7 @@ function env-about() {
 	echo "Main Database IP: $databaseIP"
 	echo "www root: $wwwroot"
 	echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
-	echo "System settings:";
+	echo "System settings:"
 	echo-hr
 }
 
