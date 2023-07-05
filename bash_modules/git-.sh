@@ -216,6 +216,11 @@ function git-pull-all() {
 	git-pull-repo "$www_sitefocus"
 }
 
+function git-setup() {
+	echo ""
+	echo "Enter GIT username (used to create urls for push / pull etc"
+	read gituname
+}
 
 function git-deploysubrepos() {
 	git-deploysubrepo "$www_sitefocus/public" "DD_libwww"
