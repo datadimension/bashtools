@@ -8,8 +8,8 @@ function env-attributerequire() {
 			os_status="1"
 			bash-restart
 		elif [ "$os_status" == "1" ]; then
-			os-secureaccess
-			#os_status="2"
+			os-sshaccess
+			os_status="2"
 			bash-restart
 		fi
 	elif [ "$varname" == "environment" ]; then
