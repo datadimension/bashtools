@@ -159,6 +159,9 @@ function os-sshaccess() {
 		echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
 		puttygen id_rsa -o id_rsa.ppk
 		ppk=$(<~/.ssh/id_rsa.ppk)
+		echo "Remove temp key for this server from git at add this"
+		echo pubkey
+		read wait
 		echo "Now paste this into a windows .ppk file and tell Putty where to find it."
 		echo ""
 		echo $echo ppk

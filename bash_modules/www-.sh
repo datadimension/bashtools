@@ -60,7 +60,7 @@ function www-siteset() {
 		www_sitefocus=$dir
 	else # need to set up repo
 		#set -e #stop everything if there is a failure
-		echo "Directory $dir not found."
+		echo "Directory $dir not found so will install."
 		echo "Will install under $wwwroot/html/$dir"
 		echo "Please enter the git reponame to put here"
 		read reponame
