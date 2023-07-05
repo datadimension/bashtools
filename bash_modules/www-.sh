@@ -70,7 +70,7 @@ function www-siteset() {
 		#sudo chown $user:www-data $wwwroot/html/$dir/.env;
 		www-envinstall $dir $reponame
 		www-siteconfigupdate
-		nginx-start;
+		nginx-start
 	fi
 	cd "$wwwroot/html/$www_sitefocus"
 	echo "setting site to $www_sitefocus"
@@ -95,6 +95,24 @@ function www-envinstall() {
 	read -p "Google Client Secret:" gclient_secret
 	clear
 	php ~/bashtools/php_laravel/envinstall.php api_emai=$api_emai api_emailpwd=$api_emailpwd dir=$dir appname=$appname dbpword=$dbpword gclient_id=$gclient_id gclient_secret=$gclient_secret
+	echo "Will now generate code to run in mysql"
+	www-sitesqluserinstall $appname $dbpword
+}
+
+function www-sitesqluserinstall() {
+	appname=$1
+	dbpword=$2
+	sqlusername=$appname"_php"
+	echo "log in to mysql with:"
+	echo ""
+	echo "sudo mysql"
+	echo ""
+	echo "and run:"
+	echo ""
+	echo "CREATE USER '$sqlusername'@'%' IDENTIFIED BY '"$dbpword"';"
+	echo "GRANT EXECUTE,SELECT,SHOW VIEW ON ddDB.* TO '"$sqlusername"'@'%';"
+	echo "GRANT DELETE,EXECUTE,INSERT,SELECT,SHOW VIEW,UPDATE ON $appname.* TO '"$sqlusername"'@'%';"
+	echo "FLUSH PRIVILEGES;"
 }
 
 function www-siteswitch() {
@@ -136,8 +154,8 @@ function www-envinstall() {
 function www-siteconfigupdate() {
 	clear
 	echo-h1 "Updating Site Config"
-	echo "update via composer";
-	echo "This now might require manual edit of files";
+	echo "update via composer"
+	echo "This now might require manual edit of files"
 	cd $wwwroot/html/$www_sitefocus
 	#dev versions follow in comments
 	composer dump-autoload # php 71 `which composer` dump-autoload;

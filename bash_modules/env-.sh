@@ -4,13 +4,13 @@ function env-attributerequire() {
 	if [ "$varname" == "os_status" ]; then
 		if [ "$os_status" == "" ]; then
 			echo "$os_status"
-			os-installdependancies
+			os-install-dependancies
 			os_status="1"
-			bash-restart;
+			bash-restart
 		elif [ "$os_status" == "1" ]; then
 			os-secureaccess
 			#os_status="2"
-			bash-restart;
+			bash-restart
 		fi
 	elif [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
