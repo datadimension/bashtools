@@ -98,7 +98,7 @@ function www-envinstall() {
 	read -p "Google Client Secret:" gclient_secret
 	read -p "GOOGLE_JAVASCRIPT_APIKEY:" google_jskey
 	clear
-	php ~/bashtools/php_laravel/envinstall.php api_emai=$api_emai api_emailpwd=$api_emailpwd dir=$dir appname=$appname dbpword=$dbpword gclient_id=$gclient_id gclient_secret=$gclient_secret
+	php ~/bashtools/php_laravel/envinstall.php api_emai=$api_emai api_emailpwd=$api_emailpwd dir=$dir appname=$appname dbpword=$dbpword gclient_id=$gclient_id gclient_secret=$gclient_secret google_jskey=$google_jskey
 	echo "Will now generate user creation code to run in mysql  to use if you have not already done so"
 	www-sitesqluserinstall $appname $dbpword
 }
