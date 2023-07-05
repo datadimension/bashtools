@@ -106,6 +106,7 @@ function bash-writesettings() {
 	#20230629echo $csv;
 	echo "$csv" >~/bashtoolscfg/wwwsites
 	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
+	echo "$git_ssh" >~/bashtoolscfg/gitcfg
 	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 }
 
@@ -117,6 +118,10 @@ function bash-readsettings() {
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
 	os_status=${values[0]}
 	sshsecure=${values[1]}
+
+	csv=$(<~/bashtoolscfg/gitcfg)
+	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
+	git_ssh=${values[0]}
 
 	csv=$(<~/bashtoolscfg/bash.env)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
@@ -185,9 +190,9 @@ function bash-h() {
 		read search
 	fi
 	clear
-	echo "history search:";
+	echo "history search:"
 	echo "$search"
-	echo-hr;
+	echo-hr
 	if [ "$search" == "" ]; then
 		history
 	else

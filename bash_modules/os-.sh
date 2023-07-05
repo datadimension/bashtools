@@ -139,19 +139,23 @@ function os-sshaccess() {
 		sudo usermod -aG sudo $newuser
 		currentuser=$USER
 		sudo mv /home/$currentuser/.bash_profile /home/$newuser/.bash_profile
-		sudo mv /home/$currentuser/bashtools /home/$newuser/bashtools
-		sudo mv /home/$currentuser/bashtoolscfg /home/$newuser/bashtoolscfg
 		sudo chown $newuser:$newuser /home/$newuser/.bash_profile
-		sudo chown $newuser:$newuser /home/$newuser/bashtools
-		sudo chown $newuser:$newuser /home/$newuser/bashtoolscfg
+
+		sudo mv /home/$currentuser/bashtools /home/$newuser/bashtools
+		sudo chown -R $newuser:$newuser /home/$newuser/bashtools
+
+		sudo mv /home/$currentuser/bashtoolscfg /home/$newuser/bashtoolscfg
+		sudo touch /home/$newuser/bashtoolscfg/gitcfg
+		sudo chown -R $newuser:$newuser /home/$newuser/bashtoolscfg
+
 		echo "Now generating ssh keys, you are ok to accept defaults"
 		ssh-keygen
 		pubkey=$(<~/.ssh/id_rsa.pub)
 		touch /home/$newuser/.ssh/authorized_keys
 		sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
 		sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
-		sudo chown $newuser:$newuser /home/$newuser/.ssh/id_rsa.pub
-		sudo chown $newuser:$newuser /home/$newuser/.ssh/id_rsa
+		sudo chown -R $newuser:$newuser /home/$newuser/.ssh
+
 		echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
 		puttygen id_rsa -o id_rsa.ppk
 		ppk=$(<~/.ssh/id_rsa.ppk)
