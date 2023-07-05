@@ -22,5 +22,5 @@ function php-install() {
 	sudo apt -y install php-mysql
 	sudo apt -y install php-readline
 	sudo apt -y install php-xml
-		env-attributerequire phpNo
+	php-v;
 }

@@ -4,7 +4,7 @@ function env-attributerequire() {
 	if [ "$varname" == "os_status" ]; then
 		if [ "$os_status" == "" ]; then
 		  	echo "$os_status";
-			os-installadditional
+			os-installdependancies
 			os_status="basic"
 			bash-writesettings
 		fi
