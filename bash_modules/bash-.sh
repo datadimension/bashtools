@@ -66,7 +66,7 @@ function bash-install() {
 	fi
 	cat ~/bashtools/bashinstall/bash_profile_user.sh >>~/.bash_profile
 	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
-	mkdir -p ~/bashtoolscfg
+	mkdir -p ~/bashtoolscfg/tmp
 	bash-writesettings
 	echo "Restarting shell ..."
 	read -t 2 input

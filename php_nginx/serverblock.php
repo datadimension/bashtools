@@ -14,5 +14,5 @@ $blocktemplate = file_get_contents(getenv('HOME') . "/bashtools/templates/nginx/
 $blocktemplate = str_replace("<servername />", $args["servername"], $blocktemplate);
 $blocktemplate = str_replace("<wwwroot />", $wwwroot, $blocktemplate);
 $blocktemplate = str_replace("<phpNo />", $phpNo, $blocktemplate);
-file_put_contents("/etc/nginx/sites-enabled/" . $args["servername"], $blocktemplate);
+file_put_contents(getenv('HOME') . "/bashtoolscfg/tmp/serverblock" . $args["servername"], $blocktemplate);
 

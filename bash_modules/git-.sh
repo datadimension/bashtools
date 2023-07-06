@@ -10,6 +10,8 @@ function git-installrepo() {
 	sudo touch /etc/nginx/sites-enabled/$dir
 	sudo chown $user:www-data /etc/nginx/sites-enabled/$dir
 	php ~/bashtools/php_nginx/serverblock.php servername=$dir
+
+	#file_put_contents("/etc/nginx/sites-enabled/" . $args["servername"], $blocktemplate);
 	www_sitefocus=$dir #do not this until now in case setting the repo dir and cloning it causes error
 	git-deploysubrepos
 	sudo mkdir -p $wwwroot/html/$dir/storage/framework/views/
@@ -72,7 +74,6 @@ function git-push() {
 	fi
 	cd $curpwd
 }
-
 
 function git-add() {
 	git status -uno
@@ -155,7 +156,6 @@ function git-push-all() {
 	git-push-repo "DD_laravelAp"
 	git-push-repo "$www_sitefocus"
 }
-
 
 function git-push-repo() {
 	gitreponame=$1
