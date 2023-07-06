@@ -69,7 +69,9 @@ function www-siteset() {
 		sudo touch $wwwroot/html/$dir/.env
 		sudo chown $user:www-data $wwwroot/html/$dir/.env
 		www-envinstall $dir $reponame
-		www-siteconfigupdate
+		sudo mkdir /var/www/certs/$dir
+
+		www-install-dependancies
 		nginx-start
 	fi
 	cd "$wwwroot/html/$www_sitefocus"
@@ -91,12 +93,14 @@ function www-envinstall() {
 	read -p "Database Password: " dbpword
 	echo ""
 	echo "Some additional information please, eg if copying from existing .env (you can skip these if you dont know):"
-	read -p "API User Email:" api_emai
-	read -p "API Email Password:" api_emailpwd
 	echo ""
 	read -p "Google Client ID:" gclient_id
 	read -p "Google Client Secret:" gclient_secret
 	read -p "GOOGLE_JAVASCRIPT_APIKEY:" google_jskey
+	echo ""
+	read -p "API User Email:" api_emai
+	read -p "API Email Password:" api_emailpwd
+
 	clear
 	php ~/bashtools/php_laravel/envinstall.php api_emai=$api_emai api_emailpwd=$api_emailpwd dir=$dir appname=$appname dbpword=$dbpword gclient_id=$gclient_id gclient_secret=$gclient_secret google_jskey=$google_jskey
 	echo "Will now generate user creation code to run in mysql  to use if you have not already done so"
@@ -149,7 +153,7 @@ function www-create() {
 	#20201119composer require clicksend/clicksend-php;
 }
 
-function www-siteconfigupdate() {
+function www-install-dependancies() {
 	clear
 	echo-h1 "Updating Site Config"
 	echo "update via composer"
@@ -168,4 +172,8 @@ function www-siteconfigupdate() {
 	php artisan view:clear
 	php artisan --version
 	bash-secure
+}
+
+function os-certificategen() {
+	echo "This will install a self signed certificate"
 }

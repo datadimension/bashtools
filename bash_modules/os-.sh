@@ -55,6 +55,28 @@ function os-installer() {
 	fi
 }
 
+function os-screen() {
+	screen -ls
+	echo ""
+	echo "Please enter action"
+	echo "1: Close Screen session"
+	echo "2: Start Screen session"
+	read option
+	if [ "$option" == "1" ]; then
+		echo "Enter screen id"
+		read screenid
+		screen -XS $screenid quit
+		echo ""
+		screen -ls
+	elif [ "$option" == "2" ]; then
+		echo "Enter new screen id"
+		read screenid
+		screen -S $screenid
+		echo ""
+		screen -ls
+	fi
+}
+
 function os-upgrade() {
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
@@ -80,6 +102,7 @@ function os-install-dependancies() {
 	sudo apt-get install -y whois
 	sudo apt-get install putty-tools
 	sudo mkdir /var/www/html
+	sudo mkdir /var/www/certs
 	php-install
 }
 function os-installnewselfsignedcert() {
