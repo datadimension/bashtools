@@ -10,7 +10,8 @@ function git-installrepo() {
 	sudo touch /etc/nginx/sites-enabled/$dir
 	sudo chown $user:www-data /etc/nginx/sites-enabled/$dir
 	php ~/bashtools/php_nginx/serverblock.php servername=$dir
-
+	sudo mv /home/$user/bashtoolscfg/tmp/serverblock$dir /etc/nginx/sites-enabled/$dir
+	sudo chown root:www-data /etc/nginx/sites-enabled/$dir
 	#file_put_contents("/etc/nginx/sites-enabled/" . $args["servername"], $blocktemplate);
 	www_sitefocus=$dir #do not this until now in case setting the repo dir and cloning it causes error
 	git-deploysubrepos

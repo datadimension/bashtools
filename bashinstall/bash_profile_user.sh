@@ -24,9 +24,7 @@ function echo-h1() {
 		figlet $textoutput
 	fi
 }
-function help-() {
-	php ~/bashtools/php_bash/bash-help.php
-}
+
 function echo-hr() {
 	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 }

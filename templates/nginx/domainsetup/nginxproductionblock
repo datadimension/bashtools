@@ -12,7 +12,6 @@ server {
         #access_log /var
 
         #<ssl_certs>
-	ssl on;
         ssl_certificate /var/www/certs/<servername />/<servername />_chain.crt;
         ssl_certificate_key /var/www/certs/<servername />/<servername />.key;
         #</ssl_certs>

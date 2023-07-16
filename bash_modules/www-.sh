@@ -69,8 +69,11 @@ function www-siteset() {
 		sudo touch $wwwroot/html/$dir/.env
 		sudo chown $user:www-data $wwwroot/html/$dir/.env
 		www-envinstall $dir $reponame
-		sudo mkdir /var/www/certs/$dir
-
+		sudo mkdir -p /var/www/certs/$dir
+		sudo chown $user:www-data /var/www/certs/$dir
+		echo "please upload ssl certs to /var/www/certs/$dir or directory pointed to by nginxblock for $dir"
+		echo "if sharing certificate, please amend nginx block to point to it"
+		read wait
 		www-install-dependancies
 		nginx-start
 	fi

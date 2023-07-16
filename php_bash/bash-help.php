@@ -1,12 +1,17 @@
 <?php
 /**
-used by shel script bash-help
+ * used by shel script bash-help
  */
+include(getenv('HOME') . "/bashtools/php_bash/bash.env.php");
+parse_str(implode('&', array_slice($argv, 1)), $args);
+
 $home = getenv('HOME');
-$bashprof = file_get_contents($home . "/.bash_profile");
+#$bashprof = file_get_contents($home . "/.bash_profile");
+
+$bashprof = file_get_contents($home . "/bashtools/bash_modules/" . $args["helptype"] . "-.sh");
 $functions = explode("function ", $bashprof);
 $funclist = [];
-echo "\nBASH helper functions:\n";
+echo "\nBASH helper functions for " . $args["helptype"] . ":\n";
 foreach ($functions as $f) {
       array_push($funclist, substr($f, 0, strpos($f, "(")));
 }
@@ -31,4 +36,4 @@ foreach ($funclist as $f) {
       echo $sep;
       echo $f;
 }
-echo "\n";
+echo "\n\n";

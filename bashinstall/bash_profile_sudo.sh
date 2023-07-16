@@ -58,7 +58,12 @@ function nginx-start() {
 		sudo /etc/init.d/cron start
 		ps aux | grep php
 		echo ""
-		echo "finished restart"
+		if [ -e /var/run/nginx.pid ]; then
+			echo "finished restart"
+		else
+			echo "nginx broke"
+			log-nginxerror
+		fi
 		echo-now
 		echo-hr
 	fi
@@ -155,7 +160,6 @@ function bash-hosts() {
 	sudo nano /etc/hosts
 }
 
-
 function x20230701git-deploy() {
 	clear
 	if [[ $environment != "production" ]]; then
@@ -195,7 +199,6 @@ function x20230701git-deploy() {
 	echo-h1 "Cloning $reponame"
 	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
 	sudo chown $USER:www-data $wwwroot/html/$www_sitefocus
-
 
 	# we can try and reinstall pre-existing platform files later, but at least have a .env and a credentials dir
 	cp $wwwroot/html/$reponame/.env.example $wwwroot/html/$reponame/.env

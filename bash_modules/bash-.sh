@@ -74,6 +74,24 @@ function bash-install() {
 	source ~/.bash_profile
 }
 
+function bash-help() {
+	helptype=$1
+	if [ "$helptype" == "" ]; then
+		echo ""
+		echo "Please enter what commands you would like help with:"
+		echo "bash"
+		echo "env"
+		echo "filesys"
+		echo "git"
+		echo "os"
+		echo "php"
+		echo "www"
+		echo ""
+		read helptype
+	fi
+	php ~/bashtools/php_bash/bash-help.php helptype=$helptype
+}
+
 function bash-restart() {
 	bash-writesettings
 	clear
