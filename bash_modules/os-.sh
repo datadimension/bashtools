@@ -81,7 +81,10 @@ function os-upgrade() {
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
 function os-install-dependancies() {
 	os-upgrade
 	#force utc timezone
@@ -129,6 +132,13 @@ function os-install-nginx() {
 
 	#copy nginx test package into html directory
 	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
+<<<<<<< HEAD
+=======
+	#move test block so nginx can read it
+	sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
+	sudo mkdir /etc/nginx
+
+>>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
 	echo "Copy self signed cert ? So dev server can run  HTTPS (y/n) - note this is an insecure certificate and will not be valid on live server"
 	read input
 	if [ "$input" != "y" ]; then
@@ -137,6 +147,7 @@ function os-install-nginx() {
 		sudo cp ~/bashtools/templates/nginx/nginxsetup/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
 		sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf
 	fi
+<<<<<<< HEAD
 	#create test block so nginx can read it
 	user=$USER
 	php ~/bashtools/php_nginx/serverblock.php servername=nginxtest
@@ -145,14 +156,25 @@ function os-install-nginx() {
 
 	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
 	#20230716 sudo mkdir /etc/nginx
+=======
+
+>>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
 	#cp /var/www/html/serveradmin/_cli/bash/templates/.bash_cfg ~/.bash_cfg;
 	# #20230113
 	# sudo cp /etc/nginx/snippets/phpmyadmin.conf /var/www/html/serveradmin/_cli/bash/templates/phpmyadminnginxsnippet;
 	nginx-start
+<<<<<<< HEAD
 	echo "Now go to your local hosts file (we moved it to C:\www"
 	echo "and add lines as appropriate for local browser address entry"
 	echo "127.0.0.1    nginxtest"
 
+=======
+	echo "Now go to hosts file (we moved it to C:\www"
+	echo "and add lines as appropriate for local browser address entry"
+	echo "127.0.0.1    nginxtest"
+	echo "127.0.0.1    mysite.local.com"
+	$()
+>>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
 }
 
 function os-sshaccess() {

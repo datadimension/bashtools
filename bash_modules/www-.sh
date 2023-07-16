@@ -114,7 +114,11 @@ function www-sitesqluserinstall() {
 	appname=$1
 	dbpword=$2
 	sqlusername=$appname"_php"
+<<<<<<< HEAD
 	echo "log in to mysql on the production server with:"
+=======
+	echo "log in to mysql with:"
+>>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
 	echo ""
 	echo "sudo mysql"
 	echo ""
