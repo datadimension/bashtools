@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#note this is for generating ssh key for your own repo
 
 function os-() {
 	# at some point we could have a list of options here
@@ -23,21 +22,24 @@ function os-installer() {
 	echo "4: MySQL"
 	echo "5: Access Security"
 	echo "6: OS Additional"
+	echo "7: Install Nginx"
 	echo "10: VPN client"
 	echo "anything else to Exit"
 	read option
 	if [ "$option" == "1" ]; then
-		os-installadditional
+		os-install-additional
 	elif [ "$option" == "2" ]; then
-		install-php
+		os-installphp
 	elif [ "$option" == "3" ]; then
-		install-composer
+		os-install-composer
 	elif [ "$option" == "4" ]; then
-		installmysql
+		os-install-mysql
 	elif [ "$option" == "5" ]; then
 		os-access
 	elif [ "$option" == "6" ]; then
 		os-additional
+	elif [ "$option" == "7" ]; then
+		os-install-nginx
 	elif [ "$option" == "10" ]; then
 		sudo apt-get -y install network-manager-openconnect-gnome
 	else
@@ -48,19 +50,39 @@ function os-installer() {
 		echo "Finished, press any key to continue"
 		read $wait
 		os-installer $option
-		else
+	else
 		bash-start
+	fi
+}
+
+function os-screen() {
+	screen -ls
+	echo ""
+	echo "Please enter action"
+	echo "1: Close Screen session"
+	echo "2: Start Screen session"
+	read option
+	if [ "$option" == "1" ]; then
+		echo "Enter screen id"
+		read screenid
+		screen -XS $screenid quit
+		echo ""
+		screen -ls
+	elif [ "$option" == "2" ]; then
+		echo "Enter new screen id"
+		read screenid
+		screen -S $screenid
+		echo ""
+		screen -ls
 	fi
 }
 
 function os-upgrade() {
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
-	#sudo apt-get -f install;
-	#sudo apt-get -y install build-essential;
-	#sudo add-apt-repository -y universe;
 }
-function os-installadditional() {
+
+function os-install-dependancies() {
 	os-upgrade
 	#force utc timezone
 	sudo rm -f /etc/localtime                         # Delete the current time zone file
@@ -79,33 +101,12 @@ function os-installadditional() {
 	sudo apt-get install -y nodejs
 	sudo apt install net-tools
 	sudo apt-get install -y whois
+	sudo apt-get install putty-tools
 	sudo mkdir /var/www/html
-
+	sudo mkdir /var/www/certs
+	php-install
 }
-
-function install-php() {
-	sudo apt -y install php
-	sudo apt -y install php-fpm
-	env-attributerequire phpNo
-	echo "We will edit /etc/php/$phpNo/fpm/php.ini"
-	echo "And for security change line to be"
-	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
-	read wait
-	sudo nano +801 /etc/php/$phpNo/fpm/php.ini
-	sudo apt -y install php-zip
-	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
-	sudo apt -y install php-soap
-	sudo apt -y install php-curl
-	sudo apt -y install php-bcmath
-	sudo apt -y install php-bz2
-	sudo apt -y install php-intl
-	sudo apt -y install php-mbstring
-	sudo apt -y install php-mysql
-	sudo apt -y install php-readline
-	sudo apt -y install php-xml
-}
-
-function install-newselfsignedcert() {
+function os-installnewselfsignedcert() {
 	#self signed certificate#######################################################
 	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
 	#also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
@@ -119,7 +120,7 @@ function install-newselfsignedcert() {
 	sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
 }
 
-function install-nginx() {
+function os-install-nginx() {
 	sudo apt -y install nginx
 	#clear default files
 	sudo rm /etc/nginx/sites-enabled/default
@@ -128,10 +129,6 @@ function install-nginx() {
 
 	#copy nginx test package into html directory
 	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
-	#move test block so nginx can read it
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
-	sudo mkdir /etc/nginx
-
 	echo "Copy self signed cert ? So dev server can run  HTTPS (y/n) - note this is an insecure certificate and will not be valid on live server"
 	read input
 	if [ "$input" != "y" ]; then
@@ -140,37 +137,92 @@ function install-nginx() {
 		sudo cp ~/bashtools/templates/nginx/nginxsetup/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
 		sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf
 	fi
+	#create test block so nginx can read it
+	user=$USER
+	php ~/bashtools/php_nginx/serverblock.php servername=nginxtest
+	sudo mv /home/$user/bashtoolscfg/tmp/serverblocknginxtest /etc/nginx/sites-enabled/nginxtest
+	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
 
+	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
+	#20230716 sudo mkdir /etc/nginx
 	#cp /var/www/html/serveradmin/_cli/bash/templates/.bash_cfg ~/.bash_cfg;
 	# #20230113
 	# sudo cp /etc/nginx/snippets/phpmyadmin.conf /var/www/html/serveradmin/_cli/bash/templates/phpmyadminnginxsnippet;
 	nginx-start
-	echo "Now go to hosts file (we moved it to C:\www"
+	echo "Now go to your local hosts file (we moved it to C:\www"
 	echo "and add lines as appropriate for local browser address entry"
 	echo "127.0.0.1    nginxtest"
-	echo "127.0.0.1    mysite.local.com"
-	$()
+
 }
 
-function os-access() {
+function os-sshaccess() {
+	clear
+	echo-h1 "Securing server access - note this is intended for if you are logging in as root. If you are loggin in as another user you will lose access"
+	echo "Please enter login name to be used as sudo"
+	read newuser
+	if [ "$newuser" != "" ]; then
+		sudo adduser $newuser
+		sudo usermod -aG sudo $newuser
+		currentuser=$USER
+		sudo mv /home/$currentuser/.bash_profile /home/$newuser/.bash_profile
+		sudo chown $newuser:$newuser /home/$newuser/.bash_profile
+
+		sudo mv /home/$currentuser/bashtools /home/$newuser/bashtools
+		sudo chown -R $newuser:$newuser /home/$newuser/bashtools
+
+		sudo mv /home/$currentuser/bashtoolscfg /home/$newuser/bashtoolscfg
+		sudo touch /home/$newuser/bashtoolscfg/gitcfg
+		sudo chown -R $newuser:$newuser /home/$newuser/bashtoolscfg
+
+		echo "Now generating ssh keys, you are ok to accept defaults"
+		ssh-keygen
+		pubkey=$(<~/.ssh/id_rsa.pub)
+		touch /home/$newuser/.ssh/authorized_keys
+		sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
+		sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
+		sudo chown -R $newuser:$newuser /home/$newuser/.ssh
+
+		echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
+		puttygen id_rsa -o id_rsa.ppk
+		ppk=$(<~/.ssh/id_rsa.ppk)
+		echo "Remove temp key for this server from git at add this"
+		echo pubkey
+		read wait
+		echo "Now paste this into a windows .ppk file and tell Putty where to find it."
+		echo ""
+		echo $echo ppk
+		echo "Press any key to exit and then log in as this user using ssh key"
+		read wait
+		exit
+	fi
+}
+
+function os-sshsecure() {
 	echo "any key to edit ssh to remove root - set"
+	echo "Comment out includes":
+	sudo nano +12 /etc/ssh/sshd_config
 	echo "PermitRootLogin no"
 	read wait
 	sudo nano +36 /etc/ssh/sshd_config
-	echo "Edit ssh to remove password access"
-	echo "******* ONLY IF YOU HAVE SETUP AND TESTED SSH CERTIFICATION LOGIN ***** set"
-	echo "PasswordAuthentication no"
-	read wait
-	sudo nano +60 /etc/ssh/sshd_config
 	echo "PubkeyAuthentication yes"
 	read wait
 	sudo nano +41 /etc/ssh/sshd_config
 	echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root"
 	read wait
+	echo "Edit ssh to remove password access"
+	echo "PasswordAuthentication no"
+	read wait
+	sudo nano +60 /etc/ssh/sshd_config
 	sudo sudo service ssh reload
+	echo "We will edit /etc/php/$phpNo/fpm/php.ini"
+	echo "And for security change line to be"
+	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
+	read wait
+	sudo nano +802 /etc/php/$phpNo/fpm/php.ini
+	echo "***** DO NOT CLOSE CURRENT SESSION UNTIL YOU VERIFY YOU CAN ACCESS USING NEW PUTTY SESSION"
 }
 
-function install-composer() {
+function os-install-composer() {
 	cd ~/
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 	php composer-setup.php
@@ -179,19 +231,12 @@ function install-composer() {
 	composer global require laravel/installer
 }
 
-function installmysql() {
+function os-install-mysql() {
 	#https://support.rackspace.com/how-to/installing-mysql-server-on-ubuntu/
 	#ignore part about ufw, we will do that seperate
 	echo "Follow this guide for mysql8"
 	echo "https://tastethelinux.com/upgrade-mysql-server-from-5-7-to-8-ubuntu-18-04/"
 	sudo apt-get -y install mysql-server
-	echo "Now set up security"
-	echo "Set max security password"
-	echo "Deny remote root access"
-	echo "Remove default test tables"
-	echo "Reload priviledges to take effect"
-	echo "Set Strong password with options"
-	read wait
 
 	#set max security and remove min priviledges such as root access
 	sudo mysql_secure_installation utility
@@ -203,29 +248,28 @@ function installmysql() {
 	echo "
 You need to edit mysqld.cnf
 set bind address for all ip addresses so can remote access
-bind-address            = 0.0.0.0
+bind-address            = 0.0.0.0 #remove 127.0.0.1
 bind-address            = <wan ip address>
 Enter to edit conf ....
 "
 	read wait
-	sudo nano +43 /etc/mysql/mysql.conf.d/mysqld.cnf
+	sudo nano +31 /etc/mysql/mysql.conf.d/mysqld.cnf
 	sudo systemctl restart mysql
 	sudo ufw allow mysql
+	echo "Enter new SQL admin username"
+	read sqluser
+	echo "Enter new SQL admin password"
+	read -s pword
 
-	#remote access and if you break it:
-	#
-	#sudo mysql --no-defaults --force --user=root --host=localhost --database=mysql
-	#select host, user from mysql.user;
-	#add user
+	echo "log in to mysql using sudo mysql and run:"
+	echo "CREATE USER '"$sqluser"'@'%' IDENTIFIED BY '"$pword"';"
+	echo "GRANT ALL PRIVILEGES ON *.* TO '"$sqluser"'@'%' WITH GRANT OPTION;"
+	echo "FLUSH PRIVILEGES;"
+
 	echo "
-log in to mysql using
-
-sudo mysql
-
-and run:
-
-CREATE USER '<mysqladminuser />'@'%' IDENTIFIED BY '<mysqladminpassword />';
-GRANT ALL PRIVILEGES ON *.* TO '<mysqladminuser />'@'%' IDENTIFIED BY '<mysqladminpassword /> 'WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+Note if something breaks or password is lost:
+sudo mysql --no-defaults --force --user=root --host=localhost --database=mysql
+select host, user from mysql.user;
+add user
 "
 }

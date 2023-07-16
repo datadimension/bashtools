@@ -6,4 +6,4 @@
 # https://docs.microsoft.com/en-gb/windows/wsl/install-manual
 
 ######################################################################
-bash-start
+sessionstart

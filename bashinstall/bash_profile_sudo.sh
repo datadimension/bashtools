@@ -58,7 +58,12 @@ function nginx-start() {
 		sudo /etc/init.d/cron start
 		ps aux | grep php
 		echo ""
-		echo "finished restart"
+		if [ -e /var/run/nginx.pid ]; then
+			echo "finished restart"
+		else
+			echo "nginx broke"
+			log-nginxerror
+		fi
 		echo-now
 		echo-hr
 	fi
@@ -155,36 +160,6 @@ function bash-hosts() {
 	sudo nano /etc/hosts
 }
 
-#creates a new website
-function www-create() {
-	composer require twilio/sdk
-	#20201119composer require clicksend/clicksend-php;
-}
-
-function www-envinstall() {
-	sudo rm $wwwroot/html/$www_sitefocus/.env
-	sudo nano $wwwroot/html/$www_sitefocus/.env
-	nginx-start
-}
-
-function www-update() {
-	bash-secure
-	echo "update composer"
-	cd $wwwroot/html/$www_sitefocus
-	#dev versions follow in comments
-	composer dump-autoload # php 71 `which composer` dump-autoload;
-
-	#need to detect php version here and if statements (bash switch?) to perform updates as system might be multi php
-
-	#works: php71 -d memory_limit=-1 `which composer` update --no-scripts;
-	composer update -W # php71 `which composer` update --no-scripts; or? php71 -d memory_limit=768M `which composer` update --no-scripts;(1610612736)
-	composer install
-	# this also generates autoload;
-	php artisan key:generate #dev server php70 artisan key:generate;
-	php artisan view:clear
-	php artisan --version
-}
-
 function x20230701git-deploy() {
 	clear
 	if [[ $environment != "production" ]]; then
@@ -225,7 +200,6 @@ function x20230701git-deploy() {
 	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
 	sudo chown $USER:www-data $wwwroot/html/$www_sitefocus
 
-
 	# we can try and reinstall pre-existing platform files later, but at least have a .env and a credentials dir
 	cp $wwwroot/html/$reponame/.env.example $wwwroot/html/$reponame/.env
 	sudo mkdir -p $wwwroot/html/$reponame/apicredentials/google
@@ -238,7 +212,7 @@ function x20230701git-deploy() {
 	git-deploysubrepos
 	sudo php $wwwroot/html/serveradmin/_cli/bash/helpers/nginxblockdeployer.php $reponame $dnsname $environment
 	sudo ln -s /etc/nginx/sites-available/$reponame /etc/nginx/sites-enabled/$reponame
-	www-update #sort permisions and composer out
+	www-siteconfigupdate #sort permisions and composer out
 	google-deploy
 	echo "note changes to hosts will require"
 	echo "ipconfig /flushdns"
