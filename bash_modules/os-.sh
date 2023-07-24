@@ -29,7 +29,7 @@ function os-installer() {
 	if [ "$option" == "1" ]; then
 		os-install-additional
 	elif [ "$option" == "2" ]; then
-		os-installphp
+		php-install
 	elif [ "$option" == "3" ]; then
 		os-install-composer
 	elif [ "$option" == "4" ]; then
@@ -81,10 +81,7 @@ function os-upgrade() {
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
 function os-install-dependancies() {
 	os-upgrade
 	#force utc timezone
@@ -108,6 +105,7 @@ function os-install-dependancies() {
 	sudo mkdir /var/www/html
 	sudo mkdir /var/www/certs
 	php-install
+	net-firewall-start
 }
 function os-installnewselfsignedcert() {
 	#self signed certificate#######################################################
@@ -129,16 +127,6 @@ function os-install-nginx() {
 	sudo rm /etc/nginx/sites-enabled/default
 	sudo rm /etc/nginx/sites-available/default
 	sudo rm /var/www/html/index.nginx-debian.html
-
-	#copy nginx test package into html directory
-	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
-<<<<<<< HEAD
-=======
-	#move test block so nginx can read it
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
-	sudo mkdir /etc/nginx
-
->>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
 	echo "Copy self signed cert ? So dev server can run  HTTPS (y/n) - note this is an insecure certificate and will not be valid on live server"
 	read input
 	if [ "$input" != "y" ]; then
@@ -147,34 +135,51 @@ function os-install-nginx() {
 		sudo cp ~/bashtools/templates/nginx/nginxsetup/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
 		sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf
 	fi
-<<<<<<< HEAD
-	#create test block so nginx can read it
-	user=$USER
-	php ~/bashtools/php_nginx/serverblock.php servername=nginxtest
-	sudo mv /home/$user/bashtoolscfg/tmp/serverblocknginxtest /etc/nginx/sites-enabled/nginxtest
-	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
+	www-nginxtest_install
+	sudo net-firewall-start
+}
 
-	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
-	#20230716 sudo mkdir /etc/nginx
-=======
+#downloads only into user downloads dir with the sub path given
+function os-download() {
+	url=$1
+	path=$2
+	curl $url --create-dirs -o ~/downloads/$path
+}
 
->>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
-	#cp /var/www/html/serveradmin/_cli/bash/templates/.bash_cfg ~/.bash_cfg;
-	# #20230113
-	# sudo cp /etc/nginx/snippets/phpmyadmin.conf /var/www/html/serveradmin/_cli/bash/templates/phpmyadminnginxsnippet;
-	nginx-start
-<<<<<<< HEAD
-	echo "Now go to your local hosts file (we moved it to C:\www"
-	echo "and add lines as appropriate for local browser address entry"
-	echo "127.0.0.1    nginxtest"
-
-=======
-	echo "Now go to hosts file (we moved it to C:\www"
-	echo "and add lines as appropriate for local browser address entry"
-	echo "127.0.0.1    nginxtest"
-	echo "127.0.0.1    mysite.local.com"
-	$()
->>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
+function os-install-xdebug() {
+	echo "You will need to enable the nginxtest pages here to show the required info."
+	echo "Enable ? y/n"
+	read input
+	if [ "$input" != "y" ]; then
+		www-nginxtest_install
+		echo "Enter to continue"
+		read input
+		clear
+		echo "From the xdebug Install Wizard Instructions, please enter the version number required eg 3.2.2 if we require xdebug-3.2.2.tgz"
+		read xvers
+		echo "Please enter the Zend Module Api No"
+		echo "eg Configuring for:     Zend Module Api No:  20210902"
+		echo "Just the number please"
+		read zendapi_no
+		echo "Finally enter the FULL xdebug.ini path given eg /etc/php/8.1/fpm/conf.d/99-xdebug.ini"
+		read inipath
+		os-download https://xdebug.org/files/xdebug-$xvers.tgz tmp/xdebug-$xvers.tgz
+		cd ~/downloads/tmp
+		tar -xvzf xdebug-$xvers.tgz
+		cd xdebug-$xvers
+		phpize
+		./configure
+		make
+		#to generic echo "zend_extension = xdebug" >conf
+		echo "zend_extension = /usr/lib/php/$zendapi_no/xdebug.so" >conf
+		sudo cp modules/xdebug.so /usr/lib/php/$zendapi_no
+		sudo cp conf $inipath
+		sudo touch /var/log/xdebug.log
+		sudo net-firewall-start
+		echo "make sure port 9003 is enabled"
+		read wait
+		nginx-start
+	fi
 }
 
 function os-sshaccess() {
@@ -241,6 +246,7 @@ function os-sshsecure() {
 	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
 	read wait
 	sudo nano +802 /etc/php/$phpNo/fpm/php.ini
+	net-firewall-start
 	echo "***** DO NOT CLOSE CURRENT SESSION UNTIL YOU VERIFY YOU CAN ACCESS USING NEW PUTTY SESSION"
 }
 

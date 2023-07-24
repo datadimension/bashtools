@@ -6,6 +6,7 @@ function bash-start() {
 	source ~/bashtools/bash_modules/php-.sh
 	source ~/bashtools/bash_modules/www-.sh
 	source ~/bashtools/bash_modules/git-.sh
+	source ~/bashtools/bash_modules/net-.sh
 	clear
 	bash-readsettings
 	env-attributerequire "os_status"
