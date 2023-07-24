@@ -82,7 +82,25 @@ function www-siteset() {
 	bash-writesettings
 	www-siteswitch
 }
-
+function www-siteswitch() {
+	www-siteshow
+	echo "Please select a site number to chose for operations"
+	read sitenumber
+	echo "Auto sync with GIT ? (y/n)"
+	read -t 3 input
+	if [ "$input" == "y" ]; then
+		git-push
+	fi
+	sitenumber=$((sitenumber - 1))
+	www_sitefocus=${wwwsites[sitenumber]}
+	cd "$wwwroot/html/$www_sitefocus"
+	echo "setting site to $www_sitefocus"
+	bash-writesettings
+	if [ "$input" == "y" ]; then
+		git-pull
+	fi
+	bash-start
+}
 function www-envinstall() {
 	rm $wwwroot/html/$www_sitefocus/.env
 	touch $wwwroot/html/$www_sitefocus/.env
@@ -114,11 +132,7 @@ function www-sitesqluserinstall() {
 	appname=$1
 	dbpword=$2
 	sqlusername=$appname"_php"
-<<<<<<< HEAD
 	echo "log in to mysql on the production server with:"
-=======
-	echo "log in to mysql with:"
->>>>>>> 2b6639839e3f26d81482966251a3a15cc1c30b95
 	echo ""
 	echo "sudo mysql"
 	echo ""
@@ -128,6 +142,29 @@ function www-sitesqluserinstall() {
 	echo "GRANT EXECUTE,SELECT,SHOW VIEW ON ddDB.* TO '"$sqlusername"'@'%';"
 	echo "GRANT DELETE,EXECUTE,INSERT,SELECT,SHOW VIEW,UPDATE ON $appname.* TO '"$sqlusername"'@'%';"
 	echo "FLUSH PRIVILEGES;"
+}
+
+function www-nginxtest_install() {
+	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
+	#create test block so nginx can read it
+	user=$USER
+	php ~/bashtools/php_nginx/serverblock.php servername=nginxtest
+	sudo mv /home/$user/bashtoolscfg/tmp/serverblocknginxtest /etc/nginx/sites-enabled/nginxtest
+	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
+	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
+	#20230716 sudo mkdir /etc/nginx
+	echo "Now go to your local hosts file (we moved it to C:\www"
+	echo "and add lines as appropriate for local browser address entry"
+	echo "127.0.0.1    nginxtest"
+	echo "then open Windows cmd and run ipconfig /flushdns"
+	echo "Enter https://nginxtest into browser"
+	echo "and the test server should show online"
+}
+
+#remove the nginx test site
+function www-nginxtest_remove() {
+	sudo rm -R /var/www/html/nginxtest
+	sudo rm /etc/nginx/sites-enabled/nginxtest
 }
 
 function www-siteswitch() {
