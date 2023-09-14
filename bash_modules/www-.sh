@@ -82,7 +82,7 @@ function www-siteset() {
 	bash-writesettings
 	www-siteswitch
 }
-function www-siteswitch() {
+function www-xsiteswitch() {
 	www-siteshow
 	echo "Please select a site number to chose for operations"
 	read sitenumber
@@ -101,6 +101,31 @@ function www-siteswitch() {
 	fi
 	bash-start
 }
+
+#reset permission levels to minimal required
+#need to check if permisions can be tightened
+#https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
+function www-secure() {
+
+	#sudo find /path/to/your/laravel/root/directory -type f -exec chmod 644 {} \;
+	#sudo find /path/to/your/laravel/root/directory -type d -exec chmod 755 {} \;
+
+	#20230907sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
+	#moving this to php sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
+	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/calendartoken.json
+	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
+	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
+	sudo chmod -R ug+rwx $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
+	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/bootstrap/cache
+
+	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/public/downloads
+	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
+
+	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/storage
+	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
+	#sudo chown -R $USER $HOME/.composer;#https://askubuntu.com/questions/1077879/cannot-create-cache-directory-home-user-composer-cache-repo-https-packagi
+}
+
 function www-envinstall() {
 	rm $wwwroot/html/$www_sitefocus/.env
 	touch $wwwroot/html/$www_sitefocus/.env
