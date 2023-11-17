@@ -5,52 +5,6 @@ function bash-sudoers() {
 	grep '^sudo:.*$' /etc/group | cut -d: -f4
 }
 
-#reset permission levels to minimal required
-#need to check if permisions can be tightened
-#https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
-function bash-secure() {
-	echo "Remove nginxtest ? y/n"
-	read -t 3 input
-	if [ "$input" == "y" ]; then
-		www-nginxtest_remove
-	fi
-	echo "Securing file ownership" # this is after as password required first
-	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus
-
-	echo "Securing file permissions"
-	sudo find $wwwroot/html/$www_sitefocus -type f -exec chmod 644 {} \;
-
-	echo "Securing directory permissions"
-	sudo find $wwwroot/html/$www_sitefocus -type d -exec chmod 755 {} \;
-
-	echo "Securing laravel permissions"
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
-
-	echo "Not impelemented"
-	echo "FIrewall lockdown to"
-	echo "SSH"l
-	echo "FTP via SSH"
-	echo "NGINX"
-	echo "MySQL"
-	echo "Xdebug (for dev only)"
-	#legacy
-	#sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
-	#sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
-	#sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/calendartoken.json
-	#sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-	#sudo chmod -R 770 $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-	#sudo chmod -R ug+rwx $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-	#sudo chmod -R 775 $wwwroot/html/$www_sitefocus/bootstrap/cache
-
-	#sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/public/downloads
-	#
-
-	#sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/storage
-	#sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
-	#sudo chown -R $USER $HOME/.composer;#https://askubuntu.com/questions/1077879/cannot-create-cache-directory-home-user-composer-cache-repo-https-packagi
-}
-
 function nginx-start() {
 	echo "Restart Nginx ? y/n"
 	read -t 3 input
