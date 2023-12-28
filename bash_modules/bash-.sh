@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+
+# initialises the bash shell #
 function bash-start() {
 	source ~/bashtools/bash_modules/os-.sh
 	source ~/bashtools/bash_modules/filesys-.sh
@@ -32,6 +34,7 @@ function bash-start() {
 	file-showdir $startdir
 }
 
+# this comment will be ignored for now as no closure
 function bash-push() {
 	echo-h1 "pushing bash repo"
 	cd ~/bashtools

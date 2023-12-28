@@ -12,8 +12,18 @@ $bashprof = file_get_contents($home . "/bashtools/bash_modules/" . $args["helpty
 $functions = explode("function ", $bashprof);
 $funclist = [];
 echo "\nBASH helper functions for " . $args["helptype"] . ":\n";
-foreach ($functions as $f) {
-      array_push($funclist, substr($f, 0, strpos($f, "(")));
+foreach ($functions as $row => $f) {
+      $funcname = substr($f, 0, strpos($f, "("));
+      if ($row > 0) {
+	    $comment = $functions[$row - 1];
+	    if (substr($comment, 0, 1) == "#") {
+		  $comment = substr($comment, 0, 10);
+		  $funcname .= "  -  " . $comment;
+	    }
+      }
+      if ($funcname) {
+	    array_push($funclist, $funcname);
+      }
 }
 sort($funclist);
 $curprefix = "";
@@ -26,7 +36,7 @@ foreach ($funclist as $f) {
 	    $fcount = 0;
       }
       else {
-	    $sep = " ";
+	    $sep = "\n";
       }
       $fcount++;
       if ($fcount >= 5) {

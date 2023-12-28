@@ -1,3 +1,4 @@
+# function description #
 function nginx-start() {
 	echo "Restart Nginx ? y/n"
 	read -t 3 input
