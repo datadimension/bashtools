@@ -15,6 +15,8 @@ function bash-start() {
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
+	MENUCHOICE="";#reserved as a global for menu function
+
 	#env-attributerequire "welcomemsg"
 
 	echo "Welcome to"
@@ -95,6 +97,12 @@ function bash-help() {
 		read helptype
 	fi
 	php ~/bashtools/php_bash/bash-help.php helptype=$helptype
+}
+
+function bash-help() {
+		echo "Help categories:"
+	  menu "bash,env,filesys,git,log,net,os,php,www"
+	php ~/bashtools/php_bash/bash-help.php helptype=$MENUCHOICE
 }
 
 function bash-restart() {
