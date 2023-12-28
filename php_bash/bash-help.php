@@ -10,16 +10,19 @@ $home = getenv('HOME');
 
 $bashprof = file_get_contents($home . "/bashtools/bash_modules/" . $args["helptype"] . "-.sh");
 $functions = explode("function ", $bashprof);
-var_dump($functions);
 $funclist = [];
 echo "\nBASH helper functions for " . $args["helptype"] . ":\n";
 foreach ($functions as $row => $f) {
       $funcname = substr($f, 0, strpos($f, "("));
       if ($row > 0) {
 	    $comment = $functions[$row - 1];
+	    $commentindex = strrpos($comment, "\n");
+	    $comment = substr($comment, $commentindex);
+	    $funcname .= "  -  " . $comment;
+
 	    if (substr($comment, 0, 1) == "#") {
 		  $comment = substr($comment, 0, 10);
-		  $funcname .= "  -  " . $comment;
+		  // $funcname .= "  -  " . $comment;
 	    }
       }
       if ($funcname) {
