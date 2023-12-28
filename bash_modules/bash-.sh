@@ -79,7 +79,7 @@ function bash-help() {
 	helptype=$1
 	if [ "$helptype" == "" ]; then
 		echo ""
-		echo "Please enter what commands you would like help with:"
+		echo "Please enter what command category you would like help with:"
 		echo "bash"
 		echo "env"
 		echo "filesys"
