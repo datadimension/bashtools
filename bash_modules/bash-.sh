@@ -7,6 +7,8 @@ function bash-start() {
 	source ~/bashtools/bash_modules/www-.sh
 	source ~/bashtools/bash_modules/git-.sh
 	source ~/bashtools/bash_modules/net-.sh
+	source ~/bashtools/bash_modules/log-.sh
+
 	clear
 	bash-readsettings
 	env-attributerequire "os_status"
@@ -84,6 +86,8 @@ function bash-help() {
 		echo "env"
 		echo "filesys"
 		echo "git"
+		echo "log"
+		echo "net"
 		echo "os"
 		echo "php"
 		echo "www"
