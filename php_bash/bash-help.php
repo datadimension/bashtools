@@ -10,6 +10,7 @@ $home = getenv('HOME');
 
 $bashprof = file_get_contents($home . "/bashtools/bash_modules/" . $args["helptype"] . "-.sh");
 $functions = explode("function ", $bashprof);
+var_dump($functions);
 $funclist = [];
 echo "\nBASH helper functions for " . $args["helptype"] . ":\n";
 foreach ($functions as $row => $f) {
