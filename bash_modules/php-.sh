@@ -25,3 +25,35 @@ function php-install() {
 	php-v;
 }
 
+function php-edit() {
+	echo "You might need the gateway ip:"
+	tail /etc/resolv.conf
+	read waitinput
+	phproot="/etc/php/$phpNo/fpm"
+	inifileName="$phproot/php.ini"
+	sudo nano +9999 $inifileName
+	nginx-start
+}
+
+function phpfpm-edit() {
+	phproot="/etc/php/$phpNo/fpm"
+	confFileName="$phproot/php-fpm.conf"
+	sudo nano $confFileName
+	nginx-start
+}
+
+function ~php() {
+	phproot="/etc/php/$phpNo/fpm"
+	ls -al $phproot
+}
+
+function php-start() {
+	clear
+	echo-h1 "Closing PHP"
+	ps aux | grep php
+	sudo pkill php-fpm
+	clear
+	echo-h1 "Starting PHP"
+	sudo service php7.4-fpm start
+	ps aux | grep php
+}

@@ -3,6 +3,7 @@ function bash-start() {
 	source ~/bashtools/bash_modules/os-.sh
 	source ~/bashtools/bash_modules/filesys-.sh
 	source ~/bashtools/bash_modules/env-.sh
+	source ~/bashtools/bash_modules/nginx-.sh
 	source ~/bashtools/bash_modules/php-.sh
 	source ~/bashtools/bash_modules/www-.sh
 	source ~/bashtools/bash_modules/git-.sh
@@ -81,7 +82,7 @@ function bash-install() {
 
 function bash-help() {
 		echo "Help categories:"
-	  menu "bash,env,filesys,git,log,net,os,php,www"
+	  menu "bash,env,filesys,git,log,net,os,nginx,php,www"
 	php ~/bashtools/php_bash/bash-help.php helptype=$MENUCHOICE
 }
 
