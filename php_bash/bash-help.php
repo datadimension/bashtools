@@ -18,7 +18,7 @@ foreach ($functions as $row => $f) {
 	    $comment = $functions[$row - 1];
 	    $commentindex = strrpos($comment, PHP_EOL);
 	    $comment = substr($comment, $commentindex);
-	    $funcname .= "  -  " . $comment;
+	    $funcname .= "  -  " . $commentindex;
 
 	    if (substr($comment, 0, 1) == "#") {
 		  $comment = substr($comment, 0, 10);
