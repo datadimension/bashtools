@@ -16,7 +16,7 @@ foreach ($functions as $row => $f) {
       $funcname = substr($f, 0, strpos($f, "("));
       if ($row > 0) {
 	    $comment = $functions[$row - 1];
-	    $commentindex = strrpos($comment, PHP_EOL, 1);
+	    $commentindex = strrpos($comment, PHP_EOL, -1);
 	    $comment = substr($comment, $commentindex);
 	    $funcname .= "  -  " . $commentindex . " " . $comment;
 
