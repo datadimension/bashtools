@@ -243,3 +243,20 @@ function bash-secure() {
 	echo "MySQL"
 	echo "Xdebug (for dev only)"
 }
+
+function bash-hosts() {
+	sudo nano /etc/hosts
+}
+
+function bash-sudoers() {
+	grep '^sudo:.*$' /etc/group | cut -d: -f4
+}
+
+function bash-gitinstall() {
+	cd $wwwroot/html/serveradmin/_cli/bash
+	git pull
+	sudo rm ~/.bash_profile
+	sudo cp $wwwroot/html/serveradmin/_cli/bash/bash_profile.sh ~/.bash_profile
+	source ~/.bash_profile
+	bash-start
+}

@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 #bash_profile sudo
 
-function bash-sudoers() {
-	grep '^sudo:.*$' /etc/group | cut -d: -f4
-}
+
 
 function nginx-start() {
 	echo "Restart Nginx ? y/n"
@@ -46,21 +44,6 @@ function php-start() {
 	ps aux | grep php
 }
 
-function bash-gitinstall() {
-	cd $wwwroot/html/serveradmin/_cli/bash
-	git pull
-	sudo rm ~/.bash_profile
-	sudo cp $wwwroot/html/serveradmin/_cli/bash/bash_profile.sh ~/.bash_profile
-	source ~/.bash_profile
-	bash-start
-}
-
-bash-hosts() {
-	sudo tail /etc/resolv.conf
-}
-
-
-
 function vpn() {
 	echo 'Please enter the VPN url'
 	read vpnurl
@@ -96,9 +79,7 @@ function ~g_drive() {
 	ls
 }
 
-function bash-hosts() {
-	sudo nano /etc/hosts
-}
+
 
 function x20230701git-deploy() {
 	clear
