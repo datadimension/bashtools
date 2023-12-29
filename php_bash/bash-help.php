@@ -9,11 +9,11 @@ $home = getenv('HOME');
 #$bashprof = file_get_contents($home . "/.bash_profile");
 
 $bashprof = file_get_contents($home . "/bashtools/bash_modules/" . $args["helptype"] . "-.sh");
-$functions = explode("function(", $bashprof);
+$functions = explode("function(", $bashprof);//split inc bracket as never argmuents https://stackoverflow.com/questions/4654700/what-are-the-parentheses-used-for-in-a-bash-shell-script-function-definition-lik#:~:text=The%20keyword-,function,-has%20been%20deprecated
 $funclist = [];
 echo "\nBASH helper functions for " . $args["helptype"] . ":\n";
 foreach ($functions as $row => $f) {
-      $funcname = substr($f, 0, strpos($f, "(")) . " len " . strlen($f);
+      $funcname = substr($f, 0, strpos($f, ")")) . " len " . strlen($f);
       if ($row > 0) {
 	    $comment = $functions[$row - 1];
 	    $commentindex = strrpos($comment, PHP_EOL, -2);
