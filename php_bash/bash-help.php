@@ -20,9 +20,9 @@ foreach ($functions as $row => $f) {
 	    $comment = substr($comment, $commentindex + 1);
 //	    $funcname .= "  " . $commentindex . " " . $comment;
 
-	    if (substr($comment, 0, 1) != "") {
+	    if (substr($comment, 0, 1) == "#") {
 		  $comment = substr($comment, 0);
-		  $funcname .= "  -  |" . $comment . "|";
+		  $funcname .= "  " . $comment;
 	    }
       }
       if ($funcname) {
