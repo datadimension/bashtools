@@ -60,3 +60,4 @@ foreach ($funclist as $f) {
       echo $f;
 }
 echo "\n\n";
+*/
