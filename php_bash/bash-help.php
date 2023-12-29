@@ -18,8 +18,6 @@ foreach ($functions as $row => $f) {
 	    $comment = $functions[$row - 1];
 	    $commentindex = strrpos($comment, PHP_EOL, -2);
 	    $comment = substr($comment, $commentindex + 1);
-//	    $funcname .= "  " . $commentindex . " " . $comment;
-
 	    if (substr($comment, 0, 1) == "#") {
 		  $comment = substr($comment, 1);
 		  $funcname .= "  -" . $comment;

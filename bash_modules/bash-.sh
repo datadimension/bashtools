@@ -90,6 +90,7 @@ function bash-help() {
 	php ~/bashtools/php_bash/bash-help.php helptype=$MENUCHOICE
 }
 
+#restarts bash shell
 function bash-restart() {
 	bash-writesettings
 	clear
