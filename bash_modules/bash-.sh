@@ -54,6 +54,7 @@ function bash-pull() {
 	bash-install
 }
 
+# installs the enhanced bash functionality provided by Bashtools
 function bash-install() {
 	#detect ubuntu or MINW64
 	homepath=${HOME:0:6}
@@ -72,7 +73,7 @@ function bash-install() {
 	if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
 		# cat ~/bashtools/bashinstall/bash_profile_sudo.sh >>~/.bash_profile
 	fi
-	cat ~/bashtools/bashinstall/bash_profile_multiplatform.sh >>~/.bash_profile
+	# cat ~/bashtools/bashinstall/bash_profile_multiplatform.sh >>~/.bash_profile
 	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
 	mkdir -p ~/bashtoolscfg/tmp
 	bash-writesettings
