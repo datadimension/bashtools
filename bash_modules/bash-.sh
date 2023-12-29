@@ -41,8 +41,6 @@ function bash-push() {
 	git add -A
 	git commit -a -m update
 	git push
-	echo "Any key to return to current project"
-	read -t 3 input
 	bash-pull
 	~www
 }
@@ -85,8 +83,7 @@ function bash-install() {
 
 # shows bash function categories and functions
 function bash-help() {
-		echo-b "Help Categories:"
-	  menu "bash,env,filesys,git,log,net,os,nginx,php,www"
+	  menu bash,env,filesys,git,log,net,os,nginx,php,www  "Help Categories:"
 	php ~/bashtools/php_bash/bash-help.php helptype=$MENUCHOICE
 }
 
