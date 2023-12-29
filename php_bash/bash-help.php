@@ -17,7 +17,7 @@ foreach ($functions as $row => $f) {
       if ($row > 0) {
 	    $comment = $functions[$row - 1];
 	    $commentindex = strrpos($comment, PHP_EOL, -2);
-	    $comment = substr($comment, $commentindex + 1);
+	    $comment = trim(substr($comment, $commentindex + 1));
 	    if (substr($comment, 0, 1) == "#") {
 		  $comment = substr($comment, 0);
 		  $funcname .= "  " . $comment;
