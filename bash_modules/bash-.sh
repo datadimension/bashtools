@@ -69,7 +69,7 @@ function bash-install() {
 	rm ~/.bash_profile
 	cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile
 	if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
-		cat ~/bashtools/bashinstall/bash_profile_sudo.sh >>~/.bash_profile
+		# cat ~/bashtools/bashinstall/bash_profile_sudo.sh >>~/.bash_profile
 	fi
 	cat ~/bashtools/bashinstall/bash_profile_multiplatform.sh >>~/.bash_profile
 	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile

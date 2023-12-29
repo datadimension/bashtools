@@ -15,3 +15,11 @@ ufw allow 3306
 function net-firewall-status() {
 	sudo ufw status
 }
+
+function vpn() {
+	echo 'Please enter the VPN url'
+	read vpnurl
+	echo "If not prompted for username AND password you will need to authorise local sudo permission to connect (this machines password)"
+	sudo openconnect -b $vpnurl
+	echo "CTRL C exits VPN setup - if connected will continue running in the background"
+}
