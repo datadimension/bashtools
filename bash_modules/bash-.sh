@@ -67,11 +67,12 @@ function bash-install() {
 		platform="windows"
 		wwwroot="/c/Users/$username/www"
 	fi
-	echo -e "Detected:\nPlatform=$platform\nUser=$use-installrname\nwwwroot=$wwwroot"
+	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
 	rm ~/.bash_profile
-	cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile
+	cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile;
 	if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
 		# cat ~/bashtools/bashinstall/bash_profile_sudo.sh >>~/.bash_profile
+		noop=1;
 	fi
 	# cat ~/bashtools/bashinstall/bash_profile_multiplatform.sh >>~/.bash_profile
 	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
@@ -79,7 +80,6 @@ function bash-install() {
 	bash-writesettings
 	echo "Restarting shell ..."
 	read -t 2 input
-	head -20 ~/.bash_profile
 	source ~/.bash_profile
 }
 
