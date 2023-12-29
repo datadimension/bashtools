@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# shows site selection
+# list to pick from for various funcs
 function www-siteshow() {
 	echo ""
 	echo "Current $environment site options are:"
@@ -169,6 +172,7 @@ function www-sitesqluserinstall() {
 	echo "FLUSH PRIVILEGES;"
 }
 
+# installs an nginx test page to check server is operational
 function www-nginxtest_install() {
 	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
 	#create test block so nginx can read it
@@ -222,6 +226,7 @@ function www-create() {
 	#20201119composer require clicksend/clicksend-php;
 }
 
+# refreshes and installs composer dependancies
 function www-install-dependancies() {
 	clear
 	echo-h1 "Updating Site Config"

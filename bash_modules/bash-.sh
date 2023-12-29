@@ -141,9 +141,6 @@ function bash-h() {
 	echo-hr
 }
 
-
-
-
 function bash-sudoers() {
 	grep '^sudo:.*$' /etc/group | cut -d: -f4
 }
