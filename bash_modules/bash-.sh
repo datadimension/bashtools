@@ -83,6 +83,7 @@ function bash-install() {
 	source ~/.bash_profile
 }
 
+# shows bash function categories and functions
 function bash-help() {
 		echo "Help categories:"
 	  menu "bash,env,filesys,git,log,net,os,nginx,php,www"
