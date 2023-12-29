@@ -13,7 +13,7 @@ $functions = explode("function", $bashprof);
 $funclist = [];
 echo "\nBASH helper functions for " . $args["helptype"] . ":\n";
 foreach ($functions as $row => $f) {
-      $funcname = trim(substr($f, 0, strpos($f, "(")));
+      $funcname = trim(substr($f, 0, strpos($f, "("))) . ".";
       if ($row > 0) {
 	    $comment = $functions[$row - 1];
 	    $commentindex = strrpos($comment, PHP_EOL, -2);
