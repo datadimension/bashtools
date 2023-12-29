@@ -17,12 +17,12 @@ foreach ($functions as $row => $f) {
       if ($row > 0) {
 	    $comment = $functions[$row - 1];
 	    $commentindex = strrpos($comment, PHP_EOL, -2);
-	    $comment = substr($comment, $commentindex, 10);
+	    $comment = substr($comment, $commentindex);
 //	    $funcname .= "  -  " . $commentindex . " " . $comment;
 
 	    if (substr($comment, 0, 1) != "") {
 		  $comment = substr($comment, 0, 10);
-		  $funcname .= "  -  " . $comment;
+		  $funcname .= "  -  |" . $comment . "|";
 	    }
       }
       if ($funcname) {
