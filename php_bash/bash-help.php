@@ -19,8 +19,8 @@ foreach ($functions as $row => $f) {
 	    $commentindex = strrpos($comment, PHP_EOL, -2);
 	    $comment = substr($comment, $commentindex + 1);
 	    if (substr($comment, 0, 1) == "#") {
-		  $comment = substr($comment, 1);
-		  $funcname .= "  -" . $comment;
+		  $comment = substr($comment);
+		  $funcname .= "  " . $comment;
 	    }
       }
       if ($funcname) {
