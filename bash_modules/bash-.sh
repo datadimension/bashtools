@@ -85,7 +85,7 @@ function bash-install() {
 
 # shows bash function categories and functions
 function bash-help() {
-		echo "Help categories:"
+		echo-b "Help Categories:"
 	  menu "bash,env,filesys,git,log,net,os,nginx,php,www"
 	php ~/bashtools/php_bash/bash-help.php helptype=$MENUCHOICE
 }
