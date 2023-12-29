@@ -95,7 +95,7 @@ function git-reset-all() {
 		echo "Reset file and directory permissions ? [y/n]"
 		read input
 		if [ "$input" == "y" ]; then
-			bash-secure
+			filesys-secure
 		fi
 	fi
 }

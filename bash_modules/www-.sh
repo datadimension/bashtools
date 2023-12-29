@@ -240,7 +240,7 @@ function www-install-dependancies() {
 	php artisan key:generate #dev server php70 artisan key:generate;
 	php artisan view:clear
 	php artisan --version
-	bash-secure
+	filesys-secure
 }
 
 function os-certificategen() {

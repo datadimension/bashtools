@@ -2,6 +2,7 @@
 
 # initialises the bash shell #
 function bash-start() {
+	source ~/bashtools/bash_modules/std-.sh #standard for a platforms
 	source ~/bashtools/bash_modules/os-.sh
 	source ~/bashtools/bash_modules/filesys-.sh
 	source ~/bashtools/bash_modules/env-.sh
@@ -83,7 +84,7 @@ function bash-install() {
 
 # shows bash function categories and functions
 function bash-help() {
-	  menu bash,env,filesys,git,log,net,os,nginx,php,www  "Help Categories:"
+	  std-menu std,bash,env,filesys,git,log,net,os,nginx,php,www  "Help Categories:"
 	php ~/bashtools/php_bash/bash-help.php helptype=$MENUCHOICE
 }
 
@@ -93,23 +94,6 @@ function bash-restart() {
 	clear
 	source ~/.bash_profile
 	bash-start
-}
-
-function bash-sshcheck() {
-	echo 'Current sessions are:'
-	ps -ef | grep ssh
-	echo "use sudo kill -9 <processid />" to end it
-	echo "or enter 'ok' to kill all ssh - including this one and reboot server"
-	read option
-	if [ "$option" == "ok" ]; then
-		sudo pkill ssh
-		sudo reboot
-	fi
-}
-
-function xbash-sshcheck() {
-	echo 'Current sessions are:'
-	ps -A | grep ssh
 }
 
 function bash-writesettings() {
@@ -124,9 +108,48 @@ function bash-writesettings() {
 	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 }
 
+function bash-who() {
+	echo "I am"
+	echo-h1 $welcomemsg
+}
+
+function bash-logout() {
+	bash-writesettings
+	echo "Written out settings, press enter to exit"
+	read waitb
+	clear
+	source ~/.bash_profile
+}
+
+# Show history or search in history
+function bash-h() {
+	search=$1
+	if [ "$search" == "" ]; then
+		echo "enter search text"
+		read search
+	fi
+	clear
+	echo "history search:"
+	echo "$search"
+	echo-hr
+	if [ "$search" == "" ]; then
+		history
+	else
+		history | grep $search
+	fi
+	echo-hr
+}
+
+
+
+
+function bash-sudoers() {
+	grep '^sudo:.*$' /etc/group | cut -d: -f4
+}
+
 function bash-readsettings() {
-	wwwsites=$(<~/bashtoolscfg/wwwsites)
-	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
+	#20231229wwwsites=$(<~/bashtoolscfg/wwwsites)
+#20231229IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
 
 	csv=$(<~/bashtoolscfg/os_status)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
@@ -151,115 +174,4 @@ function bash-readsettings() {
 	welcomemsg=${values[10]}
 	wwwroot=${values[11]}
 	platform=${values[12]}
-}
-
-function bash-who() {
-	echo "I am"
-	echo-h1 $welcomemsg
-}
-
-bash-envsetphp() {
-	php -v
-	echo "Please enter php version to 1 decimal place eg 7.4"
-	read phpNo
-	bash-writesettings
-	#bash-sets
-}
-
-function bash-ssh() {
-	echo "Enter server to access:"
-	echo "1. $ssh1"
-	echo "2. $ssh2"
-	echo ""
-	read server
-	if [ "$server" == "1" ]; then
-		ssh $ssh1
-	else
-		ssh $ssh2
-	fi
-	bash-readsettings
-}
-
-function bash-setssh() {
-	echo "Please enter ssh servers in format <username />@<ipaddress /> eg myuser@123.123.123.123"
-	echo "Enter ssh server 1"
-	read ssh1
-	echo "Enter ssh server 2"
-	read ssh2
-	bash-writesettings
-}
-
-function bash-logout() {
-	bash-writesettings
-	echo "Written out settings, press enter to exit"
-	read waitb
-	clear
-	source ~/.bash_profile
-}
-
-function bash-h() {
-	search=$1
-	if [ "$search" == "" ]; then
-		echo "enter search text"
-		read search
-	fi
-	clear
-	echo "history search:"
-	echo "$search"
-	echo-hr
-	if [ "$search" == "" ]; then
-		history
-	else
-		history | grep $search
-	fi
-	echo-hr
-}
-
-#reset permission levels to minimal required
-#need to check if permisions can be tightened
-#https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
-function bash-secure() {
-	echo "Remove nginxtest ? y/n"
-	read -t 3 input
-	if [ "$input" == "y" ]; then
-		www-nginxtest_remove
-	fi
-	echo "Securing file ownership" # this is after as password required first
-	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus
-
-	echo "Securing file permissions"
-	sudo find $wwwroot/html/$www_sitefocus -type f -exec chmod 644 {} \;
-
-	echo "Securing directory permissions"
-	sudo find $wwwroot/html/$www_sitefocus -type d -exec chmod 755 {} \;
-
-	echo "Securing laravel permissions"
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/private/downloads
-
-	echo "Not impelemented"
-	echo "FIrewall lockdown to"
-	echo "SSH"l
-	echo "FTP via SSH"
-	echo "NGINX"
-	echo "MySQL"
-	echo "Xdebug (for dev only)"
-}
-
-function bash-hosts() {
-	sudo nano /etc/hosts
-}
-
-function bash-sudoers() {
-	grep '^sudo:.*$' /etc/group | cut -d: -f4
-}
-
-function bash-gitinstall() {
-	cd $wwwroot/html/serveradmin/_cli/bash
-	git pull
-	sudo rm ~/.bash_profile
-	sudo cp $wwwroot/html/serveradmin/_cli/bash/bash_profile.sh ~/.bash_profile
-	source ~/.bash_profile
-	bash-start
 }

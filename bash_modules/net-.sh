@@ -23,3 +23,19 @@ function vpn() {
 	sudo openconnect -b $vpnurl
 	echo "CTRL C exits VPN setup - if connected will continue running in the background"
 }
+
+function net-hosts() {
+	sudo nano /etc/hosts
+}
+
+function net-sshcheck() {
+	echo 'Current sessions are:'
+	ps -ef | grep ssh
+	echo "use sudo kill -9 <processid />" to end it
+	echo "or enter 'ok' to kill all ssh - including this one and reboot server"
+	read option
+	if [ "$option" == "ok" ]; then
+		sudo pkill ssh
+		sudo reboot
+	fi
+}
