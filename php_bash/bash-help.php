@@ -21,7 +21,7 @@ foreach ($functions as $row => $f) {
 //	    $funcname .= "  -  " . $commentindex . " " . $comment;
 
 	    if (substr($comment, 0, 1) != "") {
-		  $comment = substr($comment, 0, 10);
+		  $comment = substr($comment, 0);
 		  $funcname .= "  -  |" . $comment . "|";
 	    }
       }
