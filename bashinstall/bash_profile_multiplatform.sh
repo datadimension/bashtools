@@ -31,7 +31,7 @@ function menu(){
   for (( i=$start; i<=$optioncount; i++ ));do
     	echo "$((i + 1)): ${values[$i]}"
   done
-  echo $'\nEnter Choice:';
+  echo-b "Enter Choice:";
   read choice
   choice=$choice-1;
   MENUCHOICE=${values[$choice]};
@@ -61,6 +61,11 @@ function echo-h1() {
 
 function echo-hr() {
 	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+}
+
+function echo-b(){
+  	textoutput=$1
+  echo -e "\e[1m$textoutput\e[0m";
 }
 
 function set-timestamp() {
