@@ -145,9 +145,28 @@ function bash-sudoers() {
 	grep '^sudo:.*$' /etc/group | cut -d: -f4
 }
 
+# displays the current bashtoolscfg files
+function bash-cfg(){
+  echo-b "bash.env";
+  echo "";
+  tail ~/bashtoolscfg/bash.env;
+  echo -e "\n";
+  echo-b "os_status";
+  echo "";
+  tail ~/bashtoolscfg/os_status;
+  echo -e "\n";
+  echo-b "os_status.env";
+  echo "";
+  tail ~/bashtoolscfg/os_status.env;
+  echo -e "\n";
+  echo-b "wwwsites";
+  echo "";
+  tail ~/bashtoolscfg/wwwsites;
+}
+
 function bash-readsettings() {
-	#20231229wwwsites=$(<~/bashtoolscfg/wwwsites)
-#20231229IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
+	wwwsites=$(<~/bashtoolscfg/wwwsites)
+  IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
 
 	csv=$(<~/bashtoolscfg/os_status)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written

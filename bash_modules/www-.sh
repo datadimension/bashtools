@@ -41,6 +41,7 @@ function www-siteremove() {
 	fi
 }
 
+# sets up and assigns site to site index list, installing if needed
 function www-siteset() {
 	clear
 	echo-h1 "Site Set"
