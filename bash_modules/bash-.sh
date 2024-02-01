@@ -20,7 +20,7 @@ function bash-start() {
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
-	MENUCHOICE="";#reserved as a global for menu function
+	MENUCHOICE="" #reserved as a global for menu function
 
 	#env-attributerequire "welcomemsg"
 
@@ -36,11 +36,11 @@ function bash-start() {
 	startdir="$wwwroot/html/$www_sitefocus"
 	cd $startdir
 	file-showdir $startdir
-	 echo-now >>  ~/bashtoolscfg/sshclient.log
-	 echo $SSH_CLIENT | awk '{ print $1}' >> ~/bashtoolscfg/sshclient.log
+	echo-now >>~/bashtoolscfg/sshclient.log
+	echo $SSH_CLIENT | awk '{ print $1}' >>~/bashtoolscfg/sshclient.log
 }
 
-# this comment will be ignored for now as no closure #   
+# this comment will be ignored for now as no closure #
 function bash-push() {
 	echo-h1 "pushing bash repo"
 	cd ~/bashtools
@@ -74,10 +74,10 @@ function bash-install() {
 	fi
 	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
 	rm ~/.bash_profile
-	cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile;
+	cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile
 	if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
 		# cat ~/bashtools/bashinstall/bash_profile_sudo.sh >>~/.bash_profile
-		noop=1;
+		noop=1
 	fi
 	# cat ~/bashtools/bashinstall/bash_profile_multiplatform.sh >>~/.bash_profile
 	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
@@ -90,7 +90,7 @@ function bash-install() {
 
 # shows bash function categories and functions
 function bash-help() {
-	  std-menu std,bash,env,filesys,git,log,net,os,nginx,php,www  "Help Categories:"
+	std-menu std,bash,env,filesys,git,log,net,os,nginx,php,www "Help Categories:"
 	php ~/bashtools/php_bash/bash-help.php helptype=$MENUCHOICE
 }
 
@@ -151,27 +151,27 @@ function bash-sudoers() {
 }
 
 # displays the current bashtoolscfg files
-function bash-cfg(){
-  echo-b "bash.env";
-  echo "";
-  tail ~/bashtoolscfg/bash.env;
-  echo -e "\n";
-  echo-b "os_status";
-  echo "";
-  tail ~/bashtoolscfg/os_status;
-  echo -e "\n";
-  echo-b "os_status.env";
-  echo "";
-  tail ~/bashtoolscfg/os_status.env;
-  echo -e "\n";
-  echo-b "wwwsites";
-  echo "";
-  tail ~/bashtoolscfg/wwwsites;
+function bash-cfg() {
+	echo-b "bash.env"
+	echo ""
+	tail ~/bashtoolscfg/bash.env
+	echo -e "\n"
+	echo-b "os_status"
+	echo ""
+	tail ~/bashtoolscfg/os_status
+	echo -e "\n"
+	echo-b "os_status.env"
+	echo ""
+	tail ~/bashtoolscfg/os_status.env
+	echo -e "\n"
+	echo-b "wwwsites"
+	echo ""
+	tail ~/bashtoolscfg/wwwsites
 }
 
 function bash-readsettings() {
 	wwwsites=$(<~/bashtoolscfg/wwwsites)
-  IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
+	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
 
 	csv=$(<~/bashtoolscfg/os_status)
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written

@@ -5,11 +5,17 @@ function net-firewall-start() {
 	sudo ufw reset
 	sudo ufw enable
 	sudo ufw allow ssh
-ufw allow 3306
+	ufw allow 3306
 	sudo ufw allow 'Nginx Full'
 	sudo ufw allow 9003
 	sudo ufw reload
 	sudo ufw status
+}
+
+#show history for user ssh sessions
+function net-ssh-history() {
+	echo "History for your ssh sessions:"
+	tail -1000 ~/bashtoolscfg/sshclient.log
 }
 
 function net-firewall-status() {
