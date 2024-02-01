@@ -18,6 +18,7 @@ function net-ssh-history() {
 	tail -1000 ~/bashtoolscfg/sshclient.log
 }
 
+#SYSTEM FUNC stores info about the current ssh client details
 function net-ssh-log-session() {
 	echo-now >>~/bashtoolscfg/sshclient.log
 	echo $SSH_CLIENT | awk '{ print $1}' >>~/bashtoolscfg/sshclient.log
