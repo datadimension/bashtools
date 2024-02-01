@@ -18,6 +18,11 @@ function net-ssh-history() {
 	tail -1000 ~/bashtoolscfg/sshclient.log
 }
 
+function net-ssh-log-session() {
+	echo-now >>~/bashtoolscfg/sshclient.log
+	echo $SSH_CLIENT | awk '{ print $1}' >>~/bashtoolscfg/sshclient.log
+}
+
 function net-firewall-status() {
 	sudo ufw status
 }

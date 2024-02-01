@@ -36,8 +36,7 @@ function bash-start() {
 	startdir="$wwwroot/html/$www_sitefocus"
 	cd $startdir
 	file-showdir $startdir
-	echo-now >>~/bashtoolscfg/sshclient.log
-	echo $SSH_CLIENT | awk '{ print $1}' >>~/bashtoolscfg/sshclient.log
+	net-ssh-log-session
 }
 
 # this comment will be ignored for now as no closure #
