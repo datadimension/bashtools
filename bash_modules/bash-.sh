@@ -15,6 +15,7 @@ function bash-start() {
 
 	clear
 	bash-readsettings
+
 	env-attributerequire "os_status"
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
@@ -33,9 +34,11 @@ function bash-start() {
 	startdir="$wwwroot/html/$www_sitefocus"
 	cd $startdir
 	file-showdir $startdir
+	 echo-now >>  ~/bashtoolscfg/sshclient.log
+	 echo $SSH_CLIENT | awk '{ print $1}' >> ~/bashtoolscfg/sshclient.log
 }
 
-# this comment will be ignored for now as no closure #
+# this comment will be ignored for now as no closure #   
 function bash-push() {
 	echo-h1 "pushing bash repo"
 	cd ~/bashtools

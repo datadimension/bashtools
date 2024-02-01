@@ -1,4 +1,13 @@
-# bashtools various functions to help with webdev
+bashtools are various functions to help with various terminal systems
+
+This projects is different in that it is not a web project, more its compiled into a user directory to be used for bash_profile
+therefore it should be stored outside of the www development directory.
+
+Edits should be pushed with bash-push
+
+Changes are made simply with bash-pull which pulls from git and recompiles and restarts bash
+
+some commands require sudo priviledge, but now are not seperated, similar to windows requiring Admin permission
 
 initialise with:
 
