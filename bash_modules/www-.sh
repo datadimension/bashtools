@@ -203,8 +203,10 @@ function www-siteswitch() {
 	read sitenumber
 	echo "Auto sync with GIT ? (y/n)"
 	read -t 3 input
-	if [ "$input" == "y" ]; then
-		git-push
+	if [ "$environment" != "production" ]; then #never push from production
+		if [ "$input" == "y" ]; then
+			git-push
+		fi
 	fi
 	sitenumber=$((sitenumber - 1))
 	www_sitefocus=${wwwsites[sitenumber]}
