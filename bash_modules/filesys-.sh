@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+# shows disk partition usage
+function file-disk(){
+  df -H
+}
 #reset permission levels to minimal required
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
