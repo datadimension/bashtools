@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # shows disk partition usage
-function file-disk(){
+function fsys-disk(){
   df -H
 }
 #reset permission levels to minimal required
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
-function files-secure() {
+function fsys-secure() {
 	echo "Remove nginxtest ? y/n"
 	read -t 3 input
 	if [ "$input" == "y" ]; then
