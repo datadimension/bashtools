@@ -89,7 +89,7 @@ function bash-install() {
 
 # shows bash function categories and functions
 function bash-help() {
-	std-menu std,bash,env,filesys,git,log,net,os,nginx,php,www "Help Categories:"
+	std-menu std,bash,env,fsys,git,log,net,os,nginx,php,www "Help Categories:"
 	php ~/bashtools/php_bash/bash-help.php helptype=$MENUCHOICE
 }
 
