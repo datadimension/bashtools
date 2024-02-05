@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # shows disk partition usage
-function fsys-disk(){
-  df -H
+function fsys-disk() {
+	df -H
 }
 #reset permission levels to minimal required
 #need to check if permisions can be tightened
@@ -64,7 +64,7 @@ function ~www() {
 	ls
 }
 function ~home() {
-  echo-h1 "home directory"
+	echo-h1 "home directory"
 	cd ~/
 	ls -al
 }
@@ -110,8 +110,8 @@ function ~log-sys() {
 }
 
 function ~nginx() {
-  echo-hr;
-  echo "NGINX sites"
+	echo-hr
+	echo "NGINX sites"
 	cd /etc/nginx/sites-enabled
 	ls
 }

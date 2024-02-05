@@ -4,7 +4,7 @@
 function bash-start() {
 	source ~/bashtools/bash_modules/std-.sh #standard for a platforms
 	source ~/bashtools/bash_modules/os-.sh
-	source ~/bashtools/bash_modules/filesys-.sh
+	source ~/bashtools/bash_modules/fsys-.sh
 	source ~/bashtools/bash_modules/env-.sh
 	source ~/bashtools/bash_modules/nginx-.sh
 	source ~/bashtools/bash_modules/php-.sh
