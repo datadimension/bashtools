@@ -39,14 +39,14 @@ function fsys-secure() {
 # combines cd and ls into a single command
 function cdls() {
 	mode=""
-	dir=$1;
+	dir=$1
 	if [ "$1" == "-al" ]; then
 		dir=$2
 		mode="-al"
 	fi
 	cd $dir
-		if [ "$mode" == "-al" ]; then
-		ls -al;
+	if [ "$mode" == "-al" ]; then
+		ls -al
 	fi
 	ls
 }
