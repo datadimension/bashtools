@@ -36,7 +36,7 @@ function fsys-secure() {
 	echo "Xdebug (for dev only)"
 }
 
-function cd~() {
+function cdls() {
 	dir=$1
 	cd $dir
 	ls
