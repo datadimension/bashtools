@@ -201,10 +201,10 @@ function www-siteswitch() {
 	www-siteshow
 	echo "Please select a site number to chose for operations"
 	read sitenumber
-	echo "Auto sync with GIT ? (y/n)"
-	read -t 3 input
+	echo "Auto sync with GIT (recommended) ? n=no"
+	read -t 5 input
 	if [ "$environment" != "production" ]; then #never push from production
-		if [ "$input" == "y" ]; then
+		if [ "$input" != "n" ]; then
 			git-push
 		fi
 	fi
@@ -213,7 +213,7 @@ function www-siteswitch() {
 	cd "$wwwroot/html/$www_sitefocus"
 	echo "setting site to $www_sitefocus"
 	bash-writesettings
-	if [ "$input" == "y" ]; then
+	if [ "$input" != "n" ]; then
 		git-pull
 	fi
 	bash-start
