@@ -83,6 +83,8 @@ function os-upgrade() {
 }
 
 function os-install-dependancies() {
+echo "System Setup.";
+echo "Ready to install system dependencies";
 	os-upgrade
 	#force utc timezone
 	sudo rm -f /etc/localtime                         # Delete the current time zone file
