@@ -83,8 +83,10 @@ function os-upgrade() {
 }
 
 function os-install-dependancies() {
-echo "System Setup.";
-echo "Ready to install system dependencies";
+	echo "System Setup."
+	echo "Ready to install system dependencies"
+	echo "Press Enter"
+	read wait
 	os-upgrade
 	#force utc timezone
 	sudo rm -f /etc/localtime                         # Delete the current time zone file
@@ -107,6 +109,7 @@ echo "Ready to install system dependencies";
 	sudo mkdir /var/www/html
 	sudo mkdir /var/www/certs
 	php-install
+	os-install-nginx
 	net-firewall-start
 }
 function os-installnewselfsignedcert() {
@@ -138,7 +141,7 @@ function os-install-nginx() {
 		sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf
 	fi
 	www-nginxtest_install
-	sudo net-firewall-start
+	net-firewall-start
 }
 
 #downloads only into user downloads dir with the sub path given
@@ -186,13 +189,14 @@ function os-install-xdebug() {
 
 function os-sshaccess() {
 	clear
-	echo-h1 "Securing server access - note this is intended for if you are logging in as root. If you are loggin in as another user you will lose access"
+	echo "Securing server access - note this is intended for if you are logging in as root. If you are loggin in as another user you might lose access"
 	echo "Please enter login name to be used as sudo"
 	read newuser
-	if [ "$newuser" != "" ]; then
+	currentuser=$USER
+
+	if [ "$newuser" != "$currentuser" ]; then
 		sudo adduser $newuser
 		sudo usermod -aG sudo $newuser
-		currentuser=$USER
 		sudo mv /home/$currentuser/.bash_profile /home/$newuser/.bash_profile
 		sudo chown $newuser:$newuser /home/$newuser/.bash_profile
 
@@ -202,7 +206,6 @@ function os-sshaccess() {
 		sudo mv /home/$currentuser/bashtoolscfg /home/$newuser/bashtoolscfg
 		sudo touch /home/$newuser/bashtoolscfg/gitcfg
 		sudo chown -R $newuser:$newuser /home/$newuser/bashtoolscfg
-
 		echo "Now generating ssh keys, you are ok to accept defaults"
 		ssh-keygen
 		pubkey=$(<~/.ssh/id_rsa.pub)
@@ -212,18 +215,22 @@ function os-sshaccess() {
 		sudo chown -R $newuser:$newuser /home/$newuser/.ssh
 
 		echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
-		puttygen id_rsa -o id_rsa.ppk
-		ppk=$(<~/.ssh/id_rsa.ppk)
-		echo "Remove temp key for this server from git at add this"
-		echo pubkey
-		read wait
-		echo "Now paste this into a windows .ppk file and tell Putty where to find it."
-		echo ""
-		echo $echo ppk
-		echo "Press any key to exit and then log in as this user using ssh key"
-		read wait
-		exit
+	else
+		pubkey=$(<~/.ssh/id_rsa.pub)
 	fi
+	puttygen id_rsa -o id_rsa.ppk
+	ppk=$(<~/.ssh/id_rsa.ppk)
+	if [ "$newuser" != "$currentuser" ]; then
+		echo "Remove temp key for this server from git at add this"
+		echo $pubkey
+		read wait
+	fi
+	echo "If on Windows paste this into a windows .ppk file and tell Putty where to find it (eg IP address)"
+	echo ""
+	echo $echo ppk
+	echo "Press any key to exit and then log in as this user using ssh key"
+	read wait
+	exit
 }
 
 function os-sshsecure() {

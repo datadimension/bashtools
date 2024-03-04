@@ -8,11 +8,6 @@ function fsys-disk() {
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
-	echo "Remove nginxtest ? y/n"
-	read -t 3 input
-	if [ "$input" == "y" ]; then
-		www-nginxtest_remove
-	fi
 	echo "Securing file ownership" # this is after as password required first
 	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus
 
@@ -25,7 +20,7 @@ function fsys-secure() {
 	echo "Securing laravel permissions"
 	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
 	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/private/downloads
+	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/private
 
 	echo "Not impelemented"
 	echo "FIrewall lockdown to"

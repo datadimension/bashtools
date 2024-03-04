@@ -1,4 +1,6 @@
-# function description #
+#!/usr/bin/env bash
+
+# restart nginx and php completely
 function nginx-start() {
 	echo "Restart Nginx ? y/n"
 	read -t 3 input
@@ -26,6 +28,14 @@ function nginx-start() {
 		fi
 		echo-now
 		echo-hr
+	fi
+}
+
+function remove-nginxtest(){
+	echo "Remove nginxtest ? y/n"
+	read -t 3 input
+	if [ "$input" == "y" ]; then
+		www-nginxtest_remove
 	fi
 }
 

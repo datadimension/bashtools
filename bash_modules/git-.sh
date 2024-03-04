@@ -19,9 +19,12 @@ function git-installrepo() {
 	sudo mkdir -p $wwwroot/html/$dir/storage/framework/sessions/
 	sudo mkdir -p $wwwroot/html/$dir/storage/framework/cache/
 	sudo mkdir -p $wwwroot/html/$dir/storage/app/cache/
+
 	sudo mkdir -p $wwwroot/html/$dir/storage/logs/
 	sudo touch $wwwroot/html/$dir/storage/logs/cronresult.log
 	sudo touch $wwwroot/html/$dir/storage/logs/apperror.log
+	sudo touch $wwwroot/html/$dir/storage/logs/ssh.log
+
 	sudo mkdir -p $wwwroot/html/$dir/bootstrap/cache
 	sudo mkdir -p $wwwroot/html/$dir/public/downloads/
 }
