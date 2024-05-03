@@ -99,7 +99,7 @@ function os-install-dependancies() {
 	#sudo apt-get -y install software-properties-common;
 	#sudo apt-get -y install jq;#terminal json processor https://stedolan.github.io/jq/
 	#sudo apt-get -y install tree;#https://lintut.com/use-tree-command-in-linux/
-	#sudo apt-get -y install curl;
+	sudo apt-get -y install curl
 	#sudo apt-get -y install xclip;#allows copying of file to clipboard in the terminal
 	sudo apt-get -y install figlet
 	sudo apt-get install -y nodejs
@@ -213,13 +213,12 @@ function os-sshaccess() {
 		sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
 		sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
 		sudo chown -R $newuser:$newuser /home/$newuser/.ssh
-
 		echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
 	else
 		pubkey=$(<~/.ssh/id_rsa.pub)
 	fi
-	puttygen id_rsa -o id_rsa.ppk
-	ppk=$(<~/.ssh/id_rsa.ppk)
+	puttygen /home/$newuser/.ssh/id_rsa -o /home/$newuser/.ssh/id_rsa.ppk
+	ppk=$(</home/$newuser/.ssh/id_rsa.ppk)
 	if [ "$newuser" != "$currentuser" ]; then
 		echo "Remove temp key for this server from git at add this"
 		echo $pubkey
@@ -266,6 +265,8 @@ function os-install-composer() {
 	php -r "unlink('composer-setup.php');"
 	sudo mv composer.phar /usr/local/bin/composer
 	composer global require laravel/installer
+	composer global require phpseclib/phpseclib:~3.0
+
 }
 
 function os-install-mysql() {

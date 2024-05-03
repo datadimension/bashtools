@@ -18,8 +18,8 @@ function fsys-secure() {
 	sudo find $wwwroot/html/$www_sitefocus -type d -exec chmod 755 {} \;
 
 	echo "Securing laravel permissions"
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
+	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/storage
+	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/public/downloads
 	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/private
 
 	echo "Not impelemented"
@@ -29,6 +29,15 @@ function fsys-secure() {
 	echo "NGINX"
 	echo "MySQL"
 	echo "Xdebug (for dev only)"
+}
+
+function file_exists() {
+	path=$1
+	if test -f $path; then
+  echo "File exists: $path"
+  else
+  echo "File does not exist: $path"
+fi
 }
 
 # combines cd and ls into a single command
