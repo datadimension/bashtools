@@ -189,6 +189,7 @@ function os-install-xdebug() {
 
 function os-sshaccess() {
 	clear
+	echo "SSH setup";
 	echo "Securing server access - note this is intended for if you are logging in as root. If you are loggin in as another user you might lose access"
 	echo "Please enter login name to be used as sudo"
 	read newuser

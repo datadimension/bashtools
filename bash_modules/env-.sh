@@ -3,11 +3,14 @@ function env-attributerequire() {
 	varname=$1
 	if [ "$varname" == "os_status" ]; then
 		if [ "$os_status" == "" ]; then
-			echo "$os_status"
+			echo "Status: $os_status"
+			wait
 			os-install-dependancies
 			os_status="1"
 			bash-restart
 		elif [ "$os_status" == "1" ]; then
+		  			echo "Status: $os_status"
+		  			wait
 			os-sshaccess
 			os_status="2"
 			bash-restart
