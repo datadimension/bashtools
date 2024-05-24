@@ -132,14 +132,11 @@ function os-install-nginx() {
 	sudo rm /etc/nginx/sites-enabled/default
 	sudo rm /etc/nginx/sites-available/default
 	sudo rm /var/www/html/index.nginx-debian.html
-	echo "Copy self signed cert ? So dev server can run  HTTPS (y/n) - note this is an insecure certificate and will not be valid on live server"
-	read input
-	if [ "$input" != "y" ]; then
-		sudo cp ~/bashtools/templates/nginx/nginxsetup/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
-		sudo cp ~/bashtools/templates/nginx/nginxsetup/dhparam.pem /etc/nginx/dhparam.pem
-		sudo cp ~/bashtools/templates/nginx/nginxsetup/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
-		sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf
-	fi
+	echo "Copying self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
+	sudo cp ~/bashtools/templates/nginx/nginxsetup/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
+	sudo cp ~/bashtools/templates/nginx/nginxsetup/dhparam.pem /etc/nginx/dhparam.pem
+	sudo cp ~/bashtools/templates/nginx/nginxsetup/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
+	sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf
 	www-nginxtest_install
 	net-firewall-start
 }
@@ -189,12 +186,11 @@ function os-install-xdebug() {
 
 function os-sshaccess() {
 	clear
-	echo "SSH setup";
+	echo "SSH setup"
 	echo "Securing server access - note this is intended for if you are logging in as root. If you are loggin in as another user you might lose access"
 	echo "Please enter login name to be used as sudo"
 	read newuser
 	currentuser=$USER
-
 	if [ "$newuser" != "$currentuser" ]; then
 		sudo adduser $newuser
 		sudo usermod -aG sudo $newuser
@@ -228,9 +224,6 @@ function os-sshaccess() {
 	echo "If on Windows paste this into a windows .ppk file and tell Putty where to find it (eg IP address)"
 	echo ""
 	echo $echo ppk
-	echo "Press any key to exit and then log in as this user using ssh key"
-	read wait
-	exit
 }
 
 function os-sshsecure() {

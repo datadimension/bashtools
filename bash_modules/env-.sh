@@ -4,16 +4,35 @@ function env-attributerequire() {
 	if [ "$varname" == "os_status" ]; then
 		if [ "$os_status" == "" ]; then
 			echo "Status: $os_status"
-			wait
+			read wait
 			os-install-dependancies
 			os_status="1"
 			bash-restart
 		elif [ "$os_status" == "1" ]; then
-		  			echo "Status: $os_status"
-		  			wait
+			echo "Status: $os_status installing ssh access"
+			read wait
 			os-sshaccess
 			os_status="2"
-			bash-restart
+			echo "Press any key to exit and then log in as this user using ssh key"
+			read wait
+			bash-writesettings;
+			exit
+		fi
+		elif [ "$os_status" == "2" ]; then
+			echo "Status: $os_status securing ssh access"
+			read wait
+			echo "Please write TESTED to confirm you have logged in via ssh - otherwise you might get blocked as we will secure ssh access in the next step"
+			read confirm
+			if [ "$confirm" != "TESTED" ]; then
+			  echo "You can try running os-sshaccess again or try logging in via ssh"
+				  			read wait;
+				  			bash-restart;
+			fi
+			os-sshsecure
+			os_status="2"
+			echo "Press any key to exit and then log in as this user using ssh key"
+			read wait
+			exit
 		fi
 	elif [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
