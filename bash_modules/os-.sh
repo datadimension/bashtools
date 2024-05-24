@@ -188,42 +188,49 @@ function os-sshaccess() {
 	clear
 	echo "SSH setup"
 	echo "Securing server access - note this is intended for if you are logging in as root. If you are loggin in as another user you might lose access"
-	echo "Please enter login name to be used as sudo"
+	echo "Please enter username you wish to use for sudo and ssh"
+
 	read newuser
 	currentuser=$USER
 	if [ "$newuser" != "$currentuser" ]; then
 		sudo adduser $newuser
 		sudo usermod -aG sudo $newuser
-		sudo mv /home/$currentuser/.bash_profile /home/$newuser/.bash_profile
-		sudo chown $newuser:$newuser /home/$newuser/.bash_profile
+		echo "Please log in as this user"
+		read wait
+		exit
+		#sudo mv /home/$currentuser/.bash_profile /home/$newuser/.bash_profile
+		#sudo chown $newuser:$newuser /home/$newuser/.bash_profile
 
-		sudo mv /home/$currentuser/bashtools /home/$newuser/bashtools
-		sudo chown -R $newuser:$newuser /home/$newuser/bashtools
+		#sudo mv /home/$currentuser/bashtools /home/$newuser/bashtools
+		#	sudo chown -R $newuser:$newuser /home/$newuser/bashtools
 
-		sudo mv /home/$currentuser/bashtoolscfg /home/$newuser/bashtoolscfg
-		sudo touch /home/$newuser/bashtoolscfg/gitcfg
-		sudo chown -R $newuser:$newuser /home/$newuser/bashtoolscfg
-		echo "Now generating ssh keys, you are ok to accept defaults"
-		ssh-keygen
-		pubkey=$(<~/.ssh/id_rsa.pub)
-		touch /home/$newuser/.ssh/authorized_keys
-		sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
-		sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
-		sudo chown -R $newuser:$newuser /home/$newuser/.ssh
-		echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
+		#	sudo mv /home/$currentuser/bashtoolscfg /home/$newuser/bashtoolscfg
+		#	sudo touch /home/$newuser/bashtoolscfg/gitcfg
+		#	sudo chown -R $newuser:$newuser /home/$newuser/bashtoolscfg
 	else
-		pubkey=$(<~/.ssh/id_rsa.pub)
+		echo "Do you want to generate NEW ssh keys or are you using EXISTING [new/existing]"
+		read confirm
+		if [ "$confirm" == "new" ]; then
+			echo "Now generating ssh keys, you are ok to accept defaults"
+			ssh-keygen
+			pubkey=$(<~/.ssh/id_rsa.pub)n
+			touch /home/$newuser/.ssh/authorized_keys
+			#sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
+			#sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
+			sudo chown -R $newuser:$newuser /home/$newuser/.ssh
+			echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
+		else
+			pubkey=$(<~/.ssh/id_rsa.pub)
+		fi
 	fi
 	puttygen /home/$newuser/.ssh/id_rsa -o /home/$newuser/.ssh/id_rsa.ppk
 	ppk=$(</home/$newuser/.ssh/id_rsa.ppk)
-	if [ "$newuser" != "$currentuser" ]; then
-		echo "Remove temp key for this server from git at add this"
-		echo $pubkey
-		read wait
-	fi
-	echo "If on Windows paste this into a windows .ppk file and tell Putty where to find it (eg IP address)"
+	echo "Public key for git for this server"
+	echo $pubkey
 	echo ""
+	echo "For Windows ssh access paste this into a windows .ppk file and tell Putty where to find it (eg IP address)"
 	echo $echo ppk
+	wait
 }
 
 function os-sshsecure() {

@@ -4,7 +4,6 @@ function env-attributerequire() {
 	if [ "$varname" == "os_status" ]; then
 		if [ "$os_status" == "" ]; then
 			echo "Status: $os_status"
-			read wait
 			os-install-dependancies
 			os_status="1"
 			bash-restart
@@ -30,8 +29,8 @@ function env-attributerequire() {
 		os-sshsecure
 		os_status="3"
 		bash-writesettings
-					echo "Press any key to exit and then log in as this user using ssh key"
-wait
+		echo "Press any key to exit and then log in as this user using ssh key"
+		wait
 		exit
 	elif [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
