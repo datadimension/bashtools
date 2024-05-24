@@ -15,25 +15,24 @@ function env-attributerequire() {
 			os_status="2"
 			echo "Press any key to exit and then log in as this user using ssh key"
 			read wait
-			bash-writesettings;
+			bash-writesettings
 			exit
 		fi
-		elif [ "$os_status" == "2" ]; then
-			echo "Status: $os_status securing ssh access"
+	elif [ "$os_status" == "2" ]; then
+		echo "Status: $os_status securing ssh access"
+		read wait
+		echo "Please write TESTED to confirm you have logged in via ssh - otherwise you might get blocked as we will secure ssh access in the next step"
+		read confirm
+		if [ "$confirm" != "TESTED" ]; then
+			echo "You can try running os-sshaccess again or try logging in via ssh"
 			read wait
-			echo "Please write TESTED to confirm you have logged in via ssh - otherwise you might get blocked as we will secure ssh access in the next step"
-			read confirm
-			if [ "$confirm" != "TESTED" ]; then
-			  echo "You can try running os-sshaccess again or try logging in via ssh"
-				  			read wait;
-				  			bash-restart;
-			fi
-			os-sshsecure
-			os_status="2"
-			echo "Press any key to exit and then log in as this user using ssh key"
-			read wait
-			exit
+			bash-restart
 		fi
+		os-sshsecure
+		os_status="2"
+		echo "Press any key to exit and then log in as this user using ssh key"
+		read wait
+		exit
 	elif [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
 			env-setservertype
