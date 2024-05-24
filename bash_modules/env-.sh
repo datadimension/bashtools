@@ -20,7 +20,6 @@ function env-attributerequire() {
 		fi
 	elif [ "$os_status" == "2" ]; then
 		echo "Status: $os_status securing ssh access"
-		read wait
 		echo "Please write TESTED to confirm you have logged in via ssh - otherwise you might get blocked as we will secure ssh access in the next step"
 		read confirm
 		if [ "$confirm" != "TESTED" ]; then
@@ -29,9 +28,10 @@ function env-attributerequire() {
 			bash-restart
 		fi
 		os-sshsecure
-		os_status="2"
-		echo "Press any key to exit and then log in as this user using ssh key"
-		read wait
+		os_status="3"
+		bash-writesettings
+					echo "Press any key to exit and then log in as this user using ssh key"
+wait
 		exit
 	elif [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
