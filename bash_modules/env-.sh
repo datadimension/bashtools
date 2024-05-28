@@ -9,7 +9,6 @@ function env-attributerequire() {
 			bash-restart
 		elif [ "$os_status" == "1" ]; then
 			echo "Status: $os_status installing ssh access"
-			read wait
 			os-sshaccess
 			os_status="2"
 			echo "Press any key to exit and then log in as this user using ssh key"

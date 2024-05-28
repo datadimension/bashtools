@@ -108,6 +108,7 @@ function os-install-dependancies() {
 	sudo apt-get install putty-tools
 	sudo mkdir /var/www/html
 	sudo mkdir /var/www/certs
+	sudo apt install openssh-server
 	php-install
 	os-install-nginx
 	net-firewall-start
@@ -208,54 +209,54 @@ function os-sshaccess() {
 		#	sudo touch /home/$newuser/bashtoolscfg/gitcfg
 		#	sudo chown -R $newuser:$newuser /home/$newuser/bashtoolscfg
 	else
+		touch /home/$newuser/.ssh/authorized_keys
 		echo "Do you want to generate NEW ssh keys or are you using EXISTING [new/existing]"
 		read confirm
 		if [ "$confirm" == "new" ]; then
 			echo "Now generating ssh keys, you are ok to accept defaults"
 			ssh-keygen
-			pubkey=$(<~/.ssh/id_rsa.pub)n
-			touch /home/$newuser/.ssh/authorized_keys
+			#pubkey=$(<~/.ssh/id_rsa.pub)
 			#sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
 			#sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
-			sudo chown -R $newuser:$newuser /home/$newuser/.ssh
-			echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
-		else
-			pubkey=$(<~/.ssh/id_rsa.pub)
 		fi
+		pubkey=$(<~/.ssh/id_rsa.pub)
+		sudo chown -R $newuser:$newuser /home/$newuser/.ssh
+		echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
+		puttygen /home/$newuser/.ssh/id_rsa -o /home/$newuser/.ssh/id_rsa.ppk
+		ppk=$(</home/$newuser/.ssh/id_rsa.ppk)
+		echo ""
+		echo "Public key for git for this server"
+		echo $pubkey
+		echo ""
+		echo "For Windows ssh access paste this into a windows .ppk file and tell Putty where to find it (eg IP address)"
+		echo $ppk
+		wait
 	fi
-	puttygen /home/$newuser/.ssh/id_rsa -o /home/$newuser/.ssh/id_rsa.ppk
-	ppk=$(</home/$newuser/.ssh/id_rsa.ppk)
-	echo "Public key for git for this server"
-	echo $pubkey
-	echo ""
-	echo "For Windows ssh access paste this into a windows .ppk file and tell Putty where to find it (eg IP address)"
-	echo $echo ppk
-	wait
 }
 
 function os-sshsecure() {
 	echo "any key to edit ssh to remove root - set"
 	echo "Comment out includes":
-	sudo nano +12 /etc/ssh/sshd_config
+	sudo sudo nano +12 /etc/ssh/sshd_config
 	echo "PermitRootLogin no"
 	read wait
-	sudo nano +36 /etc/ssh/sshd_config
+	sudo sudo nano +33 /etc/ssh/sshd_config
 	echo "PubkeyAuthentication yes"
 	read wait
-	sudo nano +41 /etc/ssh/sshd_config
-	echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root"
-	read wait
+	sudo nano +39 /etc/ssh/sshd_config
 	echo "Edit ssh to remove password access"
 	echo "PasswordAuthentication no"
 	read wait
-	sudo nano +60 /etc/ssh/sshd_config
-	sudo sudo service ssh reload
+	sudo nano +57 /etc/ssh/sshd_config
 	echo "We will edit /etc/php/$phpNo/fpm/php.ini"
 	echo "And for security change line to be"
 	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
 	read wait
 	sudo nano +802 /etc/php/$phpNo/fpm/php.ini
+	echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root"
+	read wait
 	net-firewall-start
+	sudo sudo service ssh reload
 	echo "***** DO NOT CLOSE CURRENT SESSION UNTIL YOU VERIFY YOU CAN ACCESS USING NEW PUTTY SESSION"
 }
 
