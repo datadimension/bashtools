@@ -41,6 +41,50 @@ function www-siteremove() {
 	fi
 }
 
+# create extra requirements such as storage .env etc
+function www-createnonrepofiles(){
+	sudo mkdir -p $wwwroot/html/$dir/storage/framework/views/
+	sudo mkdir -p $wwwroot/html/$dir/storage/framework/sessions/
+	sudo mkdir -p $wwwroot/html/$dir/storage/framework/cache/
+	sudo mkdir -p $wwwroot/html/$dir/storage/app/cache/
+
+	sudo mkdir -p $wwwroot/html/$dir/storage/logs/
+	sudo touch $wwwroot/html/$dir/storage/logs/cronresult.log
+	sudo touch $wwwroot/html/$dir/storage/logs/apperror.log
+	sudo touch $wwwroot/html/$dir/storage/logs/ssh.log
+
+	sudo mkdir -p $wwwroot/html/$dir/bootstrap/cache
+	sudo mkdir -p $wwwroot/html/$dir/public/downloads/
+}
+
+#creates a new website
+function www-create() {
+    clear
+    echo "This will create a new laravel project";
+  	echo "Available site directories:"
+  	echo-hr
+  	ls $wwwroot/html
+  	echo-hr
+  	www-siteshow
+  	echo ""
+  	echo "Please enter the index to set the new site on"
+  	echo ""
+  	read option
+  	sitenumber=$(($option - 1))
+  	echo "Enter the root DNS name eg example.com"
+  	read dir;
+	  wwwsites[$sitenumber]=$dir;
+	  cd "$wwwroot/html"
+    composer create-project laravel/laravel $dir;
+    www_sitefocus=$dir
+	  cd "$wwwroot/html/$www_sitefocus"
+    git-deploysubrepos
+    www-createnonrepofiles
+	  bash-writesettings
+	  #composer require twilio/sdk
+	  #20201119composer require clicksend/clicksend-php;
+}
+
 # sets up and assigns site to site index list, installing if needed
 function www-siteset() {
 	clear
@@ -221,12 +265,6 @@ function www-siteswitch() {
 
 function www-routes() {
 	php artisan route:list
-}
-
-#creates a new website
-function www-create() {
-	composer require twilio/sdk
-	#20201119composer require clicksend/clicksend-php;
 }
 
 # refreshes and installs composer dependancies

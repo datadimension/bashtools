@@ -235,20 +235,25 @@ function os-sshaccess() {
 }
 
 function os-sshsecure() {
-	echo "any key to edit ssh to remove root - set"
-	echo "Comment out includes":
+	echo "Between EACH, press ENTER to go to relevant line to edit ssh config"
+	echo ""
+	echo "1/5 Comment out the following to make this the definitive config file:"
+	echo "Include/etc/ssh/sshd_config.d/*.conf":
+	read wait
 	sudo sudo nano +12 /etc/ssh/sshd_config
+	echo "2/5 stop ssh access via root for security set"
 	echo "PermitRootLogin no"
 	read wait
 	sudo sudo nano +33 /etc/ssh/sshd_config
+	echo "3/5 set authentication by public key only set"
 	echo "PubkeyAuthentication yes"
 	read wait
-	sudo nano +39 /etc/ssh/sshd_config
-	echo "Edit ssh to remove password access"
+	sudo nano +38 /etc/ssh/sshd_config
+	echo "4/5 Edit ssh to remove password access"
 	echo "PasswordAuthentication no"
 	read wait
 	sudo nano +57 /etc/ssh/sshd_config
-	echo "We will edit /etc/php/$phpNo/fpm/php.ini"
+	echo "5/5 We will edit /etc/php/$phpNo/fpm/php.ini"
 	echo "And for security change line to be"
 	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
 	read wait

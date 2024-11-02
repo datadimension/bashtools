@@ -18,7 +18,7 @@ function env-attributerequire() {
 		fi
 	elif [ "$os_status" == "2" ]; then
 		echo "Status: $os_status securing ssh access"
-		echo "Please write TESTED to confirm you have logged in via ssh - otherwise you might get blocked as we will secure ssh access in the next step"
+		echo "Please write TESTED to confirm you have logged in via ssh with key access not password  - otherwise you might get blocked as we will secure ssh access in the next step"
 		read confirm
 		if [ "$confirm" != "TESTED" ]; then
 			echo "You can try running os-sshaccess again or try logging in via ssh"

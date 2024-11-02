@@ -14,19 +14,8 @@ function git-installrepo() {
 	sudo chown root:www-data /etc/nginx/sites-enabled/$dir
 	#file_put_contents("/etc/nginx/sites-enabled/" . $args["servername"], $blocktemplate);
 	www_sitefocus=$dir #do not this until now in case setting the repo dir and cloning it causes error
-	git-deploysubrepos
-	sudo mkdir -p $wwwroot/html/$dir/storage/framework/views/
-	sudo mkdir -p $wwwroot/html/$dir/storage/framework/sessions/
-	sudo mkdir -p $wwwroot/html/$dir/storage/framework/cache/
-	sudo mkdir -p $wwwroot/html/$dir/storage/app/cache/
-
-	sudo mkdir -p $wwwroot/html/$dir/storage/logs/
-	sudo touch $wwwroot/html/$dir/storage/logs/cronresult.log
-	sudo touch $wwwroot/html/$dir/storage/logs/apperror.log
-	sudo touch $wwwroot/html/$dir/storage/logs/ssh.log
-
-	sudo mkdir -p $wwwroot/html/$dir/bootstrap/cache
-	sudo mkdir -p $wwwroot/html/$dir/public/downloads/
+	git-deploysubrepos;
+	www-createnonrepofiles;
 }
 
 function git-pull() {
@@ -98,7 +87,7 @@ function git-reset-all() {
 		echo "Reset file and directory permissions ? [y/n]"
 		read input
 		if [ "$input" == "y" ]; then
-			filesys-secure
+			fsys-secure
 		fi
 	fi
 }
