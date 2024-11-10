@@ -55,6 +55,8 @@ function www-createnonrepofiles(){
 
 	sudo mkdir -p $wwwroot/html/$dir/bootstrap/cache
 	sudo mkdir -p $wwwroot/html/$dir/public/downloads/
+	sudo mkdir -p $wwwroot/html/$dir/private/
+
 }
 
 #creates a new website
@@ -78,9 +80,25 @@ function www-create() {
     composer create-project laravel/laravel $dir;
     www_sitefocus=$dir
 	  cd "$wwwroot/html/$www_sitefocus"
+	  composer require laravel/ui
+    php artisan ui bootstrap --auth
     git-deploysubrepos
     www-createnonrepofiles
 	  bash-writesettings
+	  #set nginx block
+	  php ~/bashtools/php_nginx/serverblock.php servername=$www_sitefocus
+	  sudo mv ~/bashtoolscfg/tmp/serverblock$www_sitefocus /etc/nginx/sites-enabled/$www_sitefocus
+    #add required Laravel files to use DD_laravel app
+    sudo cp ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http/Controller_c.php $wwwroot/html/$www_sitefocus/app/Http/Controllers/Contoller_c.php
+    #set routes
+    sudo cp ~/bashtools/templates/laravel/webfileinstall $wwwroot/html/$www_sitefocus/routes/web.php
+	  nginx-start;
+	  fsys-secure;
+	  echo "Site created. If all set correctly You can test by entering";
+	  echo;
+	  echo "https://"$www_sitefocus"/baseservertest";
+	  echo;
+	  echo "Into your browser"
 	  #composer require twilio/sdk
 	  #20201119composer require clicksend/clicksend-php;
 }

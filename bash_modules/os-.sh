@@ -109,6 +109,7 @@ function os-install-dependancies() {
 	sudo mkdir /var/www/html
 	sudo mkdir /var/www/certs
 	sudo apt install openssh-server
+	sudo apt install npm
 	php-install
 	os-install-nginx
 	net-firewall-start
