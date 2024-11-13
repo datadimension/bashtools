@@ -89,7 +89,7 @@ function www-create() {
 	  php ~/bashtools/php_nginx/serverblock.php servername=$www_sitefocus
 	  sudo mv ~/bashtoolscfg/tmp/serverblock$www_sitefocus /etc/nginx/sites-enabled/$www_sitefocus
     #add required Laravel files to use DD_laravel app
-    sudo cp ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http/Controller_c.php $wwwroot/html/$www_sitefocus/app/Http/Controllers/Contoller_c.php
+    sudo cp ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http/Controller_c.php $wwwroot/html/$www_sitefocus/app/Http/Controllers/Controller_c.php
     #set routes
     sudo cp ~/bashtools/templates/laravel/webfileinstall $wwwroot/html/$www_sitefocus/routes/web.php
 	  nginx-start;

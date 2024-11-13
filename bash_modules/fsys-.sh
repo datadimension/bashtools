@@ -18,13 +18,13 @@ function fsys-secure() {
 	sudo find $wwwroot/html/$www_sitefocus -type d -exec chmod 755 {} \;
 
 	echo "Securing laravel permissions"
-	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/app
+	sudo chmod -R 755 $wwwroot/html/$www_sitefocus/app
 	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/storage
 	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/public/downloads
 	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/private
 
 	echo "Not impelemented"
-	echo "FIrewall lockdown to" 
+	echo "FIrewall lockdown to"
 	echo "SSH"l
 	echo "FTP via SSH"
 	echo "NGINX"

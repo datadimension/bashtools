@@ -90,26 +90,22 @@ function os-install-dependancies() {
 	os-upgrade
 	#force utc timezone
 	sudo rm -f /etc/localtime                         # Delete the current time zone file
-	sudo ln -s /usr/share/zoneinfo/UTC /etc/localtime # Set it to the new value
-	#sudo apt-get -y install -y members;
-	sudo apt-get -y remove apache2.*
+	sudo ln -s /usr/share/zoneinfo/UTC /etc/localtime # Set it to UTC
+	sudo apt-get -y remove apache2.*#ensure apache is completely removed
 	sudo apt-get -y purge apache2
 	sudo apt-get -y autoremove
 	sudo apt-get -y autoclean
-	#sudo apt-get -y install software-properties-common;
-	#sudo apt-get -y install jq;#terminal json processor https://stedolan.github.io/jq/
-	#sudo apt-get -y install tree;#https://lintut.com/use-tree-command-in-linux/
+
 	sudo apt-get -y install curl
-	#sudo apt-get -y install xclip;#allows copying of file to clipboard in the terminal
 	sudo apt-get -y install figlet
-	sudo apt-get install -y nodejs
+	sudo apt-get -y install nodejs
 	sudo apt install net-tools
 	sudo apt-get install -y whois
 	sudo apt-get install putty-tools
-	sudo mkdir /var/www/html
-	sudo mkdir /var/www/certs
-	sudo apt install openssh-server
-	sudo apt install npm
+	sudo mkdir -p /var/www/html
+	sudo mkdir -p /var/www/certs
+	sudo apt-get -y install openssh-server
+	sudo apt-get -y install npm
 	php-install
 	os-install-nginx
 	net-firewall-start
@@ -186,62 +182,61 @@ function os-install-xdebug() {
 	fi
 }
 
-function os-sshaccess() {
-	clear
-	echo "SSH setup"
-	echo "Securing server access - note this is intended for if you are logging in as root. If you are loggin in as another user you might lose access"
-	echo "Please enter username you wish to use for sudo and ssh"
-
-	read newuser
+#create sudo user
+function os-sudocreate(){
+  echo "Please enter new sudo name"
+  read newuser
 	currentuser=$USER
 	if [ "$newuser" != "$currentuser" ]; then
 		sudo adduser $newuser
 		sudo usermod -aG sudo $newuser
-		echo "Please log in as this user"
+		os_status=$((os_status+1))
+		bash-writesettings
+		cd /home;
+		sudo cp -R ~/bashtools $newuser/bashtools
+		sudo cp -R ~/bashtoolscfg $newuser/bashtoolscfg
+		sudo rm $newuser/.bash_profile;
+  sudo cp ~/.bash_profile $newuser/.bash_profile;
+  sudo chown -R $newuser:$newuser  $newuser/bashtools;
+  sudo chown -R $newuser:$newuser  $newuser/bashtoolscfg;
+		echo "Please log in as this user and hit ENTER to exit this shell"
 		read wait
-		exit
-		#sudo mv /home/$currentuser/.bash_profile /home/$newuser/.bash_profile
-		#sudo chown $newuser:$newuser /home/$newuser/.bash_profile
-
-		#sudo mv /home/$currentuser/bashtools /home/$newuser/bashtools
-		#	sudo chown -R $newuser:$newuser /home/$newuser/bashtools
-
-		#	sudo mv /home/$currentuser/bashtoolscfg /home/$newuser/bashtoolscfg
-		#	sudo touch /home/$newuser/bashtoolscfg/gitcfg
-		#	sudo chown -R $newuser:$newuser /home/$newuser/bashtoolscfg
-	else
-		touch /home/$newuser/.ssh/authorized_keys
-		echo "Do you want to generate NEW ssh keys or are you using EXISTING [new/existing]"
-		read confirm
-		if [ "$confirm" == "new" ]; then
-			echo "Now generating ssh keys, you are ok to accept defaults"
-			ssh-keygen
-			#pubkey=$(<~/.ssh/id_rsa.pub)
-			#sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
-			#sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
+				os_status=0 #prevent root from setting up anything else
+						bash-writesettings
+		exit;
 		fi
-		pubkey=$(<~/.ssh/id_rsa.pub)
-		sudo chown -R $newuser:$newuser /home/$newuser/.ssh
-		echo "$pubkey" >/home/$newuser/.ssh/authorized_keys
-		puttygen /home/$newuser/.ssh/id_rsa -o /home/$newuser/.ssh/id_rsa.ppk
-		ppk=$(</home/$newuser/.ssh/id_rsa.ppk)
-		echo ""
-		echo "Public key for git for this server"
-		echo $pubkey
-		echo ""
-		echo "For Windows ssh access paste this into a windows .ppk file and tell Putty where to find it (eg IP address)"
-		echo $ppk
-		wait
-	fi
+}
+
+#lists and allows delete of sudoer
+function os-rmsudo(){
+    shopt -s nullglob
+    numfiles=(*)
+    numfiles=${#numfiles[@]}
+    if [ $numfiles == 1 ]; then
+      echo "Only one SUDOer left, you cannot remove all, try os-sudocreate first";
+    else
+      echo "Current SUDOers";
+      grep -Po '^sudo.+:\K.*$' /etc/group
+      echo "Please enter sudo user name to delete"
+      read rmuser;
+      sudo userdel -rfRZ $rmuser;
+    fi
 }
 
 function os-sshsecure() {
+  		echo "Please write TESTED to confirm you have logged in via ssh with key access not password  - otherwise you might get blocked as we will secure ssh access in the next step"
+  		read confirm
+  		if [ "$confirm" != "TESTED" ]; then
+  			echo "You can try running os-sshaccess again or try logging in via ssh"
+  			read wait
+  			bash-restart
+  			fi
 	echo "Between EACH, press ENTER to go to relevant line to edit ssh config"
 	echo ""
 	echo "1/5 Comment out the following to make this the definitive config file:"
 	echo "Include/etc/ssh/sshd_config.d/*.conf":
 	read wait
-	sudo sudo nano +12 /etc/ssh/sshd_config
+	sudo nano +12 /etc/ssh/sshd_config
 	echo "2/5 stop ssh access via root for security set"
 	echo "PermitRootLogin no"
 	read wait
@@ -259,11 +254,20 @@ function os-sshsecure() {
 	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
 	read wait
 	sudo nano +802 /etc/php/$phpNo/fpm/php.ini
+			os_status=$((os_status+1))
+  bash-writesettings;
+  read "Can you log in using keypair y/n ?"
+  read yn
+  	  		if [ "$yn" != "y" ]; then
+      			echo "You can try running os-sshaccess again or try logging in via ssh"
+      			read wait
+      			bash-restart
+      			fi
 	echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root"
 	read wait
 	net-firewall-start
-	sudo sudo service ssh reload
-	echo "***** DO NOT CLOSE CURRENT SESSION UNTIL YOU VERIFY YOU CAN ACCESS USING NEW PUTTY SESSION"
+	sudo service ssh reload
+exit;
 }
 
 function os-install-composer() {
@@ -319,3 +323,37 @@ select host, user from mysql.user;
 add user
 "
 }
+
+
+function os-sshkeygen() {
+  	currentuser=$USER
+		touch /home/$currentuser/.ssh/authorized_keys
+		echo "Do you want to generate NEW ssh keys or are you using EXISTING [new/existing]"
+		read confirm
+		if [ "$confirm" == "new" ]; then
+			echo "Now generating ssh keys, you are ok to accept defaults"
+			echo "Enter your email to personalise the keys"
+			read email;
+			ssh-keygen -t rsa -b 4096 -C $email;
+
+			#pubkey=$(<~/.ssh/id_rsa.pub)
+			#sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
+			#sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
+		fi
+		pubkey=$(<~/.ssh/id_rsa.pub)
+		sudo chown -R $currentuser:$currentuser /home/$currentuser/.ssh
+		echo "$pubkey" >/home/$currentuser/.ssh/authorized_keys
+		puttygen /home/$currentuser/.ssh/id_rsa -o /home/$currentuser/.ssh/id_rsa.ppk
+		ppk=$(</home/$currentuser/.ssh/id_rsa.ppk)
+		echo ""
+		echo "Public key for git for this server"
+		echo $pubkey
+		echo ""
+		echo "For Windows ssh access paste this into a windows text file"
+		 echo "with .ppk extension and tell Putty where to find it"
+		 echo ""
+		cat /home/$currentuser/.ssh/id_rsa.ppk
+		echo ""
+		wait
+}
+

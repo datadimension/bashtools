@@ -15,7 +15,6 @@ function bash-start() {
 
 	clear
 	bash-readsettings
-
 	env-attributerequire "os_status"
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
@@ -24,7 +23,7 @@ function bash-start() {
 
 	#env-attributerequire "welcomemsg"
 
-	echo "Welcome to"
+	echo "Hello Welcome to"
 	echo-h1 $serverid
 	echo $welcomemsg
 	echo "Your session IP detected as:"
@@ -38,6 +37,8 @@ function bash-start() {
 	file-showdir $startdir
 	net-ssh-log-session
 }
+
+
 
 # this comment will be ignored for now as no closure #
 function bash-push() {
@@ -101,18 +102,6 @@ function bash-restart() {
 	bash-start
 }
 
-function bash-writesettings() {
-	csv=""
-	for i in {0..9}; do
-		csv+="${wwwsites[$i]},"
-	done
-	#20230629echo $csv;
-	echo "$csv" >~/bashtoolscfg/wwwsites
-	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
-	echo "$git_ssh" >~/bashtoolscfg/gitcfg
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
-}
-
 function bash-who() {
 	echo "I am"
 	echo-h1 $welcomemsg
@@ -166,6 +155,18 @@ function bash-cfg() {
 	echo-b "wwwsites"
 	echo ""
 	tail ~/bashtoolscfg/wwwsites
+}
+
+function bash-writesettings() {
+	csv=""
+	for i in {0..9}; do
+		csv+="${wwwsites[$i]},"
+	done
+	#20230629echo $csv;
+	echo "$csv" >~/bashtoolscfg/wwwsites
+	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
+	echo "$git_ssh" >~/bashtoolscfg/gitcfg
+	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
 }
 
 function bash-readsettings() {

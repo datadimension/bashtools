@@ -9,19 +9,19 @@ function php-v(){
 }
 
 function php-install() {
-	sudo apt -y install php
-	sudo apt -y install php-fpm
-	sudo apt -y install php-zip
+	sudo apt-get -y install php
+	sudo apt-get -y install php-fpm
+	sudo apt-get -y install php-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
-	sudo apt -y install php-soap
-	sudo apt -y install php-curl
-	sudo apt -y install php-bcmath
-	sudo apt -y install php-bz2
-	sudo apt -y install php-intl
-	sudo apt -y install php-mbstring
-	sudo apt -y install php-mysql
-	sudo apt -y install php-readline
-	sudo apt -y install php-xml
+	sudo apt-get -y install php-soap
+	sudo apt-get -y install php-curl
+	sudo apt-get -y install php-bcmath
+	sudo apt-get -y install php-bz2
+	sudo apt-get -y install php-intl
+	sudo apt-get -y install php-mbstring
+	sudo apt-get -y install php-mysql
+	sudo apt-get -y install php-readline
+	sudo apt-get -y install php-xml
 	php-v;
 }
 
