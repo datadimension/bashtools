@@ -2,23 +2,25 @@
 
 # shows site selection
 # list to pick from for various funcs
-function www-siteshow() {
-	echo ""
-	echo "Current $environment site options are:"
-	echo ""
+function www-reposhow() {
+	echo-br "Current repo options are:"
 	for i in {0..9}; do
-		echo "$((i + 1)): ${wwwsites[$i]}"
+		repolabel=${wwwsites[$i]};
+					if [ "$repolabel" != "" ]; then
+										repolabel="$repolabel  [dev URL: $repolabel.$serverid.com ]" ;
+fi
+		echo "$((i + 1)): $repolabel"
 	done
 	echo ""
-	echo "www-siteswitch to change / www-siteset to configure / www-siteremove to remove"
+	echo "www-reposwitch to change / www-reposet to configure / www-siteremove to remove"
 }
 
 function www-siteremove() {
 	clear
 	echo-h1 "Site Removal"
 	echo "To remove from this server, you will still be able to reinstate from git using www-setsite"
-	www-siteshow
-	echo "if not on the list you will need to assign it to an option with www-siteset"
+	www-reposhow
+	echo "if not on the list you will need to assign it to an option with www-reposet"
 	echo "Enter site number to remove"
 	read option
 	sitenumber=$(($option - 1))
@@ -42,7 +44,7 @@ function www-siteremove() {
 }
 
 # create extra requirements such as storage .env etc
-function www-createnonrepofiles(){
+function x20241122www-createnonrepofiles(){
 	sudo mkdir -p $wwwroot/html/$dir/storage/framework/views/
 	sudo mkdir -p $wwwroot/html/$dir/storage/framework/sessions/
 	sudo mkdir -p $wwwroot/html/$dir/storage/framework/cache/
@@ -56,7 +58,6 @@ function www-createnonrepofiles(){
 	sudo mkdir -p $wwwroot/html/$dir/bootstrap/cache
 	sudo mkdir -p $wwwroot/html/$dir/public/downloads/
 	sudo mkdir -p $wwwroot/html/$dir/private/
-
 }
 
 #creates a new website
@@ -67,7 +68,7 @@ function www-create() {
   	echo-hr
   	ls $wwwroot/html
   	echo-hr
-  	www-siteshow
+  	www-reposhow
   	echo ""
   	echo "Please enter the index to set the new site on"
   	echo ""
@@ -78,25 +79,27 @@ function www-create() {
 	  wwwsites[$sitenumber]=$dir;
 	  cd "$wwwroot/html"
     composer create-project laravel/laravel $dir;
-    www_sitefocus=$dir
-	  cd "$wwwroot/html/$www_sitefocus"
+    www_repofocus=$dir
+	  cd "$wwwroot/html/$www_repofocus"
 	  composer require laravel/ui
+	  echo "/etc/php/8.3/cli/conf.d/20-xdebug.ini"
     php artisan ui bootstrap --auth
     git-deploysubrepos
     www-createnonrepofiles
+		php ~/bashtools/php_laravel/composerjsonincludes.php;
 	  bash-writesettings
 	  #set nginx block
-	  php ~/bashtools/php_nginx/serverblock.php servername=$www_sitefocus
-	  sudo mv ~/bashtoolscfg/tmp/serverblock$www_sitefocus /etc/nginx/sites-enabled/$www_sitefocus
+	  php ~/bashtools/php_nginx/serverblock.php servername=$www_repofocus
+	  sudo mv ~/bashtoolscfg/tmp/serverblock$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
     #add required Laravel files to use DD_laravel app
-    sudo cp ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http/Controller_c.php $wwwroot/html/$www_sitefocus/app/Http/Controllers/Controller_c.php
+    sudo cp ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http/Controller_c.php $wwwroot/html/$www_repofocus/app/Http/Controllers/Controller_c.php
     #set routes
-    sudo cp ~/bashtools/templates/laravel/webfileinstall $wwwroot/html/$www_sitefocus/routes/web.php
+    sudo cp ~/bashtools/templates/laravel/webfileinstall $wwwroot/html/$www_repofocus/routes/web.php
 	  nginx-start;
 	  fsys-secure;
 	  echo "Site created. If all set correctly You can test by entering";
 	  echo;
-	  echo "https://"$www_sitefocus"/baseservertest";
+	  echo "https://"$www_repofocus"/baseservertest";
 	  echo;
 	  echo "Into your browser"
 	  #composer require twilio/sdk
@@ -104,52 +107,39 @@ function www-create() {
 }
 
 # sets up and assigns site to site index list, installing if needed
-function www-siteset() {
+function www-reposet() {
 	clear
-	echo-h1 "Site Set"
-	echo "Available site directories:"
+	echo-h1 "Repo Set"
+	echo "Available Repos:"
 	echo-hr
 	ls $wwwroot/html
 	echo-hr
-	www-siteshow
+	www-reposhow
 	echo ""
-	echo "NOTE: Reassigning site number will not delete the site - you will need to assign it to delete it and run www-siteremove"
+	echo "NOTE: Reassigning repo number will not delete the repo - you will need to run www-reporemove"
 	echo ""
-	echo "Enter site number to change"
+	echo "Enter repo number to change"
 	read option
 	sitenumber=$(($option - 1))
-	echo "Enter site root directory name to set against site $option"
-	read dir
-	wwwsites[$sitenumber]=$dir
-	if [ -d "$wwwroot/html/$dir" ]; then #just change option if repo exists
-		echo "Setting $option to $dir"
-		www_sitefocus=$dir
+	echo "Enter repo name to set against site";#[note on dev server use the url for the dev server eg liveinfo247"
+	read newrepo
+	wwwsites[$sitenumber]=$newrepo
+	if [ -d "$wwwroot/html/$newrepo" ]; then #just change option if repo exists
+		echo "Setting $option to $newrepo"
+		www_repofocus=$newrepo
 	else # need to set up repo
 		#set -e #stop everything if there is a failure
-		echo "Directory $dir not found so will install."
-		echo "Will install under $wwwroot/html/$dir"
-		echo "Please enter the git reponame to put here"
-		read reponame
-		echo "Installing '$reponame' under $wwwroot/html/$dir"
-		git-installrepo $dir $reponame
-		sudo touch $wwwroot/html/$dir/.env
-		sudo chown $user:www-data $wwwroot/html/$dir/.env
-		www-envinstall $dir $reponame
-		sudo mkdir -p /var/www/certs/$dir
-		sudo chown $user:www-data /var/www/certs/$dir
-		echo "please upload ssl certs to /var/www/certs/$dir or directory pointed to by nginxblock for $dir"
-		echo "if sharing certificate, please amend nginx block to point to it"
-		read wait
-		www-install-dependancies
-		nginx-start
-	fi
-	cd "$wwwroot/html/$www_sitefocus"
-	echo "setting site to $www_sitefocus"
-	bash-writesettings
-	www-siteswitch
+		www_repofocus=$newrepo
+		echo "Directory $newrepo not found so will install."
+		echo "Will install under $wwwroot/html/$www_repofocus"
+		echo "with dev URL: $www_repofocus.$serverid.com"
+		git-installrepo $www_repofocus
+		bash-writesettings;
+		fi
 }
+
 function www-xsiteswitch() {
-	www-siteshow
+	www-reposhow
 	echo "Please select a site number to chose for operations"
 	read sitenumber
 	echo "Auto sync with GIT ? (y/n)"
@@ -158,9 +148,9 @@ function www-xsiteswitch() {
 		git-push
 	fi
 	sitenumber=$((sitenumber - 1))
-	www_sitefocus=${wwwsites[sitenumber]}
-	cd "$wwwroot/html/$www_sitefocus"
-	echo "setting site to $www_sitefocus"
+	www_repofocus=${wwwsites[sitenumber]}
+	cd "$wwwroot/html/$www_repofocus"
+	echo "setting site to $www_repofocus"
 	bash-writesettings
 	if [ "$input" == "y" ]; then
 		git-pull
@@ -178,24 +168,159 @@ function www-secure() {
 
 	#20230907sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
 	#moving this to php sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/credentials.json
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/apicredentials/google/calendartoken.json
-	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-	sudo chmod -R ug+rwx $wwwroot/html/$www_sitefocus/app/DD_laravelAp/API
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/bootstrap/cache
+	sudo chmod -R 775 $wwwroot/html/$www_repofocus/apicredentials/google/calendartoken.json
+	sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus/app/DD_laravelAp/API
+	sudo chmod -R 770 $wwwroot/html/$www_repofocus/app/DD_laravelAp/API
+	sudo chmod -R ug+rwx $wwwroot/html/$www_repofocus/app/DD_laravelAp/API
+	sudo chmod -R 775 $wwwroot/html/$www_repofocus/bootstrap/cache
 
-	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/public/downloads
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/public/downloads
+	sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus/public/downloads
+	sudo chmod -R 775 $wwwroot/html/$www_repofocus/public/downloads
 
-	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus/storage
-	sudo chmod -R 775 $wwwroot/html/$www_sitefocus/storage
+	sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus/storage
+	sudo chmod -R 775 $wwwroot/html/$www_repofocus/storage
 	#sudo chown -R $USER $HOME/.composer;#https://askubuntu.com/questions/1077879/cannot-create-cache-directory-home-user-composer-cache-repo-https-packagi
 }
 
-function www-envinstall() {
-	rm $wwwroot/html/$www_sitefocus/.env
-	touch $wwwroot/html/$www_sitefocus/.env
-	chown $USER:www-data $wwwroot/html/$www_sitefocus/.env
+function www-envinstall(){
+	rm ~/bashtoolscfg/tmp/env
+	touch ~/bashtoolscfg/tmp/env
+	echo "Please add .env settings (press enter to accept default value if given)"
+  declare -a attributes=(
+"APP_ENV"
+"SERVER_ID"
+"TTL_CACHE"
+"APP_DEBUG"
+"APP_LOG_LEVEL"
+""
+"APP_NAME"
+"APP_KEY"
+"APP_URL"
+"DEFAULT_TIMEZONE"
+""
+"GOOGLE_CLIENT_ID"
+"GOOGLE_CLIENT_SECRET"
+""
+"GOOGLE_JAVASCRIPT_APIKEY"
+""
+"DD_CLIENT_SECRET"
+""
+"MAIL_DRIVER"
+"MAIL_HOST"
+"MAIL_PORT"
+"MAIL_USERNAME"
+"MAIL_PASSWORD"
+"MAIL_ENCRYPTION"
+""
+"API_SMS_ACCOUNTID"
+"API_SMS_KEY"
+"API_SMS_FROMCLI"
+""
+"DB_HOST_ddDB"
+"DB_PORT_ddDB"
+"DB_DATABASE_ddDB"
+"DB_USERNAME_ddDB"
+"DB_PASSWORD_ddDB"
+""
+"DB_HOST_appDB"
+"DB_PORT_appDB"
+"DB_DATABASE_appDB"
+"DB_USERNAME_appDB"
+"DB_PASSWORD_appDB"
+""
+"BROADCAST_DRIVER"
+"CACHE_DRIVER"
+"SESSION_DRIVER"
+"QUEUE_DRIVER"
+    )
+
+declare -a dev_defaultvals=(
+$environment
+$serverid
+"7200"
+"true"
+"debug"
+""
+$repo_focus
+""
+"$repo_focus.$serverid.com"
+"Europe/London"
+""
+""
+""
+""
+""
+""
+""
+""
+"smtp"
+"smtp.googlemail.com"
+"465"
+""
+""
+"ssl"
+""
+""
+""
+""
+""
+""
+"3306"
+""
+""
+""
+""
+""
+"3306"
+""
+""
+""
+""
+"log"
+"file"
+"file"
+"sync"
+            )
+
+  declare -a possiblevals=(
+              ""
+              ""
+              "7200"
+              "true or false"
+              "debug / error"
+   )
+
+declare -a defaultvals=("${dev_defaultvals[@]}")
+
+size=${#defaultvals[@]}
+i=0;
+while [ $i -lt $size ]
+		do
+			prompt="${attributes[$i]}"
+			possval=""
+			if [ "$prompt" != "" ] && [ $i -lt 7 ] && [ "${possiblevals[$i]}" != "" ];then
+			possval="<poss vals: ${possiblevals[$i]}> "
+			fi
+			if [ "$prompt" == "" ] ;then
+				 echo "";
+							echo "" >> ~/bashtoolscfg/tmp/env;
+			else
+			 		default="${defaultvals[$i]}"
+			 		read -p "$prompt : $possval [default: $default] " value
+					 value=${value:-$default}
+					 echo "$prompt=$value" >> ~/bashtoolscfg/tmp/env;
+		 fi
+		 						i=$(($i+1))
+		done
+		mv ~/bashtoolscfg/tmp/env $wwwroot/html/$www_repofocus/.env
+		    		sudo chown $USER:www-data $wwwroot/html/$www_repofocus/.env
+
+}
+
+function x20241115www-envinstall() {
+	rm $wwwroot/html/$www_repofocus/.env
+	touch $wwwroot/html/$www_repofocus/.env
+	chown $USER:www-data $wwwroot/html/$www_repofocus/.env
 	echo-h1 ".env file install"
 	env-attributerequire databaseIP
 	dir=$1
@@ -207,6 +332,7 @@ function www-envinstall() {
 	echo "Some additional information please, eg if copying from existing .env (you can skip these if you dont know):"
 	echo ""
 	read -p "Google Client ID:" gclient_id
+
 	read -p "Google Client Secret:" gclient_secret
 	read -p "GOOGLE_JAVASCRIPT_APIKEY:" google_jskey
 	echo ""
@@ -259,9 +385,10 @@ function www-nginxtest_remove() {
 	sudo rm /etc/nginx/sites-enabled/nginxtest
 }
 
-function www-siteswitch() {
-	www-siteshow
-	echo "Please select a site number to chose for operations"
+#switch the repo to work on
+function www-reposwitch() {
+	www-reposhow
+	echo "Please select a repo number to chose for operations"
 	read sitenumber
 	echo "Auto sync with GIT (recommended) ? n=no"
 	read -t 5 input
@@ -271,9 +398,10 @@ function www-siteswitch() {
 		fi
 	fi
 	sitenumber=$((sitenumber - 1))
-	www_sitefocus=${wwwsites[sitenumber]}
-	cd "$wwwroot/html/$www_sitefocus"
-	echo "setting site to $www_sitefocus"
+	www_repofocus=${wwwsites[sitenumber]}
+	repo_focus=${wwwsites[sitenumber]}
+	cd "$wwwroot/html/$www_repofocus"
+	echo "setting repo to $www_repofocus"
 	bash-writesettings
 	if [ "$input" != "n" ]; then
 		git-pull
@@ -291,7 +419,7 @@ function www-install-dependancies() {
 	echo-h1 "Updating Site Config"
 	echo "update via composer"
 	echo "This now might require manual edit of files"
-	cd $wwwroot/html/$www_sitefocus
+	cd $wwwroot/html/$www_repofocus
 	#dev versions follow in comments
 	composer dump-autoload # php 71 `which composer` dump-autoload;
 
@@ -310,3 +438,16 @@ function www-install-dependancies() {
 function os-certificategen() {
 	echo "This will install a self signed certificate"
 }
+
+
+function www-repoinstall(){
+		dir=$1
+  	reponame=$2
+	echo "repoinstall";
+			echo "Please enter the git reponame to put here"
+  		read reponame
+  		echo "Installing '$reponame' under $wwwroot/html/$dir"
+  		git-installrepo $dir $reponame
+
+}
+

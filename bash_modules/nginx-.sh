@@ -23,7 +23,8 @@ function nginx-start() {
 		if [ -e /var/run/nginx.pid ]; then
 			echo "finished restart"
 		else
-			echo "nginx broke"
+			echo-h1 "NGINX FAIL"
+			sudo nginx -t
 			log-nginxerror
 		fi
 		echo-now
@@ -40,6 +41,6 @@ function remove-nginxtest(){
 }
 
 function nginx-edit() {
-	sudo nano /etc/nginx/sites-enabled/$www_sitefocus
+	sudo nano /etc/nginx/sites-enabled/$www_repofocus
 	nginx-start
 }

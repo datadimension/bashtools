@@ -1,28 +1,103 @@
 #!/usr/bin/env bash
+
 function git-installrepo() {
 	env-attributerequire gituname
-	dir=$1
-	reponame=$2
+	reponame=$1
 	user=$USER
-	sudo mkdir $wwwroot/html/$dir
-	sudo chown $user:www-data $wwwroot/html/$dir
-	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$dir
-	sudo touch /etc/nginx/sites-enabled/$dir
-	sudo chown $user:www-data /etc/nginx/sites-enabled/$dir
+	sudo mkdir $wwwroot/html/$reponame
+	sudo chown $user:www-data $wwwroot/html/$reponame
+	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
+	sudo touch /etc/nginx/sites-enabled/$reponame
+	sudo chown $user:www-data /etc/nginx/sites-enabled/$reponame
+	php ~/bashtools/php_nginx/serverblock.php repo_name=$reponame;
+
+	sudo mv /home/$user/bashtoolscfg/tmp/serverblock_$reponame /etc/nginx/sites-enabled/$reponame
+	sudo chown $user:www-data /etc/nginx/sites-enabled/$reponame
+	#file_put_contents("/etc/nginx/sites-enabled/" . $args["servername"], $blocktemplate);
+	git-deploysubrepos;
+git-addlocalexcludedfiles;
+
+
+    		www-envinstall
+
+    #sudo mkdir -p /var/www/certs/$dir
+    	#	sudo chown $user:www-data /var/www/certs/$dir
+    		#echo "please upload ssl certs to /var/www/certs/$dir or directory pointed to by nginxblock for $dir"
+    	#	echo "if sharing certificate, please amend nginx block to point to it"
+    		#read wait
+
+    composer update
+    composer cache clear
+    		nginx-start
+    		fsys-secure
+
+    	cd "$wwwroot/html/$repo_focus"
+    	echo "set focused repo to '$repo_focus'"
+    	bash-writesettings
+    	bash-restart
+}
+
+function git-addlocalexcludedfiles(){
+		sudo mkdir -p $wwwroot/html/$www_repofocus/storage/framework/views/
+  	sudo mkdir -p $wwwroot/html/$www_repofocus/storage/framework/sessions/
+  	sudo mkdir -p $wwwroot/html/$www_repofocus/storage/framework/cache/
+  	sudo mkdir -p $wwwroot/html/$www_repofocus/storage/app/cache/
+
+  	sudo mkdir -p $wwwroot/html/$www_repofocus/storage/logs/
+
+  	sudo touch $wwwroot/html/$www_repofocus/storage/logs/laravel.log
+  	sudo touch $wwwroot/html/$www_repofocus/storage/logs/cronresult.log
+  	sudo touch $wwwroot/html/$www_repofocus/storage/logs/apperror.log
+  	sudo touch $wwwroot/html/$www_repofocus/storage/logs/ssh.log
+
+	sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus/storage
+	sudo chmod -R 770 $wwwroot/html/$www_repofocus/storage
+
+  	sudo mkdir -p $wwwroot/html/$www_repofocus/bootstrap/cache
+  	sudo mkdir -p $wwwroot/html/$www_repofocus/public/downloads/
+  	sudo mkdir -p $wwwroot/html/$www_repofocus/private/
+}
+
+function x20241121git-installrepo() {
+	env-attributerequire gituname
+	reponame=$1
+	user=$USER
+	sudo mkdir $wwwroot/html/$reponame
+	sudo chown $user:www-data $wwwroot/html/$reponame
+	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
+	sudo touch /etc/nginx/sites-enabled/$reponame
+	sudo chown $user:www-data /etc/nginx/sites-enabled/$reponame
+
 	php ~/bashtools/php_nginx/serverblock.php servername=$dir
 	sudo mv /home/$user/bashtoolscfg/tmp/serverblock$dir /etc/nginx/sites-enabled/$dir
 	sudo chown root:www-data /etc/nginx/sites-enabled/$dir
 	#file_put_contents("/etc/nginx/sites-enabled/" . $args["servername"], $blocktemplate);
-	www_sitefocus=$dir #do not this until now in case setting the repo dir and cloning it causes error
+	www_repofocus=$dir #do not this until now in case setting the repo dir and cloning it causes error
 	git-deploysubrepos;
 	www-createnonrepofiles;
+
+	sudo touch $wwwroot/html/$dir/.env
+
+    		sudo mkdir -p /var/www/certs/$dir
+    		sudo chown $user:www-data /var/www/certs/$dir
+    		echo "please upload ssl certs to /var/www/certs/$dir or directory pointed to by nginxblock for $dir"
+    		echo "if sharing certificate, please amend nginx block to point to it"
+    		read wait
+    		php ~/bashtools/php_laravel/composerjsonincludes.php;
+    composer update
+    		nginx-start
+    		fsys-secure
+    	cd "$wwwroot/html/$www_repofocus"
+    	echo "setting site to $www_repofocus"
+    	bash-writesettings
+    	www-reposwitch
 }
 
 function git-pull() {
 	clear
 	echo-hr
 	curpwd=$(pwd)
-	echo-h1 "Pulling to $www_sitefocus"
+	echo-h1 "Pulling to $www_repofocus"
 	echo "Enter a repo name"
 	echo ""
 	echo "1: DD_libwww"
@@ -45,7 +120,7 @@ function git-pull() {
 function git-push() {
 	clear
 	curpwd=$(pwd)
-	echo-h1 "Pushing from $www_sitefocus"
+	echo-h1 "Pushing from $www_repofocus"
 	echo "Enter a repo name"
 	echo ""
 	echo "1: DD_libwww"
@@ -82,7 +157,7 @@ function git-reset-all() {
 	git-reset-repo "DD_libwww"
 	#git-reset-repo "DD_libmedia"
 	git-reset-repo "DD_laravelAp"
-	git-reset-repo "$www_sitefocus"
+	git-reset-repo "$www_repofocus"
 	if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
 		echo "Reset file and directory permissions ? [y/n]"
 		read input
@@ -119,16 +194,16 @@ function git-reset() {
 function git-reset-repo() {
 	gitreponame=$1
 	if [ "$gitreponame" == "DD_laraview" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/resources/views"
+		gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
 	elif [ "$gitreponame" == "DD_libwww" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/public"
+		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	elif [ "$gitreponame" == "DD_laravelAp" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/app"
+		gitrepopath="$wwwroot/html/$www_repofocus/app"
 	elif [ "$gitreponame" == "DD_libmedia" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/public"
+		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	else
 		gitrepopath="$wwwroot/html"
-		gitreponame=$www_sitefocus
+		gitreponame=$www_repofocus
 	fi
 	echo-hr
 	echo "reseting repo ..."
@@ -147,22 +222,22 @@ function git-push-all() {
 	git-push-repo "DD_laraview"
 	git-push-repo "DD_libwww"
 	git-push-repo "DD_laravelAp"
-	git-push-repo "$www_sitefocus"
+	git-push-repo "$www_repofocus"
 }
 
 function git-push-repo() {
 	gitreponame=$1
 	if [ "$gitreponame" == "DD_laraview" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/resources/views"
+		gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
 	elif [ "$gitreponame" == "DD_libwww" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/public"
+		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	elif [ "$gitreponame" == "DD_laravelAp" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/app"
+		gitrepopath="$wwwroot/html/$www_repofocus/app"
 	elif [ "$gitreponame" == "DD_libmedia" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/public"
+		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	else
 		gitrepopath="$wwwroot/html"
-		gitreponame=$www_sitefocus
+		gitreponame=$www_repofocus
 	fi
 	echo "pushing repo ..."
 	echo-h1 "$gitreponame"
@@ -179,16 +254,16 @@ function git-push-repo() {
 function git-pull-repo() {
 	gitreponame=$1
 	if [ "$gitreponame" == "DD_laraview" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/resources/views"
+		gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
 	elif [ "$gitreponame" == "DD_libwww" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/public"
+		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	elif [ "$gitreponame" == "DD_laravelAp" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/app"
+		gitrepopath="$wwwroot/html/$www_repofocus/app"
 	elif [ "$gitreponame" == "DD_libmedia" ]; then
-		gitrepopath="$wwwroot/html/$www_sitefocus/public"
+		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	else
 		gitrepopath="$wwwroot/html"
-		gitreponame=$www_sitefocus
+		gitreponame=$www_repofocus
 	fi
 	echo "pulling repo ..."
 	echo-h1 "$gitreponame"
@@ -206,7 +281,7 @@ function git-pull-all() {
 	git-pull-repo "DD_laraview"
 	git-pull-repo "DD_libwww"
 	git-pull-repo "DD_laravelAp"
-	git-pull-repo "$www_sitefocus"
+	git-pull-repo "$www_repofocus"
 }
 
 function git-setup() {
@@ -216,10 +291,9 @@ function git-setup() {
 }
 
 function git-deploysubrepos() {
-	git-deploysubrepo "$www_sitefocus/public" "DD_libwww"
-	#20230701 this has its own repo now git-deploysubrepo "$www_sitefocus/public" "DD_libmedia"
-	git-deploysubrepo "$www_sitefocus/app" "DD_laravelAp"
-	git-deploysubrepo "$www_sitefocus/resources/views" "DD_laraview"
+	git-deploysubrepo "$www_repofocus/public" "DD_libwww"
+	git-deploysubrepo "$www_repofocus/app" "DD_laravelAp"
+	git-deploysubrepo "$www_repofocus/resources/views" "DD_laraview"
 }
 
 function git-deploysubrepo() {
@@ -275,7 +349,7 @@ function x20230701git-deploy() {
 	echo-hr
 	echo-h1 "Cloning $reponame"
 	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
-	sudo chown $USER:www-data $wwwroot/html/$www_sitefocus
+	sudo chown $USER:www-data $wwwroot/html/$www_repofocus
 
 	# we can try and reinstall pre-existing platform files later, but at least have a .env and a credentials dir
 	cp $wwwroot/html/$reponame/.env.example $wwwroot/html/$reponame/.env
@@ -285,7 +359,7 @@ function x20230701git-deploy() {
 	sudo cp $backupPath/.env $wwwroot/html/$reponame/.env
 	sudo cp -r $backupPath/apicredentials $wwwroot/html/$reponame/app/DD_laravelAp/API
 
-	www_sitefocus=$reponame
+	www_repofocus=$reponame
 	git-deploysubrepos
 	sudo php $wwwroot/html/serveradmin/_cli/bash/helpers/nginxblockdeployer.php $reponame $dnsname $environment
 	sudo ln -s /etc/nginx/sites-available/$reponame /etc/nginx/sites-enabled/$reponame

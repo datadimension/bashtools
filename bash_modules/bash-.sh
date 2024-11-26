@@ -23,16 +23,21 @@ function bash-start() {
 
 	#env-attributerequire "welcomemsg"
 
-	echo "Hello Welcome to"
+	echo "Welcome to"
 	echo-h1 $serverid
 	echo $welcomemsg
-	echo "Your session IP detected as:"
-	echo $SSH_CLIENT | awk '{ print $1}'
+		echo "Your session IP detected as:"
+  	echo $SSH_CLIENT | awk '{ print $1}'
 	# sudo /etc/init.d/cron start;
 	echo "Use 'env-about' for more info, 'bash-help' for more functions"
-	www-siteshow
+	www-reposhow
 	#bash-showsettings
-	startdir="$wwwroot/html/$www_sitefocus"
+	startdir="$wwwroot/html/$www_repofocus"
+	echo ""
+	php artisan --version;
+	echo "Recommended URL"
+	echo "$www_repofocus.$serverid.com"
+	echo ""
 	cd $startdir
 	file-showdir $startdir
 	net-ssh-log-session
@@ -164,13 +169,16 @@ function bash-writesettings() {
 	done
 	#20230629echo $csv;
 	echo "$csv" >~/bashtoolscfg/wwwsites
+		echo "$csv" >~/bashtoolscfg/wwwrepos
 	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
 	echo "$git_ssh" >~/bashtoolscfg/gitcfg
-	echo "$environment,$www_sitefocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform" >~/bashtoolscfg/bash.env
+	echo "$environment,$www_repofocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$repo_focus" >~/bashtoolscfg/bash.env
 }
 
 function bash-readsettings() {
 	wwwsites=$(<~/bashtoolscfg/wwwsites)
+	wwwrepos=$(<~/bashtoolscfg/wwwrepos)
+
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
 
 	csv=$(<~/bashtoolscfg/os_status)
@@ -186,7 +194,7 @@ function bash-readsettings() {
 	IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
 	serverid=${values[5]}
 	environment=${values[0]}
-	www_sitefocus=${values[1]}
+	www_repofocus=${values[1]}
 	ssh1=${values[2]}
 	ssh2=${values[3]}
 	databaseIP=${values[4]}
@@ -196,4 +204,6 @@ function bash-readsettings() {
 	welcomemsg=${values[10]}
 	wwwroot=${values[11]}
 	platform=${values[12]}
+	wwwrepos=${values[13]}
+	repo_focus=${values[14]}
 }

@@ -4,7 +4,7 @@
 
 function laravel-version() {
 	echo "for all laravel functions we are going to site focus root (~www)"
-	cd "$wwwroot/html/$www_sitefocus"
+	cd "$wwwroot/html/$www_repofocus"
 	php artisan --version
 }
 
@@ -19,6 +19,20 @@ function echo-h1() {
 
 function echo-hr() {
 	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+}
+
+#output with a line break before;
+function echo-br(){
+  	textoutput=""$1"";
+  	echo "";
+  	echo $textoutput;
+}
+
+#output with a line break after;
+function echo-nl(){
+  	textoutput=""$1"";
+  	echo $textoutput;
+  	echo "";
 }
 
 function echo-b(){
@@ -58,7 +72,7 @@ function pshell() {
 
 function logv() {
 	logname=$1
-	tail -f -n 100 $wwwroot/$www_sitefocus/storage/logs/$logname.log
+	tail -f -n 100 $wwwroot/$www_repofocus/storage/logs/$logname.log
 }
 
 ## allow a list of options, then selection via number, the menu value being stored in MENUCHOICE

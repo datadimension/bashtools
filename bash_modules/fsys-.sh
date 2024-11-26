@@ -8,20 +8,22 @@ function fsys-disk() {
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
+	repopath=$wwwroot/html/$www_repofocus;
 	echo "Securing file ownership" # this is after as password required first
-	sudo chown -R $USER:www-data $wwwroot/html/$www_sitefocus
+
+	sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus
 
 	echo "Securing file permissions"
-	sudo find $wwwroot/html/$www_sitefocus -type f -exec chmod 644 {} \;
+	sudo find $wwwroot/html/$www_repofocus -type f -exec chmod 644 {} \;
 
 	echo "Securing directory permissions"
-	sudo find $wwwroot/html/$www_sitefocus -type d -exec chmod 755 {} \;
+	sudo find $wwwroot/html/$www_repofocus -type d -exec chmod 755 {} \;
 
 	echo "Securing laravel permissions"
-	sudo chmod -R 755 $wwwroot/html/$www_sitefocus/app
-	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/storage
-	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/public/downloads
-	sudo chmod -R 770 $wwwroot/html/$www_sitefocus/private
+	sudo chmod -R 755 $wwwroot/html/$www_repofocus/app
+	sudo chmod -R 770 $wwwroot/html/$www_repofocus/storage
+	sudo chmod -R 770 $wwwroot/html/$www_repofocus/public/downloads
+	sudo chmod -R 770 $wwwroot/html/$www_repofocus/private
 
 	echo "Not impelemented"
 	echo "FIrewall lockdown to"
@@ -74,7 +76,7 @@ function ls-i() {
 }
 
 function ~www() {
-	cd $wwwroot/html/$www_sitefocus
+	cd $wwwroot/html/$www_repofocus
 	ls
 }
 function ~home() {
@@ -84,37 +86,37 @@ function ~home() {
 }
 
 function ~libapp() {
-	cd $wwwroot/html/$www_sitefocus/app/DD_laravelAp
+	cd $wwwroot/html/$www_repofocus/app/DD_laravelAp
 	ls -al
 }
 
 function ~libviews() {
-	cd $wwwroot/html/$www_sitefocus/resources/views/DD_laraview
+	cd $wwwroot/html/$www_repofocus/resources/views/DD_laraview
 	ls -al
 }
 
 function ~libapp() {
-	cd $wwwroot/html/$www_sitefocus/app/DD_laravelAp
+	cd $wwwroot/html/$www_repofocus/app/DD_laravelAp
 	ls
 }
 
 function ~libviews() {
-	cd $wwwroot/html/$www_sitefocus/resources/views/DD_laraview
+	cd $wwwroot/html/$www_repofocus/resources/views/DD_laraview
 	ls
 }
 
 function ~libmedia() {
-	cd $wwwroot/html/$www_sitefocus/public/DD_libmedia
+	cd $wwwroot/html/$www_repofocus/public/DD_libmedia
 	ls
 }
 
 function ~libwww() {
-	cd $wwwroot/html/$www_sitefocus/public/DD_libwww
+	cd $wwwroot/html/$www_repofocus/public/DD_libwww
 	ls
 }
 
 function ~log() {
-	cd $wwwroot/html/$www_sitefocus/storage/logs
+	cd $wwwroot/html/$www_repofocus/storage/logs
 	ls
 }
 

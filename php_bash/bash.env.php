@@ -8,7 +8,7 @@ $csv = explode(",", $csv);
 
 $serverid = $csv[5];
 $environment = $csv[0];
-$www_sitefocus = $csv[1];
+$www_repofocus = $csv[1];
 $ssh1 = $csv[2];
 $ssh2 = $csv[3];
 $databaseIP = $csv[4];

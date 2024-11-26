@@ -11,20 +11,16 @@ function env-setwwwroot() {
 function env-about() {
 	clear
 	echo-h1 "About this system"
-	echo "Server name: $servername"
-	echo "System Time:"
+	echo "Server name: $serverid"
+	echo "Server environment [ production / local ]: $environment"
+	echo-nl "System Time:"
 	echo-now
-	if [ "$platform" == "ubuntu" ]; then
-		echo "Current Environment (development/ production):$environment use 'env-setservertype' to change"
 		ipaddr=$(hostname --all-ip-addresses)
 		cat /etc/lsb-release
 		echo "IP : $ipaddr"
 		# echo |  Gateway: $ipgateway  |
 		echo "PHP Version: $phpNo"
 		echo "GIT username: $gituname"
-	else
-		echo $platform
-	fi
 	echo-hr
 	echo "Main Database IP: $databaseIP"
 	echo "www root: $wwwroot"
@@ -36,10 +32,11 @@ function env-about() {
 #for per machine settings that do not change
 function env-setservertype() {
 	#bash-envsetwwwroot
-	echo "Enter environment (production / development)"
+	echo "Enter environment (production / local)"
 	read environment
-	if [ "$environment" == "development" ]; then
-		environment="development"
+	if [ "$environment" == "local" ]; then
+		environment="local"
+		os-install-xdebug;
 	else
 		environment="production"
 	fi
@@ -48,7 +45,7 @@ function env-setservertype() {
 	#echo "Enter dev site project names ? y/n"
 	#read doset
 	# if [ "$doset" = "y" ]; then
-	#   www-siteset
+	#   www-reposet
 	# fi
 	# cd $wwwroot
 }
@@ -76,7 +73,9 @@ function env-attributerequire () {
     if [ "$os_status" == "" ]; then
       os_status=1;
     fi
-    declare -a os_steps=("echo 'setup for this login is done';exit;" "os-sudocreate" "os-sshkeygen" "os-sshsecure" "os-install-dependancies")
+        if [ "$os_status" != "0"  ]; then
+
+    declare -a os_steps=("echo 'setup for this login is done';read wait;;" "os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies")
     os_setupfunc="${os_steps[$os_status]}";
         clear;
     echo "OS Stepup stage:"
@@ -84,28 +83,6 @@ function env-attributerequire () {
     echo "";
     eval $os_setupfunc;
 		os_status=$((os_status+1))
-    fi
-		#	bash-restart
-
-		echo "Status: $os_status installing ssh access"
-      			os-sshaccess
-      			os_status="1"
-      			echo "Press any key to exit and then log in as this user using ssh key"
-      			read wait
-      			exit
-		elif [ "$os_status" == "1" ]; then
-		  echo "next step needed";
-			echo "Status: $os_status"
-			os-install-dependancies
-			os_status="2"
-			bash-restart
-		fi
-		elif [ "$os_status" == "1" ]; then
-		  echo "next step needed";
-			echo "Status: $os_status"
-			os-install-dependancies
-			os_status="2"
-			bash-restart
 		fi
 	elif [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then

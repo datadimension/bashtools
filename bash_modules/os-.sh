@@ -85,8 +85,6 @@ function os-upgrade() {
 function os-install-dependancies() {
 	echo "System Setup."
 	echo "Ready to install system dependencies"
-	echo "Press Enter"
-	read wait
 	os-upgrade
 	#force utc timezone
 	sudo rm -f /etc/localtime                         # Delete the current time zone file
@@ -95,7 +93,6 @@ function os-install-dependancies() {
 	sudo apt-get -y purge apache2
 	sudo apt-get -y autoremove
 	sudo apt-get -y autoclean
-
 	sudo apt-get -y install curl
 	sudo apt-get -y install figlet
 	sudo apt-get -y install nodejs
@@ -106,6 +103,7 @@ function os-install-dependancies() {
 	sudo mkdir -p /var/www/certs
 	sudo apt-get -y install openssh-server
 	sudo apt-get -y install npm
+	os-installcomposer
 	php-install
 	os-install-nginx
 	net-firewall-start
@@ -130,11 +128,8 @@ function os-install-nginx() {
 	sudo rm /etc/nginx/sites-enabled/default
 	sudo rm /etc/nginx/sites-available/default
 	sudo rm /var/www/html/index.nginx-debian.html
-	echo "Copying self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/dhparam.pem /etc/nginx/dhparam.pem
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf
+	echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
+ os-installnewselfsignedcert
 	www-nginxtest_install
 	net-firewall-start
 }
@@ -147,43 +142,66 @@ function os-download() {
 }
 
 function os-install-xdebug() {
-	echo "You will need to enable the nginxtest pages here to show the required info."
-	echo "Enable ? y/n"
+	echo "Do not install Xdebug on production servers. Install Xdebug here ? y/n"
 	read input
-	if [ "$input" != "y" ]; then
-		www-nginxtest_install
-		echo "Enter to continue"
-		read input
+	if [ "$input" == "y" ]; then
 		clear
-		echo "From the xdebug Install Wizard Instructions, please enter the version number required eg 3.2.2 if we require xdebug-3.2.2.tgz"
-		read xvers
-		echo "Please enter the Zend Module Api No"
-		echo "eg Configuring for:     Zend Module Api No:  20210902"
-		echo "Just the number please"
-		read zendapi_no
-		echo "Finally enter the FULL xdebug.ini path given eg /etc/php/8.1/fpm/conf.d/99-xdebug.ini"
-		read inipath
-		os-download https://xdebug.org/files/xdebug-$xvers.tgz tmp/xdebug-$xvers.tgz
-		cd ~/downloads/tmp
-		tar -xvzf xdebug-$xvers.tgz
-		cd xdebug-$xvers
-		phpize
-		./configure
-		make
-		#to generic echo "zend_extension = xdebug" >conf
-		echo "zend_extension = /usr/lib/php/$zendapi_no/xdebug.so" >conf
-		sudo cp modules/xdebug.so /usr/lib/php/$zendapi_no
-		sudo cp conf $inipath
-		sudo touch /var/log/xdebug.log
-		sudo net-firewall-start
-		echo "make sure port 9003 is enabled"
-		read wait
-		nginx-start
+ sudo apt-get install php-xdebug;
+ echo-br;
+  php --ini;
+		echo-br "See the xdebug Install Wizard Instructions for full details at https://xdebug.org/docs/install."
+ echo-br "First configure PHP.";
+ echo "from the above list copy and paste the file name with xdebug in it so we can locate the file to edit".
+ read xdebugpath;
+ #echo "To check installed - visit the xdebug info at:"
+ #echo "$www_sitefocus/xdebuginfo.php";
+ #echo "Scroll down to Settings and enter the path for  the .ini file for fpm eg"
+ sudo bash -c "echo 'zend_extension=xdebug' >> $xdebugpath"
+ sudo bash -c "echo 'xdebug.mode = debug' >> $xdebugpath"
+ sudo bash -c "echo 'xdebug.start_with_request = yes' >> $xdebugpath"
+ sudo bash -c "echo 'xdebug.client_port = 9003' >> $xdebugpath"
+ sudo bash -c "echo xdebug.log = \"/var/log/xdebug.log\" >> $xdebugpath"
+ sudo bash -c "echo 'xdebug.idekey = PHPSTORM' >> $xdebugpath"
+
+ sudo tail -100 $xdebugpath;
+sudo touch /var/log/xdebug.log
+sudo chown -R $USER:www-data /var/log/xdebug.log
+sudo chmod -R 770  /var/log/xdebug.log
+
+nginx-start;
+# echo "/etc/php/8.3/fpm/php.ini";
+echo-br "To check installed - visit the xdebug info at:"
+echo-nl "$www_repofocus/xdebuginfo.php";
+echo "and check for errors";
+
+ 	#	echo "as stated please enter the version number required eg 3.2.2 if we require xdebug-3.2.2.tgz"
+	#	read xvers
+	#	echo "Please enter the Zend Module Api No"
+	#	echo "eg Configuring for:     Zend Module Api No:  20210902"
+	#	echo "Just the number please"
+	#	read zendapi_no
+	#	echo "Finally enter the FULL xdebug.ini path given eg /etc/php/8.1/fpm/conf.d/99-xdebug.ini"
+	#	read inipath
+	#	os-download https://xdebug.org/files/xdebug-$xvers.tgz tmp/xdebug-$xvers.tgz
+	#	cd ~/downloads/tmp
+	#	tar -xvzf xdebug-$xvers.tgz
+	#	cd xdebug-$xvers
+	#	phpize
+	#	./configure
+	#	make
+	#	#to generic echo "zend_extension = xdebug" >conf
+	#	echo "zend_extension = /usr/lib/php/$zendapi_no/xdebug.so" >conf
+	#	sudo cp modules/xdebug.so /usr/lib/php/$zendapi_no
+	#	sudo cp conf $inipath
+	#	sudo net-firewall-start
+	#	echo "make sure port 9003 is enabled"
+	#	read wait
+	#	nginx-start
 	fi
 }
 
 #create sudo user
-function os-sudocreate(){
+function os-sudo-create(){
   echo "Please enter new sudo name"
   read newuser
 	currentuser=$USER
@@ -208,12 +226,12 @@ function os-sudocreate(){
 }
 
 #lists and allows delete of sudoer
-function os-rmsudo(){
+function os-sudo-remove(){
     shopt -s nullglob
     numfiles=(*)
     numfiles=${#numfiles[@]}
     if [ $numfiles == 1 ]; then
-      echo "Only one SUDOer left, you cannot remove all, try os-sudocreate first";
+      echo "Only one SUDOer left, you cannot remove all, try os-sudo-create first";
     else
       echo "Current SUDOers";
       grep -Po '^sudo.+:\K.*$' /etc/group
@@ -248,7 +266,7 @@ function os-sshsecure() {
 	echo "4/5 Edit ssh to remove password access"
 	echo "PasswordAuthentication no"
 	read wait
-	sudo nano +57 /etc/ssh/sshd_config
+	sudo nano +72 /etc/ssh/sshd_config
 	echo "5/5 We will edit /etc/php/$phpNo/fpm/php.ini"
 	echo "And for security change line to be"
 	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
@@ -278,7 +296,6 @@ function os-install-composer() {
 	sudo mv composer.phar /usr/local/bin/composer
 	composer global require laravel/installer
 	composer global require phpseclib/phpseclib:~3.0
-
 }
 
 function os-install-mysql() {

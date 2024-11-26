@@ -1,14 +1,14 @@
 server {
     listen 80;
-    server_name <servername />;
-    return 301 https://<servername />$request_uri;
+    server_name <root_repo_url />;
+    return 301 https://<root_repo_url />$request_uri;
 }
 
 server {
         listen 443 ssl;
         listen [::]:443 ssl;
-        server_name <servername />;
-        root <wwwroot />/html/<servername />/public/;
+        server_name <root_repo_url />;
+        root <wwwroot />/html/<repo_name />/public/;
         #access_log /var
 
         #<ssl_certs>
