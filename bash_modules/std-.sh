@@ -101,6 +101,5 @@ function std-menu(){
   read choice
   choice=$choice-1;
   MENUCHOICE=${values[$choice]};
-  echo "";
 }
 

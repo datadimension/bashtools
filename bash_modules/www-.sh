@@ -130,11 +130,11 @@ function www-reposet() {
 	else # need to set up repo
 		#set -e #stop everything if there is a failure
 		www_repofocus=$newrepo
+				bash-writesettings;
 		echo "Directory $newrepo not found so will install."
 		echo "Will install under $wwwroot/html/$www_repofocus"
 		echo "with dev URL: $www_repofocus.$serverid.com"
 		git-installrepo $www_repofocus
-		bash-writesettings;
 		fi
 }
 
@@ -241,9 +241,9 @@ $serverid
 "true"
 "debug"
 ""
-$repo_focus
+$www_repofocus
 ""
-"$repo_focus.$serverid.com"
+"$www_repofocus.$serverid.com"
 "Europe/London"
 ""
 ""
@@ -399,7 +399,7 @@ function www-reposwitch() {
 	fi
 	sitenumber=$((sitenumber - 1))
 	www_repofocus=${wwwsites[sitenumber]}
-	repo_focus=${wwwsites[sitenumber]}
+	www_repofocus=${wwwsites[sitenumber]}
 	cd "$wwwroot/html/$www_repofocus"
 	echo "setting repo to $www_repofocus"
 	bash-writesettings

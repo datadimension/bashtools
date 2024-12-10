@@ -26,13 +26,14 @@ git-addlocalexcludedfiles;
     	#	echo "if sharing certificate, please amend nginx block to point to it"
     		#read wait
 
+    php artisan key:generate
     composer update
     composer cache clear
     		nginx-start
     		fsys-secure
 
-    	cd "$wwwroot/html/$repo_focus"
-    	echo "set focused repo to '$repo_focus'"
+    	cd "$wwwroot/html/$www_repofocus"
+    	echo "set focused repo to '$www_repofocus'"
     	bash-writesettings
     	bash-restart
 }
@@ -93,7 +94,7 @@ function x20241121git-installrepo() {
     	www-reposwitch
 }
 
-function git-pull() {
+function git-pull-select(){
 	clear
 	echo-hr
 	curpwd=$(pwd)
@@ -117,29 +118,46 @@ function git-pull() {
 	cd $curpwd
 }
 
+function git-pull() {
+	clear
+	echo-hr
+	curpwd=$(pwd)
+	echo-h1 "Pulling to $www_repofocus"
+		git-pull-all
+	cd $curpwd
+}
+
+function git-push-select(){
+		clear
+  	curpwd=$(pwd)
+  	echo-h1 "Pushing from $www_repofocus"
+  	echo "Enter a repo name"
+  	echo ""
+  	echo "1: DD_libwww"
+  	echo "2: DD_laravelAp"
+  	echo "3: DD_laraview"
+  	echo "or wait / hit enter for everything"
+  	read -t 3 option
+  	if [ "$option" == "1" ]; then
+  		git-push-repo "DD_libwww"
+  		git-pull-repo "DD_libwww"
+  	elif [ "$option" == "2" ]; then
+  		git-push-repo "DD_laravelAp"
+  		git-pull-repo "DD_laravelAp"
+  	elif [ "$option" == "3" ]; then
+  		git-push-repo "DD_laraview"
+  		git-pull-repo "DD_laraview"
+  	else
+  		git-push-all
+  	fi
+  	cd $curpwd
+}
+
 function git-push() {
 	clear
 	curpwd=$(pwd)
 	echo-h1 "Pushing from $www_repofocus"
-	echo "Enter a repo name"
-	echo ""
-	echo "1: DD_libwww"
-	echo "2: DD_laravelAp"
-	echo "3: DD_laraview"
-	echo "or wait / hit enter for everything"
-	read -t 3 option
-	if [ "$option" == "1" ]; then
-		git-push-repo "DD_libwww"
-		git-pull-repo "DD_libwww"
-	elif [ "$option" == "2" ]; then
-		git-push-repo "DD_laravelAp"
-		git-pull-repo "DD_laravelAp"
-	elif [ "$option" == "3" ]; then
-		git-push-repo "DD_laraview"
-		git-pull-repo "DD_laraview"
-	else
 		git-push-all
-	fi
 	cd $curpwd
 }
 
@@ -148,7 +166,6 @@ function git-add() {
 	git add -A
 	git commit -a -m update
 	echo "... all files added"
-
 }
 
 #reset all repos

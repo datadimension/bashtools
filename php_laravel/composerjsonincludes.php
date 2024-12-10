@@ -1,6 +1,6 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_bash/bash.env.php");
-$jsonpath = $wwwroot . "/html/" . $repo_focus . "/composer.json";
+$jsonpath = $wwwroot . "/html/" . $www_repofocus . "/composer.json";
 
 $json = json_decode(file_get_contents($jsonpath), true);
 

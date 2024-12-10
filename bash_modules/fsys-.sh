@@ -8,22 +8,30 @@ function fsys-disk() {
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
-	repopath=$wwwroot/html/$www_repofocus;
-	echo "Securing file ownership" # this is after as password required first
+	echo "Securing file ownership in $www_repofocus" # this is after as password required first
 
 	sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus
 
-	echo "Securing file permissions"
-	sudo find $wwwroot/html/$www_repofocus -type f -exec chmod 644 {} \;
+	echo "Securing file permissions in $www_repofocus"
+	#sudo find $wwwroot/html/$www_repofocus -type f -exec chmod 644 {} \;
+	sudo find $wwwroot/html/$www_repofocus -type f -exec chmod 777 {} \;
 
-	echo "Securing directory permissions"
-	sudo find $wwwroot/html/$www_repofocus -type d -exec chmod 755 {} \;
 
-	echo "Securing laravel permissions"
-	sudo chmod -R 755 $wwwroot/html/$www_repofocus/app
-	sudo chmod -R 770 $wwwroot/html/$www_repofocus/storage
-	sudo chmod -R 770 $wwwroot/html/$www_repofocus/public/downloads
-	sudo chmod -R 770 $wwwroot/html/$www_repofocus/private
+	echo "Securing directory permissions in $www_repofocus"
+	#sudo find $wwwroot/html/$www_repofocus -type d -exec chmod 755 {} \;
+	sudo find $wwwroot/html/$www_repofocus -type d -exec chmod 777 {} \;
+
+	echo "Securing laravel permissions in $www_repofocus"
+	#sudo chmod -R 755 $wwwroot/html/$www_repofocus/app
+	#sudo chmod -R 770 $wwwroot/html/$www_repofocus/storage
+#	sudo chmod -R 770 $wwwroot/html/$www_repofocus/public/downloads
+#	sudo chmod -R 770 $wwwroot/html/$www_repofocus/private
+
+		sudo chmod -R 777 $wwwroot/html/$www_repofocus/app
+  	sudo chmod -R 777 $wwwroot/html/$www_repofocus/storage
+  	sudo chmod -R 777 $wwwroot/html/$www_repofocus/public/downloads
+  	sudo chmod -R 777 $wwwroot/html/$www_repofocus/private
+
 
 	echo "Not impelemented"
 	echo "FIrewall lockdown to"

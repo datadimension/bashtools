@@ -20,8 +20,8 @@ function log-nginxerror() {
 	echo-h1 "NGINX ERROR LOG"
 	sudo tail -n 100 /var/log/nginx/error.log
 		set-timestamp
-
-		sudo bash -c "echo '----- $timestamp ------' >>  /var/log/nginx/error.log"
+		sudo bash -c "echo '' >>  /var/log/nginx/error.log"
+		sudo bash -c "echo '<<<-----viewed $timestamp ------' >>  /var/log/nginx/error.log"
 		sudo bash -c "echo '' >>  /var/log/nginx/error.log"
 }
 
