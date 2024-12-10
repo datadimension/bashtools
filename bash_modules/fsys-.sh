@@ -32,6 +32,7 @@ function fsys-secure() {
   	sudo chmod -R 777 $wwwroot/html/$www_repofocus/public/downloads
   	sudo chmod -R 777 $wwwroot/html/$www_repofocus/private
 
+sudo chmod -R 770 ~/bashtools/php_bash
 
 	echo "Not impelemented"
 	echo "FIrewall lockdown to"

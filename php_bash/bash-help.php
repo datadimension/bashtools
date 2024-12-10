@@ -4,9 +4,10 @@
  * test:
  * php ~/bashtools/php_bash/bash-help.php helptype=www
  */
+echo "debug";
+
 include(getenv('HOME') . "/bashtools/php_bash/bash.env.php");;
 parse_str(implode('&', array_slice($argv, 1)), $args);
-echo "debug";
 $home = getenv('HOME');
 echo "\033[1mBASH helper functions for " . $args["helptype"] . ":\033[0m\n\n";
 
