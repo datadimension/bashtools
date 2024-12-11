@@ -60,51 +60,6 @@ function x20241122www-createnonrepofiles(){
 	sudo mkdir -p $wwwroot/html/$dir/private/
 }
 
-#creates a new website
-function www-create() {
-    clear
-    echo "This will create a new laravel project";
-  	echo "Available site directories:"
-  	echo-hr
-  	ls $wwwroot/html
-  	echo-hr
-  	www-reposhow
-  	echo ""
-  	echo "Please enter the index to set the new site on"
-  	echo ""
-  	read option
-  	sitenumber=$(($option - 1))
-  	echo "Enter the root DNS name eg example.com"
-  	read dir;
-	  wwwsites[$sitenumber]=$dir;
-	  cd "$wwwroot/html"
-    composer create-project laravel/laravel $dir;
-    www_repofocus=$dir
-	  cd "$wwwroot/html/$www_repofocus"
-	  composer require laravel/ui
-	  echo "/etc/php/8.3/cli/conf.d/20-xdebug.ini"
-    php artisan ui bootstrap --auth
-    git-deploysubrepos
-    www-createnonrepofiles
-		php ~/bashtools/php_laravel/composerjsonincludes.php;
-	  bash-writesettings
-	  #set nginx block
-	  php ~/bashtools/php_nginx/serverblock.php servername=$www_repofocus
-	  sudo mv ~/bashtoolscfg/tmp/serverblock$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
-    #add required Laravel files to use DD_laravel app
-    sudo cp ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http/Controller_c.php $wwwroot/html/$www_repofocus/app/Http/Controllers/Controller_c.php
-    #set routes
-    sudo cp ~/bashtools/templates/laravel/webfileinstall $wwwroot/html/$www_repofocus/routes/web.php
-	  nginx-start;
-	  fsys-secure;
-	  echo "Site created. If all set correctly You can test by entering";
-	  echo;
-	  echo "https://"$www_repofocus"/baseservertest";
-	  echo;
-	  echo "Into your browser"
-	  #composer require twilio/sdk
-	  #20201119composer require clicksend/clicksend-php;
-}
 
 # sets up and assigns site to site index list, installing if needed
 function www-reposet() {
@@ -120,10 +75,10 @@ function www-reposet() {
 	echo ""
 	echo "Enter repo number to change"
 	read option
-	sitenumber=$(($option - 1))
+  	reponumber=$(($option - 1))
 	echo "Enter repo name to set against site";#[note on dev server use the url for the dev server eg liveinfo247"
 	read newrepo
-	wwwsites[$sitenumber]=$newrepo
+	wwwsites[$reponumber]=$newrepo
 	if [ -d "$wwwroot/html/$newrepo" ]; then #just change option if repo exists
 		echo "Setting $option to $newrepo"
 		www_repofocus=$newrepo

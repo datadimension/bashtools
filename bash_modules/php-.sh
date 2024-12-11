@@ -22,7 +22,7 @@ function php-install() {
 	sudo apt-get -y install php-mysql
 	sudo apt-get -y install php-readline
 	sudo apt-get -y install php-xml
-	php-v;
+	php -v;
 }
 
 function php-edit() {
