@@ -219,16 +219,16 @@ $www_repofocus
 ""
 ""
 ""
-""
+$defaultDatabaseIP
 "3306"
+"ddDB"
+$www_repofocus"_php"
 ""
 ""
-""
-""
-""
+$defaultDatabaseIP
 "3306"
-""
-""
+$www_repofocus
+$www_repofocus"_php"
 ""
 ""
 "log"
@@ -318,20 +318,8 @@ function www-sitesqluserinstall() {
 
 # installs an nginx test page to check server is operational
 function www-nginxtest_install() {
-	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
-	#create test block so nginx can read it
-	user=$USER
-	php ~/bashtools/php_nginx/serverblock.php servername=nginxtest
-	sudo mv /home/$user/bashtoolscfg/tmp/serverblocknginxtest /etc/nginx/sites-enabled/nginxtest
-	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
-	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
-	#20230716 sudo mkdir /etc/nginx
-	echo "Now go to your local hosts file (we moved it to C:\www"
-	echo "and add lines as appropriate for local browser address entry"
-	echo "127.0.0.1    nginxtest"
-	echo "then open Windows cmd and run ipconfig /flushdns"
-	echo "Enter https://nginxtest into browser"
-	echo "and the test server should show online"
+	echo "Clone server admin instead";
+	exit
 }
 
 #remove the nginx test site
@@ -383,11 +371,13 @@ function www-install-dependancies() {
 	#works: php71 -d memory_limit=-1 `which composer` update --no-scripts;
 	composer update -W # php71 `which composer` update --no-scripts; or? php71 -d memory_limit=768M `which composer` update --no-scripts;(1610612736)
 	composer install
+	    composer cache clear
 	# this also generates autoload;
 	php artisan key:generate #dev server php70 artisan key:generate;
 	php artisan view:clear
 	php artisan --version
-	filesys-secure
+	fsys-secure
+	    		nginx-start
 }
 
 function os-certificategen() {
@@ -403,6 +393,58 @@ function www-repoinstall(){
   		read reponame
   		echo "Installing '$reponame' under $wwwroot/html/$dir"
   		git-installrepo $dir $reponame
-
 }
 
+#creates a new website
+function www-repocreate() {
+	#based on https://kbroman.org/github_tutorial/pages/init.html
+    clear
+    echo "This will create a new laravel project";
+  	www-reposhow
+  	echo-br "Please enter new repo name"
+  	read newrepo
+  	dir=$wwwroot/html/$newrepo;
+    	if [ -d "$dir" ]; then #just change option if repo exists
+				echo "Error: repo '$newrepo' already exists at $dir";
+    		else # need to set up repo
+    		echo "Please enter number to index '$newrepo' at"
+    		read sitenumber
+    		sitenumber=$((sitenumber - 1))
+    		wwwsites[$sitenumber]=$newrepo;
+    		www_repofocus=$newrepo
+				bash-writesettings;
+				cd "$wwwroot/html"
+				dir=$wwwroot/html/$www_repofocus
+        composer create-project laravel/laravel $www_repofocus;
+    		git-deploysubrepos;
+        git-addlocalexcludedfiles;
+        www-envinstall
+        www-install-dependancies
+        cd "$wwwroot/html/$www_repofocus"
+        echo "Vist https://github.com/new to create new repo under $www_repofocus"
+         echo "chose":
+         echo "Private"
+         echo "untick readme"
+         echo "Choose none for .giignore template"
+        	echo "No need for license"
+        	echo "When done enter the initial branch name eg main"
+        	read branchname
+        	git init
+        	git add -A;
+          git commit -m "first commit"
+          git branch -M $branchname
+          git remote add origin git@github.com:datadimension/serveradmin.git
+          git push -u origin $branchname
+        	 echo "Files set on server"
+        	 ls -al;
+        echo "set focused repo to '$www_repofocus'"
+        echo "Check list to display in browser [hit enter when checked]";
+read -p "Set server IP in hosts file for $www_repofocus.$serverid.com";
+read -p "In windows cmd ipconfig /flushdns"
+        bash-writesettings
+        bash-restart
+    	fi
+}
+
+
+}

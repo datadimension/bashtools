@@ -2,7 +2,7 @@
 
 
 function env-setwwwroot() {
-	echo "Please set www root directory"
+	echo "Please set www root directory eg /var/www"
 	read wwwroot
 	bash-writesettings
 	env-attributerequire "wwwroot"
@@ -22,7 +22,7 @@ function env-about() {
 		echo "PHP Version: $phpNo"
 		echo "GIT username: $gituname"
 	echo-hr
-	echo "Main Database IP: $databaseIP"
+	echo "Default Database IP: $defaultDatabaseIP"
 	echo "www root: $wwwroot"
 	echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
 	echo "System settings:"
@@ -100,10 +100,10 @@ function env-attributerequire () {
 			read gituname
 			bash-writesettings
 		fi
-	elif [ "$varname" == "databaseIP" ]; then
-		if [ "$databaseIP" == "" ]; then
+	elif [ "$varname" == "defaultDatabaseIP" ]; then
+		if [ "$defaultDatabaseIP" == "" ]; then
 			echo "Please enter main database IP address"
-			read databaseIP
+			read defaultDatabaseIP
 			bash-writesettings
 		fi
 	elif [ "$varname" == "wwwroot" ]; then

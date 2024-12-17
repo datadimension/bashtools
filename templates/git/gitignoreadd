@@ -1,0 +1,14 @@
+
+#additional git ignore
+
+/public/storage/*
+/public/g_drive/*
+/private/*
+/_local/*
+bu_downloads
+
+#laravel
+/storage/*
+
+#IDE
+/.idea/*

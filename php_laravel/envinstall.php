@@ -30,7 +30,7 @@ $envtemplate = str_replace("<api_emailpwd />", $args["api_emailpwd"], $envtempla
 
 $envtemplate = str_replace("<dir />", $args["dir"], $envtemplate);
 
-$envtemplate = str_replace("<databaseIP />", $databaseIP, $envtemplate);
+$envtemplate = str_replace("<databaseIP />", defaultDatabaseIP, $envtemplate);
 $envtemplate = str_replace("<databasePassword />", $args["dbpword"], $envtemplate);
 
 $installfile = $wwwroot . "/html/" . $args["dir"] . "/.env";

@@ -7,35 +7,14 @@ function git-installrepo() {
 	sudo mkdir $wwwroot/html/$reponame
 	sudo chown $user:www-data $wwwroot/html/$reponame
 	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
-	sudo touch /etc/nginx/sites-enabled/$reponame
-	sudo chown $user:www-data /etc/nginx/sites-enabled/$reponame
-	php ~/bashtools/php_nginx/serverblock.php repo_name=$reponame;
-
-	sudo mv /home/$user/bashtoolscfg/tmp/serverblock_$reponame /etc/nginx/sites-enabled/$reponame
-	sudo chown $user:www-data /etc/nginx/sites-enabled/$reponame
-	#file_put_contents("/etc/nginx/sites-enabled/" . $args["servername"], $blocktemplate);
 	git-deploysubrepos;
-git-addlocalexcludedfiles;
-
-
-    		www-envinstall
-
-    #sudo mkdir -p /var/www/certs/$dir
-    	#	sudo chown $user:www-data /var/www/certs/$dir
-    		#echo "please upload ssl certs to /var/www/certs/$dir or directory pointed to by nginxblock for $dir"
-    	#	echo "if sharing certificate, please amend nginx block to point to it"
-    		#read wait
-
-    php artisan key:generate
-    composer update
-    composer cache clear
-    		nginx-start
-    		fsys-secure
-
-    	cd "$wwwroot/html/$www_repofocus"
-    	echo "set focused repo to '$www_repofocus'"
-    	bash-writesettings
-    	bash-restart
+	git-addlocalexcludedfiles;
+  www-envinstall
+  www-install-dependancies
+  cd "$wwwroot/html/$www_repofocus"
+  echo "set focused repo to '$www_repofocus'"
+  bash-writesettings
+  bash-restart
 }
 
 function git-addlocalexcludedfiles(){
@@ -57,26 +36,19 @@ function git-addlocalexcludedfiles(){
   	sudo mkdir -p $wwwroot/html/$www_repofocus/bootstrap/cache
   	sudo mkdir -p $wwwroot/html/$www_repofocus/public/downloads/
   	sudo mkdir -p $wwwroot/html/$www_repofocus/private/
+
+  		sudo touch /etc/nginx/sites-enabled/$www_repofocus
+    	sudo chown $user:www-data /etc/nginx/sites-enabled/$www_repofocus
+    	php ~/bashtools/php_nginx/serverblock.php repo_name=$www_repofocus;
+    	sudo mv /home/$user/bashtoolscfg/tmp/serverblock_$reponame /etc/nginx/sites-enabled/$www_repofocus
+    	sudo chown $user:www-data /etc/nginx/sites-enabled/$www_repofocus
 }
 
 function x20241121git-installrepo() {
 	env-attributerequire gituname
 	reponame=$1
 	user=$USER
-	sudo mkdir $wwwroot/html/$reponame
-	sudo chown $user:www-data $wwwroot/html/$reponame
-	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
-	sudo touch /etc/nginx/sites-enabled/$reponame
-	sudo chown $user:www-data /etc/nginx/sites-enabled/$reponame
-
-	php ~/bashtools/php_nginx/serverblock.php servername=$dir
-	sudo mv /home/$user/bashtoolscfg/tmp/serverblock$dir /etc/nginx/sites-enabled/$dir
-	sudo chown root:www-data /etc/nginx/sites-enabled/$dir
-	#file_put_contents("/etc/nginx/sites-enabled/" . $args["servername"], $blocktemplate);
-	www_repofocus=$dir #do not this until now in case setting the repo dir and cloning it causes error
-	git-deploysubrepos;
 	www-createnonrepofiles;
-
 	sudo touch $wwwroot/html/$dir/.env
 
     		sudo mkdir -p /var/www/certs/$dir

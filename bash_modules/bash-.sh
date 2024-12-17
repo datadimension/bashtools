@@ -19,6 +19,8 @@ function bash-start() {
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
+	env-attributerequire "defaultDatabaseIP"
+
 	MENUCHOICE="" #reserved as a global for menu function
 
 	#env-attributerequire "welcomemsg"
@@ -173,7 +175,7 @@ function bash-writesettings() {
 		echo "$csv" >~/bashtoolscfg/wwwrepos
 	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
 	echo "$git_ssh" >~/bashtoolscfg/gitcfg
-	echo "$environment,$www_repofocus,$ssh1,$ssh2,$databaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus" >~/bashtoolscfg/bash.env
+	echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus" >~/bashtoolscfg/bash.env
 }
 
 function bash-readsettings() {
@@ -198,7 +200,7 @@ function bash-readsettings() {
 	www_repofocus=${values[1]}
 	ssh1=${values[2]}
 	ssh2=${values[3]}
-	databaseIP=${values[4]}
+	defaultDatabaseIP=${values[4]}
 	gituname=${values[7]}
 	phpNo=${values[8]}
 	ipgateway=${values[9]}
