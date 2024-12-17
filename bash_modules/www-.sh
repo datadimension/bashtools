@@ -442,6 +442,7 @@ function www-repocreate() {
 read -p "Set server IP in hosts file for $www_repofocus.$serverid.com";
 read -p "In windows cmd ipconfig /flushdns"
         bash-writesettings
+        nginx-start
         bash-restart
     	fi
 }
