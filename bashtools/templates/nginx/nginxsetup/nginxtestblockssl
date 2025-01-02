@@ -1,0 +1,45 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name 127.0.0.1 nginxtest;
+        root /var/www/html/nginxtest;
+        index index.php index.html index.htm index.nginx-debian.html;
+        location / {
+                try_files $uri $uri/ =404;
+        }
+	location ~ \.php$ {
+		try_files $uri /index.php =404;
+		#fastcgi_buffering off;# important - set as off for WSL dev environment
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+		fastcgi_index index.php;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_read_timeout 60;
+		include fastcgi_params;
+	}
+}
+
+server {
+        listen 443 ssl;
+        listen [::]:443 ssl;
+	include snippets/self-signed.conf;
+    	include snippets/ssl-params.conf;
+    	ssl_stapling off;#switch to on if real cert
+        ssl_stapling_verify off;#switch to on if real cert
+        server_name 127.0.0.1 nginxtest;
+        root /var/www/html/nginxtest;
+        index index.php index.html index.htm index.nginx-debian.html;
+        location / {
+                try_files $uri $uri/ =404;
+        }
+	location ~ \.php$ {
+		try_files $uri /index.php =404;
+		# fastcgi_buffering off;# important - set as off for WSL dev environment
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+		fastcgi_index index.php;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_read_timeout 60;
+		include fastcgi_params;
+	}
+}
