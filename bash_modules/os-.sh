@@ -22,7 +22,7 @@ function os-checkstatus(){
         		os_setupfunc="${os_steps[$os_status]}";
         		echo "$os_setupfunc";
         		echo "";
-        		read -p "Hit enter when ready" wait; 
+        		read -p "Hit enter when ready" wait;
         		eval $os_setupfunc;
     				os_status=$((os_status+1))
     				echo "Currenty OS Stepup stage:"
@@ -154,7 +154,7 @@ function os-install-nginx() {
 	sudo rm /etc/nginx/sites-available/default
 	sudo rm /var/www/html/index.nginx-debian.html
 	echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
- os-installnewselfsignedcert
+ # os-installnewselfsignedcert
 	www-nginxtest_install
 	net-firewall-start
 }
@@ -276,41 +276,36 @@ function os-sshsecure() {
   			fi
 	echo "Between EACH, press ENTER to go to relevant line to edit ssh config"
 	echo ""
-	echo "1/5 Comment out the following to make this the definitive config file:"
+	echo "1/4 Comment out the following to make this the definitive config file:"
 	echo "Include/etc/ssh/sshd_config.d/*.conf":
 	read wait
 	sudo nano +12 /etc/ssh/sshd_config
-	echo "2/5 stop ssh access via root for security set"
+	echo "2/4 stop ssh access via root for security set"
 	echo "PermitRootLogin no"
 	read wait
 	sudo sudo nano +33 /etc/ssh/sshd_config
-	echo "3/5 set authentication by public key only set"
+	echo "3/4 set authentication by public key only set"
 	echo "PubkeyAuthentication yes"
 	read wait
 	sudo nano +38 /etc/ssh/sshd_config
-	echo "4/5 Edit ssh to remove password access"
+	echo "4/4 Edit ssh to remove password access"
 	echo "PasswordAuthentication no"
 	read wait
-	sudo nano +72 /etc/ssh/sshd_config
-	echo "5/5 We will edit /etc/php/$phpNo/fpm/php.ini"
-	echo "And for security change line to be"
-	echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
-	read wait
-	sudo nano +802 /etc/php/$phpNo/fpm/php.ini
-			os_status=$((os_status+1))
+	sudo nano +57 /etc/ssh/sshd_config
+	os_status=$((os_status+1)) #we exit so need to update pointer here
   bash-writesettings;
   read "Can you log in using keypair y/n ?"
   read yn
-  	  		if [ "$yn" != "y" ]; then
+  if [ "$yn" != "y" ]; then
       			echo "You can try running os-sshaccess again or try logging in via ssh"
       			read wait
       			bash-restart
-      			fi
+  fi
 	echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root"
 	read wait
 	net-firewall-start
 	sudo service ssh reload
-exit;
+	exit;
 }
 
 function os-install-composer() {
