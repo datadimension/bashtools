@@ -23,12 +23,17 @@ function php-install() {
 	sudo apt-get -y install php-readline
 	sudo apt-get -y install php-xml
 	php -v;
-	read -p "Please confirm the php version number to 1 decimal eg 8.1" phpNo
+	php-getversion;
+	read -p "Please confirm the php version number $PHP_VERSION to 1 decimal (eg 1.23 as 1.2):" phpNo
   echo "We will now edit /etc/php/$phpNo/fpm/php.ini"
   echo "And for security change line to be"
   echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
   read wait
   sudo nano +802 /etc/php/$phpNo/fpm/php.ini
+}
+
+function php-getversion(){
+		PHP_VERSION=`php -r 'echo PHP_VERSION;'`
 }
 
 function php-edit() {

@@ -28,6 +28,7 @@ function bash-start() {
 	env-attributerequire "defaultDatabaseIP"
 
 	MENUCHOICE="" #reserved as a global for menu function
+	PHP_VERSION=`php -r 'echo PHP_VERSION;'`
 
 	#env-attributerequire "welcomemsg"
 
