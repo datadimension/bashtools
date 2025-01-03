@@ -17,8 +17,9 @@ function os-checkstatus(){
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
         )
     		size=${#os_steps[@]}
-    		size=100;
         if [ "$os_status" -lt "$size"  ]; then
+        	  os_num=$((os_status+1))
+        		echo "OS Setup $os_num / $size"
         		os_setupfunc="${os_steps[$os_status]}";
         		echo "$os_setupfunc";
         		echo "";
@@ -27,10 +28,12 @@ function os-checkstatus(){
     				os_status=$((os_status+1))
     				echo "Currenty OS Stepup stage:"
         		read wait;
+        		return 1;
+        else
+        	echo "OS Setup finished"
+          read wait;
+        	return 0;
     		fi
-
-    		echo "$os_status $size";
-    		return 1;
 }
 
 function os-installer() {
