@@ -15,7 +15,7 @@ function os-checkstatus(){
         fi
         declare -a os_steps=(
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
-        		"php-install" "os-install-nginx" "mysql-install"
+        		"php-install" "nginx-install" "mysql-install"
         )
     		size=${#os_steps[@]}
     		os_setupfunc="${os_steps[$os_status]}";
@@ -148,17 +148,6 @@ function os-installnewselfsignedcert() {
 	sudo mkdir /etc/nginx
 	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 	sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
-}
-
-function os-install-nginx() {
-	sudo apt -y install nginx
-	#clear default files
-	sudo rm /etc/nginx/sites-enabled/default
-	sudo rm /etc/nginx/sites-available/default
-	sudo rm /var/www/html/index.nginx-debian.html
-	echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
- # os-installnewselfsignedcert
-	net-firewall-start
 }
 
 #downloads only into user downloads dir with the sub path given

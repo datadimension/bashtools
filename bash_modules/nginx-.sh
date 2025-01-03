@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+#installs nginx
+function nginx-install() {
+	sudo apt -y install nginx
+	#clear default files
+	sudo rm /etc/nginx/sites-enabled/default
+	sudo rm /etc/nginx/sites-available/default
+	sudo rm /var/www/html/index.nginx-debian.html
+	echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
+ # os-installnewselfsignedcert
+	net-firewall-start
+}
+
 # restart nginx and php completely
 function nginx-start() {
 	echo "Restart Nginx ? y/n"
@@ -32,11 +44,34 @@ function nginx-start() {
 	fi
 }
 
-function remove-nginxtest(){
-	echo "Remove nginxtest ? y/n"
-	read -t 3 input
-	if [ "$input" == "y" ]; then
-		www-nginxtest_remove
+# installs an nginx test page to check server is operational
+function nginx-testadd(){
+	read -p "Add nginxtest ? Y/n"  input
+	if [ "$input" != "Y" ]; then
+		return 1;
+	fi
+	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
+	#create test block so nginx can read it
+	user=$USER
+	php ~/bashtools/php_helpers/nginx/serverblock.php servername=nginxtest
+	sudo mv /home/$user/bashtoolscfg/tmp/serverblocknginxtest /etc/nginx/sites-enabled/nginxtest
+	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
+	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
+	#20230716 sudo mkdir /etc/nginx
+	echo "Now go to your local hosts file (we moved it to C:\www"
+	echo "and add lines as appropriate for local browser address entry"
+	echo "127.0.0.1    nginxtest"
+	echo "then open Windows cmd and run ipconfig /flushdns"
+	echo "Enter https://nginxtest into browser"
+	echo "and the test server should show online"
+}
+
+#remove the nginx test site
+function nginx-testremove(){
+	read -p "Remove nginxtest ? Y/n"  input
+	if [ "$input" == "Y" ]; then
+			sudo rm -R /var/www/html/nginxtest
+    	sudo rm /etc/nginx/sites-enabled/nginxtest
 	fi
 }
 

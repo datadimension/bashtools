@@ -235,52 +235,6 @@ function www-sitesqluserinstall() {
 	echo "FLUSH PRIVILEGES;"
 }
 
-# installs an nginx test page to check server is operational
-function www-nginxtest_install() {
-	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
-	#create test block so nginx can read it
-	user=$USER
-	php ~/bashtools/php_helpers/nginx/serverblock.php servername=nginxtest
-	sudo mv /home/$user/bashtoolscfg/tmp/serverblocknginxtest /etc/nginx/sites-enabled/nginxtest
-	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
-	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
-	#20230716 sudo mkdir /etc/nginx
-	echo "Now go to your local hosts file (we moved it to C:\www"
-	echo "and add lines as appropriate for local browser address entry"
-	echo "127.0.0.1    nginxtest"
-	echo "then open Windows cmd and run ipconfig /flushdns"
-	echo "Enter https://nginxtest into browser"
-	echo "and the test server should show online"
-}
-
-#remove the nginx test site
-function www-nginxtest_remove() {
-	sudo rm -R /var/www/html/nginxtest
-	sudo rm /etc/nginx/sites-enabled/nginxtest
-}
-
-function www-siteswitch() {
-	www-siteshow
-	echo "Please select a site number to chose for operations"
-	read sitenumber
-	echo "Auto sync with GIT (recommended) ? n=no"
-	read -t 5 input
-	if [ "$environment" != "production" ]; then #never push from production
-		if [ "$input" != "n" ]; then
-			git-push
-		fi
-	fi
-	sitenumber=$((sitenumber - 1))
-	www_sitefocus=${wwwsites[sitenumber]}
-	cd "$wwwroot/html/$www_sitefocus"
-	echo "setting site to $www_sitefocus"
-	bash-writesettings
-	if [ "$input" != "n" ]; then
-		git-pull
-	fi
-	bash-start
-}
-
 function www-routes() {
 	php artisan route:list
 }

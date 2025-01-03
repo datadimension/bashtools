@@ -357,12 +357,6 @@ function www-sitesqluserinstall() {
 	echo "FLUSH PRIVILEGES;"
 }
 
-#remove the nginx test site
-function www-nginxtest_remove() {
-	sudo rm -R /var/www/html/nginxtest
-	sudo rm /etc/nginx/sites-enabled/nginxtest
-}
-
 #switch the repo to work on
 function www-reposwitch() {
 	www-reposhow
