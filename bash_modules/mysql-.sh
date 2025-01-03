@@ -80,7 +80,7 @@ g
 
 function mysql-getversion(){
 	if [ -f /etc/init.d/mysql* ]; then
-    	MYSQL_VERSION="installed"
+			MYSQL_VERSION=$(mysql -V)
 	else
   	  MYSQL_VERSION="not installed"
 	fi
