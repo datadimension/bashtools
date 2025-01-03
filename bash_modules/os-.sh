@@ -21,9 +21,11 @@ function os-checkstatus(){
         if [ "$os_status" -lt "$size"  ]; then
         	  os_num=$((os_status+1))
         		echo "OS Setup $os_num of $size"
+        		echo "";
+        		echo "Ready to run"
         		echo "$os_setupfunc";
-        		echo "Hit enter to run";
-        		read waitforit;
+        		echo ""
+        		read -p "Hit enter to continue" wait;
         		eval $os_setupfunc;
     				os_status=$((os_status+1))
         		return 1;
