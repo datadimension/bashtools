@@ -15,11 +15,12 @@ function os-checkstatus(){
         fi
         declare -a os_steps=(
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
-        		"php-install" "os-install-nginx" "net-firewall-start"
+        		"php-install" "os-install-nginx"
         )
     		size=${#os_steps[@]}
     		os_setupfunc="${os_steps[$os_status]}";
         if [ "$os_status" -lt "$size"  ]; then
+        		env-about;
         	  os_num=$((os_status+1))
         		echo "OS Setup $os_num of $size"
         		echo "";
@@ -322,6 +323,7 @@ function os-install-composer() {
 function os-install-mysql() {
 	#https://support.rackspace.com/how-to/installing-mysql-server-on-ubuntu/
 	#ignore part about ufw, we will do that seperate
+	read -p "Do you want MySQL here - if this a a dev server you might want to use production or database server"
 	echo "Follow this guide for mysql8"
 	echo "https://tastethelinux.com/upgrade-mysql-server-from-5-7-to-8-ubuntu-18-04/"
 	sudo apt-get -y install mysql-server
