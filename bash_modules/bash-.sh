@@ -15,7 +15,13 @@ function bash-start() {
 
 	clear
 	bash-readsettings
-	env-attributerequire "os_status"
+	os-checkstatus
+	osstate=$(os-checkstatus)
+	if [ "$osstate" != "0" ]; then
+		read -p "Any key to restart" wait;
+		bash-restart
+	fi
+
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"

@@ -69,21 +69,7 @@ function env-setattribute() {
 function env-attributerequire () {
 	# shellcheck disable=SC2317
 	varname=$1
-	if [ "$varname" == "os_status" ]; then
-    if [ "$os_status" == "" ]; then
-      os_status=1;
-    fi
-    if [ "$os_status" != "0"  ]; then
-    declare -a os_steps=("echo 'setup for this login is done';read wait;;" "os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies")
-    os_setupfunc="${os_steps[$os_status]}";
-        clear;
-    echo "Currenty OS Stepup stage:"
-    echo "$os_setupfunc";
-    echo "";
-    eval $os_setupfunc;
-		os_status=$((os_status+1))
-		fi
-	elif [ "$varname" == "environment" ]; then
+	if [ "$varname" == "environment" ]; then
 		if [ "$environment" == "" ]; then
 			env-setservertype
 		fi

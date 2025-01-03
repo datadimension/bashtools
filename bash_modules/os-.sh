@@ -9,6 +9,29 @@ function os-() {
 	os-installer
 }
 
+function os-checkstatus(){
+	      if [ "$os_status" == "" ]; then
+          os_status=0;
+        fi
+        declare -a os_steps=(
+        		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
+        )
+    		size=${#os_steps[@]}
+    		size=100;
+        if [ "$os_status" -lt "$size"  ]; then
+        		os_setupfunc="${os_steps[$os_status]}";
+        		echo "$os_setupfunc";
+        		echo "";
+        		eval $os_setupfunc;
+    				os_status=$((os_status+1))
+    				echo "Currenty OS Stepup stage:"
+        		read wait;
+    		fi
+
+    		echo "$os_status $size";
+    		return 1;
+}
+
 function os-installer() {
 	lastoption=$1
 	clear
