@@ -22,7 +22,6 @@ function php-install() {
 	sudo apt-get -y install php-mysql
 	sudo apt-get -y install php-readline
 	sudo apt-get -y install php-xml
-	sudo nano +57 /etc/ssh/sshd_config
 	php -v;
 	read -p "Please confirm the php version number to 1 decimal eg 8.1" phpNo
   echo "We will now edit /etc/php/$phpNo/fpm/php.ini"
