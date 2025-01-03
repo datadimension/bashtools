@@ -22,7 +22,14 @@ function php-install() {
 	sudo apt-get -y install php-mysql
 	sudo apt-get -y install php-readline
 	sudo apt-get -y install php-xml
+	sudo nano +57 /etc/ssh/sshd_config
 	php -v;
+	read -p "Please confirm the php version number to 1 decimal eg 8.1" phpNo
+  echo "We will now edit /etc/php/$phpNo/fpm/php.ini"
+  echo "And for security change line to be"
+  echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
+  read wait
+  sudo nano +802 /etc/php/$phpNo/fpm/php.ini
 }
 
 function php-edit() {

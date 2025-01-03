@@ -15,6 +15,7 @@ function os-checkstatus(){
         fi
         declare -a os_steps=(
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
+        		"php-install" "os-install-nginx" "net-firewall-start"
         )
     		size=${#os_steps[@]}
     		os_setupfunc="${os_steps[$os_status]}";
@@ -131,10 +132,8 @@ function os-install-dependancies() {
 	sudo apt-get -y install openssh-server
 	sudo apt-get -y install npm
 	sudo apt-get install php-sqlite3
-	os-installcomposer
-	php-install
-	os-install-nginx
-	net-firewall-start
+	 sudo apt-get -y install unzip
+	os-install-composer
 }
 function os-installnewselfsignedcert() {
 	#self signed certificate#######################################################
