@@ -357,12 +357,6 @@ function www-sitesqluserinstall() {
 	echo "FLUSH PRIVILEGES;"
 }
 
-# installs an nginx test page to check server is operational
-function www-nginxtest_install() {
-	echo "Clone server admin instead";
-	exit
-}
-
 #remove the nginx test site
 function www-nginxtest_remove() {
 	sudo rm -R /var/www/html/nginxtest

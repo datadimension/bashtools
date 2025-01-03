@@ -157,7 +157,6 @@ function os-install-nginx() {
 	sudo rm /var/www/html/index.nginx-debian.html
 	echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
  # os-installnewselfsignedcert
-	www-nginxtest_install
 	net-firewall-start
 }
 

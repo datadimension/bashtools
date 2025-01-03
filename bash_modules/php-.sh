@@ -29,7 +29,7 @@ function php-install() {
   echo "And for security change line to be"
   echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
   read wait
-  sudo nano +802 /etc/php/$phpNo/fpm/php.ini
+  sudo nano +817 /etc/php/$phpNo/fpm/php.ini
 }
 
 function php-getversion(){
