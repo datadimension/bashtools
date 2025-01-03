@@ -349,6 +349,8 @@ function os-sshkeygen() {
 		echo "Do you want to generate NEW ssh keys or are you using EXISTING [new/existing]"
 		read confirm
 		if [ "$confirm" == "new" ]; then
+			sudo apt install putty-tools;
+			clear;
 			echo "Now generating ssh keys, you are ok to accept defaults"
 			echo "Enter your email to personalise the keys"
 			read email;

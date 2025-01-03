@@ -73,12 +73,11 @@ function env-attributerequire () {
     if [ "$os_status" == "" ]; then
       os_status=1;
     fi
-        if [ "$os_status" != "0"  ]; then
-
+    if [ "$os_status" != "0"  ]; then
     declare -a os_steps=("echo 'setup for this login is done';read wait;;" "os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies")
     os_setupfunc="${os_steps[$os_status]}";
         clear;
-    echo "OS Stepup stage:"
+    echo "Currenty OS Stepup stage:"
     echo "$os_setupfunc";
     echo "";
     eval $os_setupfunc;
