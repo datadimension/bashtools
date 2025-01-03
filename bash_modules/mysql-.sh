@@ -20,7 +20,7 @@ sudo apt-get -y install mysql-server
 	#set bind address for all ip addresses so can remote access
 	# bind-address            = 0.0.0.0
 	echo "
-You need to edit mysqld.cnf
+We need to edit /etc/mysql/mysql.conf.d/mysqld.cnf
 set bind address for all ip addresses so can remote access
 bind-address            = 0.0.0.0 #remove 127.0.0.1
 bind-address            = <wan ip address>

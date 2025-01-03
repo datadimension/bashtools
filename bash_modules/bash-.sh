@@ -14,7 +14,7 @@ function bash-start() {
 	source ~/bashtools/bash_modules/net-.sh
 	source ~/bashtools/bash_modules/log-.sh
 
-	mysql-getversion();
+	mysql-getversion;
 
 	clear
 	bash-readsettings
