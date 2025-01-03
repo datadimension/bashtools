@@ -498,7 +498,7 @@ function www-repocreate() {
         	git add -A;
           git commit -m "first commit"
           git branch -M $branchname
-          git remote add origin git@github.com:datadimension/$www_repofocus.git
+          git remote add origin git@github.com:$gituname/$www_repofocus.git
 						git push -u origin $branchname
         	 echo "Files set on server"
         	 ls -al;

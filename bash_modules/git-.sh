@@ -199,7 +199,6 @@ function git-reset-repo() {
 	echo-h1 "$gitreponame"
 	echo "to $gitrepopath/$gitreponame;"
 	cd $gitrepopath/$gitreponame
-	#git remote set-url origin git@github.com:datadimension/$gitreponame
 	git fetch --all
 	# branchname=$(date +%Y%m%d%I%M)
 	echo "Reseting to $gitreponame$branchname"

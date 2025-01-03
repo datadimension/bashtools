@@ -49,7 +49,7 @@ function nginx-testadd(){
 	#	return 1;
 	#fi
 	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
-	sudo chown root:www-data  /var/www/html/nginxtest
+	sudo chown -R root:www-data  /var/www/html/nginxtest
 
 	#create test block so nginx can read it
 	# user=$USER
