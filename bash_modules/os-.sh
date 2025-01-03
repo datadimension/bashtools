@@ -22,7 +22,7 @@ function os-checkstatus(){
         		os_setupfunc="${os_steps[$os_status]}";
         		echo "$os_setupfunc";
         		echo "";
-        		read -p "Hit enter when ready" wait;
+        		read -p "Hit enter when ready" wait; 
         		eval $os_setupfunc;
     				os_status=$((os_status+1))
     				echo "Currenty OS Stepup stage:"
