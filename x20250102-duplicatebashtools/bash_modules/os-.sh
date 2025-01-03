@@ -114,34 +114,7 @@ function os-install-dependancies() {
 	os-install-nginx
 	net-firewall-start
 }
-function os-installnewselfsignedcert() {
-	#self signed certificate#######################################################
-	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
-	#also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
-	#https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
-	echo "This requires a stable connection and can take a long time ~40 mins"
-	echo "therefore its recommended to use a screen session for this in case of disconnect https://linuxize.com/post/how-to-use-linux-screen/?utm_content=cmp-true"
-	echo "when generating, can leave all blank apart from"
-	echo "Common Name (e.g. server FQDN or YOUR name) []:server_IP_address"
-	sudo mkdir /etc/nginx
-	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
-	sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
-}
 
-function os-install-nginx() {
-	sudo apt -y install nginx
-	#clear default files
-	sudo rm /etc/nginx/sites-enabled/default
-	sudo rm /etc/nginx/sites-available/default
-	sudo rm /var/www/html/index.nginx-debian.html
-	echo "Copying self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/dhparam.pem /etc/nginx/dhparam.pem
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
-	sudo cp ~/bashtools/templates/nginx/nginxsetup/self-signed.conf /etc/nginx/snippets/self-signed.conf
-	www-nginxtest_install
-	net-firewall-start
-}
 
 #downloads only into user downloads dir with the sub path given
 function os-download() {

@@ -9,7 +9,6 @@ else {
       $template = "nginxdevblock";
 }
 $root_repo_url=$args["repo_name"].".".$serverid.".com";
-die("need to update");
 
 $blocktemplate = file_get_contents(getenv('HOME') . "/bashtools/templates/nginx/domainsetup/" . $template);
 $blocktemplate = str_replace("<root_repo_url />", $root_repo_url, $blocktemplate);
@@ -17,4 +16,6 @@ $blocktemplate = str_replace("<repo_name />", $args["repo_name"], $blocktemplate
 
 $blocktemplate = str_replace("<wwwroot />", $wwwroot, $blocktemplate);
 $blocktemplate = str_replace("<phpNo />", $phpNo, $blocktemplate);
+
+echo $blocktemplate;
 file_put_contents(getenv('HOME') . "/bashtoolscfg/tmp/serverblock_" .$args["repo_name"] ,$blocktemplate);

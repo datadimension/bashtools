@@ -136,19 +136,6 @@ function os-install-dependancies() {
 	 sudo apt-get -y install unzip
 	os-install-composer
 }
-function os-installnewselfsignedcert() {
-	#self signed certificate#######################################################
-	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
-	#also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
-	#https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
-	echo "This requires a stable connection and can take a long time ~40 mins"
-	echo "therefore its recommended to use a screen session for this in case of disconnect https://linuxize.com/post/how-to-use-linux-screen/?utm_content=cmp-true"
-	echo "when generating, can leave all blank apart from"
-	echo "Common Name (e.g. server FQDN or YOUR name) []:server_IP_address"
-	sudo mkdir /etc/nginx
-	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
-	sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
-}
 
 #downloads only into user downloads dir with the sub path given
 function os-download() {

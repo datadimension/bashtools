@@ -7,8 +7,6 @@ function nginx-install() {
 	sudo rm /etc/nginx/sites-enabled/default
 	sudo rm /etc/nginx/sites-available/default
 	sudo rm /var/www/html/index.nginx-debian.html
-	echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
- # os-installnewselfsignedcert
 	net-firewall-start
 }
 
@@ -46,22 +44,24 @@ function nginx-start() {
 
 # installs an nginx test page to check server is operational
 function nginx-testadd(){
-	read -p "Add nginxtest ? Y/n"  input
-	if [ "$input" != "Y" ]; then
-		return 1;
-	fi
+	#read -p "Add nginxtest ? Y/n"  input
+	#if [ "$input" != "Y" ]; then
+	#	return 1;
+	#fi
 	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
+	sudo chown root:www-data  /var/www/html/nginxtest
+
 	#create test block so nginx can read it
-	user=$USER
-	php ~/bashtools/php_helpers/nginx/serverblock.php servername=nginxtest
-	sudo mv /home/$user/bashtoolscfg/tmp/serverblocknginxtest /etc/nginx/sites-enabled/nginxtest
+	# user=$USER
+	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=nginxtest
+	sudo mv /home/$user/bashtoolscfg/tmp/serverblock_nginxtest /etc/nginx/sites-enabled/nginxtest
 	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
 	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
 	#20230716 sudo mkdir /etc/nginx
 	echo "Now go to your local hosts file (we moved it to C:\www"
 	echo "and add lines as appropriate for local browser address entry"
-	echo "127.0.0.1    nginxtest"
-	echo "then open Windows cmd and run ipconfig /flushdns"
+	echo "$ipaddr    nginxtest.$serverid.com"
+		echo "then open Windows cmd and run ipconfig /flushdns"
 	echo "Enter https://nginxtest into browser"
 	echo "and the test server should show online"
 }
@@ -73,6 +73,21 @@ function nginx-testremove(){
 			sudo rm -R /var/www/html/nginxtest
     	sudo rm /etc/nginx/sites-enabled/nginxtest
 	fi
+}
+
+# Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
+function nginx-installnewselfsignedcert() {
+		echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
+	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
+	#also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
+	#https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
+	echo "This requires a stable connection and can take a long time ~40 mins"
+	echo "therefore its recommended to use a screen session for this in case of disconnect https://linuxize.com/post/how-to-use-linux-screen/?utm_content=cmp-true"
+	echo "when generating, can leave all blank apart from"
+	echo "Common Name (e.g. server FQDN or YOUR name) []:server_IP_address"
+	sudo mkdir /etc/nginx
+	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+	sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
 }
 
 function nginx-edit() {
