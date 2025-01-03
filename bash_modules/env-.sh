@@ -10,22 +10,27 @@ function env-setwwwroot() {
 
 function env-about() {
 	clear
-	echo-h1 "About this system"
-	echo "Server name: $serverid"
-	echo "Server environment [ production / local ]: $environment"
-	echo-nl "System Time:"
+	echo-h1 "About Server"
 	echo-now
-		ipaddr=$(hostname --all-ip-addresses)
-		cat /etc/lsb-release
-		echo "IP : $ipaddr"
+	echo "";
+	echo "Name: $serverid"
+	echo "OS:"
+	cat /etc/lsb-release
+	echo "";
+	echo "Environment: (production/local)"
+	echo-nl "$environment"
+	ipaddr=$(hostname --all-ip-addresses)
+  echo "IP : $ipaddr"
+	echo-nl "Default Database IP: $defaultDatabaseIP"
+
+	echo "PHP Version: $phpNo"
+	echo-nl "MYSQL Version: $MYSQL_VERSION"
+
+
 		# echo |  Gateway: $ipgateway  |
-		echo "PHP Version: $phpNo"
-		echo "GIT username: $gituname"
-	echo-hr
-	echo "Default Database IP: $defaultDatabaseIP"
+	echo "GIT username: $gituname"
 	echo "www root: $wwwroot"
-	echo "Available SSH (bash-ssh): $ssh1 | $ssh2"
-	echo "System settings:"
+	echo "Available SSH (bash-ssh) 1:$ssh1 | 2:$ssh2"
 	echo-hr
 }
 
