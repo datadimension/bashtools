@@ -103,3 +103,7 @@ function std-menu(){
   MENUCHOICE=${values[$choice]};
 }
 
+function uuid(){
+	uuid=$(uuidgen)
+}
+
