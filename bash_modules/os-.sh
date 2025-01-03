@@ -17,21 +17,19 @@ function os-checkstatus(){
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
         )
     		size=${#os_steps[@]}
+    		os_setupfunc="${os_steps[$os_status]}";
         if [ "$os_status" -lt "$size"  ]; then
         	  os_num=$((os_status+1))
-        		echo "OS Setup $os_num / $size"
-        		os_setupfunc="${os_steps[$os_status]}";
+        		echo "OS Setup $os_num of $size"
         		echo "$os_setupfunc";
-        		echo "";
-        		read -p "Hit enter when ready" wait;
+        		echo "Hit enter to run";
+        		read waitforit;
         		eval $os_setupfunc;
     				os_status=$((os_status+1))
-    				echo "Currenty OS Stepup stage:"
-        		read wait;
         		return 1;
         else
-        	echo "OS Setup finished"
-          read wait;
+        	os_status=$size;
+        	osinstall=0;
         	return 0;
     		fi
 }

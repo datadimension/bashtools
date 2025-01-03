@@ -15,9 +15,9 @@ function bash-start() {
 
 	clear
 	bash-readsettings
+	osinstall=1;
 	os-checkstatus
-	osstate=$(os-checkstatus)
-	if [ "$osstate" != "0" ]; then
+	if [ $osinstall != 0 ]; then
 		read -p "Any key to restart" wait;
 		bash-restart
 	fi
@@ -112,8 +112,7 @@ function bash-help() {
 function bash-restart() {
 	bash-writesettings
 	clear
-	source ~/.bash_profile
-	bash-start
+	source ~/.bash_profile # this restarts bash as well
 }
 
 function bash-who() {
@@ -126,7 +125,7 @@ function bash-logout() {
 	echo "Written out settings, press enter to exit"
 	read waitb
 	clear
-	source ~/.bash_profile
+	source ~/.bash_profile  # this restarts bash as well
 }
 
 # Show history or search in history
