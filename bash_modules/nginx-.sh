@@ -7,6 +7,8 @@ function nginx-install() {
 	sudo rm /etc/nginx/sites-enabled/default
 	sudo rm /etc/nginx/sites-available/default
 	sudo rm /var/www/html/index.nginx-debian.html
+	sudo mkdir -p /var/www/html
+  sudo mkdir -p /var/www/certs
 	net-firewall-start
 }
 
@@ -53,7 +55,7 @@ function nginx-testadd(){
 
 	#create test block so nginx can read it
 	# user=$USER
-	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=nginxtest
+	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=nginxtest sslcertificate=selfsigned
 	sudo mv /home/$user/bashtoolscfg/tmp/serverblock_nginxtest /etc/nginx/sites-enabled/nginxtest
 	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
 	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
@@ -83,11 +85,14 @@ function nginx-installnewselfsignedcert() {
 	#https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
 	echo "This requires a stable connection and can take a long time ~40 mins"
 	echo "therefore its recommended to use a screen session for this in case of disconnect https://linuxize.com/post/how-to-use-linux-screen/?utm_content=cmp-true"
-	echo "when generating, can leave all blank apart from"
-	echo "Common Name (e.g. server FQDN or YOUR name) []:server_IP_address"
+	echo-nl "when generating, can leave all blank"
+	echo "This window will auto close when done, you may want to leave it running and open a new one"
+	os_status=$((os_status+1)) #we exit so need to update pointer here
+  bash-writesettings;
 	sudo mkdir /etc/nginx
 	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 	sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
+	exit;
 }
 
 function nginx-edit() {

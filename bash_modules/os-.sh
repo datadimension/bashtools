@@ -15,7 +15,7 @@ function os-checkstatus(){
         fi
         declare -a os_steps=(
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
-        		"php-install" "nginx-install" "mysql-install"
+        		"php-install" "nginx-install" "nginx-installnewselfsignedcert" "mysql-install"
         )
     		size=${#os_steps[@]}
     		os_setupfunc="${os_steps[$os_status]}";
@@ -27,8 +27,10 @@ function os-checkstatus(){
         		echo "Ready to run"
         		echo "$os_setupfunc";
         		echo ""
-        		read -p "Hit enter to continue" wait;
-        		eval $os_setupfunc;
+        		read -p "Hit enter to continue or S to skip" wait;
+        		if [ "$wait" != "s" ]; then
+        			eval $os_setupfunc;
+        		fi
     				os_status=$((os_status+1))
         		return 1;
         else
@@ -128,8 +130,6 @@ function os-install-dependancies() {
 	sudo apt install net-tools
 	sudo apt-get install -y whois
 	sudo apt-get install putty-tools
-	sudo mkdir -p /var/www/html
-	sudo mkdir -p /var/www/certs
 	sudo apt-get -y install openssh-server
 	sudo apt-get -y install npm
 	sudo apt-get install php-sqlite3

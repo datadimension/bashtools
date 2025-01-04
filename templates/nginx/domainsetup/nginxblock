@@ -11,10 +11,8 @@ server {
         root <wwwroot />/html/<repo_name />/public/;
         #access_log /var
 
-        #<ssl_certs>
-        ssl_certificate /var/www/certs/<repo_name />/<repo_name />_chain.crt;
-        ssl_certificate_key /var/www/certs/<repo_name />/<repo_name />.key;
-        #</ssl_certs>
+        # ssl_certificates
+        <ssl_certs />
 
         fastcgi_buffers 16 16k;
         fastcgi_buffer_size 32k;
