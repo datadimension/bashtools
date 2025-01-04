@@ -27,8 +27,8 @@ function os-checkstatus(){
         		echo "Ready to run"
         		echo "$os_setupfunc";
         		echo ""
-        		read -p "Hit enter to continue or S to skip" wait;
-        		if [ "$wait" != "s" ]; then
+        		read -p "Hit enter to continue or S to skip: " wait;
+        		if [ "$wait" != "S" ]; then
         			eval $os_setupfunc;
         		fi
     				os_status=$((os_status+1))
