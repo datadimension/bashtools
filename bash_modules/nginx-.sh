@@ -54,9 +54,8 @@ function nginx-testadd(){
 	sudo chown -R root:www-data  /var/www/html/nginxtest
 
 	#create test block so nginx can read it
-	# user=$USER
 	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=nginxtest sslcertificate=selfsigned
-	sudo mv /home/$user/bashtoolscfg/tmp/serverblock_nginxtest /etc/nginx/sites-enabled/nginxtest
+	sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_nginxtest /etc/nginx/sites-enabled/nginxtest
 	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
 	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
 	#20230716 sudo mkdir /etc/nginx

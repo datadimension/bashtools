@@ -25,7 +25,7 @@ function os-checkstatus(){
         		echo "OS Setup $os_num of $size"
         		echo "";
         		echo "Ready to run"
-        		echo "$os_setupfunc"; 
+        		echo "$os_setupfunc";
         		echo ""
         		read -p "Hit enter to continue or S to skip: " wait;
         		if [ "$wait" != "S" ]; then
