@@ -77,7 +77,7 @@ function nginx-testremove(){
 }
 
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
-function nginx-installnewselfsignedcert() {
+function nginx-createnewselfsignedcert() {
 		echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
 	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
 	#also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
@@ -88,10 +88,16 @@ function nginx-installnewselfsignedcert() {
 	echo "This window will auto close when done, you may want to leave it running and open a new one"
 	os_status=$((os_status+1)) #we exit so need to update pointer here
   bash-writesettings;
+  echo-now;
 	sudo mkdir /etc/nginx
 	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 	sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
+	echo-now;
 	exit;
+}
+
+function nginx-installselfsignedcert(){
+	sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsignedkeys/self-signed.conf /etc/nginx/snippets/self-signed.conf
 }
 
 function nginx-edit() {

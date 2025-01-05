@@ -15,7 +15,7 @@ function os-checkstatus(){
         fi
         declare -a os_steps=(
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
-        		"php-install" "nginx-install" "nginx-installnewselfsignedcert" "mysql-install"
+        		"php-install" "nginx-install" "nginx-createnewselfsignedcert" "mysql-install"
         )
     		size=${#os_steps[@]}
     		os_setupfunc="${os_steps[$os_status]}";
