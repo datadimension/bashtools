@@ -17,7 +17,7 @@ function os-() {
 	os-installer
 }
 
-#installs a specific os install step by index number
+#sekect a specific os install step by index number or pick from menu
 function os-install_step(){
 	size=${#os_install_steps[@]}
 	useindex=$1
@@ -39,11 +39,16 @@ function os-install_step(){
 		echo "Ready to run"
 		echo "$os_setupfunc";
 		echo ""
-		read -p "Hit enter to continue or S to skip: " wait;
-		if [ "$wait" != "S" ]; then
+		read -p "Hit enter to continue or S to skip: " input;
+		if [ "$input" != "S" ]; then
         eval $os_setupfunc;
         if [ "$useindex" == "" ]; then
 					os_status=$((os_status+1))
+				fi
+		else
+				if [ "$useindex" != "" ]; then
+					read -p "Enter F to finish auto setup (this might result in unstable system): " input;
+					 os_status=$(($os_install_step_size+1))
 				fi
 		fi
 }
