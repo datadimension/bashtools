@@ -97,7 +97,7 @@ function nginx-createnewselfsignedcert() {
 }
 
 function nginx-installselfsignedcert(){
-	sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsignedkeys/self-signed.conf /etc/nginx/snippets/self-signed.conf
+	sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsignedkeys/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
 }
 
 function nginx-edit() {

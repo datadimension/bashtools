@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+declare -a os_install_steps=(
+        		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
+        		"php-install" "nginx-install" "nginx-createnewselfsignedcert" "mysql-install"
+        		"echo setup finished"
+)
+os_install_step_size=${#os_install_steps[@]}
+
+
 function os-() {
 	# at some point we could have a list of options here
 
@@ -9,34 +17,47 @@ function os-() {
 	os-installer
 }
 
+#installs a specific os install step by index number
+function os-install_step(){
+	size=${#os_install_steps[@]}
+	useindex=$1
+	if [ "$useindex" == "" ]; then
+		# use for loop to read all values and indexes
+		for (( i=0; i<${os_install_step_size}; i++ ));
+			do
+				index=$((i+1))
+  			echo "$index: ${os_install_steps[$i]}"
+			done
+		read -p "Enter step number: " os_step_num;
+		os_step_num=$(($os_step_num-1))
+	else
+		echo "OS Setup $useindex of $size"
+		os_step_num=$useindex;
+	fi
+		os_setupfunc="${os_install_steps[$os_step_num]}";
+		echo "";
+		echo "Ready to run"
+		echo "$os_setupfunc";
+		echo ""
+		read -p "Hit enter to continue or S to skip: " wait;
+		if [ "$wait" != "S" ]; then
+        eval $os_setupfunc;
+        if [ "$useindex" == "" ]; then
+					os_status=$((os_status+1))
+				fi
+		fi
+}
+
 function os-checkstatus(){
 	      if [ "$os_status" == "" ]; then
           os_status=0;
         fi
-        declare -a os_steps=(
-        		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
-        		"php-install" "nginx-install" "nginx-createnewselfsignedcert" "mysql-install"
-        )
-    		size=${#os_steps[@]}
-    		os_setupfunc="${os_steps[$os_status]}";
-        if [ "$os_status" -lt "$size"  ]; then
-        		env-about;
-        	  os_num=$((os_status+1))
-        		echo "OS Setup $os_num of $size"
-        		echo "";
-        		echo "Ready to run"
-        		echo "$os_setupfunc";
-        		echo ""
-        		read -p "Hit enter to continue or S to skip: " wait;
-        		if [ "$wait" != "S" ]; then
-        			eval $os_setupfunc;
-        		fi
-    				os_status=$((os_status+1))
-        		return 1;
+        if [ "$os_status" -lt "$os_install_step_size"  ]; then
+        	os-install_step $os_status
+    			osinstall=1;
         else
-        	os_status=$size;
+        	os_status=$(($os_install_step_size+1))
         	osinstall=0;
-        	return 0;
     		fi
 }
 

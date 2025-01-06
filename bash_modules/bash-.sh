@@ -18,9 +18,9 @@ function bash-start() {
 
 	clear
 	bash-readsettings
-	osinstall=1;
+	osinstall=0;
 	os-checkstatus
-	if [ $osinstall != 0 ]; then
+	if [ $osinstall == 1 ]; then
 		read -p "Any key to restart" wait;
 		bash-restart
 	fi
