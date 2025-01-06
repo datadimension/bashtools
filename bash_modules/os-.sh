@@ -17,7 +17,7 @@ function os-() {
 	os-installer
 }
 
-#sekect a specific os install step by index number or pick from menu
+#select a specific os install step by index number or pick from menu
 function os-install_step(){
 	size=${#os_install_steps[@]}
 	useindex=$1
@@ -31,7 +31,7 @@ function os-install_step(){
 		read -p "Enter step number: " os_step_num;
 		os_step_num=$(($os_step_num-1))
 	else
-		echo "OS Setup $useindex of $size"
+		echo "OS Setup $useindex of $size"  
 		os_step_num=$useindex;
 	fi
 		os_setupfunc="${os_install_steps[$os_step_num]}";
