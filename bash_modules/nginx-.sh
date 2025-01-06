@@ -70,9 +70,10 @@ function nginx-testadd(){
 #remove the nginx test site
 function nginx-testremove(){
 	read -p "Remove nginxtest ? Y/n"  input
-	if [ "$input" == "Y" ]; then
+	if [ "$input" != "n" ]; then
 			sudo rm -R /var/www/html/nginxtest
     	sudo rm /etc/nginx/sites-enabled/nginxtest
+    	echo "Nginx test removed";
 	fi
 }
 
