@@ -63,8 +63,8 @@ function nginx-testadd(){
 	echo "and add lines as appropriate for local browser address entry"
 	echo "$ipaddr    nginxtest.$serverid.com"
 		echo "then open Windows cmd and run ipconfig /flushdns"
-	echo "Enter https://nginxtest into browser"
-	echo "and the test server should show online"
+	echo "and the test server should show online with"
+	echo nginxtest.$serverid.com;
 }
 
 #remove the nginx test site
