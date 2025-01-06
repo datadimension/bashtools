@@ -392,21 +392,16 @@ function www-install-dependancies() {
 	echo "update via composer"
 	echo "This now might require manual edit of files"
 	cd $wwwroot/html/$www_repofocus
-	#dev versions follow in comments
-	composer dump-autoload # php 71 `which composer` dump-autoload;
-
-	#need to detect php version here and if statements (bash switch?) to perform updates as system might be multi php
-
-	#works: php71 -d memory_limit=-1 `which composer` update --no-scripts;
-	composer update -W # php71 `which composer` update --no-scripts; or? php71 -d memory_limit=768M `which composer` update --no-scripts;(1610612736)
+	composer dump-autoload
+	composer update -W
 	composer install
-	    composer clear-cache
+	composer clear-cache
 	# this also generates autoload;
-	php artisan key:generate #dev server php70 artisan key:generate;
+	php artisan key:generate
 	php artisan view:clear
 	php artisan --version
 	fsys-secure
-	    		nginx-start
+	nginx-start
 }
 
 function os-certificategen() {

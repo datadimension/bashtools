@@ -76,8 +76,15 @@ function nginx-testremove(){
 	fi
 }
 
+#sets nginx block for current repo focus
+function nginx-setcurrentrepofocusblock(){
+      	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$www_repofocus;
+      	sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
+      	sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
+}
+
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
-function nginx-createnewselfsignedcert() {
+function nginx-setselfsignedcert() {
 		echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
 	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
 	#also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
@@ -96,8 +103,12 @@ function nginx-createnewselfsignedcert() {
 	exit;
 }
 
-function nginx-installselfsignedcert(){
+#copy preprepared ssl certs for testing
+function nginx-copyselfsignedcert(){
+	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt;
+	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key;
 	sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsignedkeys/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
+	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/dhparam.pem /etc/nginx/dhparam.pem
 }
 
 function nginx-edit() {

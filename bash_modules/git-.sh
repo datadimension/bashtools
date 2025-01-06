@@ -38,10 +38,7 @@ function git-addlocalexcludedfiles(){
   	sudo mkdir -p $wwwroot/html/$www_repofocus/public/downloads/
   	sudo mkdir -p $wwwroot/html/$www_repofocus/private/
 
-  		#sudo touch /etc/nginx/sites-enabled/$www_repofocus
-    	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$www_repofocus;
-    	sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
-    	sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
+
 }
 
 function x20241121git-installrepo() {
