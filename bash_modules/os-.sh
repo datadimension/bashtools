@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-declare -a os_install_steps=(
+declare -ag os_install_steps=(
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
         		"php-install" "nginx-install" "nginx-createnewselfsignedcert" "mysql-install"
         		"echo setup finished"
