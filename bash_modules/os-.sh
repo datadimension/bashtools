@@ -5,6 +5,7 @@ declare -a os_install_steps=(
         		"php-install" "nginx-install" "nginx-createnewselfsignedcert" "mysql-install"
         		"echo setup finished"
 )
+
 os_install_step_size=${#os_install_steps[@]}
 
 
