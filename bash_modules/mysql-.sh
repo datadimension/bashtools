@@ -50,11 +50,17 @@ add user
 "
 }
 
+#generates users and permissions php and admin, note the users are named after the focused repo, however if a schema argument is supplied then this is used for the appschema
 function mysql-createrepousers(){
-	if [ "$www_repofocus" == "" ]; then
+	app_schema=$1;
+	if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ];then
 		read -p "You need to have a focused repo to do this" wait;
 		return 1;
 	fi
+	if [ "$app_schema" == "" ]; then
+		app_schema=$www_repofocus
+	fi
+	echo $app_schema;
 	newpassword="PWD_$(uuidgen)_"
   echo "NOTE YOU WILL HAVE TO RUN SQL TO ACTUALLY ADD THE USER";
   echo "Password will initially be set as random to avoid unsecurely showing it in script"
@@ -64,13 +70,13 @@ function mysql-createrepousers(){
 	echo "DROP USER IF EXISTS '"$www_repofocus"_admin';";
   echo "CREATE USER '"$www_repofocus"_admin'@'%' IDENTIFIED BY '$newpassword';"
   echo "GRANT SELECT,EXECUTE, SHOW VIEW ON ddDB.* TO '"$www_repofocus"_admin'@'%';"
-	echo-nl "GRANT ALL PRIVILEGES ON $www_repofocus.* TO '"$www_repofocus"_admin'@'%' WITH GRANT OPTION;"
+	echo-nl "GRANT ALL PRIVILEGES ON $app_schema.* TO '"$www_repofocus"_admin'@'%' WITH GRANT OPTION;"
 
 	echo "DROP USER IF EXISTS '"$www_repofocus"_php';";
   echo "CREATE USER '"$www_repofocus"_php'@'%' IDENTIFIED BY '$newpassword';"
   echo "GRANT SELECT,EXECUTE on ddDB.* TO '"$www_repofocus"_php'@'%';"
-	echo-nl "GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON $www_repofocus.* TO '"$www_repofocus"_php'@'%' WITH GRANT OPTION;"
-g
+	echo-nl "GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON $app_schema.* TO '"$www_repofocus"_php'@'%' WITH GRANT OPTION;"
+
 	echo-nl "now to set actual passwords:";
 
 	echo-nl "ALTER USER '"$www_repofocus"_admin'@'%' IDENTIFIED BY 'New-Password-Here";
