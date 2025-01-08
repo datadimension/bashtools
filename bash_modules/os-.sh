@@ -3,6 +3,7 @@
 declare -ag os_install_steps=(
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
         		"php-install" "nginx-install" "nginx-setselfsignedcert" "mysql-install"
+        		"os-media-install"
         		"echo setup finished"
 )
 

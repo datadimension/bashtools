@@ -439,9 +439,6 @@ function www-repocreate() {
 				bash-writesettings;
 				cd "$wwwroot/html"
         composer create-project laravel/laravel $www_repofocus;
-        composer require laravel/ui
-        composer require laravel/socialite
-
 # https://www.appfinz.com/blogs/laravel-middleware-for-auth-admin-users-roles/
 # php artisan make:middleware IsDataController
 
@@ -467,17 +464,22 @@ function www-repocreate() {
 
 				#add in DD  stubs
 				cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http
-				cp -a -v --update=none Controllers $wwwroot/html/$www_repofocus/app/Http
+				cp -a -v --update=none Controllers $wwwroot/html/$www_repofocus/app
 
 				cd ~/bashtools/templates/laravel/DD_laravelAppComponents/resources/views
 				cp -a -v --update=none auth $wwwroot/html/$www_repofocus/resources/views
+
+				#add project files that use DD files
+				cp ~/bashtools/templates/laravel/bootstrap/app.php $wwwroot/html/$www_repofocus/bootstrap/app.php
+
 
 #bootstrap/app (add middleware)
 #Http/Middleware/AccessLevel.php
 
 #config/app.php
 #AuthService
-
+        composer require laravel/ui
+        composer require laravel/socialite
         www-install-dependancies
 
         cd "$wwwroot/html/$www_repofocus"
@@ -513,11 +515,17 @@ function www-fromrepobackup(){
 	read -p "Enter backup dir " backupdir;
 	read -p "Enter target dir " targetdir;
   cd "$wwwroot/html/";
+
 	cp -a -v --update=none $wwwroot/html/$backupdir/private $wwwroot/html/$targetdir
 
-# private dir
-#.env
-# http/controllers
+	#  cp -r 2024_xonhealth/app/Http/Controllers xonhealth/app/Http/xControllers
+# cp -r 2024_xonhealth/private xonhealth/private
+# cp -r 2024_xonhealth/public xonhealth/xpublic
+# cp 2024_xonhealth/.env xonhealth/.env
+# cp 2024_xonhealth/routes/web.php xonhealth/routes/web.php
+# cp -r 2024_xonhealth/resources/views xonhealth/resources/xviews
+
+
 # * * * * * php /var/www/html/sc.liveinfo247.com/artisan schedule:run
 
 # * * * * * php /var/www/html/liveinfo247.com/artisan schedule:run >> /dev/null 2>&1
@@ -526,4 +534,4 @@ function www-fromrepobackup(){
 # * * * * * php /var/www/html/sc.liveinfo247.com/artisan schedule:run >> /dev/null 2>&1
 	}
 
-}
+
