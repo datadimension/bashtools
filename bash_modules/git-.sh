@@ -236,33 +236,37 @@ function git-push-repo() {
 	echo-hr
 }
 
-function git-pull-repo() {
-	gitreponame=$1
-	if [ "$gitreponame" == "DD_laraview" ]; then
-		gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
-	elif [ "$gitreponame" == "DD_libwww" ]; then
-		gitrepopath="$wwwroot/html/$www_repofocus/public"
-	elif [ "$gitreponame" == "DD_laravelAp" ]; then
-		gitrepopath="$wwwroot/html/$www_repofocus/app"
-	elif [ "$gitreponame" == "DD_libmedia" ]; then
-		gitrepopath="$wwwroot/html/$www_repofocus/public"
-	else
-		gitrepopath="$wwwroot/html"
-		gitreponame=$www_repofocus
-	fi
-	echo "pulling repo ..."
-	echo-h1 "$gitreponame"
-	echo "to $gitrepopath/$gitreponame;"
-	cd $gitrepopath/$gitreponame
-	git-add
-	git pull
-	echo ""
-	echo "Finished at:"
-	echo-now
-	echo-hr
-}
+	function x20250108git-pull-repo() {
+		gitreponame=$1
+		if [ "$gitreponame" == "DD_laraview" ]; then
+			gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
+		elif [ "$gitreponame" == "DD_libwww" ]; then
+			gitrepopath="$wwwroot/html/$www_repofocus/public"
+		elif [ "$gitreponame" == "DD_laravelAp" ]; then
+			gitrepopath="$wwwroot/html/$www_repofocus/app"
+		elif [ "$gitreponame" == "DD_libmedia" ]; then
+			echo "redundant";
+			return 0;
+			gitrepopath="$wwwroot/html/$www_repofocus/public"
 
-function git-pull-all() {
+		#gitrepopath="$wwwroot/html/$www_repofocus/public"
+		else
+			gitrepopath="$wwwroot/html"
+			gitreponame=$www_repofocus
+		fi
+		echo "pulling repo ..."
+		echo-h1 "$gitreponame"
+		echo "to $gitrepopath/$gitreponame;"
+		cd $gitrepopath/$gitreponame
+		git-add
+		git pull
+		echo ""
+		echo "Finished at:"
+		echo-now
+		echo-hr
+	}
+
+function x20250108git-pull-all() {
 	git-pull-repo "DD_laraview"
 	git-pull-repo "DD_libwww"
 	git-pull-repo "DD_laravelAp"

@@ -3,7 +3,7 @@
 declare -ag os_install_steps=(
         		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
         		"php-install" "nginx-install" "nginx-setselfsignedcert" "mysql-install"
-        		"os-media-install"
+        		"os-ddMediaInstall"
         		"echo setup finished"
 )
 
@@ -17,6 +17,22 @@ function os-() {
 	#echo "any key to continue"
 	#read wait
 	os-installer
+}
+
+#installs the git mediastore repo
+function os-ddMediaInstall(){
+				echo "installing ddMediaStore";
+  			gitrepopath="$wwwroot/html"
+  			echo "pulling repo ..."
+  			gitreponame="DD_media";
+  			echo-h1 "$gitreponame"
+  			echo "to $gitrepopath/$gitreponame;"
+  			sudo rm -r $gitrepopath/$gitreponame;
+  			sudo mkdir -p $gitrepopath/$gitreponame/public;
+  			sudo chown -R $gituname:www-data $gitrepopath/$gitreponame;
+  			git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$gitreponame
+  			git-deploysubrepo "$gitreponame/public" "DD_libmedia"
+  			sudo chown -R $gituname:www-data $gitrepopath/$gitreponame;
 }
 
 #select a specific os install step by index number or pick from menu
