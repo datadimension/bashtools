@@ -17,7 +17,11 @@ function fsys-secure() {
  		dirname=$www_repofocus;
  	fi
 	ls -al $dirname;
-	#sudo chmod -R $sec1sec755level $wwwroot/html/
+
+	echo "Securing bash-tools permissions"
+
+	sudo chown -R $USER:www-data $wwwroot/html
+	sudo chmod -R $sec755level $wwwroot/html/
 
 	echo "Securing bash-tools permissions"
   sudo chmod -R $sec770evel ~/bashtools/php_helpers/bash
@@ -27,7 +31,6 @@ function fsys-secure() {
 
 	echo "Reseting file permissions in $dirname"
 	sudo find $wwwroot/html/$dirname -type f -exec chmod $sec644evel {} \;
-
 	echo "Reseting directory permissions in $dirname"
 	sudo find $wwwroot/html/$dirname -type d -exec chmod $sec755level {} \;
 	echo "Securing directory permissions in $dirname"
