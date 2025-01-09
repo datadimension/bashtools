@@ -464,7 +464,11 @@ function www-repocreate() {
 
 				#add in DD  stubs
 				cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http
-				cp -a -v --update=none Controllers $wwwroot/html/$www_repofocus/app
+				cp -a -v --update=none Controllers $wwwroot/html/$www_repofocus/app/Http
+				cp -a -v --update=none Middleware $wwwroot/html/$www_repofocus/app/Http
+				cp -a -v --update=none API $wwwroot/html/$www_repofocus/app/Http
+				cp -a -v --update=none Models $wwwroot/html/$www_repofocus/app/Http
+
 
 				cd ~/bashtools/templates/laravel/DD_laravelAppComponents/resources/views
 				cp -a -v --update=none auth $wwwroot/html/$www_repofocus/resources/views
@@ -480,6 +484,8 @@ function www-repocreate() {
 #AuthService
         composer require laravel/ui
         composer require laravel/socialite
+        composer require google/apiclient;
+
         www-install-dependancies
 
         cd "$wwwroot/html/$www_repofocus"
