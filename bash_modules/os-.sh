@@ -21,19 +21,12 @@ function os-() {
 
 #installs the git mediastore repo
 function os-ddMediaInstall(){
-				echo "installing ddMediaStore";
-  			gitrepopath="$wwwroot/html"
-  			echo "pulling repo ..."
   			gitreponame="DD_media";
-  			echo-h1 "$gitreponame"
-  			echo "to $gitrepopath/$gitreponame;"
-  			sudo rm -r $gitrepopath/$gitreponame;
-  			sudo mkdir -p $gitrepopath/$gitreponame/public;
-  			sudo chown -R $gituname:www-data $gitrepopath/$gitreponame;
-  			git clone git@github.com:$gituname/$reponame.git $wwwroot/html/DD_media;
-  			git-deploysubrepo "$gitreponame/public" "DD_libmedia"
+  			sudo rm -R $wwwroot/DD_media;
+  			echo "installing DD_media  to $wwwroot/$gitreponame;"
+  			git clone git@github.com:$gituname/DD_media.git $wwwroot/html/DD_media;
+  			git-deploysubrepo "DD_media/public" "DD_libmedia"
   			fsys-secure DD_media;
-  			sudo chown -R $gituname:www-data $gitrepopath/$gitreponame;
 }
 
 #select a specific os install step by index number or pick from menu
