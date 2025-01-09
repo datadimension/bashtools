@@ -22,7 +22,7 @@ function os-() {
 #installs the git mediastore repo
 function os-ddMediaInstall(){
   			gitreponame="DD_media";
-  			sudo rm -R $wwwroot/DD_media;
+  			sudo rm -R $wwwroot/html/DD_media;
   			echo "installing DD_media  to $wwwroot/$gitreponame;"
   			git clone git@github.com:$gituname/DD_media.git $wwwroot/html/DD_media;
   			git-deploysubrepo "DD_media/public" "DD_libmedia"
