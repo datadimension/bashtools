@@ -26,6 +26,8 @@ function os-ddMediaInstall(){
   			echo "installing DD_media  to $wwwroot/$gitreponame;"
   			git clone git@github.com:$gituname/DD_media.git $wwwroot/html/DD_media;
   			git-deploysubrepo "DD_media/public" "DD_libmedia"
+  			php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=DD_media sslcertificate=selfsigned app_url=mediastore247.com
+  			sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_DD_media /etc/nginx/sites-enabled/DD_media
   			fsys-secure DD_media;
 }
 
