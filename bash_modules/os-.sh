@@ -32,6 +32,7 @@ function os-ddMediaInstall(){
   			sudo chown -R $gituname:www-data $gitrepopath/$gitreponame;
   			git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$gitreponame
   			git-deploysubrepo "$gitreponame/public" "DD_libmedia"
+  			fsys-secure DD_media;
   			sudo chown -R $gituname:www-data $gitrepopath/$gitreponame;
 }
 

@@ -8,39 +8,33 @@ function fsys-disk() {
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
-	echo "Securing file ownership in $www_repofocus" # this is after as password required first
+		#sec644evel=644;
+  	sec644evel=777;
+  	sec755level=755;
+  	sec770evel=770;
+	dirname=$1
+	if [ "$dirname" == "" ]; then
+ 		dirname=$www_repofocus;
+ 	fi
+	ls -al $dirname;
+	#sudo chmod -R $sec1sec755level $wwwroot/html/
 
-	sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus
+	echo "Securing bash-tools permissions"
+  sudo chmod -R $sec770evel ~/bashtools/php_helpers/bash
 
-	echo "Securing file permissions in $www_repofocus"
-	#sudo find $wwwroot/html/$www_repofocus -type f -exec chmod 644 {} \;
-	sudo find $wwwroot/html/$www_repofocus -type f -exec chmod 777 {} \;
+	echo "Reseting laravel permissions in $dirname"
+	sudo chown -R $USER:www-data $wwwroot/html/$dirname
 
+	echo "Reseting file permissions in $dirname"
+	sudo find $wwwroot/html/$dirname -type f -exec chmod $sec644evel {} \;
 
-	echo "Securing directory permissions in $www_repofocus"
-	#sudo find $wwwroot/html/$www_repofocus -type d -exec chmod 755 {} \;
-	sudo find $wwwroot/html/$www_repofocus -type d -exec chmod 777 {} \;
-
-	echo "Securing laravel permissions in $www_repofocus"
-	#sudo chmod -R 755 $wwwroot/html/$www_repofocus/app
-	#sudo chmod -R 770 $wwwroot/html/$www_repofocus/storage
-#	sudo chmod -R 770 $wwwroot/html/$www_repofocus/public/downloads
-#	sudo chmod -R 770 $wwwroot/html/$www_repofocus/private
-
-		sudo chmod -R 777 $wwwroot/html/$www_repofocus/app
-  	sudo chmod -R 777 $wwwroot/html/$www_repofocus/storage
-  	sudo chmod -R 777 $wwwroot/html/$www_repofocus/public/downloads
-  	sudo chmod -R 777 $wwwroot/html/$www_repofocus/private
-
-sudo chmod -R 770 ~/bashtools/php_helpers/bash
-
-	echo "Not impelemented"
-	echo "FIrewall lockdown to"
-	echo "SSH"l
-	echo "FTP via SSH"
-	echo "NGINX"
-	echo "MySQL"
-	echo "Xdebug (for dev only)"
+	echo "Reseting directory permissions in $dirname"
+	sudo find $wwwroot/html/$dirname -type d -exec chmod $sec755level {} \;
+	echo "Securing directory permissions in $dirname"
+	sudo chmod -R $sec755level $wwwroot/html/$dirname/app
+	sudo chmod -R $sec770evel $wwwroot/html/$dirname/storage
+	sudo chmod -R $sec770evel $wwwroot/html/$dirname/public/downloads
+	sudo chmod -R $sec770evel $wwwroot/html/$dirname/private
 }
 
 function file_exists() {
