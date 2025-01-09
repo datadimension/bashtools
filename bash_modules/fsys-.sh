@@ -16,7 +16,7 @@ function fsys-secure() {
 	if [ "$dirname" == "" ]; then
  		dirname=$www_repofocus;
  	fi
-	ls -al $dirname;
+	ls -al $wwwroot/html/$dirname;
 
 	echo "Securing bash-tools permissions"
 

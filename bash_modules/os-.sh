@@ -23,12 +23,12 @@ function os-() {
 function os-ddMediaInstall(){
   			gitreponame="DD_media";
   			sudo rm -R $wwwroot/html/DD_media;
-  			echo "installing DD_media  to $wwwroot/$gitreponame;"
+  			echo "installing DD_media  to $wwwroot/html/$gitreponame;"
   			git clone git@github.com:$gituname/DD_media.git $wwwroot/html/DD_media;
   			git-deploysubrepo "DD_media/public" "DD_libmedia"
   			php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=DD_media sslcertificate=selfsigned app_url=mediastore247.com
   			sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_DD_media /etc/nginx/sites-enabled/DD_media
-  			fsys-secure DD_media;
+  			#fsys-secure DD_media;
 }
 
 #select a specific os install step by index number or pick from menu
