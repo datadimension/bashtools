@@ -33,4 +33,3 @@ foreach($repo_env_file as $line){
       $repo_env[$key]=$value;
       echo PHP_EOL;
 }
-var_dump($repo_env);
