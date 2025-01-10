@@ -19,7 +19,7 @@ function nginx-start() {
 		return 0
 	fi
 	read -p "Conform file permisions at $www_repofocus ? y/n" -t 10 input
-	if [ "$input" == "y" ]; then
+	if [ "$input" != "n" ]; then
 		fsys-secure
 	fi
 	clear
