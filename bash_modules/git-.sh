@@ -217,7 +217,7 @@ function git-push-repo() {
 	echo-hr
 }
 
-function x20250108git-pull-repo() {
+function git-pull-repo() {
 	gitreponame=$1
 	if [ "$gitreponame" == "DD_laraview" ]; then
 		gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
@@ -247,7 +247,7 @@ function x20250108git-pull-repo() {
 	echo-hr
 }
 
-function x20250108git-pull-all() {
+function git-pull-all() {
 	git-pull-repo "DD_laraview"
 	git-pull-repo "DD_libwww"
 	git-pull-repo "DD_laravelAp"
