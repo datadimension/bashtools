@@ -15,7 +15,7 @@ function nginx-install() {
 # restart nginx and php completely
 function nginx-start() {
 	echo "Restart Nginx ? y/n"
-	read -t 3 input
+	read -t 10 input
 	if [ "$input" == "y" ]; then
 		clear
 		echo-h1 "Closing Nginx / PHP"

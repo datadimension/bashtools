@@ -26,8 +26,10 @@ function git-addlocalexcludedfiles(){
 
   	sudo mkdir -p $wwwroot/html/$www_repofocus/storage/logs/
 
-  	sudo touch $wwwroot/html/$www_repofocus/storage/logs/cronlog.log
   	sudo touch $wwwroot/html/$www_repofocus/storage/logs/laravel.log
+  	sudo touch $wwwroot/html/$www_repofocus/storage/logs/nginxerror.log
+
+  	sudo touch $wwwroot/html/$www_repofocus/storage/logs/cronlog.log
   	sudo touch $wwwroot/html/$www_repofocus/storage/logs/cronresult.log
   	sudo touch $wwwroot/html/$www_repofocus/storage/logs/apperror.log
   	sudo touch $wwwroot/html/$www_repofocus/storage/logs/ssh.log
