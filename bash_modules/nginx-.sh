@@ -15,7 +15,7 @@ function nginx-install() {
 # restart nginx and php completely
 function nginx-start() {
 	read -p "Restart Nginx ? y/n" -t 10 input
-	if [ "$input" != "y" ]; then
+	if [ "$input" == "n" ]; then
 		return 0
 	fi
 	read -p "Conform file permisions at $www_repofocus ? y/n" -t 10 input
@@ -128,14 +128,45 @@ function nginx-copyselfsignedcert() {
 	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/dhparam.pem /etc/nginx/dhparam.pem
 }
 
+#creates Certificate Signing Request private key for domainsslcreation
+function nginx-createCSR() {
+	read -p "Enter top level domain TLD to create a new CSR private key: " tld
+	cd ~/bashtoolscfg/tmp/certs/
+	mkdir $certdomain
+	cd $tld
+	echo ""
+	openssl req -new -newkey rsa:2048 -nodes -keyout $tld.key -out $tld.csr
+	echo "Save the below $tld.csr key or certificate will be invalid"
+	ls
+	cat $tld.csr
+}
+
 #install registered cert
 function nginx-copyregisteredcert() {
-	echo "Enter the file name associated with the cert files eg"
-	read -p "example.com.key and example.com.chain.crt: " certdomain
-	read -p "FTP cert files to ~/$USER/bashtoolscfg/tmp and press ENTER when done"
-	sudo mkdir /var/www/certs/$certdomain
-	sudo cp ~/bashtoolscfg/tmp/"$certdomain"_chain.crt /var/www/certs/$certdomain/"$certdomain"_chain.crt
-	sudo cp ~/bashtoolscfg/tmp/$certdomain.key /var/www/certs/$certdomain/$certdomain.key
+	echo "Enter the file name associated with the cert files (note the underscore) eg"
+	read -p "example_com.key and example_com.chain.crt: " certdomain
+
+	cd ~/bashtoolscfg/tmp/certs/
+	mkdir $certdomain
+	cd $certdomain
+
+	read -p "FTP cert files to ~/$USER/bashtoolscfg/tmp/certs/$certdomain and press ENTER when done"
+
+	mv *.crt $certdomain.crt #conform file names
+	mv *.ca-bundle $certdomain.ca-bundle
+
+	cat $certdomain.crt >"$certdomain"_chain.crt
+	echo >>"$certdomain"_chain.crt
+	cat $certdomain.ca-bundle >>"$certdomain"_chain.crt
+
+	cat your_domain.crt >your_domain_chain.crt
+	echo >>your_domain_chain.crt
+	cat your_domain.ca-bundle >>your_domain_chain.crt
+
+	sudo mkdir -p /var/www/certs/$certdomain
+
+	sudo cp ~/bashtoolscfg/tmp/certs/$certdomain/"$certdomain"_chain.crt /var/www/certs/$certdomain/"$certdomain"_chain.crt
+	sudo cp ~/bashtoolscfg/tmp/certs/$certdomain/$certdomain.key /var/www/certs/$certdomain/$certdomain.key
 	nginx-setserverblock $www_repofocus $certdomain
 }
 

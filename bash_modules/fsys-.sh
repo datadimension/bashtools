@@ -8,34 +8,35 @@ function fsys-disk() {
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
-		#sec644evel=644;
-  	sec644evel=777;
-  	sec755level=755;
-  	sec770evel=770;
+	#sec644evel=644;
+	sec644evel=777
+	sec755level=755
+	sec770evel=770
 	dirname=$1
 	if [ "$dirname" == "" ]; then
- 		dirname=$www_repofocus;
- 	fi
- 	echo "";
- 	echo $wwwroot/html/$dirname;
-	ls -al $wwwroot/html/$dirname;
+		dirname=$www_repofocus
+	fi
+	echo ""
+	echo $wwwroot/html/$dirname
+	ls -al $wwwroot/html/$dirname
 
 	echo "Securing bash-tools permissions"
-
 	sudo chown -R $USER:www-data $wwwroot/html
 	sudo chmod -R $sec755level $wwwroot/html/
 
 	echo "Securing bash-tools permissions"
-  sudo chmod -R $sec770evel ~/bashtools/php_helpers/bash
+	sudo chmod -R $sec770evel ~/bashtools/php_helpers/bash
 
 	echo "Reseting laravel permissions in $dirname"
 	sudo chown -R $USER:www-data $wwwroot/html/$dirname
+	sudo chown -R $USER:www-data $wwwroot/certs
 
 	echo "Reseting file permissions in $dirname"
 	sudo find $wwwroot/html/$dirname -type f -exec chmod $sec644evel {} \;
 	echo "Reseting directory permissions in $dirname"
 	sudo find $wwwroot/html/$dirname -type d -exec chmod $sec755level {} \;
 	echo "Securing directory permissions in $dirname"
+	sudo chmod -R $sec644evel $wwwroot/certs
 	sudo chmod -R $sec755level $wwwroot/html/$dirname/app
 	sudo chmod -R $sec770evel $wwwroot/html/$dirname/storage
 	sudo chmod -R $sec770evel $wwwroot/html/$dirname/public/downloads
@@ -45,10 +46,10 @@ function fsys-secure() {
 function file_exists() {
 	path=$1
 	if test -f $path; then
-  echo "File exists: $path"
-  else
-  echo "File does not exist: $path"
-fi
+		echo "File exists: $path"
+	else
+		echo "File does not exist: $path"
+	fi
 }
 
 # combines cd and ls into a single command
