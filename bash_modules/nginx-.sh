@@ -14,36 +14,36 @@ function nginx-install() {
 
 # restart nginx and php completely
 function nginx-start() {
-	echo "Restart Nginx ? y/n"
-	read -t 10 input
+	read -p "Restart Nginx ? y/n" -t 10 input
 	if [ "$input" != "y" ]; then
-	return 0;
+		return 0
 	fi
-		fsys-secure;
-		clear
-		echo-h1 "Closing Nginx / PHP"
-
-		sudo service nginx stop
-		sudo pkill php-fpm
-		#sudo service php-fpm stop;
-		sudo logrotate -f /etc/logrotate.d/nginx
-		clear
-		echo-h1 "Starting Nginx / PHP-fpm"
-		env-attributerequire phpNo
-		sudo service php$phpNo-fpm start
-		sudo service nginx start
-		sudo /etc/init.d/cron start
-		ps aux | grep php
-		echo ""
-		if [ -e /var/run/nginx.pid ]; then
-			echo "finished restart"
-		else
-			echo-h1 "NGINX FAIL"
-			sudo nginx -t
-			log-nginxerror
-		fi
-		echo-now
-		echo-hr
+	read -p "Conform file permisions at $www_repofocus ? y/n" -t 10 input
+	if [ "$input" == "y" ]; then
+		fsys-secure
+	fi
+	clear
+	echo-h1 "Closing Nginx / PHP"
+	sudo service nginx stop
+	sudo pkill php-fpm
+	sudo logrotate -f /etc/logrotate.d/nginx
+	clear
+	echo-h1 "Starting Nginx / PHP-fpm"
+	env-attributerequire phpNo
+	sudo service php$phpNo-fpm start
+	sudo service nginx start
+	sudo /etc/init.d/cron start
+	ps aux | grep php
+	echo ""
+	if [ -e /var/run/nginx.pid ]; then
+		echo "finished restart"
+	else
+		echo-h1 "NGINX FAIL"
+		sudo nginx -t
+		log-nginxerror
+	fi
+	echo-now
+	echo-hr
 }
 
 # installs an nginx test page to check server is operational
