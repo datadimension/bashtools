@@ -22,7 +22,7 @@ function log-app() {
 }
 
 function log-cron() {
-		log-show $wwwroot/html/$www_repofocus/storage/logs/cronlog.log $1 $2
+	log-show $wwwroot/html/$www_repofocus/storage/logs/cronlog.log $1 $2
 }
 
 function log-sys-php() {
