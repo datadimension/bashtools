@@ -93,6 +93,7 @@ function nginx-setserverblock(){
 					php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate;
 					sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
 					sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
+					nginx-start;
 		}
 
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
