@@ -26,6 +26,7 @@ function git-addlocalexcludedfiles(){
 
   	sudo mkdir -p $wwwroot/html/$www_repofocus/storage/logs/
 
+  	sudo touch $wwwroot/html/$www_repofocus/storage/logs/cronlog.log
   	sudo touch $wwwroot/html/$www_repofocus/storage/logs/laravel.log
   	sudo touch $wwwroot/html/$www_repofocus/storage/logs/cronresult.log
   	sudo touch $wwwroot/html/$www_repofocus/storage/logs/apperror.log
@@ -37,30 +38,6 @@ function git-addlocalexcludedfiles(){
   	sudo mkdir -p $wwwroot/html/$www_repofocus/bootstrap/cache
   	sudo mkdir -p $wwwroot/html/$www_repofocus/public/downloads/
   	sudo mkdir -p $wwwroot/html/$www_repofocus/private/
-
-
-}
-
-function x20241121git-installrepo() {
-	env-attributerequire gituname
-	reponame=$1
-	user=$USER
-	www-createnonrepofiles;
-	sudo touch $wwwroot/html/$dir/.env
-
-    		sudo mkdir -p /var/www/certs/$dir
-    		sudo chown $user:www-data /var/www/certs/$dir
-    		echo "please upload ssl certs to /var/www/certs/$dir or directory pointed to by nginxblock for $dir"
-    		echo "if sharing certificate, please amend nginx block to point to it"
-    		read wait
-    		php ~/bashtools/php_helpers/laravel/composerjsonincludes.php;
-    composer update
-    		nginx-start
-    		fsys-secure
-    	cd "$wwwroot/html/$www_repofocus"
-    	echo "setting site to $www_repofocus"
-    	bash-writesettings
-    	www-reposwitch
 }
 
 function git-pull-select(){
@@ -298,70 +275,4 @@ function git-deploysubrepo() {
 	echo "subrepo deployment of $subreponame finished at:"
 	echo-now
 	echo-hr
-}
-
-function x20230701git-deploy() {
-	clear
-	if [[ $environment != "production" ]]; then
-		figlet "Warning"
-		echo "This is not a production server"
-	fi
-	echo "You will overwrite local changes with current live version"
-	echo "Please confirm full deployment to this server by typing the name of the repo you would like to pull"
-	echo "You then will switch to that site and begin erasing local data with a fresh install from github"
-	echo "Enter repo name, or just [ENTER]  to quit"
-	read reponame
-	if [ "reponame" == "" ]; then
-		echo "Quit deployment"
-		return -1
-	fi
-	echo "Enter DNS name eg website.com"
-	read dnsname
-	bash-showsettings
-	echo-h1 "running deployment"
-	#20201210 reponame=$www_sitefocus;
-	## backup platform files
-	#sudo mkdir $reponame;#make it exist if not there
-	#cd $wwwroot
-
-	backupPath="$wwwroot/htmlbackups/$reponame"
-	sudo mkdir -p $backupPath
-	#cd $wwwroot;
-
-	#copy existing platform only files if we are redeploying for some reason
-	sudo cp $wwwroot/html/$reponame/.env $backupPath/.env
-	sudo cp -r $wwwroot/html/$reponame/apicredentials $backupPath
-
-	#clone repo ###############################################
-	sudo rm -r $wwwroot/html/$reponame
-	cd $wwwroot/html/
-	echo-hr
-	echo-h1 "Cloning $reponame"
-	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
-	sudo chown $USER:www-data $wwwroot/html/$www_repofocus
-
-	# we can try and reinstall pre-existing platform files later, but at least have a .env and a credentials dir
-	cp $wwwroot/html/$reponame/.env.example $wwwroot/html/$reponame/.env
-	sudo mkdir -p $wwwroot/html/$reponame/apicredentials/google
-
-	#move platform files back if we have deployed here before
-	sudo cp $backupPath/.env $wwwroot/html/$reponame/.env
-	sudo cp -r $backupPath/apicredentials $wwwroot/html/$reponame/app/DD_laravelAp/API
-
-	www_repofocus=$reponame
-	git-deploysubrepos
-	sudo php $wwwroot/html/serveradmin/_cli/bash/helpers/nginxblockdeployer.php $reponame $dnsname $environment
-	sudo ln -s /etc/nginx/sites-available/$reponame /etc/nginx/sites-enabled/$reponame
-	www-siteconfigupdate #sort permisions and composer out
-	google-deploy
-	echo "note changes to hosts will require"
-	echo "ipconfig /flushdns"
-	echo "on windows cmd terminal"
-	echo "Press enter to restart nginx"
-	read wait
-	nginx-start
-	echo-now
-	echo-hr
-	ls
-	pwd
 }

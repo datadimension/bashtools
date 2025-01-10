@@ -54,11 +54,11 @@ function nginx-testadd(){
 	sudo chown -R root:www-data  /var/www/html/nginxtest
 
 	#create test block so nginx can read it
-	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=nginxtest sslcertificate=selfsigned
-	sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_nginxtest /etc/nginx/sites-enabled/nginxtest
-	sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
-	#20230716 sudo cp ~/bashtools/templates/nginx/nginxsetup/nginxtestblockssl /etc/nginx/sites-enabled/nginxtest
-	#20230716 sudo mkdir /etc/nginx
+	nginx-setserverblock nginxtest sslselfsigned
+	#20250110 php ~/bashtools/php_helpers/nginx/serverblock.php
+	#20250110 sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_nginxtest /etc/nginx/sites-enabled/nginxtest
+	#20250110 sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
+
 	echo "Now go to your local hosts file (we moved it to C:\www"
 	echo "and add lines as appropriate for local browser address entry"
 	echo "$ipaddr    nginxtest.$serverid.com"
@@ -77,12 +77,23 @@ function nginx-testremove(){
 	fi
 }
 
-#sets nginx block for current repo focus
-function nginx-setcurrentrepofocusblock(){
-      	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$www_repofocus;
-      	sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
-      	sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
-}
+#sets nginx block for current repo focus by default or specify repo name and sslcertificate repofocus will be changed if set
+function nginx-setserverblock(){
+					reponame=$1;
+					if [ "$reponame" == "" ]; then
+						reponame=$www_repofocus
+					else
+						www_repofocus=$reponame;#set focus or .env will be read wrong by php
+						bash-writesettings;
+					fi
+					sslcertificate=$2;
+					if [ "$sslcertificate" == "" ]; then
+						sslcertificate="selfsigned";
+					fi
+					php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate;
+					#sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
+					#sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
+		}
 
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
 function nginx-setselfsignedcert() {
