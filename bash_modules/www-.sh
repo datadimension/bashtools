@@ -525,5 +525,5 @@ function www-fromrepobackup() {
 	# * * * * * php /var/www/html/liveinfo247.com/artisan schedule:run >> /dev/null 2>&1
 	# * * * * * cd /var/www/html/liveinfo247.com/app && ./cron.sh
 
-	# * * * * * php /var/www/html/sc.liveinfo247.com/artisan schedule:run >> /dev/null 2>&1
+	# * * * * * php /var/www/html/xonhealth/artisan schedule:run >> /dev/null 2>&1
 }
