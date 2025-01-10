@@ -16,7 +16,10 @@ function nginx-install() {
 function nginx-start() {
 	echo "Restart Nginx ? y/n"
 	read -t 10 input
-	if [ "$input" == "y" ]; then
+	if [ "$input" != "y" ]; then
+	return 0;
+	fi
+		fsys-secure;
 		clear
 		echo-h1 "Closing Nginx / PHP"
 
@@ -41,7 +44,6 @@ function nginx-start() {
 		fi
 		echo-now
 		echo-hr
-	fi
 }
 
 # installs an nginx test page to check server is operational
