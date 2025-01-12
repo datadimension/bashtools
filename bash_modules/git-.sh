@@ -238,8 +238,8 @@ function git-pull-repo() {
 	echo "pulling repo ..."
 	echo-h1 "$gitreponame"
 	echo "to $gitrepopath/$gitreponame;"
+	}
 	cd $gitrepopath/$gitreponame
-	git-add
 	git pull
 	echo ""
 	echo "Finished at:"

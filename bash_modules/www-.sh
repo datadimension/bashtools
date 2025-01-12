@@ -450,6 +450,7 @@ function www-repocreate() {
 		cp ~/bashtools/templates/laravel/config/database.php config/database.php
 		cp ~/bashtools/templates/laravel/config/cache.php config/cache.php
 		cp ~/bashtools/templates/laravel/config/services.php config/services.php
+		cp ~/bashtools/templates/laravel/config/logging.php config/logging.php
 
 		cp ~/bashtools/templates/laravel/routes/web.php routes/web.php
 

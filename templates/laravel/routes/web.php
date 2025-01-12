@@ -8,3 +8,7 @@
 Route::get('/', function () {
       return view('DD_laraview.underconstruction');
 });
+
+Route::get('/', function () {
+      return view('welcome');
+});
