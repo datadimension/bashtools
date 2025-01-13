@@ -106,7 +106,8 @@ function git-push-select() {
 function git-push() {
 	clear
 	curpwd=$(pwd)
-	echo-h1 "Pushing from $www_repofocus"
+	echo-h1 $www_repofocus
+	echo "PUSH ALL MODE"
 	git-push-all
 	cd $curpwd
 }
@@ -125,13 +126,12 @@ function git-reset-all() {
 	#git-reset-repo "DD_libmedia"
 	git-reset-repo "DD_laravelAp"
 	git-reset-repo "$www_repofocus"
-	if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
-		echo "Reset file and directory permissions ? [y/n]"
-		read input
-		if [ "$input" == "y" ]; then
-			fsys-secure
-		fi
+	echo "Reset file and directory permissions ? [y/n]"
+	read input
+	if [ "$input" == "y" ]; then
+		fsys-secure
 	fi
+
 }
 
 function git-reset() {
@@ -189,6 +189,7 @@ function git-push-all() {
 	git-push-repo "DD_libwww"
 	git-push-repo "DD_laravelAp"
 	git-push-repo "$www_repofocus"
+	echo-hr
 }
 
 function git-push-repo() {
@@ -205,16 +206,16 @@ function git-push-repo() {
 		gitrepopath="$wwwroot/html"
 		gitreponame=$www_repofocus
 	fi
-	echo "pushing repo ..."
-	echo-h1 "$gitreponame"
+	echo-hr
+	echo "pushing repo $gitreponame"
 	echo "from $gitrepopath/$gitreponame;"
+	echo-hr
 	cd $gitrepopath/$gitreponame
 	git-add
 	git push
 	echo ""
 	echo "Finished at:"
 	echo-now
-	echo-hr
 }
 
 function git-pull-repo() {
@@ -263,6 +264,7 @@ function git-deploysubrepos() {
 	git-deploysubrepo "$www_repofocus/public" "DD_libwww"
 	git-deploysubrepo "$www_repofocus/app" "DD_laravelAp"
 	git-deploysubrepo "$www_repofocus/resources/views" "DD_laraview"
+	echo-hr
 }
 
 function git-deploysubrepo() {
@@ -271,11 +273,12 @@ function git-deploysubrepo() {
 	subrepopath="$wwwroot/html/$subrepopath"
 	rm -R $subrepopath/$subreponame
 	echo-hr
-	echo-h1 "cloning subrepo $subreponame"
+	echo "cloning subrepo $subreponame"
+	echo-hr
 	echo ""
 	git clone git@github.com:$gituname/$subreponame.git $subrepopath/$subreponame
 	echo ""
 	echo "subrepo deployment of $subreponame finished at:"
 	echo-now
-	echo-hr
+	echo ""
 }

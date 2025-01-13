@@ -79,7 +79,7 @@ function www-reposet() {
 	read newrepo
 	wwwsites[$reponumber]=$newrepo
 	if [ -d "$wwwroot/html/$newrepo" ]; then #just change option if repo exists
-		echo "Setting $option to $newrepo"
+		echo "Setting $option to existing $newrepo"
 		www_repofocus=$newrepo
 	else # need to set up repo
 		#set -e #stop everything if there is a failure
@@ -134,6 +134,10 @@ function www-secure() {
 	sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus/storage
 	sudo chmod -R 775 $wwwroot/html/$www_repofocus/storage
 	#sudo chown -R $USER $HOME/.composer;#https://askubuntu.com/questions/1077879/cannot-create-cache-directory-home-user-composer-cache-repo-https-packagi
+}
+
+function php-clitest() {
+	php ~/bashtools/php_helpers/envtestinstall.php
 }
 
 function www-envinstall() {
@@ -397,8 +401,6 @@ function www-install-dependancies() {
 	php artisan key:generate
 	php artisan view:clear
 	php artisan --version
-	fsys-secure
-	nginx-start
 }
 
 function os-certificategen() {
