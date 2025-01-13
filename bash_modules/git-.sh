@@ -252,7 +252,7 @@ function git-pull-all() {
 	git-pull-repo "DD_libwww"
 	git-pull-repo "DD_laravelAp"
 	git-pull-repo "$www_repofocus"
-}
+} 
 
 function git-setup() {
 	echo ""
