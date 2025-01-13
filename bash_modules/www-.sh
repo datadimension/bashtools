@@ -447,22 +447,20 @@ function www-repocreate() {
 		cd "$wwwroot/html/$www_repofocus"
 
 		#would be better here to have php func to add array element to the config file
-		cp ~/bashtools/templates/laravel/config/database.php config/database.php
-		cp ~/bashtools/templates/laravel/config/cache.php config/cache.php
-		cp ~/bashtools/templates/laravel/config/services.php config/services.php
-		cp ~/bashtools/templates/laravel/config/logging.php config/logging.php
+		cd ~/bashtools/templates/laravel/config
+		cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/config
 
 		cp ~/bashtools/templates/laravel/routes/web.php routes/web.php
 
 		#add in DD  stubs
 		cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http
-		cp -a -v --update=none Controllers $wwwroot/html/$www_repofocus/app/Http
-		cp -a -v --update=none Middleware $wwwroot/html/$www_repofocus/app/Http
-		cp -a -v --update=none API $wwwroot/html/$www_repofocus/app/Http
-		cp -a -v --update=none Models $wwwroot/html/$www_repofocus/app/Http
+		cp -v --update=none Controllers/*.* $wwwroot/html/$www_repofocus/app/Http/Controllers
+		cp -v --update=none Middleware/*.* $wwwroot/html/$www_repofocus/app/Http/Middleware
+		cp -v --update=none API/*.* $wwwroot/html/$www_repofocus/app/Http/API/
+		cp -v --update=none Models/*.* $wwwroot/html/$www_repofocus/app/Http/Models
 
-		cd ~/bashtools/templates/laravel/DD_laravelAppComponents/resources/views
-		cp -a -v --update=none auth $wwwroot/html/$www_repofocus/resources/views
+		cd ~/bashtools/templates/laravel/DD_laravelAppComponents/resources
+		cp -v --update=none auth/*.* $wwwroot/html/$www_repofocus/resources/views/auth
 
 		#add project files that use DD files
 		cp ~/bashtools/templates/laravel/bootstrap/app.php $wwwroot/html/$www_repofocus/bootstrap/app.php

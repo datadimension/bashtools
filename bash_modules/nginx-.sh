@@ -142,31 +142,45 @@ function nginx-createCSR() {
 }
 
 #install registered cert
-function nginx-copyregisteredcert() {
-	echo "Enter the file name associated with the cert files (note the underscore) eg"
-	read -p "example_com.key and example_com.chain.crt: " certdomain
+function nginx-makeregisteredcert() {
+	echo-nl "Run this on your actual live server, not the test"
+	echo "This may take an hour whereby this ssh window should be kept open, as we will need to request ssl key from third party"
+	read -p "Enter main domain name the ssl cert will be againts eg example_com: " certdomain
+	mkdir -p ~/sslfiles/$certdomain
+	cd ~/sslfiles/$certdomain
+	echo "Now to generate private keys to use for ssl cert"
+	read -p "Country code [eg GB for Great Britain]: " CC
+	read -p "State [eg Surrey]: " ST
+	read -p "Locality [eg London]: " LO
 
-	cd ~/bashtoolscfg/tmp/certs/
-	mkdir $certdomain
-	cd $certdomain
+	openssl req -nodes -newkey rsa:2048 -keyout $certdomain.key -out $certdomain.csr -subj "/C=$CC/ST=$ST/L=$LO/O=NA/OU=NA/CN=$certdomain"
 
-	read -p "FTP cert files to ~/$USER/bashtoolscfg/tmp/certs/$certdomain and press ENTER when done"
+	echo "Now go to your certificate supplier and enter this as the Certificate Signing Request"
+	echo-nl
+	cat $certdomain.csr
+	echo ""
+	read -p "Use CNAME validation and ensure this passes and hit enter when certificate is issued" wait
 
+	cd ~/sslfiles/$certdomain
+
+	read -p "FTP cert files or zip to ~/$USER/sslfiles/$certdomain and press ENTER when done"
+	read -p "Is it a single zip file [y/n]: " input
+	if [ "$input" == "y" ]; then
+		mv *.zip $certdomain.zip #conform file names
+		unzip $certdomain.zip
+		rm $certdomain.zip
+	fi
 	mv *.crt $certdomain.crt #conform file names
 	mv *.ca-bundle $certdomain.ca-bundle
 
 	cat $certdomain.crt >"$certdomain"_chain.crt
-	echo >>"$certdomain"_chain.crt
+	echo >>"$certdomain"_chain.crt#add a new line under cert, so can add .crt below
 	cat $certdomain.ca-bundle >>"$certdomain"_chain.crt
-
-	cat your_domain.crt >your_domain_chain.crt
-	echo >>your_domain_chain.crt
-	cat your_domain.ca-bundle >>your_domain_chain.crt
 
 	sudo mkdir -p /var/www/certs/$certdomain
 
-	sudo cp ~/bashtoolscfg/tmp/certs/$certdomain/"$certdomain"_chain.crt /var/www/certs/$certdomain/"$certdomain"_chain.crt
-	sudo cp ~/bashtoolscfg/tmp/certs/$certdomain/$certdomain.key /var/www/certs/$certdomain/$certdomain.key
+	sudo cp "$certdomain"_chain.crt /var/www/certs/$certdomain/"$certdomain"_chain.crt
+	sudo cp "$certdomain".key /var/www/certs/$certdomain/"$certdomain".key
 	nginx-setserverblock $www_repofocus $certdomain
 }
 
