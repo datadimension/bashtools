@@ -88,7 +88,7 @@ function mysql-createrepousers() {
 	echo-nl "ALTER USER '"$www_repofocus"_admin'@'%' IDENTIFIED BY 'New-Password-Here"
 	echo-nl "ALTER USER '"$www_repofocus"_php'@'%' IDENTIFIED BY 'New-Password-Here"
 	echo "FLUSH PRIVILEGES;"
-	sudo mysql -u ovh-admin -p
+	sudo mysql
 }
 
 function mysql-getversion() {
