@@ -53,7 +53,7 @@ add user
 #generates users and permissions php and admin, note the users are named after the focused repo, however if a schema argument is supplied then this is used for the appschema
 function mysql-createrepousers() {
 	if [ "$environment" != "production" ]; then
-		echo "this function MUST be done on the DATABASE SERVER"
+		echo "ERROR - this function MUST be done on the DATABASE SERVER"
 		return 0
 	fi
 	app_schema=$1
