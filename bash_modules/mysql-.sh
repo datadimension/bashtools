@@ -62,9 +62,10 @@ function mysql-createrepousers() {
 	fi
 	echo $app_schema
 	newpassword="PWD_$(uuidgen)_"
-	echo "NOTE YOU WILL HAVE TO RUN SQL TO ACTUALLY ADD THE USER"
-	echo "AND THIS MUST BE DONE ON THE DATABASE SERVER"
-echo-hr;
+	clear
+	echo "this function MUST be done on the DATABASE SERVER"
+	echo "and that YOU WILL HAVE TO RUN SQL TO ACTUALLY ADD THE USER"
+	echo-hr
 	echo "Password will initially be set as random to avoid unsecurely showing it in script"
 	echo-nl "The script will ask you to change this immediately"
 	echo-nl "SQL Script:"
