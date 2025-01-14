@@ -6,3 +6,8 @@ function laravel-showversion() {
 function laravel-configcheck() {
 	echo "config check"
 }
+
+function laravel-getenv_value() {
+	key=$1
+	echo "getting $key"
+}

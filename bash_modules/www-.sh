@@ -137,7 +137,7 @@ function www-secure() {
 }
 
 function www-envinstall() {
-	php ~/bashtools/php_helpers/envinstall.php
+	php ~/bashtools/php_helpers/laravel/env_ops.php install
 	echo-hr
 	echo "Generated env file:"
 	echo-hr
@@ -185,34 +185,6 @@ function www-sqlinstall() {
 	echo "now create views"
 	php ~/bashtools/php_helpers/mysql/view_domainwidgets.php
 	read -p "Press Enter when done"
-}
-
-function x20241115www-envinstall() {
-	rm $wwwroot/html/$www_repofocus/.env
-	touch $wwwroot/html/$www_repofocus/.env
-	chown $USER:www-data $wwwroot/html/$www_repofocus/.env
-	echo-h1 ".env file install"
-	env-attributerequire databaseIP
-	dir=$1
-	appname=$2
-	echo "Installing new .env file in project root $wwwroot/html/$dir"
-	echo "First some required information please:"
-	read -p "Database Password: " dbpword
-	echo ""
-	echo "Some additional information please, eg if copying from existing .env (you can skip these if you dont know):"
-	echo ""
-	read -p "Google Client ID:" gclient_id
-
-	read -p "Google Client Secret:" gclient_secret
-	read -p "GOOGLE_JAVASCRIPT_APIKEY:" google_jskey
-	echo ""
-	read -p "API User Email:" api_emai
-	read -p "API Email Password:" api_emailpwd
-
-	clear
-	php ~/bashtools/php_helpers/laravel/envinstall.php api_emai=$api_emai api_emailpwd=$api_emailpwd dir=$dir appname=$appname dbpword=$dbpword gclient_id=$gclient_id gclient_secret=$gclient_secret google_jskey=$google_jskey
-	echo "Will now generate user creation code to run in mysql  to use if you have not already done so"
-	www-sitesqluserinstall $appname $dbpword
 }
 
 function www-sitesqluserinstall() {

@@ -39,7 +39,7 @@ function bash-start() {
 	echo "Welcome to"
 	echo-h1 $serverid
 	echo $welcomemsg
-		echo "Your session IP detected as:"
+	echo "Your session IP detected as:"
   	echo $SSH_CLIENT | awk '{ print $1}'
 	# sudo /etc/init.d/cron start;
 	echo "Use 'env-about' for more info, 'bash-help' for more functions"
