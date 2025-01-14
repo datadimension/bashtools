@@ -48,8 +48,7 @@ function bash-start() {
 	startdir="$wwwroot/html/$www_repofocus"
 	cd $startdir
 	echo ""
-	laravel-getversion;
-	php artisan --version;
+	laravel-showversion;
 	echo "Recommended URL"
 	echo "$www_repofocus.$serverid.com"
 	echo ""

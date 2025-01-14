@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-function laravel-getversion() {
-	echo "test"
+function laravel-showversion() {
+	php artisan --version
 }
