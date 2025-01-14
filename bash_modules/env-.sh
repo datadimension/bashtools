@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-
-
 function env-setwwwroot() {
 	echo "Please set www root directory eg /var/www"
 	read wwwroot

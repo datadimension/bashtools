@@ -13,6 +13,7 @@ function bash-start() {
 	source ~/bashtools/bash_modules/git-.sh
 	source ~/bashtools/bash_modules/net-.sh
 	source ~/bashtools/bash_modules/log-.sh
+	source ~/bashtools/bash_modules/laravel-.sh
 
 	mysql-getversion;
 
@@ -46,6 +47,7 @@ function bash-start() {
 	#bash-showsettings
 	startdir="$wwwroot/html/$www_repofocus"
 	echo ""
+	echo laravel-getversion;
 	php artisan --version;
 	echo "Recommended URL"
 	echo "$www_repofocus.$serverid.com"
