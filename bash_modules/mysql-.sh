@@ -52,6 +52,10 @@ add user
 
 #generates users and permissions php and admin, note the users are named after the focused repo, however if a schema argument is supplied then this is used for the appschema
 function mysql-createrepousers() {
+	if [ "$environment" != "production" ]; then
+		echo "this function MUST be done on the DATABASE SERVER"
+		return 0
+	fi
 	app_schema=$1
 	if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
 		read -p "You need to have a focused repo to do this" wait
@@ -63,8 +67,7 @@ function mysql-createrepousers() {
 	echo $app_schema
 	newpassword="PWD_$(uuidgen)_"
 	clear
-	echo "this function MUST be done on the DATABASE SERVER"
-	echo "and that YOU WILL HAVE TO RUN SQL TO ACTUALLY ADD THE USER"
+	echo "YOU WILL HAVE TO RUN SQL TO ACTUALLY ADD THE USER"
 	echo-hr
 	echo "Password will initially be set as random to avoid unsecurely showing it in script"
 	echo-nl "The script will ask you to change this immediately"
