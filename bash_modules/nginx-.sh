@@ -100,7 +100,7 @@ function nginx-setserverblock() {
 }
 
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
-function nginx-createselfsignedcert() {
+function nginx-cert-createselfsigned() {
 	echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
 	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
 	#also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
@@ -121,28 +121,15 @@ function nginx-createselfsignedcert() {
 }
 
 #copy preprepared ssl self signed certs for testing
-function nginx-copyselfsignedcert() {
+function nginx-cert-copyselfsigned() {
 	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
 	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
 	sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsignedkeys/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
 	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/dhparam.pem /etc/nginx/dhparam.pem
 }
 
-#creates Certificate Signing Request private key for domainsslcreation
-function nginx-createCSR() {
-	read -p "Enter top level domain TLD to create a new CSR private key: " tld
-	cd ~/bashtoolscfg/tmp/certs/
-	mkdir $certdomain
-	cd $tld
-	echo ""
-	openssl req -new -newkey rsa:2048 -nodes -keyout $tld.key -out $tld.csr
-	echo "Save the below $tld.csr key or certificate will be invalid"
-	ls
-	cat $tld.csr
-}
-
-#install registered cert
-function nginx-makeregisteredcert() {
+#guides on creation and install registered cert - namecheap was used for certificate
+function nginx-cert-createregistered() {
 	echo-nl "Run this on your actual live server, not the test"
 	echo "This may take an hour whereby this ssh window should be kept open, as we will need to request ssl key from third party"
 	read -p "Enter main domain name the ssl cert will be againts eg example_com: " certdomain

@@ -13,8 +13,8 @@ function git-installrepo() {
 	www-install-dependancies
 	cd "$wwwroot/html/$www_repofocus"
 	echo "set focused repo to '$www_repofocus'"
-	nginx-setserverblock $www_repofocus sslselfsigned
 	bash-writesettings
+	nginx-setserverblock $www_repofocus sslselfsigned
 	bash-restart
 }
 

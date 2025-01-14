@@ -1,5 +1,5 @@
 <?php
-function getinput($prompt, $default) {
+function getinput($prompt, $default = "") {
       if ($default) {
 	    $prompt .= " [default: " . $default . "] ";
       }
@@ -15,5 +15,5 @@ function getinput($prompt, $default) {
 		  echo "default used ---> : " . $default . PHP_EOL;
 	    }
       }
-      return $line;
+      return trim($line);
 }
