@@ -137,7 +137,7 @@ function www-secure() {
 }
 
 function www-envinstall() {
-	php ~/bashtools/php_helpers/laravel/env_ops.php install
+	php ~/bashtools/php_helpers/laravel/env_ops.php method=envgenerate
 	echo-hr
 	echo "Generated env file:"
 	echo-hr
