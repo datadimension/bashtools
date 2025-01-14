@@ -46,13 +46,13 @@ function bash-start() {
 	www-reposhow
 	#bash-showsettings
 	startdir="$wwwroot/html/$www_repofocus"
+	cd $startdir
 	echo ""
 	laravel-getversion;
 	php artisan --version;
 	echo "Recommended URL"
 	echo "$www_repofocus.$serverid.com"
 	echo ""
-	cd $startdir
 	file-showdir $startdir
 	net-ssh-log-session
 }
