@@ -8,7 +8,7 @@ if (isset($repo_env["APP_URL"])) {
 else {
       $app_url = $args["repo_name"] . "." . $serverid . ".com";
 }
-if ($args["sslcertificate"] != "selfsigned") {
+if ($args["sslcertificate"] != "sslselfsigned") {
       $certs =
 	  "ssl_certificate /var/www/certs/" . $args["sslcertificate"] . "/" . $args["sslcertificate"] . "_chain.crt;" . PHP_EOL .
 	  "	ssl_certificate_key /var/www/certs/" . $args["sslcertificate"] . "/" . $args["sslcertificate"] . ".key;";
