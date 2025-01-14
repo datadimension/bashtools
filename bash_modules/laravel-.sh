@@ -2,3 +2,7 @@
 function laravel-showversion() {
 	php artisan --version
 }
+
+function laravel-configcheck() {
+	echo "config check"
+}

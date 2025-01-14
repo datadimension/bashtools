@@ -54,6 +54,7 @@ function bash-start() {
 	echo ""
 	file-showdir $startdir
 	net-ssh-log-session
+	laravel-configcheck
 }
 
 
