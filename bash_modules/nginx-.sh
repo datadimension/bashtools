@@ -124,7 +124,7 @@ function nginx-cert-createselfsigned() {
 function nginx-cert-copyselfsigned() {
 	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
 	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
-	sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsignedkeys/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
+	sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsslcert/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
 	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/dhparam.pem /etc/nginx/dhparam.pem
 }
 
