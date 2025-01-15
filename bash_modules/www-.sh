@@ -137,12 +137,18 @@ function www-secure() {
 }
 
 function www-envinstall() {
-	php ~/bashtools/php_helpers/laravel/env_ops.php method=envgenerate
+	php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate
 	echo-hr
 	echo "Generated env file:"
 	echo-hr
-	cat ~/bashtoolscfg/tmp/$www_repofocus.env
 	mv ~/bashtoolscfg/tmp/$www_repofocus.env $wwwroot/html/$www_repofocus/.env
+	read -p "View final result as editable [y/n] : " input
+	if [ "$input" == "y" ]; then
+		nano $wwwroot/html/$www_repofocus/.env
+	else
+		tail -1000 $wwwroot/html/$www_repofocus/.env
+	fi
+	www-install-dependancies
 }
 
 function www-sqlinstall() {
@@ -233,10 +239,10 @@ function www-routes() {
 
 # refreshes and installs composer dependancies
 function www-install-dependancies() {
-	clear
-	echo-h1 "Updating Site Config"
-	echo "update via composer"
-	echo "This now might require manual edit of files"
+	echo ""
+	echo-hr
+	echo "Updating Repo Dependancies"
+	echo-hr
 	cd $wwwroot/html/$www_repofocus
 	composer dump-autoload
 	composer update -W

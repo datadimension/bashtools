@@ -1,7 +1,12 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_helpers/bash/bash.env.php");
 include(getenv('HOME') . "/bashtools/php_helpers/php_cli.php");
-if ($args["method"] == "envgenerate") {
+
+if ($args["method"] == "env_getvalue") {
+      echo "get " . $args["key"] . "value";
+}
+
+if ($args["method"] == "env_generate") {
       $autovals = [
 	  "APP_NAME" => $www_repofocus,
 	  "APP_KEY" => "",
