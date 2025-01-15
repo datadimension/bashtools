@@ -90,9 +90,8 @@ function nginx-setserverblock() {
 	fi
 	sslcertificate=$2
 	if [ "$sslcertificate" == "" ]; then
-		sslcertificate="selfsigned"
+		sslcertificate="sslselfsigned"
 	fi
-	echo $sslcertificate
 	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate
 	sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
 	sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
