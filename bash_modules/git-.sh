@@ -182,7 +182,7 @@ function git-reset-repo() {
 	echo "Reseting to $gitreponame$branchname"
 	# git branch "reset$gitreponame$branchname"
 	git reset --hard origin/master
-	git pull;
+	git pull
 }
 
 function git-push-all() {
