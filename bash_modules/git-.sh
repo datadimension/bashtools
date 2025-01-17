@@ -70,9 +70,10 @@ function git-pull-select() {
 
 function git-pull() {
 	clear
-	echo-hr
 	curpwd=$(pwd)
-	echo-h1 "Pulling to $www_repofocus"
+	echo "Pulling to $www_repofocus"
+		echo-hr
+
 	git-pull-all
 	cd $curpwd
 }

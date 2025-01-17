@@ -326,6 +326,7 @@ function www-repocreate() {
 		composer require laravel/ui
 		composer require laravel/socialite
 		composer require google/apiclient
+		composer require google/photos-library
 
 		www-install-dependancies
 
