@@ -69,10 +69,12 @@ function git-pull-select() {
 }
 
 function git-pull() {
-	clear
 	curpwd=$(pwd)
-	echo "Pulling to $www_repofocus"
+	clear
 	echo-hr
+	echo "Pulling all repos and subrepos"
+	echo-b $www_repofocus
+	echo "Pulling to $www_repofocus"
 	git-pull-all
 	cd $curpwd
 }
@@ -104,9 +106,9 @@ function git-push-select() {
 }
 
 function git-push() {
+	curpwd=$(pwd)
 	clear
 	echo-hr
-	curpwd=$(pwd)
 	echo "Pushing all repos and subrepos"
 	echo-b $www_repofocus
 	git-push-all

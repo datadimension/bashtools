@@ -22,22 +22,23 @@ function echo-hr() {
 }
 
 #output with a line break after;
-function echo-br(){
-  	textoutput=""$1"";
-  	echo $textoutput;
-  	  	echo "";
+function echo-br() {
+	textoutput=""$1""
+	echo $textoutput
+	echo ""
 }
 
 #output with a line break after;
-function echo-nl(){
-  	textoutput=""$1"";
-  	echo $textoutput;
-  	echo "";
+function echo-nl() {
+	textoutput=""$1""
+	echo $textoutput
+	echo ""
 }
 
-function echo-b(){
-  	textoutput=""$1"";
-  printf "\e[1m$textoutput\e[0m";
+function echo-b() {
+	textoutput=""$1""
+	printf "\e[1m$textoutput\e[0m"
+	echo ""
 }
 
 function set-timestamp() {
@@ -80,30 +81,29 @@ function logv() {
 # menu a,b,c,d "Menu Title Text"
 # echo MENUCHOICE
 # would give 'c' if option 3 selected
-function std-menu(){
-  options=""$1"";
-  title=""$2"";
-  	if [ "$title" != "" ]; then
-  	  echo ""
-  		echo-b "$title";
-  		echo "";
-  	fi
-  IFS=',' read -r -a values <<<"$options";
-  optioncount=${#values[@]};#note no space in assignation
-  optioncount=$optioncount-1;
-  #for i in {0..$optioncount}; do
-  start=0;
-  for (( i=$start; i<=$optioncount; i++ ));do
-    	echo "$((i + 1)): ${values[$i]}"
-  done
-  echo "";
-  echo-b "Enter Choice:";
-  read choice
-  choice=$choice-1;
-  MENUCHOICE=${values[$choice]};
+function std-menu() {
+	options=""$1""
+	title=""$2""
+	if [ "$title" != "" ]; then
+		echo ""
+		echo-b "$title"
+		echo ""
+	fi
+	IFS=',' read -r -a values <<<"$options"
+	optioncount=${#values[@]} #note no space in assignation
+	optioncount=$optioncount-1
+	#for i in {0..$optioncount}; do
+	start=0
+	for ((i = $start; i <= $optioncount; i++)); do
+		echo "$((i + 1)): ${values[$i]}"
+	done
+	echo ""
+	echo-b "Enter Choice:"
+	read choice
+	choice=$choice-1
+	MENUCHOICE=${values[$choice]}
 }
 
-function uuid(){
+function uuid() {
 	uuid=$(uuidgen)
 }
-
