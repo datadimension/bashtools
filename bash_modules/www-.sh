@@ -243,6 +243,11 @@ function www-install-dependancies() {
 	echo-hr
 	echo "Updating Repo Dependancies"
 	echo-hr
+	www-update
+}
+
+#updates dependencies
+function www-update() {
 	cd $wwwroot/html/$www_repofocus
 	composer dump-autoload
 	composer update -W
@@ -252,6 +257,7 @@ function www-install-dependancies() {
 	php artisan key:generate
 	php artisan view:clear
 	php artisan --version
+	fsys-secure
 }
 
 function os-certificategen() {

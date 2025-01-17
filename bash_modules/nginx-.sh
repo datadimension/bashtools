@@ -18,10 +18,7 @@ function nginx-start() {
 	if [ "$input" == "n" ]; then
 		return 0
 	fi
-	read -p "Conform file permisions at $www_repofocus ? y/n" -t 10 input
-	if [ "$input" != "n" ]; then
-		fsys-secure
-	fi
+	fsys-secure
 	clear
 	echo-h1 "Closing Nginx / PHP"
 	sudo service nginx stop

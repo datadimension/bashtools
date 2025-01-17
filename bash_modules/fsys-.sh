@@ -9,7 +9,11 @@ function fsys-disk() {
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
 	#sec644evel=644;
-	sec644evel=777
+	read -p "Conform file permisions at $www_repofocus ? This can take a few mines [y/n]: " -t 10 input
+	if [ "$input" != "y" ]; then
+		return 0
+	fi
+	sec644evel=644
 	sec755level=755
 	sec770evel=770
 	dirname=$1

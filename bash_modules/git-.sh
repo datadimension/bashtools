@@ -75,6 +75,7 @@ function git-pull() {
 	echo "Pulling all repos and subrepos"
 	echo-b $www_repofocus
 	echo "Pulling to $www_repofocus"
+	echo-hr
 	git-pull-all
 	cd $curpwd
 }
