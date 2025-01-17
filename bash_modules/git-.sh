@@ -105,10 +105,10 @@ function git-push-select() {
 
 function git-push() {
 	clear
+	echo-hr
 	curpwd=$(pwd)
 	echo "Pushing all repos and subrepos"
-	echo $www_repofocus
-	echo-hr
+	echo-b $www_repofocus
 	git-push-all
 	cd $curpwd
 }
