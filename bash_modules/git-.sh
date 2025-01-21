@@ -201,6 +201,8 @@ function git-push-repo() {
 		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	elif [ "$gitreponame" == "DD_laravelAp" ]; then
 		gitrepopath="$wwwroot/html/$www_repofocus/app"
+	elif [ "$gitreponame" == "bashtools" ]; then
+    		gitrepopath=~
 	else
 		gitrepopath="$wwwroot/html"
 		gitreponame=$www_repofocus
@@ -229,9 +231,12 @@ function git-pull-repo() {
 		gitrepopath="$wwwroot/html"
 		gitreponame=$www_repofocus
 	fi
-	echo "pulling repo ..."
-	echo-h1 "$gitreponame"
-	echo "to $gitrepopath/$gitreponame;"
+
+	echo-hr
+    echo "pulling repo $gitreponame"
+    echo "from $gitrepopath/$gitreponame;"
+    echo-hr
+
 	cd $gitrepopath/$gitreponame
 	git pull
 	echo ""

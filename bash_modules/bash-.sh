@@ -57,20 +57,26 @@ function bash-start() {
 	laravel-configcheck
 }
 
+function bash-push(){
+	git-push-repo bashtools
+}
 
+function bash-push(){
+	git-pullbash
+}
 
-# this comment will be ignored for now as no closure #
-function bash-push() {
+function git-pushbash() {
 	echo-h1 "pushing bash repo"
 	cd ~/bashtools
 	git add -A
 	git commit -a -m update
 	git push
-	bash-pull
+	git-pullbash
 	~www
 }
 
-function bash-pull() {
+
+function git-pullbash() {
 	clear
 	echo-h1 "Updating BASH"
 	cd ~/bashtools
