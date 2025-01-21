@@ -59,28 +59,12 @@ function bash-start() {
 
 function bash-push(){
 	git-push-repo bashtools
-}
-
-function bash-push(){
-	git-pullbash
-}
-
-function git-pushbash() {
-	echo-h1 "pushing bash repo"
-	cd ~/bashtools
-	git add -A
-	git commit -a -m update
-	git push
-	git-pullbash
 	~www
 }
 
-
-function git-pullbash() {
-	clear
-	echo-h1 "Updating BASH"
-	cd ~/bashtools
-	git pull
+function bash-pull(){
+	echo "updating bash";
+	git-pull-repo bashtools
 	bash-install
 }
 

@@ -227,6 +227,8 @@ function git-pull-repo() {
 		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	elif [ "$gitreponame" == "DD_laravelAp" ]; then
 		gitrepopath="$wwwroot/html/$www_repofocus/app"
+	elif [ "$gitreponame" == "bashtools" ]; then
+            		gitrepopath=~
 	else
 		gitrepopath="$wwwroot/html"
 		gitreponame=$www_repofocus
@@ -246,6 +248,7 @@ function git-pull-repo() {
 }
 
 function git-pull-all() {
+	git-pull-repo "bashtools"
 	git-pull-repo "DD_laraview"
 	git-pull-repo "DD_libwww"
 	git-pull-repo "DD_laravelAp"
