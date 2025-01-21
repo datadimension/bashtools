@@ -127,7 +127,6 @@ function git-add() {
 function git-reset-all() {
 	git-reset-repo "DD_laraview"
 	git-reset-repo "DD_libwww"
-	#git-reset-repo "DD_libmedia"
 	git-reset-repo "DD_laravelAp"
 	git-reset-repo "$www_repofocus"
 	echo "Reset file and directory permissions ? [y/n]"
@@ -145,7 +144,6 @@ function git-reset() {
 	echo ""
 	echo "1: DD_libwww"
 	echo "2: DD_laravelAp"
-	#echo "3: DD_libmedia"
 	echo "3: DD_laraview"
 	echo "or hit enter for everything"
 	read option
@@ -170,8 +168,6 @@ function git-reset-repo() {
 		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	elif [ "$gitreponame" == "DD_laravelAp" ]; then
 		gitrepopath="$wwwroot/html/$www_repofocus/app"
-	elif [ "$gitreponame" == "DD_libmedia" ]; then
-		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	else
 		gitrepopath="$wwwroot/html"
 		gitreponame=$www_repofocus
@@ -205,8 +201,6 @@ function git-push-repo() {
 		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	elif [ "$gitreponame" == "DD_laravelAp" ]; then
 		gitrepopath="$wwwroot/html/$www_repofocus/app"
-	elif [ "$gitreponame" == "DD_libmedia" ]; then
-		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	else
 		gitrepopath="$wwwroot/html"
 		gitreponame=$www_repofocus
@@ -231,12 +225,6 @@ function git-pull-repo() {
 		gitrepopath="$wwwroot/html/$www_repofocus/public"
 	elif [ "$gitreponame" == "DD_laravelAp" ]; then
 		gitrepopath="$wwwroot/html/$www_repofocus/app"
-	elif [ "$gitreponame" == "DD_libmedia" ]; then
-		echo "redundant"
-		return 0
-		gitrepopath="$wwwroot/html/$www_repofocus/public"
-
-	#gitrepopath="$wwwroot/html/$www_repofocus/public"
 	else
 		gitrepopath="$wwwroot/html"
 		gitreponame=$www_repofocus

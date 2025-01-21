@@ -246,9 +246,10 @@ function www-install-dependancies() {
 	www-update
 }
 
-#updates dependencies
+# updates dependencies
 function www-update() {
 	cd $wwwroot/html/$www_repofocus
+	echo "Updating composer packages"
 	composer dump-autoload
 	composer update -W
 	composer install
@@ -309,10 +310,14 @@ function www-repocreate() {
 		cd ~/bashtools/templates/laravel/config
 		cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/config
 
-		cp ~/bashtools/templates/laravel/routes/web.php routes/web.php
+		cd ~/bashtools/templates/laravel/routes
+		cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/routes
 
 		#add in DD  stubs
-		cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http
+				cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app
+		cp -v --update=none Console/*.* $wwwroot/html/$www_repofocus/app/Console
+
+				cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http
 		cp -v --update=none Controllers/*.* $wwwroot/html/$www_repofocus/app/Http/Controllers
 		cp -v --update=none Middleware/*.* $wwwroot/html/$www_repofocus/app/Http/Middleware
 		cp -v --update=none API/*.* $wwwroot/html/$www_repofocus/app/Http/API/

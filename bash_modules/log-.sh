@@ -6,6 +6,10 @@ function log-show() {
 	if [ "$lines" == "" ]; then
 		lines=100
 	fi
+		if [ "$lines" == "clear" ]; then
+    		lines=500
+    		action="clear"
+    	fi
 	lines=-$lines
 	sudo tail $lines $wwwroot/html/$www_repofocus/storage/logs/laravel.log
 	if [ "$action" == "clear" ]; then
