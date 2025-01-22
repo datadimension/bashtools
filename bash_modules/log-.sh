@@ -6,12 +6,12 @@ function log-show() {
 	if [ "$lines" == "" ]; then
 		lines=100
 	fi
-		if [ "$lines" == "clear" ]; then
-    		lines=500
-    		action="clear"
-    	fi
+	if [ "$lines" == "clear" ]; then
+		lines=500
+		action="clear"
+	fi
 	lines=-$lines
-	sudo tail $lines $wwwroot/html/$www_repofocus/storage/logs/laravel.log
+	sudo tail $lines $path
 	if [ "$action" == "clear" ]; then
 		>$wwwroot/html/$www_repofocus/storage/logs/laravel.log
 	fi
@@ -19,6 +19,17 @@ function log-show() {
 
 function log-laravel() {
 	log-show $wwwroot/html/$www_repofocus/storage/logs/laravel.log $1 $2
+}
+
+function log-nginxerror() {
+		log-show /var/log/nginx/error.log $1 $2
+
+	#20250122echo-h1 "NGINX ERROR LOG"
+	#20250122sudo tail -n 100 /var/log/nginx/error.log
+	#20250122set-timestamp
+	#20250122sudo bash -c "echo '' >>  /var/log/nginx/error.log"
+	#20250122sudo bash -c "echo '<<<-----viewed $timestamp ------' >>  /var/log/nginx/error.log"
+	#20250122sudo bash -c "echo '' >>  /var/log/nginx/error.log"
 }
 
 function log-app() {
@@ -39,14 +50,7 @@ function log-nginxaccess() {
 	sudo tail -n 100 /var/log/nginx/access.log
 }
 
-function log-nginxerror() {
-	echo-h1 "NGINX ERROR LOG"
-	sudo tail -n 100 /var/log/nginx/error.log
-	set-timestamp
-	sudo bash -c "echo '' >>  /var/log/nginx/error.log"
-	sudo bash -c "echo '<<<-----viewed $timestamp ------' >>  /var/log/nginx/error.log"
-	sudo bash -c "echo '' >>  /var/log/nginx/error.log"
-}
+
 
 function log-xdebug() {
 	echo-h1 "XDEBUG LOG"
