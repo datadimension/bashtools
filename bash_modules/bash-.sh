@@ -82,6 +82,7 @@ function bash-pull(){
 function bash-install() {
 	 rm ~/.bash_profile
 	mkdir -p ~/bashtoolscfg/tmp
+	homepath=${HOME:0:6}
 	#detect ubuntu or MINW64 - keeping seperate functions for future proofing, even though very similar
 	if [ "$homepath" == "/home/" ]; then
 		bash-install-ubuntu
