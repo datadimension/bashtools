@@ -10,7 +10,7 @@ function bash-start(){
 }
 
 function bash-start-windows() {
-	clear
+	
 	echo "Welcome to Extended Bash for Windows"
 }
 
