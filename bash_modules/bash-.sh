@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 
+function bash-start-windows(){
+	bash-readsettings
+	if [ "$platform" == "ubuntu" ]; then
+    	bash-start-ubuntu
+    else
+    	echo "windows"
+    fi
+}
+
 # initialises the bash shell #
-function bash-start() {
+function bash-start-ubuntu() {
 	source ~/bashtools/bash_modules/std-.sh #standard for a platforms
 	source ~/bashtools/bash_modules/os-.sh
-		source ~/bashtools/bash_modules/mysql-.sh
+	source ~/bashtools/bash_modules/mysql-.sh
 	source ~/bashtools/bash_modules/fsys-.sh
 	source ~/bashtools/bash_modules/env-.sh
 	source ~/bashtools/bash_modules/nginx-.sh
@@ -86,7 +95,6 @@ function bash-install-ubuntu(){
 	wwwroot="/var/www"
     echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
 	cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
-    #20250224cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
    bash-writesettings
  	echo "Hit enter to restart Ubuntu shell ..."
     read -t 5 input
@@ -100,6 +108,7 @@ function bash-install-windows(){
     	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
 		echo "bash installed for windows";
 		cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
+ 	   bash-writesettings
  	echo "Hit enter to restart Windows shell ..."
     read -t 5 input
 		#source ~/.bash_profile
