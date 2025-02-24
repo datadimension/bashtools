@@ -77,7 +77,7 @@ function www-reposet() {
 	reponumber=$(($option - 1))
 	echo "Enter repo name to set against site" #[note on dev server use the url for the dev server eg liveinfo247"
 	read newrepo
-	wwwsites[$reponumber]=$newrepo
+	wwwrepos[$reponumber]=$newrepo
 	if [ -d "$wwwroot/html/$newrepo" ]; then #just change option if repo exists
 		echo "Setting $option to existing $newrepo"
 		www_repofocus=$newrepo
