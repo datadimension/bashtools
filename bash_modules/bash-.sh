@@ -100,6 +100,10 @@ function bash-install() {
 	source ~/.bash_profile
 }
 
+function bash-installforwindows(){
+	echo "bash install for windows";
+}
+
 # shows bash function categories and functions
 function bash-help() {
 	std-menu std,bash,env,fsys,git,log,net,os,nginx,php,www "Help Categories:"
