@@ -10,7 +10,6 @@ function bash-start(){
 }
 
 function bash-start-windows() {
-
 	echo "Welcome to Extended Bash for Windows"
 }
 
@@ -32,7 +31,6 @@ function bash-start-ubuntu() {
 
 	mysql-getversion;
 
-	clear
 	bash-readsettings
 	osinstall=0;
 	os-checkstatus
