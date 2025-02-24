@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 
 function bash-start(){
+		source ~/bashtools/bash_modules/std-.sh #standard for a platforms
+    	source ~/bashtools/bash_modules/os-.sh
+    	source ~/bashtools/bash_modules/mysql-.sh
+    	source ~/bashtools/bash_modules/fsys-.sh
+    	source ~/bashtools/bash_modules/env-.sh
+    	source ~/bashtools/bash_modules/nginx-.sh
+    	source ~/bashtools/bash_modules/php-.sh
+    	source ~/bashtools/bash_modules/www-.sh
+    	source ~/bashtools/bash_modules/git-.sh
+    	source ~/bashtools/bash_modules/net-.sh
+    	source ~/bashtools/bash_modules/log-.sh
+    	source ~/bashtools/bash_modules/laravel-.sh
 	bash-readsettings
 	if [ "$platform" == "ubuntu" ]; then
     	bash-start-ubuntu
@@ -16,21 +28,7 @@ function bash-start-windows() {
 
 # initialises the bash shell #
 function bash-start-ubuntu() {
-	source ~/bashtools/bash_modules/std-.sh #standard for a platforms
-	source ~/bashtools/bash_modules/os-.sh
-	source ~/bashtools/bash_modules/mysql-.sh
-	source ~/bashtools/bash_modules/fsys-.sh
-	source ~/bashtools/bash_modules/env-.sh
-	source ~/bashtools/bash_modules/nginx-.sh
-	source ~/bashtools/bash_modules/php-.sh
-	source ~/bashtools/bash_modules/www-.sh
-	source ~/bashtools/bash_modules/git-.sh
-	source ~/bashtools/bash_modules/net-.sh
-	source ~/bashtools/bash_modules/log-.sh
-	source ~/bashtools/bash_modules/laravel-.sh
-
 	mysql-getversion;
-
 	bash-readsettings
 	osinstall=0;
 	os-checkstatus
@@ -38,7 +36,6 @@ function bash-start-ubuntu() {
 		read -p "Any key to restart" wait;
 		bash-restart
 	fi
-
 	env-attributerequire "serverid"
 	env-attributerequire "environment"
 	env-attributerequire "wwwroot"
@@ -188,7 +185,7 @@ function bash-writesettings() {
 		csv+="${wwwsites[$i]},"
 	done
 	#20230629echo $csv;
-	echo "$csv" >~/bashtoolscfg/wwwsites
+	#20250224echo "$csv" >~/bashtoolscfg/wwwsites
 		echo "$csv" >~/bashtoolscfg/wwwrepos
 	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
 	echo "$git_ssh" >~/bashtoolscfg/gitcfg
