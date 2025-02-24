@@ -5,9 +5,14 @@ function bash-start(){
 	if [ "$platform" == "ubuntu" ]; then
     	bash-start-ubuntu
     else
-    	echo "windows"
+    	bash-start-windows
     fi
 }
+
+function bash-start-windows() {
+	echo "windows bash started"
+}
+
 
 # initialises the bash shell #
 function bash-start-ubuntu() {
@@ -192,7 +197,8 @@ function bash-writesettings() {
 }
 
 function bash-readsettings() {
-	wwwsites=$(<~/bashtoolscfg/wwwsites)
+	wwwsites=$(<~/bashtoolscfg/wwwsites
+	})
 	wwwrepos=$(<~/bashtoolscfg/wwwrepos)
 
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
