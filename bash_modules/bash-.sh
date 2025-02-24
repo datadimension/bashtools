@@ -14,6 +14,7 @@ function bash-start(){
     	source ~/bashtools/bash_modules/log-.sh
     	source ~/bashtools/bash_modules/laravel-.sh
 	bash-readsettings
+	env-attributerequire "welcomemsg"
 	if [ "$platform" == "ubuntu" ]; then
     	bash-start-ubuntu
     else
@@ -25,7 +26,6 @@ function bash-start-windows() {
 	clear
 	echo "Welcome to Bash for Windows"
 		www-reposhow
-
 	startdir="$wwwroot/html/$www_repofocus"
     cd $startdir
 }
