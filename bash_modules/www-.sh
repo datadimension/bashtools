@@ -81,6 +81,7 @@ function www-reposet() {
 	if [ -d "$wwwroot/html/$newrepo" ]; then #just change option if repo exists
 		echo "Setting $option to existing $newrepo"
 		www_repofocus=$newrepo
+		bash-writesettings
 	else # need to set up repo
 		#set -e #stop everything if there is a failure
 		www_repofocus=$newrepo

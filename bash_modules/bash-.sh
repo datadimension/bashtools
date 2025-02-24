@@ -185,7 +185,7 @@ function bash-writesettings() {
 		csv+="${wwwsites[$i]},"
 	done
 	#20230629echo $csv;
-	#20250224echo "$csv" >~/bashtoolscfg/wwwsites
+	echo "$csv" >~/bashtoolscfg/wwwsites
 		echo "$csv" >~/bashtoolscfg/wwwrepos
 	echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
 	echo "$git_ssh" >~/bashtoolscfg/gitcfg
@@ -193,7 +193,7 @@ function bash-writesettings() {
 }
 
 function bash-readsettings() {
-	wwwsites=$(<~/bashtoolscfg/wwwsites})
+	#20250224wwwsites=$(<~/bashtoolscfg/wwwsites})
 	wwwrepos=$(<~/bashtoolscfg/wwwrepos)
 
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
