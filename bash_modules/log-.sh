@@ -11,9 +11,12 @@ function log-show() {
 		action="clear"
 	fi
 	lines=-$lines
+	echo "Showing $path with $lines lines:"
 	sudo tail $lines $path
+	echo $path;
 	if [ "$action" == "clear" ]; then
-		>$wwwroot/html/$www_repofocus/storage/logs/laravel.log
+		echo "Clearing log at %pat"
+		>$path
 	fi
 }
 

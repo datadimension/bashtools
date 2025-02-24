@@ -13,9 +13,9 @@ function fsys-secure() {
 	if [ "$input" != "y" ]; then
 		return 0
 	fi
-	sec644evel=644
+	sec644level=644
 	sec755level=755
-	sec770evel=770
+	sec770level=770
 	dirname=$1
 	if [ "$dirname" == "" ]; then
 		dirname=$www_repofocus
@@ -29,22 +29,22 @@ function fsys-secure() {
 	sudo chmod -R $sec755level $wwwroot/html/
 
 	echo "Securing bash-tools permissions"
-	sudo chmod -R $sec770evel ~/bashtools/php_helpers/bash
+	sudo chmod -R $sec770level ~/bashtools/php_helpers/bash
 
 	echo "Reseting laravel permissions in $dirname"
 	sudo chown -R $USER:www-data $wwwroot/html/$dirname
 	sudo chown -R $USER:www-data $wwwroot/certs
 
 	echo "Reseting file permissions in $dirname"
-	sudo find $wwwroot/html/$dirname -type f -exec chmod $sec644evel {} \;
+	sudo find $wwwroot/html/$dirname -type f -exec chmod $sec644level {} \;
 	echo "Reseting directory permissions in $dirname"
 	sudo find $wwwroot/html/$dirname -type d -exec chmod $sec755level {} \;
 	echo "Securing directory permissions in $dirname"
-	sudo chmod -R $sec644evel $wwwroot/certs
+	sudo chmod -R $sec644level $wwwroot/certs
 	sudo chmod -R $sec755level $wwwroot/html/$dirname/app
-	sudo chmod -R $sec770evel $wwwroot/html/$dirname/storage
-	sudo chmod -R $sec770evel $wwwroot/html/$dirname/public/downloads
-	sudo chmod -R $sec770evel $wwwroot/html/$dirname/private
+	sudo chmod -R $sec770level $wwwroot/html/$dirname/storage
+	sudo chmod -R $sec770level $wwwroot/html/$dirname/public/downloads
+	sudo chmod -R $sec770level $wwwroot/html/$dirname/private
 }
 
 function file_exists() {

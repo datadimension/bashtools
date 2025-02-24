@@ -79,6 +79,9 @@ function bash-install() {
 	else
 		username=${HOME:9}
 		platform="windows"
+		echo "windows"
+		read wait
+		die
 		wwwroot="/c/Users/$username/www"
 	fi
 	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
