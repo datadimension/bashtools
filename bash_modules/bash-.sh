@@ -104,7 +104,7 @@ function bash-install-windows(){
 		wwwroot="${HOME}/www"
     	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
         rm ~/.bash_profile
-		echo "bash install for windows";
+		echo "bash installed for windows";
 }
 
 # shows bash function categories and functions
