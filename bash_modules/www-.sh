@@ -5,7 +5,7 @@
 function www-reposhow() {
 	echo-br "Current repo options are:"
 	for i in {0..9}; do
-		repolabel=${wwwsites[$i]}
+		repolabel=${wwwrepos[$i]}
 		if [ "$repolabel" != "" ]; then
 			repolabel="$repolabel  [dev URL: $repolabel.$serverid.com ]"
 		fi
