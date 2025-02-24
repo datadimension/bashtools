@@ -70,6 +70,7 @@ function bash-pull(){
 
 # installs the enhanced bash functionality provided by Bashtools
 function bash-install() {
+	 rm ~/.bash_profile
 	mkdir -p ~/bashtoolscfg/tmp
 	#detect ubuntu or MINW64
 	if [ "$homepath" == "/home/" ]; then
@@ -84,26 +85,24 @@ function bash-install-ubuntu(){
     platform="ubuntu"
 	wwwroot="/var/www"
     echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
-    rm ~/.bash_profile
 	cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
     #20250224cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
    bash-writesettings
- 	echo "Hit enter to restart
- 	 Ubuntu shell ..."
-    read -t 20 input
+ 	echo "Hit enter to restart Ubuntu shell ..."
+    read -t 5 input
 		source ~/.bash_profile
 }
 
 function bash-install-windows(){
-	    rm ~/.bash_profile
 		platform="windows"
 		username=${HOME:9}
 		wwwroot="${HOME}/www"
     	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
 		echo "bash installed for windows";
 		cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
-		#20250224cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
-		source ~/.bash_profile
+ 	echo "Hit enter to restart Windows shell ..."
+    read -t 5 input
+		#source ~/.bash_profile
 }
 
 # shows bash function categories and functions
