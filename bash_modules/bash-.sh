@@ -30,27 +30,27 @@ function bash-start-windows() {
     cd $startdir
 }
 
+bash-start-ubuntu-osconfigcheck(){
+		mysql-getversion;
+    	osinstall=0;
+    	os-checkstatus
+    	if [ $osinstall == 1 ]; then
+    		read -p "Any key to restart" wait;
+    		bash-restart
+    	fi
+    	env-attributerequire "serverid"
+    	env-attributerequire "environment"
+    	env-attributerequire "wwwroot"
+    	env-attributerequire "defaultDatabaseIP"
+
+    	MENUCHOICE="" #reserved as a global for menu function
+    	PHP_VERSION=`php -r 'echo PHP_VERSION;'`
+    	#env-attributerequire "welcomemsg"
+}
 
 # initialises the bash shell #
 function bash-start-ubuntu() {
-	mysql-getversion;
-	bash-readsettings
-	osinstall=0;
-	os-checkstatus
-	if [ $osinstall == 1 ]; then
-		read -p "Any key to restart" wait;
-		bash-restart
-	fi
-	env-attributerequire "serverid"
-	env-attributerequire "environment"
-	env-attributerequire "wwwroot"
-	env-attributerequire "defaultDatabaseIP"
-
-	MENUCHOICE="" #reserved as a global for menu function
-	PHP_VERSION=`php -r 'echo PHP_VERSION;'`
-
-	#env-attributerequire "welcomemsg"
-
+	bash-start-ubuntu-osconfigcheck
 	echo "Welcome to"
 	echo-h1 $serverid
 	echo $welcomemsg
