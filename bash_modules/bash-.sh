@@ -88,8 +88,8 @@ function bash-install-ubuntu(){
 	cp ~/bashtools/bashinstall/bash_profile.sh ~/.bash_profile #overwrite with potention changes
     #20250224cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
    bash-writesettings
- 	echo "Restarting shell ..."
-    read -t 2 input
+ 	echo "Restarting Ubuntu shell ..."
+    read -t 20 input
    	source ~/.bash_profile
 }
 
