@@ -10,7 +10,7 @@ function bash-start(){
 }
 
 function bash-start-windows() {
-	
+
 	echo "Welcome to Extended Bash for Windows"
 }
 
@@ -198,8 +198,7 @@ function bash-writesettings() {
 }
 
 function bash-readsettings() {
-	wwwsites=$(<~/bashtoolscfg/wwwsites
-	})
+	wwwsites=$(<~/bashtoolscfg/wwwsites})
 	wwwrepos=$(<~/bashtoolscfg/wwwrepos)
 
 	IFS=', ' read -r -a wwwsites <<<"$wwwsites" #read back in same order as written
