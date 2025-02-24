@@ -24,6 +24,8 @@ function bash-start(){
 function bash-start-windows() {
 	clear
 	echo "Welcome to Bash for Windows"
+		www-reposhow
+
 	startdir="$wwwroot/html/$www_repofocus"
     cd $startdir
 }
