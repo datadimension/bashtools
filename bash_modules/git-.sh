@@ -4,6 +4,7 @@ function git-installrepo() {
 	env-attributerequire gituname
 	reponame=$1
 	user=$USER
+	sudo rm -r -f $wwwroot/html/$reponame
 	sudo mkdir $wwwroot/html/$reponame
 	sudo chown $user:www-data $wwwroot/html/$reponame
 	git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
@@ -236,7 +237,7 @@ function git-pull-repo() {
 
 	echo-hr
     echo "pulling repo $gitreponame"
-    echo "from $gitrepopath/$gitreponame;"
+    echo "to $gitrepopath/$gitreponame;"
     echo-hr
 
 	cd $gitrepopath/$gitreponame

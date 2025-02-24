@@ -1,18 +1,10 @@
 #!/usr/bin/env bash
 
 function bash-start(){
-		source ~/bashtools/bash_modules/std-.sh #standard for a platforms
-    	source ~/bashtools/bash_modules/os-.sh
-    	source ~/bashtools/bash_modules/mysql-.sh
-    	source ~/bashtools/bash_modules/fsys-.sh
-    	source ~/bashtools/bash_modules/env-.sh
-    	source ~/bashtools/bash_modules/nginx-.sh
-    	source ~/bashtools/bash_modules/php-.sh
-    	source ~/bashtools/bash_modules/www-.sh
-    	source ~/bashtools/bash_modules/git-.sh
-    	source ~/bashtools/bash_modules/net-.sh
-    	source ~/bashtools/bash_modules/log-.sh
-    	source ~/bashtools/bash_modules/laravel-.sh
+	#load modules optimised for all os
+	source ~/bashtools/bash_modules/std-.sh #standard for a platforms
+    source ~/bashtools/bash_modules/env-.sh
+    source ~/bashtools/bash_modules/www-.sh
 	bash-readsettings
 	env-attributerequire "welcomemsg"
 	if [ "$platform" == "ubuntu" ]; then
@@ -23,6 +15,7 @@ function bash-start(){
 }
 
 function bash-start-windows() {
+	    source ~/bashtools/bash_modules_windows/git-.sh
 	clear
 		echo $welcomemsg
 	echo "Welcome to Bash for Windows"
@@ -51,6 +44,15 @@ bash-start-ubuntu-osconfigcheck(){
 
 # initialises the bash shell #
 function bash-start-ubuntu() {
+    source ~/bashtools/bash_modules/os-.sh
+     source ~/bashtools/bash_modules/mysql-.sh
+        	source ~/bashtools/bash_modules/fsys-.sh
+        	source ~/bashtools/bash_modules/nginx-.sh
+        	source ~/bashtools/bash_modules/php-.sh
+        	    source ~/bashtools/bash_modules/git-.sh
+        	source ~/bashtools/bash_modules/net-.sh
+        	source ~/bashtools/bash_modules/log-.sh
+        	source ~/bashtools/bash_modules/laravel-.sh
 	bash-start-ubuntu-osconfigcheck
 	echo "Welcome to"
 	echo-h1 $serverid
