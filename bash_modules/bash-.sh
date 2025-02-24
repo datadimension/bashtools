@@ -22,7 +22,7 @@ function bash-start(){
 }
 
 function bash-start-windows() {
-	echo "Welcome to Extended Bash for Windows"
+	echo "Welcome to Bash for Windows"
 }
 
 
