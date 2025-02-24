@@ -85,12 +85,13 @@ function bash-install-ubuntu(){
 	wwwroot="/var/www"
     echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
     rm ~/.bash_profile
-	cp ~/bashtools/bashinstall/bash_profile.sh ~/.bash_profile #overwrite with potention changes
+	cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
     #20250224cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
    bash-writesettings
- 	echo "Restarting Ubuntu shell ..."
+ 	echo "Hit enter to restart
+ 	 Ubuntu shell ..."
     read -t 20 input
-   	source ~/.bash_profile
+		source ~/.bash_profile
 }
 
 function bash-install-windows(){
@@ -100,7 +101,7 @@ function bash-install-windows(){
 		wwwroot="${HOME}/www"
     	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
 		echo "bash installed for windows";
-		cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile
+		cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
 		#20250224cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
 		source ~/.bash_profile
 }
