@@ -72,14 +72,13 @@ function bash-pull(){
 function bash-install() {
 	#detect ubuntu or MINW64
 	if [ "$homepath" == "/home/" ]; then
-		bash-install-linux
+		bash-install-ubuntu
 	else
 		bash-installforwindows
 	fi
 }
 
-function bash-install-linux(){
-	homepath=${HOME:0:6}
+function bash-install-ubuntu(){
 	username=${HOME:6}
     platform="ubuntu"
 	wwwroot="/var/www"
@@ -100,6 +99,10 @@ function bash-install-linux(){
 }
 
 function bash-install-windows(){
+			platform="windows"
+			username=${HOME:9}
+			wwwroot="${HOME}/www"
+    echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
 	echo "bash install for windows";
 }
 
