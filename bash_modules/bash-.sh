@@ -81,7 +81,7 @@ function bash-install() {
 		platform="windows"
 		echo "windows"
 		read wait
-		die
+		exit
 		wwwroot="/c/Users/$username/www"
 	fi
 	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
