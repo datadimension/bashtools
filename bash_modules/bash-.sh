@@ -76,28 +76,23 @@ function bash-install() {
 		username=${HOME:6}
 		platform="ubuntu"
 		wwwroot="/var/www"
+		echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
+        rm ~/.bash_profile
+      	cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile
+        if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
+        	# cat ~/bashtools/bashinstall/bash_profile_sudo.sh >>~/.bash_profile
+        	noop=1
+    	fi
+       	# cat ~/bashtools/bashinstall/bash_profile_multiplatform.sh >>~/.bash_profile
+      	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
+       	mkdir -p ~/bashtoolscfg/tmp
+       	bash-writesettings
+       	echo "Restarting shell ..."
+       	read -t 2 input
+       	source ~/.bash_profile
 	else
-		username=${HOME:9}
-		platform="windows"
-		echo "windows"
-		read wait
-		exit
-		wwwroot="/c/Users/$username/www"
+		bash-installforwindows
 	fi
-	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
-	rm ~/.bash_profile
-	cp ~/bashtools/bashinstall/bash_profile_head.sh ~/.bash_profile
-	if [ "$platform" == "ubuntu" ]; then # aimed at the ming64 shell for windows which does not have functions such as sudo
-		# cat ~/bashtools/bashinstall/bash_profile_sudo.sh >>~/.bash_profile
-		noop=1
-	fi
-	# cat ~/bashtools/bashinstall/bash_profile_multiplatform.sh >>~/.bash_profile
-	cat ~/bashtools/bashinstall/bash_profile_foot.sh >>~/.bash_profile
-	mkdir -p ~/bashtoolscfg/tmp
-	bash-writesettings
-	echo "Restarting shell ..."
-	read -t 2 input
-	source ~/.bash_profile
 }
 
 function bash-installforwindows(){
