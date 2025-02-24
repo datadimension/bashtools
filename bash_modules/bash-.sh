@@ -103,6 +103,8 @@ function bash-install-windows(){
 			username=${HOME:9}
 			wwwroot="${HOME}/www"
     echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
+        rm ~/.bash_profile
+
 	echo "bash install for windows";
 }
 
