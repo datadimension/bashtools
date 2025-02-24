@@ -82,6 +82,7 @@ function www-reposet() {
 		echo "Setting $option to existing $newrepo"
 		www_repofocus=$newrepo
 		bash-writesettings
+		bash-restart
 	else # need to set up repo
 		#set -e #stop everything if there is a failure
 		www_repofocus=$newrepo
