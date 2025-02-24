@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function bash-start-windows(){
+function bash-start(){
 	bash-readsettings
 	if [ "$platform" == "ubuntu" ]; then
     	bash-start-ubuntu
@@ -81,7 +81,7 @@ function bash-pull(){
 function bash-install() {
 	 rm ~/.bash_profile
 	mkdir -p ~/bashtoolscfg/tmp
-	#detect ubuntu or MINW64
+	#detect ubuntu or MINW64 - keeping seperate functions for future proofing, even though very similar
 	if [ "$homepath" == "/home/" ]; then
 		bash-install-ubuntu
 	else
@@ -90,14 +90,12 @@ function bash-install() {
 }
 
 function bash-install-ubuntu(){
-	username=${HOME:6}
     platform="ubuntu"
+	username=${HOME:6}
 	wwwroot="/var/www"
     echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
 	cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
    bash-writesettings
- 	echo "Hit enter to restart Ubuntu shell ..."
-    read -t 5 input
 		source ~/.bash_profile
 }
 
@@ -106,12 +104,9 @@ function bash-install-windows(){
 		username=${HOME:9}
 		wwwroot="${HOME}/www"
     	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
-		echo "bash installed for windows";
 		cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
  	   bash-writesettings
- 	echo "Hit enter to restart Windows shell ..."
-    read -t 5 input
-		#source ~/.bash_profile
+		source ~/.bash_profile
 }
 
 # shows bash function categories and functions
