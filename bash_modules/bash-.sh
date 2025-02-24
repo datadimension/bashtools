@@ -74,7 +74,7 @@ function bash-install() {
 	if [ "$homepath" == "/home/" ]; then
 		bash-install-ubuntu
 	else
-		bash-installforwindows
+		bash-install-windows
 	fi
 }
 
@@ -99,11 +99,11 @@ function bash-install-ubuntu(){
 }
 
 function bash-install-windows(){
+	    rm ~/.bash_profile
 		platform="windows"
 		username=${HOME:9}
 		wwwroot="${HOME}/www"
     	echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
-        rm ~/.bash_profile
 		echo "bash installed for windows";
 }
 
