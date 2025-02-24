@@ -9,4 +9,3 @@ function sessionstart() {
 	source ~/bashtools/bash_modules/bash-.sh
 	bash-start
 }
-sessionstart
