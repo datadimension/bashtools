@@ -15,11 +15,11 @@ function bash-start(){
 }
 
 function bash-start-windows() {
-	read -p "windows"
+	read -p "windows" wait
 	    source ~/bashtools/bash_modules_windows/git-.sh
 	clear
 		echo $welcomemsg
-	echo "Welcome to Bash for Windows"
+	echo "Welcome to Bash for Windows !"
 		www-reposhow
 	startdir="$wwwroot/html/$www_repofocus"
     cd $startdir
