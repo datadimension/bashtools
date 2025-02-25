@@ -17,7 +17,7 @@ function bash-start() {
 function bash-start-windows() {
   source ~/bashtools/bash_modules/windows/git-.sh
   source ~/bashtools/bash_modules//windows/fsys-.sh
-  echo "BashTools [Windows IDE]"
+  echo "BashTools [Windows IDE version]"
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
