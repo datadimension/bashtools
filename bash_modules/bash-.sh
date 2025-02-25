@@ -34,8 +34,8 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/net-.sh
   source ~/bashtools/bash_modules/log-.sh
   source ~/bashtools/bash_modules/laravel-.sh
-  echo "BashTools [$platform] >"
   bash-start-ubuntu-osconfigcheck
+  echo "BashTools [$platform]"
   echo-h1 $serverid
   echo $welcomemsg
   echo "Your session IP detected as:"
