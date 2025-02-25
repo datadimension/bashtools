@@ -19,7 +19,7 @@ function bash-start-windows() {
 	    source ~/bashtools/bash_modules_windows/git-.sh
 	clear
 		echo $welcomemsg
-	echo "Welcome to Bash for Windows !" 
+	echo "Welcome to Bash for Windows !"
 		www-reposhow
 	startdir="$wwwroot/html/$www_repofocus"
     cd $startdir
