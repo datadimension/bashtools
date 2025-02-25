@@ -15,7 +15,6 @@ function bash-start(){
 }
 
 function bash-start-windows() {
-	read -p "windows" wait
 	    source ~/bashtools/bash_modules_windows/git-.sh
 	clear
 		echo $welcomemsg

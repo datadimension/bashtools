@@ -36,3 +36,31 @@ function git-deploysubrepo() {
 	echo-now
 	echo ""
 }
+
+function git-pull-repo() {
+	gitreponame=$1
+	if [ "$gitreponame" == "DD_laraview" ]; then
+		gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
+	elif [ "$gitreponame" == "DD_libwww" ]; then
+		gitrepopath="$wwwroot/html/$www_repofocus/public"
+	elif [ "$gitreponame" == "DD_laravelAp" ]; then
+		gitrepopath="$wwwroot/html/$www_repofocus/app"
+	elif [ "$gitreponame" == "bashtools" ]; then
+            		gitrepopath=~
+	else
+		gitrepopath="$wwwroot/html"
+		gitreponame=$www_repofocus
+	fi
+
+	echo-hr
+    echo "pulling repo $gitreponame"
+    echo "to $gitrepopath/$gitreponame;"
+    echo-hr
+
+	cd $gitrepopath/$gitreponame
+	git pull
+	echo ""
+	echo "Finished at:"
+	echo-now
+	echo-hr
+}
