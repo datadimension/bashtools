@@ -3,7 +3,7 @@
 # shows site selection
 # list to pick from for various funcs
 function www-reposhow() {
-  echo-br "Current repo options are:"
+  echo-br "Current repos are:"
   for i in {0..9}; do
     repolabel=${wwwrepos[$i]}
     if [ "$repolabel" != "" ]; then

@@ -37,7 +37,7 @@ function bash-start-ubuntu() {
   bash-start-ubuntu-osconfigcheck
   echo "BashTools [$platform - $serverid]"
   echo-hr
-  echo $welcomemsg
+  echo "welcommsg$welcomemsg"
   www-reposhow
   echo "Use 'env-about' for more info, 'bash-help' for more functions"
   startdir="$wwwroot/html/$www_repofocus"
