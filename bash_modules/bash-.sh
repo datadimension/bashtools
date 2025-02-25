@@ -16,24 +16,30 @@ function bash-start() {
 
 function bash-start-windows() {
   source ~/bashtools/bash_modules/windows/git-.sh
+  source ~/bashtools/bash_modules//windows/fsys-.sh
   echo "BashTools [Windows IDE]"
-  echo $welcomemsg
+  if [ "$welcomemsg" != "" ]; then
+    echo "$welcomemsg"
+  fi
   www-reposhow
   startdir="$wwwroot/html/$www_repofocus"
   cd $startdir
+  file-showdir $startdir
+
 }
 
 # initialises the bash shell #
 function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/os-.sh
   source ~/bashtools/bash_modules/mysql-.sh
-  source ~/bashtools/bash_modules/fsys-.sh
   source ~/bashtools/bash_modules/nginx-.sh
   source ~/bashtools/bash_modules/php-.sh
   source ~/bashtools/bash_modules/git-.sh
   source ~/bashtools/bash_modules/net-.sh
   source ~/bashtools/bash_modules/log-.sh
   source ~/bashtools/bash_modules/laravel-.sh
+  source ~/bashtools/bash_modules/fsys-.sh
+
   bash-start-ubuntu-osconfigcheck
   echo "BashTools [$platform - $serverid]"
   echo-hr
@@ -41,7 +47,6 @@ function bash-start-ubuntu() {
     echo "$welcomemsg"
   fi
   www-reposhow
-  echo "Use 'env-about' for more info, 'bash-help' for more functions"
   startdir="$wwwroot/html/$www_repofocus"
   cd $startdir
   file-showdir $startdir
