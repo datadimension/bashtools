@@ -18,9 +18,9 @@ if ($args["method"] == "env_generate") {
 	  "APP_DEBUG" => ["production" => "false", "local" => "true"],
 	  "APP_LOG_LEVEL" => ["production" => "error", "local" => "debug"],
 
-	  "GOOGLE_CLIENT_ID" => "",
-	  "GOOGLE_CLIENT_SECRET" => "",
-	  "GOOGLE_JAVASCRIPT_APIKEY" => "",
+	    #20250224"GOOGLE_CLIENT_ID" => "",
+	    #20250224"GOOGLE_CLIENT_SECRET" => "",
+	    #20250224"GOOGLE_JAVASCRIPT_APIKEY" => "",
 
 	  "MAIL_DRIVER" => "smtp",
 	  "MAIL_HOST" => "smtp.googlemail.com",

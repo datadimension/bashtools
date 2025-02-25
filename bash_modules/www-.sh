@@ -150,7 +150,6 @@ function www-envinstall() {
 	else
 		tail -1000 $wwwroot/html/$www_repofocus/.env
 	fi
-	www-install-dependancies
 }
 
 function www-sqlinstall() {
