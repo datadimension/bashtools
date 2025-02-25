@@ -35,8 +35,8 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/log-.sh
   source ~/bashtools/bash_modules/laravel-.sh
   bash-start-ubuntu-osconfigcheck
-  echo "BashTools [$platform]"
-  echo-h1 $serverid
+  echo "BashTools [$platform - $serverid]"
+  echo-hr
   echo $welcomemsg
   echo "Your session IP detected as:"
   echo $SSH_CLIENT | awk '{ print $1}'
