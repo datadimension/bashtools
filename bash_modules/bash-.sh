@@ -16,7 +16,7 @@ function bash-start() {
 
 function bash-start-windows() {
   source ~/bashtools/bash_modules/windows/git-.sh
-  echo "BashTools [Windows] >"
+  echo "BashTools [Windows IDE]"
   echo $welcomemsg
   www-reposhow
   startdir="$wwwroot/html/$www_repofocus"
