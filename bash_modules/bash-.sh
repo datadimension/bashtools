@@ -47,10 +47,6 @@ function bash-start-ubuntu() {
   startdir="$wwwroot/html/$www_repofocus"
   cd $startdir
   echo ""
-  #laravel-showversion;
-  echo "Recommended URL"
-  echo "$www_repofocus.$serverid.com"
-  echo ""
   file-showdir $startdir
   #net-ssh-log-session
   #laravel-configcheck
