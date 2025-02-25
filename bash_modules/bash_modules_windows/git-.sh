@@ -3,6 +3,10 @@
 function git-installrepo() {
   env-attributerequire gituname
   reponame=$1
+  if [ "$reponame" == "" ]; then
+    read -p "No repo name provided" wait
+    return 0
+  fi
   user=$USER
   rm -R -f $wwwroot/html/$reponame
   mkdir $wwwroot/html/$reponame
