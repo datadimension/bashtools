@@ -36,20 +36,14 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/laravel-.sh
   bash-start-ubuntu-osconfigcheck
   echo "BashTools [$platform - $serverid]"
+  echo "Use 'env-about' for more info, 'bash-help' for more functions"
   echo-hr
   echo $welcomemsg
-  echo "Your session IP detected as:"
-  echo $SSH_CLIENT | awk '{ print $1}'
-  # sudo /etc/init.d/cron start;
-  echo "Use 'env-about' for more info, 'bash-help' for more functions"
   www-reposhow
-  #bash-showsettings
   startdir="$wwwroot/html/$www_repofocus"
   cd $startdir
-  echo ""
   file-showdir $startdir
-  #net-ssh-log-session
-  #laravel-configcheck
+
 }
 
 bash-start-ubuntu-osconfigcheck() {
