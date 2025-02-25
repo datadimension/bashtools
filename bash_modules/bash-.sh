@@ -36,14 +36,13 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/laravel-.sh
   bash-start-ubuntu-osconfigcheck
   echo "BashTools [$platform - $serverid]"
-  echo "Use 'env-about' for more info, 'bash-help' for more functions"
   echo-hr
   echo $welcomemsg
   www-reposhow
+  echo "Use 'env-about' for more info, 'bash-help' for more functions"
   startdir="$wwwroot/html/$www_repofocus"
   cd $startdir
   file-showdir $startdir
-
 }
 
 bash-start-ubuntu-osconfigcheck() {
