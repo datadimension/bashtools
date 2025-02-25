@@ -34,9 +34,8 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/net-.sh
   source ~/bashtools/bash_modules/log-.sh
   source ~/bashtools/bash_modules/laravel-.sh
-
+  echo "BashTools [$platform] >"
   bash-start-ubuntu-osconfigcheck
-  echo "Welcome to"
   echo-h1 $serverid
   echo $welcomemsg
   echo "Your session IP detected as:"
@@ -44,8 +43,6 @@ function bash-start-ubuntu() {
   # sudo /etc/init.d/cron start;
   echo "Use 'env-about' for more info, 'bash-help' for more functions"
   www-reposhow
-  echo "BashTools [Ubuntu] >"
-
   #bash-showsettings
   startdir="$wwwroot/html/$www_repofocus"
   cd $startdir
