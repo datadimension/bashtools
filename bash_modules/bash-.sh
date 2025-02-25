@@ -15,7 +15,7 @@ function bash-start() {
 }
 
 function bash-start-windows() {
-  source ~/bashtools/bash_modules_windows/git-.sh
+  source ~/bashtools/bash_modules/windows/git-.sh
   clear
   echo $welcomemsg
   echo "Welcome to Bash for Windows !"
