@@ -55,10 +55,10 @@ function git-pull() {
 
 function git-pull-all() {
   git-pull-repo "bashtools"
-  git-pull-repo "DD_laraview" forced
-  git-pull-repo "DD_libwww" forced
-  git-pull-repo "DD_laravelAp" forced
-  git-pull-repo "$www_repofocus" forced
+  git-pull-repo "DD_laraview" FORCED
+  git-pull-repo "DD_libwww" FORCED
+  git-pull-repo "DD_laravelAp" FORCED
+  git-pull-repo "$www_repofocus" FORCED
 }
 
 function git-pull-repo() {
@@ -81,7 +81,7 @@ function git-pull-repo() {
   echo "to $gitrepopath/$gitreponame;"
   echo-hr
   cd $gitrepopath/$gitreponame
-  if [ "$forced" == "forced" ]; then
+  if [ "$forced" == "FORCED" ]; then
     git fetch
     git reset --hard HEAD
     git merge '@{u}'

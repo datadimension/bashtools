@@ -245,7 +245,7 @@ function git-pull-repo() {
   echo-hr
 
   cd $gitrepopath/$gitreponame
-  if [ "$forced" == "forced" ]; then
+  if [ "$forced" == "FORCED" ]; then
     git fetch
     git reset --hard HEAD
     git merge '@{u}'
