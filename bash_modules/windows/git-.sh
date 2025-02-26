@@ -41,6 +41,26 @@ function git-deploysubrepo() {
   echo ""
 }
 
+function git-pull() {
+  curpwd=$(pwd)
+  clear
+  echo-hr
+  echo "Pulling all repos and subrepos"
+  echo-b $www_repofocus
+  echo "Pulling to $www_repofocus"
+  echo-hr
+  git-pull-all
+  cd $curpwd
+}
+
+function git-pull-all() {
+  git-pull-repo "bashtools"
+  git-pull-repo "DD_laraview"
+  git-pull-repo "DD_libwww"
+  git-pull-repo "DD_laravelAp"
+  git-pull-repo "$www_repofocus"
+}
+
 function git-pull-repo() {
   gitreponame=$1
   if [ "$gitreponame" == "DD_laraview" ]; then
