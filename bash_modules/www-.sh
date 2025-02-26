@@ -75,8 +75,7 @@ function www-reposet() {
   echo "Enter repo number to change"
   read option
   reponumber=$(($option - 1))
-  echo "Enter repo name to set against site" #[note on dev server use the url for the dev server eg liveinfo247"
-  read newrepo
+  read -p "Enter repo name to set against #$option: " newrepo #[note on dev server use the url for the dev server eg liveinfo247"
   wwwrepos[$reponumber]=$newrepo
   if [ -d "$wwwroot/html/$newrepo" ]; then #just change option if repo exists
     echo "Setting $option to existing $newrepo"
@@ -251,9 +250,8 @@ function www-install-dependancies() {
 function www-update() {
   cd $wwwroot/html/$www_repofocus
   echo "Updating composer packages"
-  composer dump-autoload
+  #20250226composer dump-autoload
   composer update -W
-  composer install
   composer clear-cache
   # this also generates autoload;
   php artisan key:generate

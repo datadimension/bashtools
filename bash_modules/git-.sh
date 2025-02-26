@@ -10,14 +10,13 @@ function git-installrepo() {
   user=$USER
   sudo rm -r -f $wwwroot/html/$reponame
   sudo mkdir $wwwroot/html/$reponame
-  sudo chown $user:www-data $wwwroot/html/$reponame
   git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
   git-deploysubrepos
   git-addlocalexcludedfiles
   www-envinstall
   www-install-dependancies
-  cd "$wwwroot/html/$www_repofocus"
-  echo "set focused repo to '$www_repofocus'"
+  # cd "$wwwroot/html/$www_repofocus"
+  # echo "set focused repo to '$www_repofocus'"
   bash-writesettings
   nginx-setserverblock $www_repofocus sslselfsigned
   bash-restart
