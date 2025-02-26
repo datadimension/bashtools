@@ -73,7 +73,6 @@ function cdls() {
 function file-showdir() {
   directory=$1
   echo-hr
-  echo "Files at"
   echo "$directory"
   echo-hr
   ls $directory
