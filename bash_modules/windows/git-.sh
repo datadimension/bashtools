@@ -77,12 +77,11 @@ function git-pull-repo() {
     gitreponame=$www_repofocus
   fi
   echo-hr
-  echo "pulling repo $gitreponame"
+  echo "pulling repo $gitreponame $forced"
   echo "to $gitrepopath/$gitreponame;"
   echo-hr
   cd $gitrepopath/$gitreponame
   if [ "$forced" == "forced" ]; then
-    echo "Pulling with forced option"
     git fetch
     git reset --hard HEAD
     git merge '@{u}'
