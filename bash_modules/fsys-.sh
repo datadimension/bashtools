@@ -77,7 +77,6 @@ function file-showdir() {
   echo-hr
   ls $directory
   echo-hr
-  echo ""
 }
 
 function ls-i() {

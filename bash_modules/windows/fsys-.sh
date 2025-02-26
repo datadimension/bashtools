@@ -7,5 +7,4 @@ function file-showdir() {
   echo-hr
   ls $directory
   echo-hr
-  echo ""
 }
