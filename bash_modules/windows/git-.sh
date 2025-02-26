@@ -96,5 +96,6 @@ function git-pull-repo() {
 
 function git-push() {
   echo "GIT-PUSH is disabled in Windows IDE as you should set PHPStorm or other IDE to deploy to test server in order to debug."
-  echo "Then you should run git-push via Putty on the actual dev server to make changes live in the repo"
+  echo ""
+  echo "Then you should run git-push on a terminal on the actual dev server to make changes live in the repo"
 }
