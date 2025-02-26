@@ -225,6 +225,7 @@ function git-push-repo() {
 
 function git-pull-repo() {
   gitreponame=$1
+  forced=$2
   if [ "$gitreponame" == "DD_laraview" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
   elif [ "$gitreponame" == "DD_libwww" ]; then
@@ -244,7 +245,14 @@ function git-pull-repo() {
   echo-hr
 
   cd $gitrepopath/$gitreponame
-  git pull
+  if [ "$forced" == "forced" ]; then
+    echo "Pulling with forced option"
+    git fetch
+    git reset --hard HEAD
+    git merge '@{u}'
+  else
+    git pull
+  fi
   echo ""
   echo "Finished at:"
   echo-now

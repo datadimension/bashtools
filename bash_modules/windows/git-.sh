@@ -55,14 +55,15 @@ function git-pull() {
 
 function git-pull-all() {
   git-pull-repo "bashtools"
-  git-pull-repo "DD_laraview"
-  git-pull-repo "DD_libwww"
-  git-pull-repo "DD_laravelAp"
-  git-pull-repo "$www_repofocus"
+  git-pull-repo "DD_laraview" forced
+  git-pull-repo "DD_libwww" forced
+  git-pull-repo "DD_laravelAp" forced
+  git-pull-repo "$www_repofocus" forced
 }
 
 function git-pull-repo() {
   gitreponame=$1
+  forced=$2
   if [ "$gitreponame" == "DD_laraview" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
   elif [ "$gitreponame" == "DD_libwww" ]; then
@@ -75,14 +76,19 @@ function git-pull-repo() {
     gitrepopath="$wwwroot/html"
     gitreponame=$www_repofocus
   fi
-
   echo-hr
   echo "pulling repo $gitreponame"
   echo "to $gitrepopath/$gitreponame;"
   echo-hr
-
   cd $gitrepopath/$gitreponame
-  git pull
+  if [ "$forced" == "forced" ]; then
+    echo "Pulling with forced option"
+    git fetch
+    git reset --hard HEAD
+    git merge '@{u}'
+  else
+    git pull
+  fi
   echo ""
   echo "Finished at:"
   echo-now
