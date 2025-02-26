@@ -93,26 +93,6 @@ function www-reposet() {
   fi
 }
 
-function www-xsiteswitch() {
-  www-reposhow
-  echo "Please select a site number to chose for operations"
-  read sitenumber
-  echo "Auto sync with GIT ? (y/n)"
-  read -t 3 input
-  if [ "$input" == "y" ]; then
-    git-push
-  fi
-  sitenumber=$((sitenumber - 1))
-  www_repofocus=${wwwsites[sitenumber]}
-  cd "$wwwroot/html/$www_repofocus"
-  echo "setting site to $www_repofocus"
-  bash-writesettings
-  if [ "$input" == "y" ]; then
-    git-pull
-  fi
-  bash-start
-}
-
 #reset permission levels to minimal required
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
@@ -213,7 +193,8 @@ function www-sitesqluserinstall() {
 function www-reposwitch() {
   www-reposhow
   echo "Please select a repo number to chose for operations"
-  read sitenumber
+  read option
+  reponumber=$(($option - 1))
   echo "Auto sync with GIT (recommended) ? n=no"
   read -t 5 input
   if [ "$environment" != "production" ]; then #never push from production
@@ -221,9 +202,7 @@ function www-reposwitch() {
       git-push
     fi
   fi
-  sitenumber=$((sitenumber - 1))
-  www_repofocus=${wwwsites[sitenumber]}
-  www_repofocus=${wwwsites[sitenumber]}
+  www_repofocus=${wwwrepos[reponumber]}
   cd "$wwwroot/html/$www_repofocus"
   echo "setting repo to $www_repofocus"
   bash-writesettings
