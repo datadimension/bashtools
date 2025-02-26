@@ -43,8 +43,8 @@ function git-deploysubrepo() {
 
 function git-pull() {
   echo "Did you upload all local changes to DEV SERVER before running this, otherwise you will lose them"
-  read -p "Yes/No: " input
-  if [ "$input" != "Yes" ]; then
+  read -p "YES/No: " input
+  if [ "$input" != "YES" ]; then
     echo "GIT-PULL aborted as YES not given for go ahead"
     return 0
   fi
