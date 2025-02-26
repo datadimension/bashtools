@@ -42,6 +42,11 @@ function git-deploysubrepo() {
 }
 
 function git-pull() {
+  echo "Did you upload all local changes to DEV SERVER before running this, otherwise you will lose them"
+  read -p "Yes/No" input
+  if [ "$input" != "Yes" ]; then
+    return 0
+  fi
   curpwd=$(pwd)
   clear
   echo-hr
