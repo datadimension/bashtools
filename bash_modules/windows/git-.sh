@@ -98,5 +98,5 @@ function git-push() {
   echo ""
   echo "GIT-PUSH is disabled in Windows IDE as you should set PHPStorm or other IDE to deploy to test server in order to debug."
   echo ""
-  echo "Then you should run git-push on a terminal on the actual DEV server to make changes live in the repo"
+  echo "Then you should run git-push on a terminal on the actual DEV SERVER, not the IDE device to make changes live in the repo"
 }
