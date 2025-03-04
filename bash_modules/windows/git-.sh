@@ -88,7 +88,6 @@ function git-pull-repo() {
   echo-hr
   cd $gitrepopath/$gitreponame
   if [ "$forced" == "FORCED" ]; then
-    echo "forcing push"
     git fetch
     git reset --hard HEAD
     git merge '@{u}'
