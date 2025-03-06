@@ -74,6 +74,6 @@ echo "\n";
 $view = str_replace("\n", " ", $view);
 $view = str_replace("\t", "  ", $view);
 $view = preg_replace('!\s+!', ' ', $view);
-
+$view = trim($view);
 echo $view;
 echo "\n";

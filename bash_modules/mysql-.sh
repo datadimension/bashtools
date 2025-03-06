@@ -169,5 +169,4 @@ function mysql-createrepodatabase() {
   php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
   echo-hr
   mysql-login
-
 }
