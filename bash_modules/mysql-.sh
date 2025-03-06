@@ -107,7 +107,7 @@ function mysql-createrepousers() {
 
 function mysql-login() {
   echo-hr
-  echo "MYSQL>"
+  echo "opening MYSQL [exit to return] ---->"
   sudo mysql
 }
 
