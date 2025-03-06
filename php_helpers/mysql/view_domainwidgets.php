@@ -72,5 +72,7 @@ $view =
 echo "\n";
 //$view = str_replace("<viewdefiner />", $args["app_schema"], $view);
 $view = str_replace("\n", " ", $view);
+$view = str_replace("\t", " ", $view);
+
 echo $view;
 echo "\n";
