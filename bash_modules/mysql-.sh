@@ -69,7 +69,7 @@ function mysql-createrepousers() {
     echo "Not the DEV server"
     return 0
   fi
-  echo "MYSQL scripts will be generated to copy"
+  echo "Create users by pasting the following scripts:"
   echo ""
   echo-hr
   app_schema=$1
@@ -121,16 +121,16 @@ function mysql-createrepodatabase() {
   if [ "$app_schema" == "" ]; then
     app_schema=$www_repofocus
   fi
-  echo "Create database by pasting the following scripts"
+  echo "Create database by pasting the following scripts:"
   echo ""
   echo-hr
   echo "create database $app_schema;"
   echo "use $app_schema;"
   mysql-login
   mysql-createrepousers $app_schema
-  wait clear
   echo "Create tables by pasting the following scripts"
-  echo-h1 "in the SQL IDE"
+  echo ""
+  echo-hr
   declare -a sqltables=(
     "_account"
     "_apisettings"
@@ -166,7 +166,7 @@ function mysql-createrepodatabase() {
     echo "create table if not exists $tablename like localserver_admin.$tablename;"
     i=$(($i + 1))
   done
-  wait clear
-  echo "now create views"
+  mysql-login
+  echo "now creating views"
   php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
 }
