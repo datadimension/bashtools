@@ -238,7 +238,7 @@ function www-repocreate() {
     bash-writesettings
         php ~/bashtools/php_helpers/laravel/composerjsonincludes.php
     git-addlocalexcludedfiles
-    echo "log on to database server and run mysql-createrepodatabase";
+    echo "log on to database server and run mysql-createrepodatabase $www_repofocus";
     wait clear
 }
 

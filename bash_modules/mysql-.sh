@@ -85,20 +85,20 @@ function mysql-createrepousers() {
   echo-nl "The script will ask you to change this immediately"
   echo-nl "SQL Script:"
   echo-hr
-  echo "DROP USER IF EXISTS '"$www_repofocus"_admin';"
-  echo "CREATE USER '"$www_repofocus"_admin'@'%' IDENTIFIED BY '$newpassword';"
+  echo "DROP USER IF EXISTS '"$app_schema"_admin';"
+  echo "CREATE USER '"$app_schema"_admin'@'%' IDENTIFIED BY '$newpassword';"
   echo "GRANT SELECT,EXECUTE, SHOW VIEW ON ddDB.* TO '"$www_repofocus"_admin'@'%';"
-  echo-nl "GRANT ALL PRIVILEGES ON $app_schema.* TO '"$www_repofocus"_admin'@'%' WITH GRANT OPTION;"
+  echo-nl "GRANT ALL PRIVILEGES ON $app_schema.* TO '"$app_schema"_admin'@'%' WITH GRANT OPTION;"
 
-  echo "DROP USER IF EXISTS '"$www_repofocus"_php';"
-  echo "CREATE USER '"$www_repofocus"_php'@'%' IDENTIFIED BY '$newpassword';"
-  echo "GRANT SELECT,EXECUTE on ddDB.* TO '"$www_repofocus"_php'@'%';"
-  echo-nl "GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON $app_schema.* TO '"$www_repofocus"_php'@'%' WITH GRANT OPTION;"
-  echo-hr
-  echo "now to set actual passwords:"
-  echo-hr
-  echo-nl "ALTER USER '"$www_repofocus"_admin'@'%' IDENTIFIED BY 'New-Password-Here"
-  echo-nl "ALTER USER '"$www_repofocus"_php'@'%' IDENTIFIED BY 'New-Password-Here"
+  echo "DROP USER IF EXISTS '"$app_schema"_php';"
+  echo "CREATE USER '"$app_schema"_php'@'%' IDENTIFIED BY '$newpassword';"
+  echo "GRANT SELECT,EXECUTE on ddDB.* TO '"$app_schema"_php'@'%';"
+  echo-nl "GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON $app_schema.* TO '"$app_schema"_php'@'%' WITH GRANT OPTION;"
+  #echo-hr
+  #echo "now to set actual passwords:"
+  #echo-hr
+  #echo-nl "ALTER USER '"$app_schema"_admin'@'%' IDENTIFIED BY 'New-Password-Here"
+  #echo-nl "ALTER USER '"$app_schema"_php'@'%' IDENTIFIED BY 'New-Password-Here"
   echo "FLUSH PRIVILEGES;"
   echo-hr
   echo "Now logging into MYSQL"
