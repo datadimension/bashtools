@@ -137,5 +137,5 @@ if ($args["method"] == "env_generate") {
 		  $envfile .= "\n" . $key . "\n";
 	    }
       }
-      file_put_contents(getenv('HOME') . "/bashtoolscfg/tmp/" . $www_repofocus . ".env", $envfile);
+      //file_put_contents(getenv('HOME') . "/bashtoolscfg/tmp/" . $www_repofocus . ".env", $envfile);
 }

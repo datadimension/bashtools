@@ -243,7 +243,6 @@ function www-repocreate() {
 }
 
 function x20250306www-repocreate(){
-mysql-createrepodatabase
     www-envinstall
 
     cd "$wwwroot/html/$www_repofocus"
