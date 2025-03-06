@@ -1,10 +1,10 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_helpers/bash/bash.env.php");
 
-$view=
-"    			CREATE
+$view =
+    "    			CREATE
               ALGORITHM = UNDEFINED
-              DEFINER = `<viewdefiner />_php`@`%`
+              DEFINER = `" . $args["app_schema"] . "_php`@`%`
               SQL SECURITY DEFINER
           VIEW `_domainwidgets` AS
               SELECT
@@ -70,6 +70,6 @@ $view=
 ";
 
 echo "\n";
-$view = str_replace("<viewdefiner />", $www_repofocus, $view);
+//$view = str_replace("<viewdefiner />", $args["app_schema"], $view);
 echo $view;
 echo "\n";

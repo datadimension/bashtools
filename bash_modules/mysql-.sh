@@ -121,10 +121,10 @@ function mysql-createrepodatabase() {
   echo "Create database by pasting the following scripts"
   echo-h1 "in the SQL IDE"
   wait clear
-  echo "create database $www_repofocus;"
-  echo "use $www_repofocus;"
+  echo "create database $app_schema;"
+  echo "use $app_schema;"
   wait clear
-  mysql-createrepousers $www_repofocus
+  mysql-createrepousers $app_schema
   wait clear
   echo "Create tables by pasting the following scripts"
   echo-h1 "in the SQL IDE"
@@ -165,5 +165,5 @@ function mysql-createrepodatabase() {
   done
   wait clear
   echo "now create views"
-  php ~/bashtools/php_helpers/mysql/view_domainwidgets.php
+  php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
 }
