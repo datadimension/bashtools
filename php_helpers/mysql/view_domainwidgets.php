@@ -66,7 +66,7 @@ $view =
                   `_widgets`.`constraint` AS `constraint`,
                   `_widgets`.`target` AS `target`
               FROM
-                  `_widgets`
+                  `_widgets`;
 ";
 
 echo "\n";
