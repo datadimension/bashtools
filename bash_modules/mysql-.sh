@@ -72,7 +72,6 @@ function mysql-createrepousers() {
   echo "MYSQL scripts will be generated to copy"
   echo ""
   echo-hr
-  wait clear
   app_schema=$1
   if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
     read -p "You need to have a focused repo to do this" wait
@@ -124,6 +123,7 @@ function mysql-createrepodatabase() {
   fi
   echo "Create database by pasting the following scripts"
   echo ""
+  echo-hr
   echo "create database $app_schema;"
   echo "use $app_schema;"
   mysql-login
