@@ -100,6 +100,7 @@ function mysql-createrepousers() {
   #echo-nl "ALTER USER '"$app_schema"_admin'@'%' IDENTIFIED BY 'New-Password-Here"
   #echo-nl "ALTER USER '"$app_schema"_php'@'%' IDENTIFIED BY 'New-Password-Here"
   echo "FLUSH PRIVILEGES;"
+  mysql-login
 }
 
 function mysql-login() {
@@ -109,6 +110,7 @@ function mysql-login() {
 }
 
 function mysql-createrepodatabase() {
+  clear
   app_schema=$1
   if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
     read -p "You need to have a focused repo to do this" wait
@@ -117,13 +119,11 @@ function mysql-createrepodatabase() {
   if [ "$app_schema" == "" ]; then
     app_schema=$www_repofocus
   fi
-  clear
   echo "Create database by pasting the following scripts"
-  echo-h1 "in the SQL IDE"
-  wait clear
+  echo ""
   echo "create database $app_schema;"
   echo "use $app_schema;"
-  wait clear
+  mysql-login
   mysql-createrepousers $app_schema
   wait clear
   echo "Create tables by pasting the following scripts"
