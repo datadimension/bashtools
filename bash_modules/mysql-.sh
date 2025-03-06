@@ -165,5 +165,9 @@ function mysql-createrepodatabase() {
   mysql-login
   clear
   echo "now create views"
+  echo-hr
   php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
+  echo-hr
+  mysql-login
+
 }
