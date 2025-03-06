@@ -131,48 +131,6 @@ function www-envinstall() {
   fi
 }
 
-function www-sqlinstall() {
-  echo-br "Create tables by pasting this in SQL IDE"
-  echo "use $www_repofocus;"
-  declare -a sqltables=(
-    "_account"
-    "_apisettings"
-    "_appsettings"
-    "_cron"
-    "_dbTableMap"
-    "_dbquery"
-    "_ddapiauth"
-    "_emailq"
-    "_event"
-    "_listplanner"
-    "_location"
-    "_monitor"
-    "_notification"
-    "_permissions"
-    "_person"
-    "_servernet"
-    "_sessions"
-    "_siteplanner"
-    "_sysquery"
-    "_usersettings"
-    "_widgetgroups"
-    "_widgets"
-    "users"
-  )
-
-  size=${#sqltables[@]}
-  i=0
-  while [ $i -lt $size ]; do
-    tablename="${sqltables[$i]}"
-    echo "create table if not exists $tablename like serveradmin.$tablename;"
-    i=$(($i + 1))
-  done
-  read -p "Press Enter when done"
-  echo "now create views"
-  php ~/bashtools/php_helpers/mysql/view_domainwidgets.php
-  read -p "Press Enter when done"
-}
-
 function www-sitesqluserinstall() {
   appname=$1
   dbpword=$2
@@ -274,18 +232,18 @@ function www-repocreate() {
     #https://www.itsolutionstuff.com/post/laravel-11-user-roles-and-permissions-tutorialexample.html
       composer create-project laravel/laravel $www_repofocus
       git-deploysubrepos
-
     reponumber=$((reponumber - 1))
   wwwrepos[$reponumber]=$newrepo
     www_repofocus=$newrepo
     bash-writesettings
+        php ~/bashtools/php_helpers/laravel/composerjsonincludes.php
+    git-addlocalexcludedfiles
+    echo "log on to database server and run mysql-createrepodatabase";
+    wait clear
 }
 
 function x20250306www-repocreate(){
-    php ~/bashtools/php_helpers/laravel/composerjsonincludes.php
-
-    git-addlocalexcludedfiles
-    www-sqlinstall
+mysql-createrepodatabase
     www-envinstall
 
     cd "$wwwroot/html/$www_repofocus"
