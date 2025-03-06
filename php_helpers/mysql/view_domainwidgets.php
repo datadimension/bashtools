@@ -71,8 +71,8 @@ $view =
 
 echo "\n";
 //$view = str_replace("<viewdefiner />", $args["app_schema"], $view);
-$view = str_replace("\n", " ", $view);
-$view = str_replace("\t", " ", $view);
+$view = str_replace("\n", " [NL] ", $view);
+$view = str_replace("\t", " [TAB] ", $view);
 
 echo $view;
 echo "\n";
