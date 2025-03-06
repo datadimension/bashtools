@@ -24,7 +24,7 @@ function fsys-secure() {
   echo $wwwroot/html/$dirname
   ls -al $wwwroot/html/$dirname
 
-  #20250304 move this tol local_admin project
+  #20250304 move this tol localserver_admin project
   #20250304 echo "Securing bash-tools permissions"
   #20250304 sudo chown -R $USER:www-data $wwwroot/html
   #20250304 sudo chmod -R $sec755level $wwwroot/html/
@@ -32,7 +32,7 @@ function fsys-secure() {
   #20250304 echo "Securing bash-tools permissions"
   #20250304 sudo chmod -R $sec770level ~/bashtools/php_helpers/bash
 
-  #20250304 move this tol local_admin project
+  #20250304 move this tol localserver_admin project
   #20250304 sudo chown -R $USER:www-data $wwwroot/certs
   #20250304 ssudo chmod -R $sec644level $wwwroot/certs
 

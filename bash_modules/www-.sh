@@ -253,7 +253,7 @@ function www-repoinstall() {
   git-installrepo $dir $reponame
 }
 
-#creates a new website
+#creates a new website eg localserver_admin
 function www-repocreate() {
   #based on https://kbroman.org/github_tutorial/pages/init.html
   clear
@@ -261,21 +261,27 @@ function www-repocreate() {
   www-reposhow
   echo-br "Please enter new repo name"
   read newrepo
-  dir=$wwwroot/html/$newrepo
-  if [ -d "$dir" ]; then #just change option if repo exists
-    echo "Error: repo '$newrepo' already exists at $dir"
-  else # need to set up repo
-    echo "Please enter number to index '$newrepo' at"
-    read sitenumber
-    sitenumber=$((sitenumber - 1))
-    wwwsites[$sitenumber]=$newrepo
-    www_repofocus=$newrepo
-    bash-writesettings
-    cd "$wwwroot/html"
-    composer create-project laravel/laravel $www_repofocus
+  read -p "Please enter index for '$newrepo' : " reponumber
+  newreopodir=$wwwroot/html/$newrepo
+  if [ -d "$newreopodir" ]; then #abort if directory exists
+    echo "Error: repo '$newrepo' already exists at $newreopodir"
+    return 0;
+  fi
+    echo "creating new repo $newrepo in directory $newreopodir at repo index $reponumber"
+
+      cd "$wwwroot/html"
     # https://www.appfinz.com/blogs/laravel-middleware-for-auth-admin-users-roles/
     #https://www.itsolutionstuff.com/post/laravel-11-user-roles-and-permissions-tutorialexample.html
-    git-deploysubrepos
+      composer create-project laravel/laravel $www_repofocus
+      git-deploysubrepos
+
+    reponumber=$((reponumber - 1))
+  wwwrepos[$reponumber]=$newrepo
+    www_repofocus=$newrepo
+    bash-writesettings
+}
+
+function x20250306www-repocreate(){
     php ~/bashtools/php_helpers/laravel/composerjsonincludes.php
 
     git-addlocalexcludedfiles
