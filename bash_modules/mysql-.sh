@@ -65,10 +65,13 @@ function mysql-createrepousers() {
   if [ "$environment" != "production" ]; then
     echo-h1 "YOU ARE NOT"
     echo "RUNNING THIS ON PRODUCTION SERVER"
+    echo-h1 "RUN ON DATABASE SERVER"
+    echo "Not the DEV server"
+    return 0
   fi
   echo "MYSQL scripts will be generated to copy"
-  echo-h1 "RUN ON DATABASE SERVER"
-  echo "Not the DEV server"
+  echo ""
+  echo-hr
   wait clear
   app_schema=$1
   if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
