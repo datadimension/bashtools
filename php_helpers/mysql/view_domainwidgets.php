@@ -1,6 +1,5 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_helpers/bash/bash.env.php");
-
 $view =
     "    			CREATE
               ALGORITHM = UNDEFINED
@@ -72,6 +71,7 @@ $view =
 echo "\n";
 //$view = str_replace("<viewdefiner />", $args["app_schema"], $view);
 $view = str_replace("\n", " ", $view);
+$view = str_replace("\r", "  ", $view);
 $view = str_replace("\t", "  ", $view);
 $view = preg_replace('!\s+!', ' ', $view);
 $view = trim($view);
