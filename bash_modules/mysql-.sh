@@ -69,8 +69,7 @@ function mysql-createrepousers() {
     echo "Not the DEV server"
     return 0
   fi
-  echo "Create users by pasting the following scripts  (type exit when done)"
-  echo ""
+  echo-nl "Create users by pasting the following scripts  (type exit when done)"
   echo-hr
   app_schema=$1
   if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
@@ -107,7 +106,7 @@ function mysql-createrepousers() {
 
 function mysql-login() {
   echo-hr
-  echo "opening MYSQL [exit to return] ---->"
+  echo-nl "opening MYSQL [exit to return] ---->"
   sudo mysql
 }
 
@@ -121,15 +120,13 @@ function mysql-createrepodatabase() {
   if [ "$app_schema" == "" ]; then
     app_schema=$www_repofocus
   fi
-  echo "Create database by pasting the following scripts (type exit when done)"
-  echo ""
+  echo-nl "Create database by pasting the following scripts (type exit when done)"
   echo-hr
   echo "create database $app_schema;"
   echo "use $app_schema;"
   mysql-login
   mysql-createrepousers $app_schema
-  echo "Create tables by pasting the following scripts (type exit when done)"
-  echo ""
+  echo-nl "Create tables by pasting the following scripts (type exit when done)"
   echo-hr
   declare -a sqltables=(
     "_account"
@@ -158,7 +155,6 @@ function mysql-createrepodatabase() {
     "_widgets"
     "users"
   )
-
   size=${#sqltables[@]}
   i=0
   while [ $i -lt $size ]; do
