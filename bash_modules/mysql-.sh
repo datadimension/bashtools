@@ -100,12 +100,23 @@ function mysql-createrepousers() {
   #echo-nl "ALTER USER '"$app_schema"_admin'@'%' IDENTIFIED BY 'New-Password-Here"
   #echo-nl "ALTER USER '"$app_schema"_php'@'%' IDENTIFIED BY 'New-Password-Here"
   echo "FLUSH PRIVILEGES;"
+}
+
+function mysql-login() {
   echo-hr
-  echo "Now logging into MYSQL"
+  echo "MYSQL>"
   sudo mysql
 }
 
 function mysql-createrepodatabase() {
+  app_schema=$1
+  if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
+    read -p "You need to have a focused repo to do this" wait
+    return 1
+  fi
+  if [ "$app_schema" == "" ]; then
+    app_schema=$www_repofocus
+  fi
   clear
   echo "Create database by pasting the following scripts"
   echo-h1 "in the SQL IDE"
