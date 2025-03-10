@@ -283,7 +283,10 @@ function git-deploysubrepo() {
   subrepopath=$1
   subreponame=$2
   subrepopath="$wwwroot/html/$subrepopath"
-  rm -R $subrepopath/$subreponame
+  if [ -d "$subrepopath/$subreponame" ]; then #abort if directory exists
+    echo "removing $subreponame as exists"
+    rm -R -f $subrepopath/$subreponame
+  fi
   echo-hr
   echo "cloning subrepo $subreponame"
   echo-hr

@@ -75,5 +75,6 @@ $view = str_replace("\r", "  ", $view);
 $view = str_replace("\t", "  ", $view);
 $view = preg_replace('!\s+!', ' ', $view);
 $view = trim($view);
+echo "use " . $args["app_schema"];
 echo $view;
 echo "\n";

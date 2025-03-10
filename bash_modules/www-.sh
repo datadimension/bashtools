@@ -217,98 +217,120 @@ function www-repocreate() {
   clear
   echo "This will create a new laravel project"
   www-reposhow
-  echo-br "Please enter new repo name"
+  echo-br "Please enter new repo name (no special chars / underscore)"
   read newrepo
   read -p "Please enter index for '$newrepo' : " reponumber
   newreopodir=$wwwroot/html/$newrepo
   if [ -d "$newreopodir" ]; then #abort if directory exists
     echo "Error: repo '$newrepo' already exists at $newreopodir"
-    return 0;
+    return 0
   fi
-    echo "creating new repo $newrepo in directory $newreopodir at repo index $reponumber"
+  echo "creating new repo $newrepo in directory $newreopodir at repo index $reponumber"
 
-      cd "$wwwroot/html"
-    # https://www.appfinz.com/blogs/laravel-middleware-for-auth-admin-users-roles/
-    #https://www.itsolutionstuff.com/post/laravel-11-user-roles-and-permissions-tutorialexample.html
-      composer create-project laravel/laravel $www_repofocus
-      git-deploysubrepos
-    reponumber=$((reponumber - 1))
+  cd "$wwwroot/html"
+  # https://www.appfinz.com/blogs/laravel-middleware-for-auth-admin-users-roles/
+  #https://www.itsolutionstuff.com/post/laravel-11-user-roles-and-permissions-tutorialexample.html
+  composer create-project laravel/laravel $newreopodir
+  www_repofocus=$newrepo
+  git-deploysubrepos
+  reponumber=$((reponumber - 1))
   wwwrepos[$reponumber]=$newrepo
-    www_repofocus=$newrepo
-    bash-writesettings
-        php ~/bashtools/php_helpers/laravel/composerjsonincludes.php
-    git-addlocalexcludedfiles
-    echo "log on to database server and run mysql-createrepodatabase $www_repofocus";
-    wait clear
+  bash-writesettings
+  ~www
+  php ~/bashtools/php_helpers/laravel/composerjsonincludes.php
+  git-addlocalexcludedfiles
+  echo "ssh database server and run mysql-createrepodatabase $www_repofocus"
+  wait clear
+  www-oauthcreate
 }
 
-function x20250306www-repocreate(){
-    www-envinstall
+function www-oauthcreate() {
+  echo "now to set up in Google Developer Console ..."
+  echo "visit https://console.cloud.google.com/projectcreate"
+  echo "and set up project for $www_repofocus"
+  echo "note it will advise removing special characters from project name"
+  wait clear
+  echo "then configure OAuth screen"
+  echo "https://console.cloud.google.com/apis/credentials/consent"
+  echo "and Create OAuth client ID"
+  echo-nl "https://console.cloud.google.com/auth/clients/create"
+  echo-nl "and add as per these examples as seperate entries:"
+  echo "https://$www_repofocus"
+  echo "https://$www_repofocus/auth/google/callback"
+  echo-nl "https://$www_repofocus/google/api_getauth"
+  echo-br "also add dev server entries similar to"
+  echo "https://$www_repofocus.devserver"
+  echo "https://$www_repofocus.devserver/auth/google/callback"
+  echo "https://$www_repofocus.devserver/google/api_getauth"
+}
 
-    cd "$wwwroot/html/$www_repofocus"
+function x20250306www-repocreate() {
+  www-envinstall
 
-    #would be better here to have php func to add array element to the config file
-    cd ~/bashtools/templates/laravel/config
-    cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/config
+  cd "$wwwroot/html/$www_repofocus"
 
-    cd ~/bashtools/templates/laravel/routes
-    cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/routes
+  #would be better here to have php func to add array element to the config file
+  cd ~/bashtools/templates/laravel/config
+  cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/config
 
-    #add in DD  stubs
-    cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app
-    cp -v --update=none Console/*.* $wwwroot/html/$www_repofocus/app/Console
+  cd ~/bashtools/templates/laravel/routes
+  cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/routes
 
-    cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http
-    cp -v --update=none Controllers/*.* $wwwroot/html/$www_repofocus/app/Http/Controllers
-    cp -v --update=none Middleware/*.* $wwwroot/html/$www_repofocus/app/Http/Middleware
-    cp -v --update=none API/*.* $wwwroot/html/$www_repofocus/app/Http/API/
-    cp -v --update=none Models/*.* $wwwroot/html/$www_repofocus/app/Http/Models
+  #add in DD  stubs
+  cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app
+  cp -v --update=none Console/*.* $wwwroot/html/$www_repofocus/app/Console
 
-    cd ~/bashtools/templates/laravel/DD_laravelAppComponents/resources
-    cp -v --update=none auth/*.* $wwwroot/html/$www_repofocus/resources/views/auth
+  cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http
+  cp -v --update=none Controllers/*.* $wwwroot/html/$www_repofocus/app/Http/Controllers
+  cp -v --update=none Middleware/*.* $wwwroot/html/$www_repofocus/app/Http/Middleware
+  cp -v --update=none API/*.* $wwwroot/html/$www_repofocus/app/Http/API/
+  cp -v --update=none Models/*.* $wwwroot/html/$www_repofocus/app/Http/Models
 
-    #add project files that use DD files
-    cp ~/bashtools/templates/laravel/bootstrap/app.php $wwwroot/html/$www_repofocus/bootstrap/app.php
+  cd ~/bashtools/templates/laravel/DD_laravelAppComponents/resources
+  cp -v --update=none auth/*.* $wwwroot/html/$www_repofocus/resources/views/auth
 
-    #bootstrap/app (add middleware)
-    #Http/Middleware/AccessLevel.php
+  #add project files that use DD files
+  cp ~/bashtools/templates/laravel/bootstrap/app.php $wwwroot/html/$www_repofocus/bootstrap/app.php
 
-    #config/app.php
-    #AuthService
-    composer require laravel/ui
-    composer require laravel/socialite
-    composer require google/apiclient
-    composer require google/photos-library
+  #bootstrap/app (add middleware)
+  #Http/Middleware/AccessLevel.php
 
-    www-install-dependancies
+  #config/app.php
+  #AuthService
+  composer require laravel/ui
+  composer require laravel/socialite
+  composer require google/apiclient
+  composer require google/photos-library
 
-    cd "$wwwroot/html/$www_repofocus"
-    echo "Vist https://github.com/new to create new repo under $www_repofocus"
-    echo "chose":
-    echo "Private"
-    echo "untick readme"
-    echo "Choose none for .giignore template"
-    echo "No need for license"
-    echo "When done enter the initial branch name eg main"
-    read branchname
-    git init
-    git add -A
-    git commit -m "first commit"
-    git branch -M $branchname
-    git remote add origin git@github.com:$gituname/$www_repofocus.git
-    git push -u origin $branchname
-    echo "Files set on server"
-    ls -al
-    echo "set focused repo to '$www_repofocus'"
-    echo "Check list to display in browser [hit enter when checked]"
-    read -p "Set server IP in hosts file for $www_repofocus.$serverid.com"
-    read -p "In windows cmd ipconfig /flushdns"
-    echo "Go to https://console.cloud.google.com/apis/credentials to set up OAuth access"
-    read wait
-    bash-writesettings
-    nginx-setserverblock $www_repofocus sslselfsigned
-    bash-restart
-  fi
+  www-install-dependancies
+
+  cd "$wwwroot/html/$www_repofocus"
+  echo "Vist https://github.com/new to create new repo under $www_repofocus"
+  echo "chose":
+  echo "Private"
+  echo "untick readme"
+  echo "Choose none for .giignore template"
+  echo "No need for license"
+  echo "When done enter the initial branch name eg main"
+  read branchname
+  git init
+  git add -A
+  git commit -m "first commit"
+  git branch -M $branchname
+  git remote add origin git@github.com:$gituname/$www_repofocus.git
+  git push -u origin $branchname
+  echo "Files set on server"
+  ls -al
+  echo "set focused repo to '$www_repofocus'"
+  echo "Check list to display in browser [hit enter when checked]"
+  read -p "Set server IP in hosts file for $www_repofocus.$serverid.com"
+  read -p "In windows cmd ipconfig /flushdns"
+  echo "Go to https://console.cloud.google.com/apis/credentials to set up OAuth access"
+  read wait
+  bash-writesettings
+  nginx-setserverblock $www_repofocus sslselfsigned
+  bash-restart
+
 }
 
 function www-fromrepobackup() {

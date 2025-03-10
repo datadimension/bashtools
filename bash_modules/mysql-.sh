@@ -157,9 +157,10 @@ function mysql-createrepodatabase() {
   )
   size=${#sqltables[@]}
   i=0
+  echo "use $app_schema;"
   while [ $i -lt $size ]; do
     tablename="${sqltables[$i]}"
-    echo "create table if not exists $tablename like localserver_admin.$tablename;"
+    echo "create table if not exists $tablename like xontoolbox.$tablename;"
     i=$(($i + 1))
   done
   mysql-login
