@@ -12,8 +12,10 @@ function fsys-secure() {
   if [ "$dirname" == "" ]; then
     dirname=$www_repofocus
   fi
-  permissionsroot=$wwwroot/html/$dirname
-  read -p "Conform file permisions at $permissionsroot ? This can take a few mines [y/n]: " -t 10 input
+  targetroot=$wwwroot/html/$dirname
+  www-reposhow
+  clear
+  read -p "Conform file permisions at $targetroot ? This can take a few mines [y/n]: " -t 10 input
   if [ "$input" != "y" ]; then
     return 0
   fi
@@ -21,7 +23,6 @@ function fsys-secure() {
   sec755level=755
   sec770level=770
   echo ""
-  echo $wwwroot/html/$dirname
   ls -al $wwwroot/html/$dirname
 
   #20250304 move this tol localserver_admin project
@@ -36,19 +37,19 @@ function fsys-secure() {
   #20250304 sudo chown -R $USER:www-data $wwwroot/certs
   #20250304 ssudo chmod -R $sec644level $wwwroot/certs
 
-  echo "Reseting global ownership in $permissionsroot"
-  sudo chown -R $USER:www-data $permissionsroot
-  echo "Reseting file permissions in $permissionsroot"
-  sudo find $permissionsroot -type f -exec chmod $sec644level {} \;
-  echo "Reseting directory permissions in $permissionsroot"
-  sudo find $permissionsroot -type d -exec chmod $sec755level {} \;
+  echo "Reseting global ownership in $targetroot"
+  sudo chown -R $USER:www-data $targetroot
+  echo "Reseting file permissions in $targetroot"
+  sudo find $targetroot -type f -exec chmod $sec644level {} \;
+  echo "Reseting directory permissions in $targetroot"
+  sudo find $targetroot -type d -exec chmod $sec755level {} \;
 
   # relax some permissions for laravel
-  echo "Securing laravel directory permissions in $permissionsroot"
-  sudo chmod -R $sec755level $permissionsroot/app
-  sudo chmod -R $sec770level $permissionsroot/storage
-  sudo chmod -R $sec770level $permissionsroot/public/downloads
-  sudo chmod -R $sec770level $permissionsroot/$dirname/private
+  echo "Securing laravel directory permissions in $targetroot"
+  sudo chmod -R $sec755level $targetroot/app
+  sudo chmod -R $sec770level $targetroot/storage
+  sudo chmod -R $sec770level $targetroot/public/downloads
+  sudo chmod -R $sec770level $targetroot/private
 }
 
 function file_exists() {

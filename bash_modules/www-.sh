@@ -174,29 +174,6 @@ function www-routes() {
   php artisan route:list
 }
 
-# refreshes and installs composer dependancies
-function www-install-dependancies() {
-  echo ""
-  echo-hr
-  echo "Updating Repo Dependancies"
-  echo-hr
-  www-update
-}
-
-# updates dependencies
-function www-update() {
-  cd $wwwroot/html/$www_repofocus
-  echo "Updating composer packages"
-  #20250226composer dump-autoload
-  composer update -W
-  composer clear-cache
-  # this also generates autoload;
-  php artisan key:generate
-  php artisan view:clear
-  php artisan --version
-  fsys-secure
-}
-
 function os-certificategen() {
   echo "This will install a self signed certificate"
 }
@@ -226,6 +203,7 @@ function www-repocreate() {
   wwwrepos[$reponumber]=$newrepo
   bash-writesettings
   echo "ssh database server and run mysql-createrepodatabase $www_repofocus"
+  wait "Finished database ? Enter to continue"
   www-oauthcreate
 }
 
@@ -235,7 +213,6 @@ function www-oauthcreate() {
   echo "visit https://console.cloud.google.com/projectcreate"
   echo "and set up project for $www_repofocus"
   echo "note it will advise removing special characters from project name"
-  wait clear
   echo "then configure OAuth screen"
   echo "https://console.cloud.google.com/apis/credentials/consent"
   echo "and Create OAuth client ID"
@@ -252,43 +229,6 @@ function www-oauthcreate() {
 
 function x20250306www-repocreate() {
   www-envinstall
-
-  cd "$wwwroot/html/$www_repofocus"
-
-  #would be better here to have php func to add array element to the config file
-  cd ~/bashtools/templates/laravel/config
-  cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/config
-
-  cd ~/bashtools/templates/laravel/routes
-  cp -v --update=none *.* $wwwroot/html/$www_repofocus/app/routes
-
-  #add in DD  stubs
-  cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app
-  cp -v --update=none Console/*.* $wwwroot/html/$www_repofocus/app/Console
-
-  cd ~/bashtools/templates/laravel/DD_laravelAppComponents/app/Http
-  cp -v --update=none Controllers/*.* $wwwroot/html/$www_repofocus/app/Http/Controllers
-  cp -v --update=none Middleware/*.* $wwwroot/html/$www_repofocus/app/Http/Middleware
-  cp -v --update=none API/*.* $wwwroot/html/$www_repofocus/app/Http/API/
-  cp -v --update=none Models/*.* $wwwroot/html/$www_repofocus/app/Http/Models
-
-  cd ~/bashtools/templates/laravel/DD_laravelAppComponents/resources
-  cp -v --update=none auth/*.* $wwwroot/html/$www_repofocus/resources/views/auth
-
-  #add project files that use DD files
-  cp ~/bashtools/templates/laravel/bootstrap/app.php $wwwroot/html/$www_repofocus/bootstrap/app.php
-
-  #bootstrap/app (add middleware)
-  #Http/Middleware/AccessLevel.php
-
-  #config/app.php
-  #AuthService
-  composer require laravel/ui
-  composer require laravel/socialite
-  composer require google/apiclient
-  composer require google/photos-library
-
-  www-install-dependancies
 
   cd "$wwwroot/html/$www_repofocus"
   echo "Vist https://github.com/new to create new repo under $www_repofocus"

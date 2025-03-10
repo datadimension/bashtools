@@ -24,28 +24,34 @@ function git-installrepo() {
 
 function git-addlocalexcludedfiles() {
   echo "Adding local non git files"
-  sudo mkdir -p $wwwroot/html/$www_repofocus/storage/framework/views/
-  sudo mkdir -p $wwwroot/html/$www_repofocus/storage/framework/sessions/
-  sudo mkdir -p $wwwroot/html/$www_repofocus/storage/framework/cache/
-  sudo mkdir -p $wwwroot/html/$www_repofocus/storage/app/cache/
+  repodir=$wwwroot/html/$www_repofocus
+  sudo mkdir -p $repodir/app/config/
+  sudo mkdir -p $repodir/app/routes/
+  sudo mkdir -p $repodir/app/Console/Commands
+  sudo mkdir -p $repodir/app/API
 
-  sudo mkdir -p $wwwroot/html/$www_repofocus/storage/logs/
+  sudo mkdir -p $repodir/storage/framework/views/
+  sudo mkdir -p $repodir/storage/framework/sessions/
+  sudo mkdir -p $repodir/storage/framework/cache/
+  sudo mkdir -p $repodir/storage/app/cache/
 
-  sudo touch $wwwroot/html/$www_repofocus/storage/logs/laravel.log
-  sudo touch $wwwroot/html/$www_repofocus/storage/logs/nginxaccess.log
-  sudo touch $wwwroot/html/$www_repofocus/storage/logs/nginxerror.log
+  sudo mkdir -p $repodir/storage/logs/
 
-  sudo touch $wwwroot/html/$www_repofocus/storage/logs/cronlog.log
-  sudo touch $wwwroot/html/$www_repofocus/storage/logs/cronresult.log
-  sudo touch $wwwroot/html/$www_repofocus/storage/logs/apperror.log
-  sudo touch $wwwroot/html/$www_repofocus/storage/logs/ssh.log
+  sudo touch $repodir/storage/logs/laravel.log
+  sudo touch $repodir/storage/logs/nginxaccess.log
+  sudo touch $repodir/storage/logs/nginxerror.log
 
-  sudo chown -R $USER:www-data $wwwroot/html/$www_repofocus/storage
-  sudo chmod -R 770 $wwwroot/html/$www_repofocus/storage
+  sudo touch $repodir/storage/logs/cronlog.log
+  sudo touch $repodir/storage/logs/cronresult.log
+  sudo touch $repodir/storage/logs/apperror.log
+  sudo touch $repodir/storage/logs/ssh.log
 
-  sudo mkdir -p $wwwroot/html/$www_repofocus/bootstrap/cache
-  sudo mkdir -p $wwwroot/html/$www_repofocus/public/downloads/
-  sudo mkdir -p $wwwroot/html/$www_repofocus/private/
+  sudo chown -R $USER:www-data $repodir/storage
+  sudo chmod -R 770 $repodir/storage
+
+  sudo mkdir -p $repodir/bootstrap/cache
+  sudo mkdir -p $repodir/public/downloads/
+  sudo mkdir -p $repodir/private/
 }
 
 function git-pull-select() {

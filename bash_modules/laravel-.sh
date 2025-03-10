@@ -12,6 +12,29 @@ function laravel-getenv_value() {
   echo "getting $key"
 }
 
+# refreshes and installs composer dependancies
+function laravel-install-dependancies() {
+  echo ""
+  echo-hr
+  echo "Updating Repo Dependancies"
+  echo-hr
+  laravel-update
+}
+
+# updates dependencies
+function laravel-update() {
+  cd $wwwroot/html/$www_repofocus
+  echo "Updating composer packages"
+  #20250226composer dump-autoload
+  composer update -W
+  composer clear-cache
+  # this also generates autoload;
+  php artisan key:generate
+  php artisan view:clear
+  php artisan --version
+  fsys-secure
+}
+
 #creates new laravel project and sets www-repofocus to it
 function laravel-create() {
   # https://www.appfinz.com/blogs/laravel-middleware-for-auth-admin-users-roles/
@@ -20,15 +43,42 @@ function laravel-create() {
   newreopodir=$wwwroot/html/$newrepo
   echo "creating new repo $newrepo in directory $newreopodir"
   if [ -d "$newreopodir" ]; then #abort if directory exists
-    wait clear "Error: repo '$newrepo' already exists at $newreopodir. Enter to exit create."
-    return 0
+    wait clear "Error: repo '$newrepo' already exists at $newreopodir. Enter to exit."
+    exit
   fi
-  return 0 #debug
   composer create-project laravel/laravel $newreopodir
   www_repofocus=$newrepo
+  cd "$wwwroot/html/$www_repofocus"
   bash-writesettings
   ~www
   git-deploysubrepos
   php ~/bashtools/php_helpers/laravel/composerjsonincludes.php
   git-addlocalexcludedfiles
+  ###################
+
+  #would be better here to have php func to add array element to the config file
+  laraveltemplatestore=~/bashtools/templates/laravel
+  targetroot=$wwwroot/html/$www_repofocus
+  sudo cp -v --update=none $laraveltemplatestore/config/*.* $targetroot/app/config
+  sudo cp -v --update=none $laraveltemplatestore/routes/*.* $targetroot/app/routes
+
+  #add in DD  stubs
+  sudo cp -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Console/Commands/*.* $targetroot/app/Console/Commands
+
+  #add project files that use DD files
+  sudo cp -R -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/* $targetroot/app
+  sudo cp -R -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Http/* $targetroot/app
+  sudo cp -v -R --update=none $laraveltemplatestore/DD_laravelAppComponents/resources/* $targetroot/resources
+
+  #add other eg bootstrap
+  sudo cp -v -R $laraveltemplatestore/bootstrap/* $targetroot/bootstrap/app.php
+
+  ~www
+  composer require laravel/ui
+  composer require laravel/socialite
+  composer require google/apiclient
+  composer require google/photos-library
+
+  www-install-dependancies
+
 }
