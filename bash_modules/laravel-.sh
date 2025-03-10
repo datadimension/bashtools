@@ -74,6 +74,7 @@ function laravel-create() {
   sudo cp -v -R $laraveltemplatestore/bootstrap/* $targetroot/bootstrap/app.php
 
   ~www
+  echo "ensure all other repos have xdebug off and closed in all IDEs, otherwise composer might freeze on a breakpoint"
   composer require laravel/ui
   composer require laravel/socialite
   composer require google/apiclient

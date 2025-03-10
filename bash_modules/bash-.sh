@@ -39,6 +39,7 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/log-.sh
   source ~/bashtools/bash_modules/laravel-.sh
   source ~/bashtools/bash_modules/fsys-.sh
+  source ~/bashtools/bash_modules/composer-.sh
 
   bash-start-ubuntu-osconfigcheck
   echo "BashTools [$platform - $serverid]"
