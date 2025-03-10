@@ -73,6 +73,7 @@ bash-start-ubuntu-osconfigcheck() {
 
 function bash-push() {
   git-push-repo bashtools
+  bash-pull
   ~www
 }
 
