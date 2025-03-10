@@ -220,31 +220,17 @@ function www-repocreate() {
   echo-br "Please enter new repo name (no special chars / underscore)"
   read newrepo
   read -p "Please enter index for '$newrepo' : " reponumber
-  newreopodir=$wwwroot/html/$newrepo
-  if [ -d "$newreopodir" ]; then #abort if directory exists
-    echo "Error: repo '$newrepo' already exists at $newreopodir"
-    return 0
-  fi
-  echo "creating new repo $newrepo in directory $newreopodir at repo index $reponumber"
-
+  laravel-create $newrepo
   cd "$wwwroot/html"
-  # https://www.appfinz.com/blogs/laravel-middleware-for-auth-admin-users-roles/
-  #https://www.itsolutionstuff.com/post/laravel-11-user-roles-and-permissions-tutorialexample.html
-  composer create-project laravel/laravel $newreopodir
-  www_repofocus=$newrepo
-  git-deploysubrepos
   reponumber=$((reponumber - 1))
   wwwrepos[$reponumber]=$newrepo
   bash-writesettings
-  ~www
-  php ~/bashtools/php_helpers/laravel/composerjsonincludes.php
-  git-addlocalexcludedfiles
   echo "ssh database server and run mysql-createrepodatabase $www_repofocus"
-  wait clear
   www-oauthcreate
 }
 
 function www-oauthcreate() {
+  clear
   echo "now to set up in Google Developer Console ..."
   echo "visit https://console.cloud.google.com/projectcreate"
   echo "and set up project for $www_repofocus"
