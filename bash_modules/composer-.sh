@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 function composer-update() {
-  echo "composer updated"
+  echo "composer updated again"
 }
