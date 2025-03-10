@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-function composer-update(){
-echo "composer here"
+function composer-update() {
+  echo "composer active"
 }
