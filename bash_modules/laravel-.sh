@@ -18,21 +18,7 @@ function laravel-install-dependancies() {
   echo-hr
   echo "Updating Repo Dependancies"
   echo-hr
-  laravel-update
-}
-
-# updates dependencies
-function laravel-update() {
-  cd $wwwroot/html/$www_repofocus
-  echo "Updating composer packages"
-  #20250226composer dump-autoload
-  composer update -W
-  composer clear-cache
-  # this also generates autoload;
-  php artisan key:generate
-  php artisan view:clear
-  php artisan --version
-  fsys-secure
+  composer-update
 }
 
 #creates new laravel project and sets www-repofocus to it
