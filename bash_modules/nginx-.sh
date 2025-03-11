@@ -43,13 +43,6 @@ function nginx-start() {
   echo-hr
 }
 
-nginx-addrepo() {
-  echo-newpagetitle "Setting up NGINX for $www_repofocus.$serverid.com"
-  echo "Add a line to your Windows hosts: "
-  echo "$('net-wanIP')    $www_repofocus.$serverid.com"
-  wait
-}
-
 # installs an nginx test page to check server is operational
 function nginx-testadd() {
   #read -p "Add nginxtest ? Y/n"  input
@@ -96,7 +89,18 @@ function nginx-setserverblock() {
   if [ "$sslcertificate" == "" ]; then
     sslcertificate="sslselfsigned"
   fi
+  echo-newpagetitle "Setting up NGINX Server block"
+  echo "Using $www_repofocus.$serverid.com with certificate $sslcertificate"
+  echo ""
+  echo "Add a line to your Windows hosts: "
+  echo "$('net-wanIP')    $www_repofocus.$serverid.com"
+  wait
+  echo "Creating NGINX server block"
+  nginx-setserverblock $www_repofocus sslselfsigned
+  return 0
   php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate
+  echo "echo cert before deploying"
+  return 0
   sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
   sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
   nginx-start
@@ -133,6 +137,8 @@ function nginx-cert-copyselfsigned() {
 
 #guides on creation and install registered cert - namecheap was used for certificate
 function nginx-cert-createregistered() {
+  echo "check this works after updates"
+  return 0
   echo-nl "Run this on your actual live server, not the test"
   echo "This may take an hour whereby this ssh window should be kept open, as we will need to request ssl key from third party"
   read -p "Enter main domain name the ssl cert will be againts eg example_com: " certdomain

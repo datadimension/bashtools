@@ -60,5 +60,5 @@ function laravel-create() {
   sudo cp -v -R $laraveltemplatestore/bootstrap/* $targetroot/bootstrap/app.php
   ~www
   composer-create-DD-dependacies
-  nginx-addrepo
+  nginx-setserverblock
 }
