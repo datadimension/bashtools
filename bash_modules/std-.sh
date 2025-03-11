@@ -2,8 +2,8 @@
 ###############################################################
 #TOP LEVEL FUNCTIONS - move elsewhere when we can compile bash from different files
 
-NONE='\033[00m'
-font_red='\033[01;31m'
+font_reset='\x1b[2m normal' #https://unix.stackexchange.com/questions/37260/change-font-in-echo-command
+color_red='\033[01;31m'
 color_green='\033[01;32m'
 color_yellow='\033[01;33m'
 color_purple='\033[01;35m'
@@ -11,6 +11,16 @@ color_cyan='\033[01;36m'
 color_white='\033[01;37m'
 weight_bold='\033[1m'
 decoration_underline='\033[4m'
+
+#echo -e "\x1b[0m io-std"
+#echo -e "\x1b[1m bold"
+#echo -e "\x1b[2m normal"
+#and from the comments, thanks manatwork and GypsyCosmonaut:
+
+#echo -e "\x1b[3m italic"
+#echo -e "\x1b[4m underlined"
+#echo -e "\x1b[5m blinking"
+#echo -e "\x1b[7m inverted"
 
 function laravel-version() {
   echo "for all laravel functions we are going to site focus root (~www)"
@@ -43,6 +53,16 @@ function echo-nl() {
   textoutput=""$1""
   echo $textoutput
   echo ""
+}
+
+function newpagetitle() {
+  textoutput=""$1""
+  clear
+  echo -e "${weight_bold}${color_cyan}"
+  echo-hr
+  echo textoutput
+  echo-hr
+  echo -e "${color_white}"
 }
 
 function echo-b() {
