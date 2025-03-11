@@ -55,14 +55,13 @@ function echo-nl() {
   echo ""
 }
 
-function newpagetitle() {
+function echo-newpagetitle() {
   textoutput=""$1""
   clear
   echo -e "${weight_bold}${color_cyan}"
   echo-hr
   echo textoutput
   echo-hr
-  echo -e "${color_white}"
   echo -e "${font_reset}"
 }
 
