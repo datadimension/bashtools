@@ -47,7 +47,7 @@ nginx-addrepo() {
   echo-newpagetitle "Setting up NGINX for $www_repofocus.$serverid.com"
   echo "Add a line to your Windows hosts: "
   echo "$('net-wanIP')    $www_repofocus.$serverid.com"
-  wait "[ENTER] -> NEXT"
+  wait
 }
 
 # installs an nginx test page to check server is operational

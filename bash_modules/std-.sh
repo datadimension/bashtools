@@ -154,6 +154,7 @@ function wait() {
       prompt=$arg1
     fi
   fi
+  echo ""
   echo -e $prompt
   read wait
   echo ""
