@@ -2,172 +2,177 @@
 
 #installs nginx
 function nginx-install() {
-	sudo apt -y install nginx
-	#clear default files
-	sudo rm /etc/nginx/sites-enabled/default
-	sudo rm /etc/nginx/sites-available/default
-	sudo rm /var/www/html/index.nginx-debian.html
-	sudo mkdir -p /var/www/html
-	sudo mkdir -p /var/www/certs
-	net-firewall-start
+  sudo apt -y install nginx
+  #clear default files
+  sudo rm /etc/nginx/sites-enabled/default
+  sudo rm /etc/nginx/sites-available/default
+  sudo rm /var/www/html/index.nginx-debian.html
+  sudo mkdir -p /var/www/html
+  sudo mkdir -p /var/www/certs
+  net-firewall-start
 }
 
 # restart nginx and php completely
 function nginx-start() {
-	read -p "Restart Nginx ? y/n" -t 10 input
-	if [ "$input" == "n" ]; then
-		return 0
-	fi
-	fsys-secure
-	clear
-	echo-h1 "Closing Nginx / PHP"
-	sudo service nginx stop
-	sudo pkill php-fpm
-	sudo logrotate -f /etc/logrotate.d/nginx
-	clear
-	echo-h1 "Starting Nginx / PHP-fpm"
-	env-attributerequire phpNo
-	sudo service php$phpNo-fpm start
-	sudo service nginx start
-	sudo /etc/init.d/cron start
-	ps aux | grep php
-	echo ""
-	if [ -e /var/run/nginx.pid ]; then
-		echo "finished restart"
-	else
-		echo-h1 "NGINX FAIL"
-		sudo nginx -t
-		log-nginxerror
-	fi
-	echo-now
-	echo-hr
+  read -p "Restart Nginx ? y/n" -t 10 input
+  if [ "$input" == "n" ]; then
+    return 0
+  fi
+  fsys-secure
+  clear
+  echo-h1 "Closing Nginx / PHP"
+  sudo service nginx stop
+  sudo pkill php-fpm
+  sudo logrotate -f /etc/logrotate.d/nginx
+  clear
+  echo-h1 "Starting Nginx / PHP-fpm"
+  env-attributerequire phpNo
+  sudo service php$phpNo-fpm start
+  sudo service nginx start
+  sudo /etc/init.d/cron start
+  ps aux | grep php
+  echo ""
+  if [ -e /var/run/nginx.pid ]; then
+    echo "finished restart"
+  else
+    echo-h1 "NGINX FAIL"
+    sudo nginx -t
+    log-nginxerror
+  fi
+  echo-now
+  echo-hr
+}
+
+nginx-addrepo() {
+  echo "for dev ensure hosts is set to $www_repofocus.$serverid.com"
+  wait "nginx needs to have a block for this, enter to continue"
 }
 
 # installs an nginx test page to check server is operational
 function nginx-testadd() {
-	#read -p "Add nginxtest ? Y/n"  input
-	#if [ "$input" != "Y" ]; then
-	#	return 1;
-	#fi
-	sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
-	sudo chown -R root:www-data /var/www/html/nginxtest
+  #read -p "Add nginxtest ? Y/n"  input
+  #if [ "$input" != "Y" ]; then
+  #	return 1;
+  #fi
+  sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
+  sudo chown -R root:www-data /var/www/html/nginxtest
 
-	#create test block so nginx can read it
-	nginx-setserverblock nginxtest sslselfsigned
-	#20250110 php ~/bashtools/php_helpers/nginx/serverblock.php
-	#20250110 sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_nginxtest /etc/nginx/sites-enabled/nginxtest
-	#20250110 sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
+  #create test block so nginx can read it
+  nginx-setserverblock nginxtest sslselfsigned
+  #20250110 php ~/bashtools/php_helpers/nginx/serverblock.php
+  #20250110 sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_nginxtest /etc/nginx/sites-enabled/nginxtest
+  #20250110 sudo chown root:www-data /etc/nginx/sites-enabled/nginxtest
 
-	echo "Now go to your local hosts file (we moved it to C:\www"
-	echo "and add lines as appropriate for local browser address entry"
-	echo "$ipaddr    nginxtest.$serverid.com"
-	echo "then open Windows cmd and run ipconfig /flushdns"
-	echo "and the test server should show online with"
-	echo nginxtest.$serverid.com
+  echo "Now go to your local hosts file (we moved it to C:\www"
+  echo "and add lines as appropriate for local browser address entry"
+  echo "$ipaddr    nginxtest.$serverid.com"
+  echo "then open Windows cmd and run ipconfig /flushdns"
+  echo "and the test server should show online with"
+  echo nginxtest.$serverid.com
 }
 
 #remove the nginx test site
 function nginx-testremove() {
-	read -p "Remove nginxtest ? Y/n" input
-	if [ "$input" != "n" ]; then
-		sudo rm -R /var/www/html/nginxtest
-		sudo rm /etc/nginx/sites-enabled/nginxtest
-		echo "Nginx test removed"
-	fi
+  read -p "Remove nginxtest ? Y/n" input
+  if [ "$input" != "n" ]; then
+    sudo rm -R /var/www/html/nginxtest
+    sudo rm /etc/nginx/sites-enabled/nginxtest
+    echo "Nginx test removed"
+  fi
 }
 
 #sets nginx block for current repo focus by default or specify repo name and sslcertificate repofocus will be changed if set
 function nginx-setserverblock() {
-	reponame=$1
-	if [ "$reponame" == "" ]; then
-		reponame=$www_repofocus
-	else
-		www_repofocus=$reponame #set focus or .env will be read wrong by php
-		bash-writesettings
-	fi
-	sslcertificate=$2
-	if [ "$sslcertificate" == "" ]; then
-		sslcertificate="sslselfsigned"
-	fi
-	php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate
-	sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
-	sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
-	nginx-start
+  reponame=$1
+  if [ "$reponame" == "" ]; then
+    reponame=$www_repofocus
+  else
+    www_repofocus=$reponame #set focus or .env will be read wrong by php
+    bash-writesettings
+  fi
+  sslcertificate=$2
+  if [ "$sslcertificate" == "" ]; then
+    sslcertificate="sslselfsigned"
+  fi
+  php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate
+  sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
+  sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
+  nginx-start
 }
 
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
 function nginx-cert-createselfsigned() {
-	echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
-	# https://linuxize.com/post/redirect-http-to-https-in-nginx/
-	#also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
-	#https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
-	echo "This requires a stable connection and can take a long time ~40 mins"
-	echo "therefore its recommended to use a screen session for this in case of disconnect https://linuxize.com/post/how-to-use-linux-screen/?utm_content=cmp-true"
-	echo-nl "when generating, can leave all blank"
-	echo "This window will auto close when done, you may want to leave it running and open a new one"
-	os_status=$((os_status + 1)) #we exit so need to update pointer here
-	bash-writesettings
-	echo-now
-	sudo mkdir /etc/nginx
-	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
-	sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
-	echo-now
-	nginx-copyselfsignedcert
-	exit
+  echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
+  # https://linuxize.com/post/redirect-http-to-https-in-nginx/
+  #also see https://linuxize.com/post/redirect-http-to-https-in-nginx/
+  #https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
+  echo "This requires a stable connection and can take a long time ~40 mins"
+  echo "therefore its recommended to use a screen session for this in case of disconnect https://linuxize.com/post/how-to-use-linux-screen/?utm_content=cmp-true"
+  echo-nl "when generating, can leave all blank"
+  echo "This window will auto close when done, you may want to leave it running and open a new one"
+  os_status=$((os_status + 1)) #we exit so need to update pointer here
+  bash-writesettings
+  echo-now
+  sudo mkdir /etc/nginx
+  sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+  sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
+  echo-now
+  nginx-copyselfsignedcert
+  exit
 }
 
 #copy preprepared ssl self signed certs for testing
 function nginx-cert-copyselfsigned() {
-	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
-	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
-	sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsslcert/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
-	sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/dhparam.pem /etc/nginx/dhparam.pem
+  sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
+  sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
+  sudo cp -R ~/bashtools/templates/nginx/domainsetup/selfsslcert/ssl-params.conf /etc/nginx/snippets/ssl-params.conf
+  sudo cp ~/bashtools/templates/nginx/domainsetup/selfsslcert/dhparam.pem /etc/nginx/dhparam.pem
 }
 
 #guides on creation and install registered cert - namecheap was used for certificate
 function nginx-cert-createregistered() {
-	echo-nl "Run this on your actual live server, not the test"
-	echo "This may take an hour whereby this ssh window should be kept open, as we will need to request ssl key from third party"
-	read -p "Enter main domain name the ssl cert will be againts eg example_com: " certdomain
-	mkdir -p ~/sslfiles/$certdomain
-	cd ~/sslfiles/$certdomain
-	echo "Now to generate private keys to use for ssl cert"
-	read -p "Country code [eg GB for Great Britain]: " CC
-	read -p "State [eg Surrey]: " ST
-	read -p "Locality [eg London]: " LO
+  echo-nl "Run this on your actual live server, not the test"
+  echo "This may take an hour whereby this ssh window should be kept open, as we will need to request ssl key from third party"
+  read -p "Enter main domain name the ssl cert will be againts eg example_com: " certdomain
+  mkdir -p ~/sslfiles/$certdomain
+  cd ~/sslfiles/$certdomain
+  echo "Now to generate private keys to use for ssl cert"
+  read -p "Country code [eg GB for Great Britain]: " CC
+  read -p "State [eg Surrey]: " ST
+  read -p "Locality [eg London]: " LO
 
-	openssl req -nodes -newkey rsa:2048 -keyout $certdomain.key -out $certdomain.csr -subj "/C=$CC/ST=$ST/L=$LO/O=NA/OU=NA/CN=$certdomain"
+  openssl req -nodes -newkey rsa:2048 -keyout $certdomain.key -out $certdomain.csr -subj "/C=$CC/ST=$ST/L=$LO/O=NA/OU=NA/CN=$certdomain"
 
-	echo "Now go to your certificate supplier and enter this as the Certificate Signing Request"
-	echo-nl
-	cat $certdomain.csr
-	echo ""
-	read -p "Use CNAME validation and ensure this passes and hit enter when certificate is issued" wait
+  echo "Now go to your certificate supplier and enter this as the Certificate Signing Request"
+  echo-nl
+  cat $certdomain.csr
+  echo ""
+  read -p "Use CNAME validation and ensure this passes and hit enter when certificate is issued" wait
 
-	cd ~/sslfiles/$certdomain
+  cd ~/sslfiles/$certdomain
 
-	read -p "FTP cert files or zip to ~/$USER/sslfiles/$certdomain and press ENTER when done"
-	read -p "Is it a single zip file [y/n]: " input
-	if [ "$input" == "y" ]; then
-		mv *.zip $certdomain.zip #conform file names
-		unzip $certdomain.zip
-		rm $certdomain.zip
-	fi
-	mv *.crt $certdomain.crt #conform file names
-	mv *.ca-bundle $certdomain.ca-bundle
+  read -p "FTP cert files or zip to ~/$USER/sslfiles/$certdomain and press ENTER when done"
+  read -p "Is it a single zip file [y/n]: " input
+  if [ "$input" == "y" ]; then
+    mv *.zip $certdomain.zip #conform file names
+    unzip $certdomain.zip
+    rm $certdomain.zip
+  fi
+  mv *.crt $certdomain.crt #conform file names
+  mv *.ca-bundle $certdomain.ca-bundle
 
-	cat $certdomain.crt >"$certdomain"_chain.crt
-	echo >>"$certdomain"_chain.crt#add a new line under cert, so can add .crt below
-	cat $certdomain.ca-bundle >>"$certdomain"_chain.crt
+  cat $certdomain.crt >"$certdomain"_chain.crt
+  echo >>"$certdomain"_chain.crt#add a new line under cert, so can add .crt below
+  cat $certdomain.ca-bundle >>"$certdomain"_chain.crt
 
-	sudo mkdir -p /var/www/certs/$certdomain
+  sudo mkdir -p /var/www/certs/$certdomain
 
-	sudo cp "$certdomain"_chain.crt /var/www/certs/$certdomain/"$certdomain"_chain.crt
-	sudo cp "$certdomain".key /var/www/certs/$certdomain/"$certdomain".key
-	nginx-setserverblock $www_repofocus $certdomain
+  sudo cp "$certdomain"_chain.crt /var/www/certs/$certdomain/"$certdomain"_chain.crt
+  sudo cp "$certdomain".key /var/www/certs/$certdomain/"$certdomain".key
+  nginx-setserverblock $www_repofocus $certdomain
 }
 
 function nginx-edit() {
-	sudo nano /etc/nginx/sites-enabled/$www_repofocus
-	nginx-start
+  sudo nano /etc/nginx/sites-enabled/$www_repofocus
+  nginx-start
 }

@@ -58,7 +58,7 @@ function laravel-create() {
 
   #add other eg bootstrap
   sudo cp -v -R $laraveltemplatestore/bootstrap/* $targetroot/bootstrap/app.php
-
   ~www
   composer-create-DD-dependacies
+  nginx-addrepo
 }

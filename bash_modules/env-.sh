@@ -17,7 +17,8 @@ function env-about() {
   echo ""
   echo "Environment: (production/local)"
   echo-nl "$environment"
-  ipaddr=$(hostname --all-ip-addresses)
+  ipaddr= $(net-getIP)
+  #ipaddr=$(hostname --all-ip-addresses)
   echo "IP : $ipaddr"
   echo-nl "Default Database IP: $defaultDatabaseIP"
   echo "Your session IP detected as:"
