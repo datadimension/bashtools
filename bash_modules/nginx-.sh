@@ -44,7 +44,11 @@ function nginx-start() {
 }
 
 nginx-addrepo() {
-  echo "for dev ensure hosts is set to $www_repofocus.$serverid.com"
+  clear
+  echo-b "Setting up NGINX for $www_repofocus.$serverid.com"
+  echo-hr
+  echo "Add a line to your Windows hosts: "
+  echo "$('net-wanIP')    $www_repofocus.$serverid.com"
   wait "nginx needs to have a block for this, enter to continue"
 }
 

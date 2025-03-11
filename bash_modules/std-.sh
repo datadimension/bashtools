@@ -2,6 +2,16 @@
 ###############################################################
 #TOP LEVEL FUNCTIONS - move elsewhere when we can compile bash from different files
 
+NONE='\033[00m'
+RED='\033[01;31m'
+GREEN='\033[01;32m'
+fontYELLOW='\033[01;33m'
+PURPLE='\033[01;35m'
+CYAN='\033[01;36m'
+WHITE='\033[01;37m'
+BOLD='\033[1m'
+UNDERLINE='\033[4m'
+
 function laravel-version() {
   echo "for all laravel functions we are going to site focus root (~www)"
   cd "$wwwroot/html/$www_repofocus"
