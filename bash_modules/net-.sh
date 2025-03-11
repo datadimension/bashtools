@@ -52,7 +52,7 @@ function net-sshcheck() {
   fi
 }
 
-net-getIP() {
+function net-getIP() {
   ip=$(hostname --all-ip-addresses)
   echo $ip
 }
