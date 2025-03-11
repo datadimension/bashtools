@@ -2,7 +2,7 @@
 ###############################################################
 #TOP LEVEL FUNCTIONS - move elsewhere when we can compile bash from different files
 
-font_reset='\x1b[2m normal' #https://unix.stackexchange.com/questions/37260/change-font-in-echo-command
+font_reset='\x1b[2m \033[00m' #https://unix.stackexchange.com/questions/37260/change-font-in-echo-command
 color_red='\033[01;31m'
 color_green='\033[01;32m'
 color_yellow='\033[01;33m'
@@ -63,6 +63,7 @@ function newpagetitle() {
   echo textoutput
   echo-hr
   echo -e "${color_white}"
+  echo -e "${font_reset}"
 }
 
 function echo-b() {
