@@ -3,14 +3,14 @@
 #TOP LEVEL FUNCTIONS - move elsewhere when we can compile bash from different files
 
 NONE='\033[00m'
-RED='\033[01;31m'
-GREEN='\033[01;32m'
-fontYELLOW='\033[01;33m'
-PURPLE='\033[01;35m'
-CYAN='\033[01;36m'
-WHITE='\033[01;37m'
-BOLD='\033[1m'
-UNDERLINE='\033[4m'
+font_red='\033[01;31m'
+color_green='\033[01;32m'
+color_yellow='\033[01;33m'
+color_purple='\033[01;35m'
+color_cyan='\033[01;36m'
+color_white='\033[01;37m'
+weight_bold='\033[1m'
+decoration_underline='\033[4m'
 
 function laravel-version() {
   echo "for all laravel functions we are going to site focus root (~www)"

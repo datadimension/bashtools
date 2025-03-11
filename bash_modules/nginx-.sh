@@ -45,7 +45,7 @@ function nginx-start() {
 
 nginx-addrepo() {
   clear
-  echo-b "Setting up NGINX for $www_repofocus.$serverid.com"
+  echo-b "${fontYellow}Setting up NGINX for $www_repofocus.$serverid.com"
   echo-hr
   echo "Add a line to your Windows hosts: "
   echo "$('net-wanIP')    $www_repofocus.$serverid.com"
