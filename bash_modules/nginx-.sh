@@ -44,13 +44,10 @@ function nginx-start() {
 }
 
 nginx-addrepo() {
-  clear
-  echo-hr
-  echo -e "${weight_bold}${color_cyan}Setting up NGINX for $www_repofocus.$serverid.com"
-  echo-hr
+  echo-newpagetitle "Setting up NGINX for $www_repofocus.$serverid.com"
   echo "Add a line to your Windows hosts: "
   echo "$('net-wanIP')    $www_repofocus.$serverid.com"
-  wait "nginx needs to have a block for this, enter to continue"
+  wait "[ENTER] -> NEXT"
 }
 
 # installs an nginx test page to check server is operational

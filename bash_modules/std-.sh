@@ -2,7 +2,7 @@
 ###############################################################
 #TOP LEVEL FUNCTIONS - move elsewhere when we can compile bash from different files
 
-font_reset='\x1b[2m \033[00m' #https://unix.stackexchange.com/questions/37260/change-font-in-echo-command
+font_reset='\x1b[2m\033[00m' #https://unix.stackexchange.com/questions/37260/change-font-in-echo-command
 color_red='\033[01;31m'
 color_green='\033[01;32m'
 color_yellow='\033[01;33m'
@@ -60,7 +60,7 @@ function echo-newpagetitle() {
   clear
   echo -e "${weight_bold}${color_cyan}"
   echo-hr
-  echo textoutput
+  echo $textoutput
   echo-hr
   echo -e "${font_reset}"
 }
@@ -143,7 +143,7 @@ function wait() {
   arg1=$1
   arg2=$2
   action="none"
-  prompt="Press Enter to continue"
+  prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} -> ${weight_bold}${color_green}NEXT${font_reset}"
   if [ "$arg1" != "" ]; then
     if [ "$arg1" == "clear" ]; then
       action="clear"
@@ -154,8 +154,8 @@ function wait() {
       prompt=$arg1
     fi
   fi
-  echo ""
-  read -p "$prompt" wait
+  echo -e $prompt
+  read wait
   echo ""
   if [ "$action" == "clear" ]; then
     clear
