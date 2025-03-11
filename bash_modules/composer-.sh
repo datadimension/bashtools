@@ -12,6 +12,7 @@ function composer-create-DD-dependacies() {
   composer require laravel/socialite
   composer require google/apiclient
   composer require google/photos-library
+  composer-update
 }
 
 function composer-update() {

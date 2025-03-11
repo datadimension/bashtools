@@ -11,7 +11,7 @@ function env-about() {
   echo-h1 "About Server"
   echo-now
   echo ""
-  echo "Name: $serverid"
+  echo "serverid: $serverid"
   echo "OS:"
   cat /etc/lsb-release
   echo ""
