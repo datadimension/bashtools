@@ -12,25 +12,30 @@ function env-about() {
   echo-now
   echo ""
   echo "serverid: $serverid"
-  echo "OS:"
-  cat /etc/lsb-release
-  echo ""
-  echo "Environment: (production/local)"
-  echo-nl "$environment"
-  ipaddr= $(net-getIP)
-  #ipaddr=$(hostname --all-ip-addresses)
-  echo "IP : $ipaddr"
+  echo "environment: [production/local]: $environment"
+  echo-nl "wwwroot: $wwwroot"
+
+  echo "IP : $('net-wanIP')"
+  echo-nl "SSH session IP detected as: $('net-sshIP')"
+
   echo-nl "Default Database IP: $defaultDatabaseIP"
-  echo "Your session IP detected as:"
-  echo $SSH_CLIENT | awk '{ print $1}'
   echo "PHP Version: $phpNo"
   echo-nl "MYSQL Version: $MYSQL_VERSION"
 
   # echo |  Gateway: $ipgateway  |
-  echo "GIT username: $gituname"
-  echo "www root: $wwwroot"
-  echo "Available SSH (bash-ssh) 1:$ssh1 | 2:$ssh2"
+  echo "gituname: $gituname"
+  echo-nl "Available SSH (bash-ssh) 1:$ssh1 | 2:$ssh2"
+
+  echo "OS:"
+  cat /etc/lsb-release
+  echo ""
   echo-hr
+}
+
+function test() {
+  local ipaddr=$('net-WanIP')
+  echo "IP address: $ipaddr"
+  echo "IP address: $('net-WanIP')"
 }
 
 #for per machine settings that do not change

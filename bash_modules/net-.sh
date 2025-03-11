@@ -52,7 +52,11 @@ function net-sshcheck() {
   fi
 }
 
-function net-getIP() {
+function net-wanIP() {
   ip=$(hostname --all-ip-addresses)
   echo $ip
+}
+
+function net-sshIP() {
+  echo $SSH_CLIENT | awk '{ print $1}'
 }
