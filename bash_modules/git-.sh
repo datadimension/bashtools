@@ -14,7 +14,7 @@ function git-installrepo() {
   git-deploysubrepos
   git-addlocalexcludedfiles
   www-envinstall
-  www-install-dependancies
+  composer-create-DD-dependacies
   # cd "$wwwroot/html/$www_repofocus"
   # echo "set focused repo to '$www_repofocus'"
   bash-writesettings

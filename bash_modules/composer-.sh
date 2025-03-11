@@ -6,9 +6,16 @@ function composer-stopxdebug() {
   wait
 }
 
+function composer-create-DD-dependacies() {
+  composer-stopxdebug
+  composer require laravel/ui
+  composer require laravel/socialite
+  composer require google/apiclient
+  composer require google/photos-library
+}
+
 function composer-update() {
   composer-stopxdebug
-  return 0
   # updates dependencies
   cd $wwwroot/html/$www_repofocus
   echo "Updating composer packages"
