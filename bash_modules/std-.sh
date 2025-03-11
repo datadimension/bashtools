@@ -58,7 +58,7 @@ function echo-nl() {
 function echo-newpagetitle() {
   textoutput=""$1""
   clear
-  echo -e "${weight_bold}${color_cyan}"
+  printf "${weight_bold}${color_cyan}"
   echo-hr
   echo $textoutput
   echo-hr
