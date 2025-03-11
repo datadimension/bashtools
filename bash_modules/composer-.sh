@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 function composer-stopxdebug() {
-  echo "if composer functions freeze, consider IDEs are not using Xdebug and stopping PHP at a breakpoint"
+  echo "ensure IDEs are not using Xdebug and stopping PHP at a breakpoint"
+  echo "otherwise composer functions will freeze"
+  wait
 }
 
 function composer-update() {
