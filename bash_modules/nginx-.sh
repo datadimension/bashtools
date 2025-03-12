@@ -95,8 +95,8 @@ function nginx-setserverblock() {
   echo "Add a lineto your Windows hosts: "
   localurl="$www_repofocus.$serverid.com"
   echo "$('net-wanIP')   $localurl"
-  wait
-  echo "Creating NGINX server block"
+  wait clear
+  echo-nl "Creating NGINX server block"
   php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
   cat /etc/nginx/sites-enabled/$www_repofocus
   echo "setting file permissions for server block and restarting nginx"
