@@ -14,7 +14,6 @@ else {
 	    $app_url = $args["repo_name"] . "." . $serverid . ".com";
       }
 }
-
 if ($args["sslcertificate"] != "sslselfsigned") {
       $certs =
 	  "ssl_certificate /var/www/certs/" . $args["sslcertificate"] . "/" . $args["sslcertificate"] . "_chain.crt;" . PHP_EOL .
@@ -37,5 +36,4 @@ $blocktemplate = str_replace("<ssl_certs />", $certs, $blocktemplate);
 
 $blocktemplate = str_replace("<phpNo />", $phpNo, $blocktemplate);
 
-echo $blocktemplate;
-file_put_contents(getenv('HOME') . "/bashtoolscfg/tmp/serverblock_" . $args["repo_name"], $blocktemplate);
+file_put_contents("/etc/nginx/sites-enabled/" . $args["repo_name"], $blocktemplate);

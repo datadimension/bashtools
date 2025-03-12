@@ -92,14 +92,13 @@ function nginx-setserverblock() {
   echo-newpagetitle "Setting up NGINX Server block"
   echo "Using $www_repofocus.$serverid.com with certificate $sslcertificate"
   echo ""
-  echo "Add a line to your Windows hosts: "
-  echo "$('net-wanIP')    $www_repofocus.$serverid.com"
+  echo "Add a lineto your Windows hosts: "
+  localurl="$www_repofocus.$serverid.com"
+  echo "$('net-wanIP')   $localurl"
   wait
   echo "Creating NGINX server block"
-  nginx-setserverblock $www_repofocus sslselfsigned
-  return 0
-  php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL="somedomain"
-  echo "echo cert before deploying"
+  php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
+  cat /etc/nginx/sites-enabled/$www_repofocus
   return 0
   sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
   sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
