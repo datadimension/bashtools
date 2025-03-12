@@ -101,7 +101,9 @@ if ($args["method"] == "env_generate") {
 	  "SESSION_DRIVER" => "file",
 	  "QUEUE_DRIVER" => "sync"
       ];
-      echo "Putting .env at $wwwroot/$www_repofocus\n";
+      $envpath = $wwwroot . "/html/" . $www_repofocus . "/.env";
+
+      echo "Putting .env at " . $envpath . "\n";
 
       $goauto = getinput("Would you like to use autovals to generate .env [y/n]", "y");
       if ($goauto == "y") {
@@ -138,5 +140,8 @@ if ($args["method"] == "env_generate") {
 		  $envfile .= "\n" . $key . "\n";
 	    }
       }
+      $envpath = $wwwroot . "/html/" . $www_repofocus . ".env";
+      echo "Putting .env at $wwwroot/$www_repofocus\n";
+
       //file_put_contents(getenv('HOME') . "/bashtoolscfg/tmp/" . $www_repofocus . ".env", $envfile);
 }

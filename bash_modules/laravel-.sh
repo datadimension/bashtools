@@ -60,12 +60,15 @@ function laravel-create() {
   sudo cp -v -R $laraveltemplatestore/bootstrap/* $targetroot/bootstrap/app.php
   ~www
   composer-create-DD-dependacies
+  laravel-envinstall
   echo "need to create .env now for nginx setup"
   return 0
   nginx-setserverblock $www_repofocus
+  echo "Now visit $localurl"
 }
 
 function laravel-envinstall() {
+  echo-newpagetitle "Creating .env file in project"
   php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate
   echo-hr
   echo "Generated env file:"

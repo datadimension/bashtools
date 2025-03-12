@@ -96,15 +96,16 @@ function nginx-setserverblock() {
   localurl="$www_repofocus.$serverid.com"
   echo "$('net-wanIP')   $localurl"
   wait clear
-  echo-nl "Creating NGINX server block"
+  echo "Creating NGINX server block"
   echo-hr
+  echo ""
   php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
   cat /etc/nginx/sites-enabled/$www_repofocus
+  echo ""
   echo-hr
   echo "setting file permissions for server block and restarting nginx"
   sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
   nginx-start
-  echo "Now visit $localurl"
 }
 
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
