@@ -117,20 +117,6 @@ function www-secure() {
   #sudo chown -R $USER $HOME/.composer;#https://askubuntu.com/questions/1077879/cannot-create-cache-directory-home-user-composer-cache-repo-https-packagi
 }
 
-function www-envinstall() {
-  php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate
-  echo-hr
-  echo "Generated env file:"
-  echo-hr
-  mv ~/bashtoolscfg/tmp/$www_repofocus.env $wwwroot/html/$www_repofocus/.env
-  read -p "View final result as editable [y/n] : " input
-  if [ "$input" == "y" ]; then
-    nano $wwwroot/html/$www_repofocus/.env
-  else
-    tail -1000 $wwwroot/html/$www_repofocus/.env
-  fi
-}
-
 function www-sitesqluserinstall() {
   appname=$1
   dbpword=$2
@@ -228,7 +214,7 @@ function www-oauthcreate() {
 }
 
 function x20250306www-repocreate() {
-  www-envinstall
+  laravel-envinstall
 
   cd "$wwwroot/html/$www_repofocus"
   echo "Vist https://github.com/new to create new repo under $www_repofocus"

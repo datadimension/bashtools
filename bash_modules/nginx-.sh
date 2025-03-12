@@ -98,7 +98,6 @@ function nginx-setserverblock() {
   wait
   echo "Creating NGINX server block"
   php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
-  clear
   cat /etc/nginx/sites-enabled/$www_repofocus
   echo "setting file permissions for server block and restarting nginx"
   sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus

@@ -101,6 +101,7 @@ if ($args["method"] == "env_generate") {
 	  "SESSION_DRIVER" => "file",
 	  "QUEUE_DRIVER" => "sync"
       ];
+      echo "Putting .env at $wwwroot/$www_repofocus\n";
 
       $goauto = getinput("Would you like to use autovals to generate .env [y/n]", "y");
       if ($goauto == "y") {

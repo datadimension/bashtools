@@ -64,3 +64,17 @@ function laravel-create() {
   return 0
   nginx-setserverblock $www_repofocus
 }
+
+function laravel-envinstall() {
+  php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate
+  echo-hr
+  echo "Generated env file:"
+  echo-hr
+  mv ~/bashtoolscfg/tmp/$www_repofocus.env $wwwroot/html/$www_repofocus/.env
+  read -p "View final result as editable [y/n] : " input
+  if [ "$input" == "y" ]; then
+    nano $wwwroot/html/$www_repofocus/.env
+  else
+    tail -1000 $wwwroot/html/$www_repofocus/.env
+  fi
+}

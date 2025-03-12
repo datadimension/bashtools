@@ -13,7 +13,7 @@ function git-installrepo() {
   git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
   git-deploysubrepos
   git-addlocalexcludedfiles
-  www-envinstall
+  laravel-envinstall
   composer-create-DD-dependacies
   # cd "$wwwroot/html/$www_repofocus"
   # echo "set focused repo to '$www_repofocus'"
