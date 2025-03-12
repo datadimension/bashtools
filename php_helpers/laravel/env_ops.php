@@ -141,5 +141,6 @@ if ($args["method"] == "env_generate") {
 	    }
       }
       $envpath = $wwwroot . "/html/" . $www_repofocus . ".env";
+      echo $envfile;
       file_put_contents($envpath, $envfile);
 }

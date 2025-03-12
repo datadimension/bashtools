@@ -68,13 +68,12 @@ function laravel-create() {
 }
 
 function laravel-envinstall() {
-  echo-newpagetitle "Creating .env file in project"
+  echo-newpagetitle "Creating .env file in project $www_repofocus"
   echo ""
   php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate
   echo-hr
   echo "Generated env file:"
   echo-hr
-  mv ~/bashtoolscfg/tmp/$www_repofocus.env $wwwroot/html/$www_repofocus/.env
   read -p "View final result as editable [y/n] : " input
   if [ "$input" == "y" ]; then
     nano $wwwroot/html/$www_repofocus/.env
