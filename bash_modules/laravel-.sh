@@ -60,5 +60,7 @@ function laravel-create() {
   sudo cp -v -R $laraveltemplatestore/bootstrap/* $targetroot/bootstrap/app.php
   ~www
   composer-create-DD-dependacies
-  nginx-setserverblock
+  echo "need to create .env now for nginx setup"
+  return 0
+  nginx-setserverblock $www_repofocus
 }

@@ -98,7 +98,7 @@ function nginx-setserverblock() {
   echo "Creating NGINX server block"
   nginx-setserverblock $www_repofocus sslselfsigned
   return 0
-  php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate
+  php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL="somedomain"
   echo "echo cert before deploying"
   return 0
   sudo mv /home/$USER/bashtoolscfg/tmp/serverblock_$www_repofocus /etc/nginx/sites-enabled/$www_repofocus
