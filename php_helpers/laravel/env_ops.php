@@ -141,7 +141,5 @@ if ($args["method"] == "env_generate") {
 	    }
       }
       $envpath = $wwwroot . "/html/" . $www_repofocus . ".env";
-      echo "Putting .env at $wwwroot/$www_repofocus\n";
-
-      //file_put_contents(getenv('HOME') . "/bashtoolscfg/tmp/" . $www_repofocus . ".env", $envfile);
+      file_put_contents($envpath, $envfile);
 }

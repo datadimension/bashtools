@@ -69,6 +69,7 @@ function laravel-create() {
 
 function laravel-envinstall() {
   echo-newpagetitle "Creating .env file in project"
+  echo ""
   php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate
   echo-hr
   echo "Generated env file:"
