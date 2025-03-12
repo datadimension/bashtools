@@ -97,8 +97,10 @@ function nginx-setserverblock() {
   echo "$('net-wanIP')   $localurl"
   wait clear
   echo-nl "Creating NGINX server block"
+  echo-hr
   php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
   cat /etc/nginx/sites-enabled/$www_repofocus
+  echo-hr
   echo "setting file permissions for server block and restarting nginx"
   sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
   nginx-start
