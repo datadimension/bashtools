@@ -52,7 +52,7 @@ function laravel-create() {
   sudo cp -v -R --update=none $laraveltemplatestore/app/* $targetroot/app
   sudo cp -v -R --update=none $laraveltemplatestore/bootstrap/* $targetroot/bootstrap
   sudo cp -v -R --update=none $laraveltemplatestore/config/* $targetroot/config
-  sudo cp -v -R --update=none $laraveltemplatestore/config/* $targetroot/public
+  sudo cp -v -R --update=none $laraveltemplatestore/public/* $targetroot/public
 
   #20250320 not need as copied whole app stubs above  sudo cp -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Console/Commands/*.* $targetroot/app/Console/Commands
 
