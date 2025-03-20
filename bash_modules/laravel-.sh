@@ -46,19 +46,19 @@ function laravel-create() {
   laraveltemplatestore=~/bashtools/templates/laravel
   targetroot=$wwwroot/html/$www_repofocus
   mkdir $targetroot/config
-  sudo cp -v --update=none $laraveltemplatestore/config/*.* $targetroot/config
   sudo cp -v --update=none $laraveltemplatestore/routes/*.* $targetroot/app/routes
 
   #add in DD  stubs
-  sudo cp -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Console/Commands/*.* $targetroot/app/Console/Commands
+  sudo cp -v -R --update=none $laraveltemplatestore/app/* $targetroot/app
+  sudo cp -v -R --update=none $laraveltemplatestore/bootstrap/* $targetroot/bootstrap
+  sudo cp -v -R --update=none $laraveltemplatestore/config/* $targetroot/config
+  sudo cp -v -R --update=none $laraveltemplatestore/config/* $targetroot/public
+
+  #20250320 not need as copied whole app stubs above  sudo cp -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Console/Commands/*.* $targetroot/app/Console/Commands
 
   #add project files that use DD files
-  sudo cp -R -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/* $targetroot/app
-  sudo cp -R -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Http/* $targetroot/app
-  sudo cp -v -R --update=none $laraveltemplatestore/DD_laravelAppComponents/resources/* $targetroot/resources
 
   #add other eg bootstrap
-  sudo cp -v -R $laraveltemplatestore/bootstrap/* $targetroot/bootstrap/app.php
   ~www
   composer-create-DD-dependacies
   laravel-envinstall

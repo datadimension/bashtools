@@ -1,0 +1,85 @@
+body, html {
+      /* font-family: 'B612';*/
+}
+
+div.form_section {
+      border-color: #292E34;
+}
+
+div.form_container {
+      background-color: #3F4851;
+      color: #ffffff;
+}
+
+.fieldset_button {
+      background-color: #02B5FF;
+      color: #292E34;
+      font-weight: bold;
+      font-size: 1em;
+}
+
+#sideviewtitle {
+      margin-top: 0.25em;
+      border: 2px solid #858585;
+      background-color: #000000;
+      color: #00ff00;
+}
+
+#icaotitle {
+      color: #000000;
+      background-color: #02B5FF;
+}
+
+#airportname {
+      color: #F0F4F8;
+      background-color: #000000;
+}
+
+div.fmcSideFrame {
+      background-color: #0D1114;
+      color: #F0F4F8;
+      padding: 0.5em;
+}
+
+#airportData {
+}
+
+.min-100 {
+      min-height: 100vh;
+}
+
+.flex-fill {
+      flex: 1 1 auto;
+}
+
+#mapframe {
+      background-color: #0d3625;
+      padding: 0;
+}
+
+#metarDial {
+      color: #000;
+      height: 420px;
+}
+
+.metar {
+      color: #ffffff;
+      background-color: #000000;
+}
+
+.col {
+      padding: 0;
+}
+
+.row {
+      padding: 0;
+}
+
+hr {
+      border: 2px solid #02B5FF;
+}
+
+div.toptitle {
+      padding: 1em;
+      border: 2px solid #02B5FF;
+}

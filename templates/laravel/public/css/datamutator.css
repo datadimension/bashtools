@@ -1,0 +1,42 @@
+body {
+    background-color: #EFF7FD;
+    padding: 1rem;
+}
+
+textarea.dataArea {
+    border: 1px solid #000000;
+    width: 90%;
+    height: 15em;
+}
+
+
+span.groupbox {
+    display: inline-block;
+    margin: 0.25em;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ebf1f6+0,bddaed+92,89c3eb+100,d5ebfb+100 */
+    background: #ebf1f6; /* Old browsers */
+    Xbackground: -moz-linear-gradient(top, #ebf1f6 0%, #bddaed 92%, #89c3eb 100%, #d5ebfb 100%); /* FF3.6-15 */
+    Xbackground: -webkit-linear-gradient(top, #ebf1f6 0%, #bddaed 92%, #89c3eb 100%,
+    #d5ebfb 100%);
+    /* Chrome10-25,Safari5.1
+       background: linear-gradient(to bottom, #ebf1f6 0%, #bddaed 92%, #89c3eb 100%,
+           #d5ebfb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebf1f6',
+    endColorstr='#d5ebfb', GradientType=0); /* IE6-9 */
+    background-color: #DDEEFA;
+    padding: 0.4em;
+}
+
+#quoteType, #colnos {
+    width: 2em;
+    font-weight: bold;
+    padding: 0 0.5em 0 0.5em;
+}
+
+span.groupbox {
+    color: #000000;
+}
+
+input.rowadds {
+    width: 28em;
+}
