@@ -213,38 +213,6 @@ function www-oauthcreate() {
   echo "https://$www_repofocus.devserver/google/api_getauth"
 }
 
-function x20250306www-repocreate() {
-  laravel-envinstall
-
-  cd "$wwwroot/html/$www_repofocus"
-  echo "Vist https://github.com/new to create new repo under $www_repofocus"
-  echo "chose":
-  echo "Private"
-  echo "untick readme"
-  echo "Choose none for .giignore template"
-  echo "No need for license"
-  echo "When done enter the initial branch name eg main"
-  read branchname
-  git init
-  git add -A
-  git commit -m "first commit"
-  git branch -M $branchname
-  git remote add origin git@github.com:$gituname/$www_repofocus.git
-  git push -u origin $branchname
-  echo "Files set on server"
-  ls -al
-  echo "set focused repo to '$www_repofocus'"
-  echo "Check list to display in browser [hit enter when checked]"
-  read -p "Set server IP in hosts file for $www_repofocus.$serverid.com"
-  read -p "In windows cmd ipconfig /flushdns"
-  echo "Go to https://console.cloud.google.com/apis/credentials to set up OAuth access"
-  read wait
-  bash-writesettings
-  nginx-setserverblock $www_repofocus sslselfsigned
-  bash-restart
-
-}
-
 function www-fromrepobackup() {
   read -p "Enter backup dir " backupdir
   read -p "Enter target dir " targetdir

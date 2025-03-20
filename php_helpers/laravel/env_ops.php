@@ -18,10 +18,6 @@ if ($args["method"] == "env_generate") {
 	  "APP_DEBUG" => ["production" => "false", "local" => "true"],
 	  "APP_LOG_LEVEL" => ["production" => "error", "local" => "debug"],
 
-	    #20250224"GOOGLE_CLIENT_ID" => "",
-	    #20250224"GOOGLE_CLIENT_SECRET" => "",
-	    #20250224"GOOGLE_JAVASCRIPT_APIKEY" => "",
-
 	  "MAIL_DRIVER" => "smtp",
 	  "MAIL_HOST" => "smtp.googlemail.com",
 	  "MAIL_PORT" => 465,
@@ -52,6 +48,7 @@ if ($args["method"] == "env_generate") {
       $keys = [
 	  "#app details" => "",
 	  "APP_NAME" => $www_repofocus,
+	  "DATA_CONTROLLER_EMAIL" => "",//full controller for this domain
 	  "APP_KEY" => "",
 	  "APP_URL" => $www_repofocus . "." . $serverid . ".com",
 	  "TTL_CACHE" => 7200,
@@ -102,9 +99,7 @@ if ($args["method"] == "env_generate") {
 	  "QUEUE_DRIVER" => "sync"
       ];
       $envpath = $wwwroot . "/html/" . $www_repofocus . "/.env";
-
       echo "Putting .env at " . $envpath . "\n";
-
       $goauto = getinput("Would you like to use autovals to generate .env [y/n]", "y");
       if ($goauto == "y") {
 	    echo "Autogenerate active" . PHP_EOL;
@@ -140,7 +135,6 @@ if ($args["method"] == "env_generate") {
 		  $envfile .= "\n" . $key . "\n";
 	    }
       }
-      $envpath = $wwwroot . "/html/" . $www_repofocus . ".env";
       echo $envfile;
       file_put_contents($envpath, $envfile);
 }

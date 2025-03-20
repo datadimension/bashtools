@@ -45,7 +45,8 @@ function laravel-create() {
   #would be better here to have php func to add array element to the config file
   laraveltemplatestore=~/bashtools/templates/laravel
   targetroot=$wwwroot/html/$www_repofocus
-  sudo cp -v --update=none $laraveltemplatestore/config/*.* $targetroot/app/config
+  mkdir $targetroot/config
+  sudo cp -v --update=none $laraveltemplatestore/config/*.* $targetroot/config
   sudo cp -v --update=none $laraveltemplatestore/routes/*.* $targetroot/app/routes
 
   #add in DD  stubs
@@ -62,9 +63,11 @@ function laravel-create() {
   composer-create-DD-dependacies
   laravel-envinstall
   echo "need to create .env now for nginx setup"
-  return 0
   nginx-setserverblock $www_repofocus
-  echo "Now visit $localurl"
+  git-repocreate
+  wait clear
+  echo "Now visit $localurl to test"
+  echo "Now to push to git if all ok"
 }
 
 function laravel-envinstall() {
@@ -72,10 +75,11 @@ function laravel-envinstall() {
   echo ""
   php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate
   echo-hr
-  echo "Generated env file:"
   echo-hr
-  read -p "View final result as editable [y/n] : " input
+  php artisan key:generate
+  read -p "View final result as editable [y/n] : " inputp
   if [ "$input" == "y" ]; then
+    clear
     nano $wwwroot/html/$www_repofocus/.env
   else
     tail -1000 $wwwroot/html/$www_repofocus/.env

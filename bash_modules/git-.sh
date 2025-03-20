@@ -24,6 +24,9 @@ function git-installrepo() {
 
 function git-addlocalexcludedfiles() {
   echo "Adding local non git files"
+
+  templatestore=~/bashtools/templates/git
+  targetroot=$wwwroot/html/$www_repofocus
   repodir=$wwwroot/html/$www_repofocus
   sudo mkdir -p $repodir/app/config/
   sudo mkdir -p $repodir/app/routes/
@@ -52,6 +55,9 @@ function git-addlocalexcludedfiles() {
   sudo mkdir -p $repodir/bootstrap/cache
   sudo mkdir -p $repodir/public/downloads/
   sudo mkdir -p $repodir/private/
+
+  cat $templatestore/gitignoreadd >>$targetroot/.gitignore
+
 }
 
 function git-pull-select() {
@@ -262,6 +268,25 @@ function git-pull-repo() {
   echo "Finished at:"
   echo-now
   echo-hr
+}
+
+# after laravel-create, this will add it as a new git repo
+git-repocreate() {
+  echo "Vist https://github.com/new to create new repo under $www_repofocus"
+  echo "chose":
+  echo "Private"
+  echo "readme: unticked"
+  echo ".giignore template: none"
+  echo "license: none"
+  echo "When done enter the initial branch name eg main"
+  read branchname
+  git init
+  git branch -m $branchname
+  git add -A
+  git commit -m "first commit"
+  git remote add origin git@github.com:$gituname/$www_repofocus.git
+  git push -u origin $branchname
+  echo "Files set on server"
 }
 
 function git-pull-all() {
