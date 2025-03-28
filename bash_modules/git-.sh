@@ -94,6 +94,7 @@ function git-pull() {
   echo-hr
   git-pull-all
   cd $curpwd
+  setSyncTimestamp
 }
 
 function git-push-select() {
