@@ -16,7 +16,5 @@ foreach ($repo_env as $key => $value) {
 	    $envfile .= $key . PHP_EOL . PHP_EOL;
       }
 }
-echo $envfile;
 $envfilepath = "$wwwroot/html/$www_repofocus/.env";
-echo $envfilepath;
 file_put_contents($envfilepath, $envfile);
