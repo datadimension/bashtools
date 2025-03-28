@@ -1,5 +1,5 @@
 <?php
-include(getenv('HOME') . "/bashtools/php_helpers/bash/bash.env.php");
+include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");
 $view =
     "    			CREATE
               ALGORITHM = UNDEFINED

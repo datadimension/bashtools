@@ -23,13 +23,15 @@ $repo_env_file = explode(PHP_EOL, file_get_contents($wwwroot . "/html/" . $www_r
 $repo_env = [];
 foreach ($repo_env_file as $line) {
       $value = explode("=", $line);
+      //20250326 $key = substr($line, 0, 1) == "#" ? null : $value[0];
       $key = $value[0];
-      if (count($value) > 1) {
-	    $value = $value[1];
+      if ($key) {
+	    if (count($value) > 1) {
+		  $value = $value[1];
+	    }
+	    else {
+		  $value = "";
+	    }
+	    $repo_env[$key] = $value;
       }
-      else {
-	    $value = "";
-      }
-      $repo_env[$key] = $value;
-      //echo PHP_EOL;
 }

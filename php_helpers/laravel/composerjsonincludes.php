@@ -1,5 +1,5 @@
 <?php
-include(getenv('HOME') . "/bashtools/php_helpers/bash/bash.env.php");
+include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");
 $jsonpath = $wwwroot . "/html/" . $www_repofocus . "/composer.json";
 
 $json = json_decode(file_get_contents($jsonpath), true);

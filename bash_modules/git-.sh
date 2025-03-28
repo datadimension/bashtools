@@ -130,6 +130,11 @@ function git-push() {
   echo-b $www_repofocus
   git-push-all
   cd $curpwd
+  setSyncTimestamp
+}
+
+function setSyncTimestamp() {
+  php ~/bashtools/php_helpers/bash/setrepoenvval.php reponame=$www_repofocus key=GIT_SYNC_TIMESTAMP #auto generated in script
 }
 
 function git-add() {
@@ -279,6 +284,7 @@ git-repocreate() {
   echo ".giignore template: none"
   echo "license: none"
   echo "When done enter the initial branch name eg main"
+  echo "if already created, use git-clean "
   read branchname
   git init
   git branch -m $branchname
@@ -287,6 +293,10 @@ git-repocreate() {
   git remote add origin git@github.com:$gituname/$www_repofocus.git
   git push -u origin $branchname
   echo "Files set on server"
+}
+
+function git-clean() {
+  echo "to set repo to ignore local files with new .gitignore see https://stackoverflow.com/questions/46273032/is-there-a-way-to-remove-all-ignored-files-from-a-local-git-working-tree"
 }
 
 function git-pull-all() {

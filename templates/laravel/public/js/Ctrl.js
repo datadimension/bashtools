@@ -1,8 +1,7 @@
 class Controller extends BaseJS_Ctrl {
-    __subconstruct() {
-    }
+      __subconstruct() {
+      }
 
-    start() {
-        //20220622view.widgets_home();
-    }
+      start() {
+      }
 }

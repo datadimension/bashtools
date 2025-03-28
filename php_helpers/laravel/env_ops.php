@@ -1,5 +1,5 @@
 <?php
-include(getenv('HOME') . "/bashtools/php_helpers/bash/bash.env.php");
+include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");
 include(getenv('HOME') . "/bashtools/php_helpers/php_cli.php");
 
 if ($args["method"] == "env_getvalue") {
@@ -13,6 +13,7 @@ if ($args["method"] == "env_generate") {
 	  "APP_URL" => $www_repofocus . "." . $serverid . ".com",
 	  "TTL_CACHE" => 7200,
 	  "APP_ENV" => $environment,
+	  "GIT_SYNC_TIMESTAMP" => 0,
 	  "SERVER_ID" => ["production" => $serverid, "local" => $serverid],
 	  "DEFAULT_TIMEZONE" => "Europe/London",
 	  "APP_DEBUG" => ["production" => "false", "local" => "true"],

@@ -4,7 +4,7 @@
  * test:
  * php ~/bashtools/php_helpers/bash/bash-help.php helptype=www
  */
-include(getenv('HOME') . "/bashtools/php_helpers/bash/bash.env.php");;
+include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");;
 parse_str(implode('&', array_slice($argv, 1)), $args);
 $home = getenv('HOME');
 echo "\033[1mBASH helper functions for " . $args["helptype"] . ":\033[0m\n\n";
