@@ -175,6 +175,7 @@ function os-install-dependancies() {
 	sudo apt-get -y install npm
 	sudo apt-get install php-sqlite3
 	 sudo apt-get -y install unzip
+	 sudo apt-get install memcached
 	os-install-composer
 }
 

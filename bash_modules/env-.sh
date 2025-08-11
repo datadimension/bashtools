@@ -116,11 +116,14 @@ function env-attributerequire() {
       bash-writesettings
     fi
   elif [ "$varname" == "welcomemsg" ]; then
-    if [ "$welcomemsg" != "" ]; then
+    if [ "$welcomemsg" == "" ]; then
       echo "Please enter Welcome Message / server name"
       read welcomemsg
       bash-writesettings
     fi
+	else # final else
+    		echo "Unknown env-require $varname"
+		read wait
   fi
   clear
 }

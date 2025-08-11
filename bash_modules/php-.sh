@@ -22,6 +22,7 @@ function php-install() {
 	sudo apt-get -y install php-mysql
 	sudo apt-get -y install php-readline
 	sudo apt-get -y install php-xml
+	sudo apt-get install php-memcached
 	php -v;
 	php-getversion;
 	read -p "Please confirm the php version number $PHP_VERSION to 1 decimal (eg 1.23 as 1.2):" phpNo
