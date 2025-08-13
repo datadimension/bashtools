@@ -55,7 +55,7 @@ function bash-start-ubuntu() {
 
 bash-start-ubuntu-osconfigcheck() {
   mysql-getversion
-  osinstall=0
+osinstall=0 #control bool to restart bash to loop through setup
   os-checkstatus
   if [ $osinstall == 1 ]; then
     read -p "Any key to restart" wait

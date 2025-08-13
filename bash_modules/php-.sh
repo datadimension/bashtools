@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+php_defaultvs="8.3";#the default version to use
+
 function php-v(){
   maj=$(php -r "echo PHP_MAJOR_VERSION ;")
   min=$(php -r "echo PHP_MINOR_VERSION ;")
@@ -9,28 +11,35 @@ function php-v(){
 }
 
 function php-install() {
-	sudo apt-get -y install php
-	sudo apt-get -y install php-fpm
-	sudo apt-get -y install php-zip
+	sudo add-apt-repository -y ppa:ondrej/php
+    sudo apt update
+	sudo apt-get -y install php$php$php_defaultvs
+	sudo apt-get -y install php$php$php_defaultvs-fpm
+	sudo apt-get -y install php$php$php_defaultvs-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
-	sudo apt-get -y install php-soap
-	sudo apt-get -y install php-curl
-	sudo apt-get -y install php-bcmath
-	sudo apt-get -y install php-bz2
-	sudo apt-get -y install php-intl
-	sudo apt-get -y install php-mbstring
-	sudo apt-get -y install php-mysql
-	sudo apt-get -y install php-readline
-	sudo apt-get -y install php-xml
-	sudo apt-get install php-memcached
+	sudo apt-get -y install php$php$php_defaultvs-soap
+	sudo apt-get -y install php$php$php_defaultvs-curl
+	sudo apt-get -y install php$php$php_defaultvs-bcmath
+	sudo apt-get -y install php$php$php_defaultvs-bz2
+	sudo apt-get -y install php$php$php_defaultvs-intl
+	sudo apt-get -y install php$php$php_defaultvs-mbstring
+	sudo apt-get -y install php$php$php_defaultvs-mysql
+	sudo apt-get -y install php$php$php_defaultvs-readline
+	sudo apt-get -y install php$php$php_defaultvs-xml
+	sudo apt-get -y install php$php$php_defaultvs-memcached
+		sudo apt-get -y install php$php$php_default-sqlite3
+
+	echo ""
+	echo ""
+	echo ""
+	echo ""
 	php -v;
 	php-getversion;
-	read -p "Please confirm the php version number $PHP_VERSION to 1 decimal (eg 1.23 as 1.2):" phpNo
-  echo "We will now edit /etc/php/$phpNo/fpm/php.ini"
+  echo "We will now edit /etc/php/$php_defaultvs/fpm/php.ini"
   echo "And for security change line to be"
   echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
   read wait
-  sudo nano +817 /etc/php/$phpNo/fpm/php.ini
+  sudo nano +817 /etc/php/$php_defaultvs/fpm/php.ini
 }
 
 function php-getversion(){

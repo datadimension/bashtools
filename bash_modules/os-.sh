@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
 declare -ag os_install_steps=(
-        		"os-sudo-create" "os-sshkeygen" "os-sshsecure" "os-install-dependancies"
-        		"php-install" "nginx-install" "nginx-cert-createselfsigned" "mysql-install"
+        		"os-updatecheck" "os-sudo-create" "os-sshkeygen" "os-installssh" "os-sshsecure" "os-installphp" "os-install-dependancies"
+        		"nginx-install" "nginx-cert-createselfsigned" "mysql-install"
         		"os-ddMediaInstall"
         		"echo setup finished"
 )
 
 os_install_step_size=${#os_install_steps[@]}
 
+#defaults to use
 
 function os-() {
 	# at some point we could have a list of options here
@@ -54,18 +55,22 @@ function os-install_step(){
 		echo "Ready to run"
 		echo "$os_setupfunc";
 		echo ""
-		read -p "Hit enter to continue or S to skip: " input;
+		read -p "Hit enter to continue or S to skip this step: " input;
 		if [ "$input" != "S" ]; then
-        eval $os_setupfunc;
-        if [ "$useindex" == "" ]; then
-					os_status=$((os_status+1))
-				fi
-		else
-				if [ "$useindex" != "" ]; then
-					read -p "Enter F to finish auto setup (this might result in unstable system): " input;
-					 os_status=$(($os_install_step_size+1))
-				fi
+        	eval $os_setupfunc;
 		fi
+		#20250811 else
+			#20250811 	if [ "$useindex" != "" ]; then
+			#20250811 		read -p "Enter F to finish auto setup (this might result in unstable system): " input;
+			#20250811 		 os_status=$(($os_install_step_size+1))
+		#20250811 		fi
+		#20250811 fi
+
+		        if [ "$useindex" != "" ]; then
+        			os_status=$((os_status+1))
+        		else
+		        	os_status=$(($os_install_step_size+1))
+        		fi
 }
 
 function os-checkstatus(){
@@ -74,7 +79,7 @@ function os-checkstatus(){
         fi
         if [ "$os_status" -lt "$os_install_step_size"  ]; then
         	os-install_step $os_status
-    			osinstall=1;
+    			osinstall=1;#whether to restart bash to continue setup
         else
         	os_status=$(($os_install_step_size+1))
         	osinstall=0;
@@ -171,9 +176,7 @@ function os-install-dependancies() {
 	sudo apt install net-tools
 	sudo apt-get install -y whois
 	sudo apt-get install putty-tools
-	sudo apt-get -y install openssh-server
 	sudo apt-get -y install npm
-	sudo apt-get install php-sqlite3
 	 sudo apt-get -y install unzip
 	 sudo apt-get install memcached
 	os-install-composer
@@ -286,7 +289,20 @@ function os-sudo-remove(){
     fi
 }
 
+function os-updatecheck(){
+sudo apt update
+sudo apt upgrade -y
+sudo apt -y install software-properties-common
+}
+
+# installs ssh
+function os-installssh(){
+	sudo apt update
+	sudo apt install openssh-server
+}
+
 function os-sshsecure() {
+	echo "Installing SSH"
   		echo "Please write TESTED to confirm you have logged in via ssh with key access not password  - otherwise you might get blocked as we will secure ssh access in the next step"
   		read confirm
   		if [ "$confirm" != "TESTED" ]; then
@@ -296,25 +312,25 @@ function os-sshsecure() {
   			fi
 	echo "Between EACH, press ENTER to go to relevant line to edit ssh config"
 	echo ""
-	echo "1/4 Comment out the following to make this the definitive config file:"
+	echo "1/4 Comment out the following to make this config file the only  config file used"
 	echo "Include/etc/ssh/sshd_config.d/*.conf":
 	read wait
 	sudo nano +12 /etc/ssh/sshd_config
-	echo "2/4 stop ssh access via root for security set"
+	echo "2/4 stop ssh access via root for security uncomment / set"
 	echo "PermitRootLogin no"
 	read wait
 	sudo sudo nano +33 /etc/ssh/sshd_config
-	echo "3/4 set authentication by public key only set"
+	echo "3/4 set authentication by public key only uncomment / set"
 	echo "PubkeyAuthentication yes"
 	read wait
 	sudo nano +38 /etc/ssh/sshd_config
-	echo "4/4 Edit ssh to remove password access"
+	echo "4/4 remove password access uncomment / set"
 	echo "PasswordAuthentication no"
 	read wait
 	sudo nano +57 /etc/ssh/sshd_config
 	os_status=$((os_status+1)) #we exit so need to update pointer here
   bash-writesettings;
-  read "Can you log in using keypair y/n ?"
+  read -p "Can you log in using keypair y/n ?"
   read yn
   if [ "$yn" != "y" ]; then
       			echo "You can try running os-sshaccess again or try logging in via ssh"
@@ -341,7 +357,8 @@ function os-install-composer() {
 function os-sshkeygen() {
   	currentuser=$USER
 		touch /home/$currentuser/.ssh/authorized_keys
-		echo "Do you want to generate NEW ssh keys or are you using EXISTING [new/existing]"
+		echo "Do you want to generate NEW ssh keys or are you using EXISTING";
+		echo "[new/existing]"
 		read confirm
 		if [ "$confirm" == "new" ]; then
 			sudo apt install putty-tools;
