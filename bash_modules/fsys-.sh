@@ -77,7 +77,8 @@ function file-cdrepo(){
 	www-reposhow
 	 if [ "$www_repofocus" == "" ]; then
     	echo "";
-    	echo "NOTE:If your repo list is empty you can test nginx with nginx-testrepoadd";
+    	echo "NOTE:"
+    	echo "If your repo list is empty you can test add the nginx test repo with nginx-testrepoadd";
     	echo "You can remove it later with nginx-testreporemove"
     	echo ""
     fi
