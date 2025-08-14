@@ -64,7 +64,7 @@ function file_exists() {
 # change current directory to current focused repo
 function file-cdrepo(){
 	startdir="$wwwroot/html/$www_repofocus"
-	if [ -f "$startdir" ]; then 
+	if [ -f "$startdir" ]; then
         echo "$FILE exists."
     else
     	echo "Error no repo at: $startdir";

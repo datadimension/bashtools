@@ -44,7 +44,7 @@ function bash-start-ubuntu() {
     echo "$welcomemsg"
   fi
    file-cdrepo
-   echo "hAS UPSrw"
+   echo "fucking git"
 }
 
 bash-start-ubuntu-osconfigcheck() {
