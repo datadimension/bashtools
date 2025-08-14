@@ -67,7 +67,8 @@ function file-cdrepo(){
 	if [ -f "$startdir" ]; then
         echo "$FILE exists."
     else
-    	echo "Error no repo at: $startdir";
+    	echo "Error: Current reponame set at '$www_repofocus'"
+    	echo "Directory: $startdir";
     	 echo "Reseting www_repofocus"
     	www_repofocus=""
     	bash-writesettings;
