@@ -78,8 +78,10 @@ function file-cdrepo(){
 	 if [ "$www_repofocus" == "" ]; then
     	echo "";
     	echo "NOTE:"
-    	echo "If your repo list is empty you can test add the nginx test repo with nginx-testrepoadd";
-    	echo "You can remove it later with nginx-testreporemove"
+    	echo "If your repo list is empty you can add the nginx test repo with"
+    	echo "nginx-testrepoadd";
+    	echo "and remove later with"
+    	echo "nginx-testreporemove"
     	echo ""
     fi
 }
