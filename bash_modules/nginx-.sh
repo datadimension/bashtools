@@ -44,7 +44,7 @@ function nginx-start() {
 }
 
 # installs an nginx test page to check server is operational
-function nginx-testadd() {
+function nginx-testrepoadd() {
   #read -p "Add nginxtest ? Y/n"  input
   #if [ "$input" != "Y" ]; then
   #	return 1;
@@ -67,7 +67,7 @@ function nginx-testadd() {
 }
 
 #remove the nginx test site
-function nginx-testremove() {
+function nginx-testreporemove() {
   read -p "Remove nginxtest ? Y/n" input
   if [ "$input" != "n" ]; then
     sudo rm -R /var/www/html/nginxtest
