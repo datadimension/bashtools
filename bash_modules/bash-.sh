@@ -191,12 +191,6 @@ function bash-writesettings() {
   echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus" >~/bashtoolscfg/bash.env
 }
 
-function bash-echosettings(){
-	  csv=$(<~/bashtoolscfg/bash.env)
-	  IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
-
-}
-
 function bash-readsettings() {
   #20250224wwwsites=$(<~/bashtoolscfg/wwwsites})
   wwwrepos=$(<~/bashtoolscfg/wwwrepos)
