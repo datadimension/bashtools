@@ -69,15 +69,17 @@ function file-cdrepo(){
     else
     	echo ""
     	echo "Error: Current reponame set at '$www_repofocus'"
-    	echo "DIR: $startdir";
+    	echo "Directory: $startdir";
     	 echo "Reseting www_repofocus"
     	www_repofocus=""
     	bash-writesettings;
+    fi
+	www-reposhow
+	if [ -f "www_repofocus" ]; then
     	echo "";
     	echo "NOTE:If your repo list is empty you can test nginx by installing nginxtestrepo?";
     	echo "You can remove it later with nginx-testremove"
     fi
-      www-reposhow
 }
 
 # combines cd and ls into a single command
