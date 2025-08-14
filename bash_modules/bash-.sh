@@ -43,7 +43,8 @@ function bash-start-ubuntu() {
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
-   file-cdrepo 
+   file-cdrepo
+   echo "hAS UPSrw"
 }
 
 bash-start-ubuntu-osconfigcheck() {
