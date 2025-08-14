@@ -69,7 +69,7 @@ function file-cdrepo(){
     else
     	echo ""
     	echo "Error: Current reponame set at '$www_repofocus'"
-    	echo "Directory: $startdir";
+    	echo "DIR: $startdir";
     	 echo "Reseting www_repofocus"
     	www_repofocus=""
     	bash-writesettings;
