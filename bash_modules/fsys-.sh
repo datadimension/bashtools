@@ -64,12 +64,12 @@ function file_exists() {
 # change current directory to current focused repo
 function file-cdrepo(){
 	startdir="$wwwroot/html/$www_repofocus"
-	if [ -f "$startdir" ]; then
-        echo "$FILE exists."
+	if [ -d "$startdir" ]; then
+        echo ""
     else
     	echo ""
     	echo "Error: Current reponame set at '$www_repofocus'"
-    	echo "Directory: $startdir";
+    	echo "Directory: $startdir does not exist";
     	 echo "Reseting www_repofocus"
     	www_repofocus=""
     	bash-writesettings;
