@@ -78,7 +78,7 @@ function file-cdrepo(){
 	if [ -f "www_repofocus" ]; then
     	echo "";
     	echo "NOTE:If your repo list is empty you can test nginx by installing nginxtestrepo?";
-    	echo "You can remove it later with nginx-testremove"
+    	echo "You can remove it later with nginx-testremove" 
     fi
 }
 
