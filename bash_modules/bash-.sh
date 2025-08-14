@@ -21,11 +21,7 @@ function bash-start-windows() {
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
-  www-reposhow
-  startdir="$wwwroot/html/$www_repofocus"
-  cd $startdir
-  file-showdir $startdir
-
+ file-cdrepo
 }
 
 # initialises the bash shell #
@@ -47,10 +43,7 @@ function bash-start-ubuntu() {
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
-  www-reposhow
-  startdir="$wwwroot/html/$www_repofocus"
-  cd $startdir
-  file-showdir $startdir
+   file-cdrepo
 }
 
 bash-start-ubuntu-osconfigcheck() {

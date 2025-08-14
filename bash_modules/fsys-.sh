@@ -61,6 +61,23 @@ function file_exists() {
   fi
 }
 
+# change current directory to current focused repo
+function file-cdrepo(){
+	startdir="$wwwroot/html/$www_repofocus"
+	if [ -f "$startdir" ]; then
+        echo "$FILE exists."
+    else
+    	echo "Error no repo at: $startdir";
+    	 echo "Reseting www_repofocus"
+    	www_repofocus=""
+    	bash-writesettings;
+    	echo "";
+    	echo "NOTE:If your repo list is empty you can test nginx by installing nginxtestrepo?";
+    	echo "You can remove it later with nginx-testremove"
+    fi
+      www-reposhow
+}
+
 # combines cd and ls into a single command
 function cdls() {
   mode=""
