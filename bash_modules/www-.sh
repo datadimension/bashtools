@@ -13,6 +13,7 @@ function www-reposhow() {
   done
   echo ""
   echo "www-reposwitch to change / www-reposet to configure "
+  echo ""
 }
 
 function www-siteremove() {
