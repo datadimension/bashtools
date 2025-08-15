@@ -43,7 +43,11 @@ function nginx-start() {
   echo-hr
 }
 
-# installs an nginx test page to check server is operational
+function nginx-installlocalserveradmin(){
+	git-installrepo localserveradmin; 
+}
+
+#deprecated in favour of installing localserveradmin by defaul  installs an nginx test page to check server is operational
 function nginx-testrepoadd() {
   #read -p "Add nginxtest ? Y/n"  input
   #if [ "$input" != "Y" ]; then
