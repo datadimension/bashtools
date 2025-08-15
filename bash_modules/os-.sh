@@ -2,7 +2,7 @@
 
 declare -ag os_install_steps=(
         		"os-updatecheck" "os-sudo-create" "os-sshkeygen" "os-installssh" "os-sshsecure" "os-installphp" "os-install-dependancies"
-        		"nginx-install" "nginx-cert-createselfsigned" "mysql-install"
+        		"nginx-install" "nginx-cert-createselfsigned" "nginx-installlocalserveradmin" "mysql-install"
         		"os-ddMediaInstall"
         		"echo setup finished"
 )
