@@ -2,7 +2,7 @@
 
 declare -ag os_install_steps=(
         		"os-updatecheck" "os-sudo-create" "os-sshkeygen" "os-installssh" "os-sshsecure" "os-installphp" "os-install-dependancies"
-        		"nginx-install" "nginx-cert-createselfsigned" "nginx-installlocalserveradmin" "mysql-install"
+        		"nginx-install" "nginx-cert-createselfsigned" "nginx-deploylocalserveradmin" "mysql-install"
         		"os-ddMediaInstall"
         		"echo setup finished"
 )
@@ -34,7 +34,7 @@ function os-ddMediaInstall(){
 
 
 #select a specific os install step by index number or pick from menu
-function os-install_step(){
+function os-installstep(){
 	size=${#os_install_steps[@]}
 	useindex=$1
 	if [ "$useindex" == "" ]; then
@@ -78,7 +78,7 @@ function os-checkstatus(){
           os_status=0;
         fi
         if [ "$os_status" -lt "$os_install_step_size"  ]; then
-        	os-install_step $os_status
+        	os-installstep $os_status
     			osinstall=1;#whether to restart bash to continue setup
         else
         	os_status=$(($os_install_step_size+1))

@@ -43,8 +43,8 @@ function nginx-start() {
   echo-hr
 }
 
-function nginx-installlocalserveradmin(){
-	git-installrepo localserveradmin; 
+function nginx-deploylocalserveradmin(){
+	git-installrepo localserveradmin;
 }
 
 #deprecated in favour of installing localserveradmin by defaul  installs an nginx test page to check server is operational
