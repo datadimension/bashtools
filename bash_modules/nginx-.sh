@@ -45,6 +45,8 @@ function nginx-start() {
 
 function nginx-deploylocalserveradmin(){
 	git-installrepo localserveradmin;
+ 	laravel-envinstall
+  	nginx-setserverblock localserveradmin sslselfsigned
 }
 
 #deprecated in favour of installing localserveradmin by defaul  installs an nginx test page to check server is operational
@@ -96,7 +98,7 @@ function nginx-setserverblock() {
   echo-newpagetitle "Setting up NGINX Server block"
   echo "Using $www_repofocus.$serverid.com with certificate $sslcertificate"
   echo ""
-  echo "Add a lineto your Windows hosts: "
+  echo "Add a line to your local hosts file: "
   localurl="$www_repofocus.$serverid.com"
   echo "$('net-wanIP')   $localurl"
   wait clear

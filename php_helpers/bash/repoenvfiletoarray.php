@@ -19,7 +19,12 @@ $ipgateway = $csv[9];
 $welcomemsg = $csv[10];
 $wwwroot = $csv[11];
 $platform = $csv[12];
-$repo_env_file = explode(PHP_EOL, file_get_contents($wwwroot . "/html/" . $www_repofocus . "/.env"));
+if (file_exists($wwwroot . "/html/" . $www_repofocus . "/.env")) {
+      $repo_env_file = explode(PHP_EOL, file_get_contents($wwwroot . "/html/" . $www_repofocus . "/.env"));
+}
+else {
+      $repo_env_file = [];
+}
 $repo_env = [];
 foreach ($repo_env_file as $line) {
       $value = explode("=", $line);

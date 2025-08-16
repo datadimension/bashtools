@@ -8,14 +8,15 @@ function git-installrepo() {
     return 0
   fi
   user=$USER
-  rm -R -f $wwwroot/html/$reponame
-  mkdir $wwwroot/html/$reponame
+  sudo rm -R -f $wwwroot/html/$reponame
+  sudo mkdir $wwwroot/html/$reponame
+  sudo chown $user:www-data $wwwroot/html/$reponame
   git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
+	www_repofocus=$reponame
   git-deploysubrepos
   cd "$wwwroot/html/$www_repofocus"
   echo "set focused repo to '$www_repofocus'"
   bash-writesettings
-  bash-restart
 }
 
 function git-deploysubrepos() {

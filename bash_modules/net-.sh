@@ -38,6 +38,7 @@ function vpn() {
 
 function net-hosts() {
   sudo nano /etc/hosts
+  sudo resolvectl flush-caches
 }
 
 function net-sshcheck() {

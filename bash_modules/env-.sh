@@ -90,7 +90,7 @@ function env-attributerequire() {
     fi
   elif [ "$varname" == "gituname" ]; then
     if [ "$gituname" == "" ]; then
-      echo "Please enter your git username and ensure you have set up ssh access"
+      echo "Please enter your git username and ensure you have set up git ssh access"
       read gituname
       bash-writesettings
     fi
