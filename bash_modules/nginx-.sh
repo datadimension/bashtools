@@ -44,9 +44,7 @@ function nginx-start() {
 }
 
 function nginx-deploylocalserveradmin(){
-	git-installrepo localserveradmin;
- 	laravel-envinstall
-  	nginx-setserverblock localserveradmin sslselfsigned
+	git-repo_install localserveradmin;
 }
 
 #deprecated in favour of installing localserveradmin by defaul  installs an nginx test page to check server is operational

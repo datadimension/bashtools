@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function git-installrepo() {
+function git-repo_install() {
   env-attributerequire gituname
   reponame=$1
   if [ "$reponame" == "" ]; then
@@ -13,8 +13,9 @@ function git-installrepo() {
   git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
   git-deploysubrepos
   git-addlocalexcludedfiles
-  laravel-envinstall
   composer-create-DD-dependacies
+    laravel-envinstall
+
   # cd "$wwwroot/html/$www_repofocus"
   # echo "set focused repo to '$www_repofocus'"
   bash-writesettings
@@ -277,13 +278,13 @@ function git-pull-repo() {
 }
 
 # after laravel-create, this will add it as a new git repo
-git-repocreate() {
+function git-repo_create() {
   echo "Vist https://github.com/new to create new repo under $www_repofocus"
   echo "chose":
   echo "Private"
   echo "readme: unticked"
-  echo ".giignore template: none"
-  echo "license: none"
+  echo ".gitgnore template: no .gitignore"
+  echo "license: no license"
   echo "When done enter the initial branch name eg main"
   echo "if already created, use git-clean "
   read branchname
