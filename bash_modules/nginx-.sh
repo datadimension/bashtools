@@ -9,6 +9,7 @@ function nginx-install() {
   sudo rm /var/www/html/index.nginx-debian.html
   sudo mkdir -p /var/www/html
   sudo mkdir -p /var/www/certs
+  php-install
   net-firewall-start
 }
 
@@ -27,7 +28,7 @@ function nginx-start() {
   clear
   echo-h1 "Starting Nginx / PHP-fpm"
   env-attributerequire phpNo
-  sudo service php$phpNo-fpm start
+  sudo service php$php_defaultvs-fpm start
   sudo service nginx start
   sudo /etc/init.d/cron start
   ps aux | grep php
@@ -44,6 +45,7 @@ function nginx-start() {
 }
 
 function nginx-deploylocalserveradmin(){
+	sudo chown datadimension:www-data /etc/nginx/sites-enabled
 	git-repo_install localserveradmin;
 }
 

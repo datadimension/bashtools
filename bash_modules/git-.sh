@@ -10,6 +10,7 @@ function git-repo_install() {
   user=$USER
   sudo rm -r -f $wwwroot/html/$reponame
   sudo mkdir $wwwroot/html/$reponame
+  sudo chown $user:www-data $wwwroot/html/$reponame
   git clone git@github.com:$gituname/$reponame.git $wwwroot/html/$reponame
   git-deploysubrepos
   git-addlocalexcludedfiles
