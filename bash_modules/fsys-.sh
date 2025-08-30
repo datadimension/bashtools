@@ -83,6 +83,9 @@ function file-cdrepo(){
     	echo "and remove later with"
     	echo "nginx-testreporemove"
     	echo ""
+else
+cd $www-repofocus
+ls
     fi
 }
 
