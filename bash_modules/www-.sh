@@ -90,7 +90,7 @@ function www-reposet() {
     echo "Directory $newrepo not found so will install."
     echo "Will install under $wwwroot/html/$www_repofocus"
     echo "with dev URL: $www_repofocus.$serverid.com"
-    git-installrepo $www_repofocus
+    git-repo_install $www_repofocus
   fi
 }
 
