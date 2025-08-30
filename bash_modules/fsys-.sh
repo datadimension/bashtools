@@ -84,7 +84,7 @@ function file-cdrepo(){
     	echo "nginx-testreporemove"
     	echo ""
 else
-cd $www_repofocus
+cd $startdir
 ls
     fi
 }
