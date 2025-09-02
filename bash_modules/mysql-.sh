@@ -50,6 +50,12 @@ add user
 "
 }
 
+#runs datagrip on ubuntu desktop
+function mysql-datagrip(){
+cd ~/;
+./software/datagrip/DataGrip-2025.2.2/bin/datagrip.sh;
+}
+
 function mysql-getversion() {
   if [ -f /etc/init.d/mysql* ]; then
     MYSQL_VERSION=$(mysql -V)
