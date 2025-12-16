@@ -90,7 +90,7 @@ function www-reposet() {
     echo "Directory $newrepo not found so will install."
     echo "Will install under $wwwroot/html/$www_repofocus"
     echo "with dev URL: $www_repofocus.$serverid.com"
-    git-repo_install $www_repofocus
+    git-installrepo $www_repofocus
   fi
 }
 
@@ -172,7 +172,7 @@ function www-repoinstall() {
   echo "Please enter the git reponame to put here"
   read reponame
   echo "Installing '$reponame' under $wwwroot/html/$dir"
-  git-installrepo $dir $reponame
+  git-repo_install $dir $reponame
 }
 
 #creates a new website eg localserver_admin

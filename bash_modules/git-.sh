@@ -55,8 +55,9 @@ function git-addlocalexcludedfiles() {
   sudo chmod -R 770 $repodir/storage
 
   sudo mkdir -p $repodir/bootstrap/cache
-  sudo mkdir -p $repodir/public/downloads/
   sudo mkdir -p $repodir/private/
+  sudo mkdir -p $repodir/public/downloads/
+
 
   cat $templatestore/gitignoreadd >>$targetroot/.gitignore
 
