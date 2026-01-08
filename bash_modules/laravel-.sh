@@ -50,13 +50,14 @@ fi
   #would be better here to have php func to add array element to the config file
   laraveltemplatestore=~/bashtools/templates/laravel
   #20250824 already created mkdir $targetroot/config
-  sudo cp -v --update=none $laraveltemplatestore/routes/*.* $targetroot/app/routes
+  #20260108 sudo cp -v --update=none $laraveltemplatestore/routes/*.* $targetroot/routes
 
   #add in DD  stubs
-  sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app
-  sudo cp -v -R --update=none $laraveltemplatestore/bootstrap/* $wwwroot/html/$www_repofocus/bootstrap
-  sudo cp -v -R --update=none $laraveltemplatestore/config/* $wwwroot/html/$www_repofocus/config
-  sudo cp -v -R --update=none $laraveltemplatestore/public/* $wwwroot/html/$www_repofocus/public
+  	sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app
+  	sudo cp -v -R --update=none $laraveltemplatestore/bootstrap/* $wwwroot/html/$www_repofocus/bootstrap
+  	sudo cp -v -R --update=none $laraveltemplatestore/routes/* $wwwroot/html/$www_repofocus/routes
+	sudo cp -v -R --update=none $laraveltemplatestore/config/* $wwwroot/html/$www_repofocus/config
+  	sudo cp -v -R --update=none $laraveltemplatestore/public/* $wwwroot/html/$www_repofocus/public
 
   #20250320 not need as copied whole app stubs above  sudo cp -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Console/Commands/*.* $targetroot/app/Console/Commands
 

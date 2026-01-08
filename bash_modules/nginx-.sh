@@ -89,7 +89,7 @@ function nginx-setserverblock() {
     reponame=$www_repofocus
   else
     www_repofocus=$reponame #set focus or .env will be read wrong by php
-    bash-writesettings
+    bash-writesettingsipiiu
   fi
   sslcertificate=$2
   if [ "$sslcertificate" == "" ]; then
@@ -101,6 +101,8 @@ function nginx-setserverblock() {
   echo "Add a line to your local hosts file: "
   localurl="$www_repofocus.$serverid.com"
   echo "$('net-wanIP')   $localurl"
+  echo "and run this in windows CMD terminal where applicable (eg on dev laptop)"
+  echo "ipconfig /flushdns"
   wait clear
   echo "Creating NGINX server block"
   echo-hr

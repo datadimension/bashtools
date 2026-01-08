@@ -30,8 +30,8 @@ function git-addlocalexcludedfiles() {
   templatestore=~/bashtools/templates/git
   targetroot=$wwwroot/html/$www_repofocus
   repodir=$wwwroot/html/$www_repofocus
-  sudo mkdir -p $repodir/app/config/
-  sudo mkdir -p $repodir/app/routes/
+  sudo mkdir -p $repodir/config/
+  sudo mkdir -p $repodir/routes/
   sudo mkdir -p $repodir/app/Console/Commands
   sudo mkdir -p $repodir/app/API
 

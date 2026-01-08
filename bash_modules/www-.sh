@@ -192,6 +192,7 @@ function www-repocreate() {
   echo "ssh database server and run mysql-createrepodatabase $www_repofocus"
   wait "Finished database ? Enter to continue"
   www-oauthcreate
+  fsys-secure;
 }
 
 function www-oauthcreate() {
