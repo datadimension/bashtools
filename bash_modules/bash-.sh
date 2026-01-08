@@ -44,7 +44,7 @@ function bash-start-ubuntu() {
     echo "$welcomemsg"
   fi
 www-reposhow
-~www;
+cd $www_repofocus;
 }
 
 bash-start-ubuntu-osconfigcheck() {
