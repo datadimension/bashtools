@@ -43,8 +43,7 @@ function bash-start-ubuntu() {
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
-www-reposhow
-cd $www_repofocus;
+file-cdrepo
 }
 
 bash-start-ubuntu-osconfigcheck() {

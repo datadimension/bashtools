@@ -67,6 +67,7 @@ function file-cdrepo(){
 	startdir="$wwwroot/html/$www_repofocus"
 	if [ -d "$startdir" ]; then
         echo ""
+        cd $startdir;
     else
     	echo ""
     	echo "Error: Current reponame set at '$www_repofocus'"
