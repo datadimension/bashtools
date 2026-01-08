@@ -1,7 +1,8 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");
 $view =
-    "    			CREATE
+    "
+    CREATE
               ALGORITHM = UNDEFINED
               DEFINER = `" . $args["app_schema"] . "_php`@`%`
               SQL SECURITY DEFINER

@@ -164,6 +164,8 @@ function mysql-createrepodatabase() {
     echo "create table if not exists $tablename like xontoolbox.$tablename;"
     i=$(($i + 1))
   done
+  echo-hr
+    echo "Then type exit when done"
   mysql-login
   clear
   echo "now create views"
@@ -171,5 +173,7 @@ function mysql-createrepodatabase() {
   echo-br "use $app_schema;"
   php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
   echo-hr
+  echo "Then type exit when done"
   mysql-login
+	php ~/bashtools/php_helpers/mysql/view_domain_icons.php app_schema=$app_schema
 }
