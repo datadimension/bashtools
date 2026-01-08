@@ -208,10 +208,6 @@ function www-oauthcreate() {
   echo "https://$www_repofocus.$serverid.com"
   echo-nl "https://$www_repofocus.$serverid.com/auth/google/callback"
   echo-nl "https://$www_repofocus.$serverid.com/google/api_getauth"
-
-  
-  echo "https://$www_repofocus/auth/google/callback"
-  echo-nl "https://$www_repofocus/google/api_getauth"
   echo-br "also add dev server entries similar to"
   echo "https://$www_repofocus.devserver"
   echo "https://$www_repofocus.devserver/auth/google/callback"
