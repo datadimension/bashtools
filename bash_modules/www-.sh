@@ -205,7 +205,11 @@ function www-oauthcreate() {
   echo "and Create OAuth client ID"
   echo-nl "https://console.cloud.google.com/auth/clients/create"
   echo-nl "and add as per these examples as seperate entries:"
-  echo "https://$www_repofocus"
+  echo "https://$www_repofocus.$serverid.com"
+  echo-nl "https://$www_repofocus.$serverid.com/auth/google/callback"
+  echo-nl "https://$www_repofocus.$serverid.com/google/api_getauth"
+
+  
   echo "https://$www_repofocus/auth/google/callback"
   echo-nl "https://$www_repofocus/google/api_getauth"
   echo-br "also add dev server entries similar to"
