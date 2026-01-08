@@ -43,7 +43,8 @@ function bash-start-ubuntu() {
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
-   ~www
+www-reposhow
+~www;
 }
 
 bash-start-ubuntu-osconfigcheck() {
