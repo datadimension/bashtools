@@ -43,7 +43,7 @@ function bash-start-ubuntu() {
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
-   file-cdrepo
+   ~www
 }
 
 bash-start-ubuntu-osconfigcheck() {
