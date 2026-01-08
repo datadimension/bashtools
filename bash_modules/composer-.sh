@@ -6,15 +6,18 @@ function composer-stopxdebug() {
   wait
 }
 
+#sets required DD dependencies
 function composer-create-DD-dependacies() {
   composer-stopxdebug
   composer require laravel/ui
   composer require laravel/socialite
   composer require google/apiclient
-  composer require google/photos-library
+  echo "google photolibrary skipped";
+  #composer require google/photos-library
   composer-update
 }
 
+#updates  dependencies
 function composer-update() {
   composer-stopxdebug
   # updates dependencies

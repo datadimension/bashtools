@@ -50,12 +50,6 @@ add user
 "
 }
 
-#runs datagrip on ubuntu desktop
-function mysql-datagrip(){
-cd ~/;
-./software/datagrip/DataGrip-2025.2.2/bin/datagrip.sh;
-}
-
 function mysql-getversion() {
   if [ -f /etc/init.d/mysql* ]; then
     MYSQL_VERSION=$(mysql -V)
@@ -146,6 +140,7 @@ function mysql-createrepodatabase() {
     "_iCalendar_event"
     "_iCalendar_eventadditional"
     "_iCalendar_usereventadditional"
+    "_iconsource"
     "_listplanner"
     "_location"
     "_monitor"

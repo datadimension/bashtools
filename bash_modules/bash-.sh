@@ -111,7 +111,7 @@ function bash-install-windows() {
 
 # shows bash function categories and functions
 function bash-help() {
-  std-menu std,bash,env,fsys,git,log,net,os,nginx,php,www "Help Categories:"
+  std-menu std,bash,env,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
   echo "Loading help for $MENUCHOICE ..."
   php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
 }

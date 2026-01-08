@@ -270,6 +270,7 @@ function git-pull-repo() {
     git fetch
     git reset --hard HEAD
     git merge '@{u}'
+    git rebase
   else
     git pull
   fi

@@ -24,8 +24,14 @@ function net-ssh-log-session() {
   echo $SSH_CLIENT | awk '{ print $1}' >>~/bashtoolscfg/sshclient.log
 }
 
+#show firewall status
 function net-firewall-status() {
   sudo ufw status
+}
+
+#installs vpn functionality
+function net-vpninstall(){
+sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome;
 }
 
 function vpn() {

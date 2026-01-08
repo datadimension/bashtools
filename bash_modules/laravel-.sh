@@ -31,7 +31,7 @@ function laravel-create() {
     bash-restart
     return
 fi
-  newreopodir=$wwwroot/html/$newrepo
+  newrepodir=$wwwroot/html/$newrepo
   echo "creating new repo $newrepo in directory $newreopodir"
   if [ -d "$newreopodir" ]; then #abort if directory exists
     wait clear "Error: repo '$newrepo' already exists at $newreopodir. Enter to exit."

@@ -49,6 +49,7 @@ function fsys-secure() {
   sudo chmod -R $sec755level $targetroot/app
   sudo chmod -R $sec770level $targetroot/storage
   sudo chmod -R $sec770level $targetroot/public/downloads
+  sudo chmod -R $sec770level $targetroot/public
   sudo chmod -R $sec770level $targetroot/private
 }
 
@@ -83,10 +84,6 @@ function file-cdrepo(){
     	echo "and remove later with"
     	echo "nginx-testreporemove"
     	echo ""
-else
-echo ""
-cd $startdir
-ls
     fi
 }
 
