@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\DD_laravelAp\Controllers\API\google\Gdrive_c;
 use App\DD_laravelAp\Controllers\API\google\Gphotos_c;
@@ -142,61 +142,6 @@ class Cron_c extends BaseCron_c {
 		  $msg = "no items to upload";
 	    }
 	    return ["resultcount" => $dir_index, "msg" => "Processed: " . $msg];
-      }
-
-      private function local_temp_photo_process($sourcedir, $limit, $targetdirs = []) {
-	    $targetdirs = array_defaults($targetdirs, [
-		"photos" => $this->_drive_serveroutbox_photos,
-		"videos" => $this->_drive_serveroutbox_videos,
-		"json" => $this->_drive_serveroutbox_json,
-		"exif" => $this->_drive_serveroutbox_exif,
-		"other" => $this->_drive_serveroutbox_nonmedia
-	    ]);
-	    $drive = new Gdrive_c();
-	    $msg = "";
-	    $dirlist = $drive->listDescendantDirectories($sourcedir, [
-		"maxtopleveldirs" => 1
-	    ]);
-	    array_push($dirlist, $sourcedir);//to include any files in parent directory
-	    $dir_index = 0;
-	    $processed_files = 0;
-	    while ($dir_index < count($dirlist) && $processed_files < $limit) {
-		  $dir_id = $dirlist[$dir_index];
-		  $diritems = $drive->listDirectoryItems($dir_id, ["withmeta" => true, "directories" => null]);
-		  if (count($diritems) > 0) {
-			$file_index = 0;
-			do {
-			      //$item_id = $diritems[$file_index]["UUID"];
-			      $item = $diritems[$file_index];
-			      if ($item["mime"] != "application/vnd.google-apps.folder") {//ignore and don't move directories, as we dont want contents to be moved with them - we will just delete them when empty as flatening directories
-				    $type = Gdrive_c::getFileType($item);
-				    if ($type == "image") {
-					  $drive->moveFileFromTo($item["UUID"], $targetdirs["photos"]);
-				    }
-				    else if ($type == "video") {
-					  $drive->moveFileFromTo($item["UUID"], $targetdirs["videos"]);
-				    }
-				    else if ($type == "json") {
-					  $drive->moveFileFromTo($item["UUID"], $targetdirs["json"]);
-				    }
-				    else {
-					  $drive->moveFileFromTo($item["UUID"], $targetdirs["other"]);
-				    }
-				    $processed_files++;
-			      }
-			      $msg .= $item["name"] . ", ";
-			      $file_index++;
-			} while ($file_index < count($diritems) && $processed_files < $limit);
-		  }
-		  else {
-			if ($dir_id != $sourcedir) {
-			      $drive->deleteItem($dir_id, ["permanent" => true]);
-			      $msg .= " DELETED EMPTY DIR:" . $dir_id . ",";
-			}
-		  }
-		  $dir_index++;
-	    }
-	    return ["resultcount" => $processed_files, "msg" => "Processed: " . $msg];
       }
 
       /** sorts unzipped takeout files
@@ -418,13 +363,6 @@ class Cron_c extends BaseCron_c {
       }
 
       /**
-       * downloads the photos from drive folder $this->_drive_serveroutbox_photos
-       **/
-      protected function x20240306_gdrive_tempvideo_to_gphotos($task) {
-	    return $this->gdrive_tempitem_to_gphotos($task, $this->_temp_videos_dir);
-      }
-
-      /**
        * gdrivemap maps google drive meta to database
        *
        * same as other sync meta, its output to the database is the whole
@@ -457,7 +395,7 @@ class Cron_c extends BaseCron_c {
 		  if ($processed_files > $limit) {
 			break;
 		  }
-		  $filenameindex = strpos($file, $filenametag,);
+		  $filenameindex = strpos($file, $filenametag);
 		  $origfilename = substr($file, $filenameindex + strlen($filenametag));
 		  $fullfilepath = $dir . "/" . $file;
 		  array_push($newMediaItems, [
@@ -478,72 +416,19 @@ class Cron_c extends BaseCron_c {
       }
 
       /**
+       * downloads the photos from drive folder $this->_drive_serveroutbox_photos
+       **/
+      protected function x20240306_gdrive_tempvideo_to_gphotos($task) {
+	    return $this->gdrive_tempitem_to_gphotos($task, $this->_temp_videos_dir);
+      }
+
+      /**
        *  extract photos from the parent directory folder subdirectories so another process can index and move them to google photos
        * @param $task
        * @return void
        */
       protected function x20240306_gdrive_processqueue($task) {
 	    $this->gdrive_dirextract($this->_drivephotoprocessqueue, $task["limit"]);
-      }
-
-      /**
-       * sorts filetypes into destination folders, deleting empty source folders
-       * @param $task
-       * @return string[]
-       */
-      private function x20240306_gdrive_dirextract($sourcedir, $limit, $targetdirs = []) {
-	    $targetdirs = array_defaults($targetdirs, [
-		"photos" => $this->_drive_serveroutbox_photos,
-		"videos" => $this->_drive_serveroutbox_videos,
-		"json" => $this->_drive_serveroutbox_json,
-		"exif" => $this->_drive_serveroutbox_exif,
-		"other" => $this->_drive_serveroutbox_nonmedia
-	    ]);
-	    $drive = new Gdrive_c();
-	    $msg = "";
-	    $dirlist = $drive->listDescendantDirectories($sourcedir, [
-		"maxtopleveldirs" => 1
-	    ]);
-	    array_push($dirlist, $sourcedir);//to include any files in parent directory
-	    $dir_index = 0;
-	    $processed_files = 0;
-	    while ($dir_index < count($dirlist) && $processed_files < $limit) {
-		  $dir_id = $dirlist[$dir_index];
-		  $diritems = $drive->listDirectoryItems($dir_id, ["withmeta" => true, "directories" => null]);
-		  if (count($diritems) > 0) {
-			$file_index = 0;
-			do {
-			      //$item_id = $diritems[$file_index]["UUID"];
-			      $item = $diritems[$file_index];
-			      if ($item["mime"] != "application/vnd.google-apps.folder") {//ignore and don't move directories, as we dont want contents to be moved with them - we will just delete them when empty as flatening directories
-				    $type = Gdrive_c::getFileType($item);
-				    if ($type == "image") {
-					  $drive->moveFileFromTo($item["UUID"], $targetdirs["photos"]);
-				    }
-				    else if ($type == "video") {
-					  $drive->moveFileFromTo($item["UUID"], $targetdirs["videos"]);
-				    }
-				    else if ($type == "json") {
-					  $drive->moveFileFromTo($item["UUID"], $targetdirs["json"]);
-				    }
-				    else {
-					  $drive->moveFileFromTo($item["UUID"], $targetdirs["other"]);
-				    }
-				    $processed_files++;
-			      }
-			      $msg .= $item["name"] . ", ";
-			      $file_index++;
-			} while ($file_index < count($diritems) && $processed_files < $limit);
-		  }
-		  else {
-			if ($dir_id != $sourcedir) {
-			      $drive->deleteItem($dir_id, ["permanent" => true]);
-			      $msg .= " DELETED EMPTY DIR:" . $dir_id . ",";
-			}
-		  }
-		  $dir_index++;
-	    }
-	    return ["resultcount" => $processed_files, "msg" => "Processed: " . $msg];
       }
 
       /**
@@ -664,6 +549,121 @@ class Cron_c extends BaseCron_c {
 	    $task["limit"] = 50;//overidden as not allowed to change amount with a pagetoken ????? !!!!!! " When using a page token, you must use the same parameters as the previous request "
 	    $meta = $gphotos->syncNext($task["limit"]);
 	    return ["msg" => $meta["count"] . " " . $meta["nextToken"]];
+      }
+
+      private function local_temp_photo_process($sourcedir, $limit, $targetdirs = []) {
+	    $targetdirs = array_defaults($targetdirs, [
+		"photos" => $this->_drive_serveroutbox_photos,
+		"videos" => $this->_drive_serveroutbox_videos,
+		"json" => $this->_drive_serveroutbox_json,
+		"exif" => $this->_drive_serveroutbox_exif,
+		"other" => $this->_drive_serveroutbox_nonmedia
+	    ]);
+	    $drive = new Gdrive_c();
+	    $msg = "";
+	    $dirlist = $drive->listDescendantDirectories($sourcedir, [
+		"maxtopleveldirs" => 1
+	    ]);
+	    array_push($dirlist, $sourcedir);//to include any files in parent directory
+	    $dir_index = 0;
+	    $processed_files = 0;
+	    while ($dir_index < count($dirlist) && $processed_files < $limit) {
+		  $dir_id = $dirlist[$dir_index];
+		  $diritems = $drive->listDirectoryItems($dir_id, ["withmeta" => true, "directories" => null]);
+		  if (count($diritems) > 0) {
+			$file_index = 0;
+			do {
+			      //$item_id = $diritems[$file_index]["UUID"];
+			      $item = $diritems[$file_index];
+			      if ($item["mime"] != "application/vnd.google-apps.folder") {//ignore and don't move directories, as we dont want contents to be moved with them - we will just delete them when empty as flatening directories
+				    $type = Gdrive_c::getFileType($item);
+				    if ($type == "image") {
+					  $drive->moveFileFromTo($item["UUID"], $targetdirs["photos"]);
+				    }
+				    else if ($type == "video") {
+					  $drive->moveFileFromTo($item["UUID"], $targetdirs["videos"]);
+				    }
+				    else if ($type == "json") {
+					  $drive->moveFileFromTo($item["UUID"], $targetdirs["json"]);
+				    }
+				    else {
+					  $drive->moveFileFromTo($item["UUID"], $targetdirs["other"]);
+				    }
+				    $processed_files++;
+			      }
+			      $msg .= $item["name"] . ", ";
+			      $file_index++;
+			} while ($file_index < count($diritems) && $processed_files < $limit);
+		  }
+		  else {
+			if ($dir_id != $sourcedir) {
+			      $drive->deleteItem($dir_id, ["permanent" => true]);
+			      $msg .= " DELETED EMPTY DIR:" . $dir_id . ",";
+			}
+		  }
+		  $dir_index++;
+	    }
+	    return ["resultcount" => $processed_files, "msg" => "Processed: " . $msg];
+      }
+
+      /**
+       * sorts filetypes into destination folders, deleting empty source folders
+       * @param $task
+       * @return string[]
+       */
+      private function x20240306_gdrive_dirextract($sourcedir, $limit, $targetdirs = []) {
+	    $targetdirs = array_defaults($targetdirs, [
+		"photos" => $this->_drive_serveroutbox_photos,
+		"videos" => $this->_drive_serveroutbox_videos,
+		"json" => $this->_drive_serveroutbox_json,
+		"exif" => $this->_drive_serveroutbox_exif,
+		"other" => $this->_drive_serveroutbox_nonmedia
+	    ]);
+	    $drive = new Gdrive_c();
+	    $msg = "";
+	    $dirlist = $drive->listDescendantDirectories($sourcedir, [
+		"maxtopleveldirs" => 1
+	    ]);
+	    array_push($dirlist, $sourcedir);//to include any files in parent directory
+	    $dir_index = 0;
+	    $processed_files = 0;
+	    while ($dir_index < count($dirlist) && $processed_files < $limit) {
+		  $dir_id = $dirlist[$dir_index];
+		  $diritems = $drive->listDirectoryItems($dir_id, ["withmeta" => true, "directories" => null]);
+		  if (count($diritems) > 0) {
+			$file_index = 0;
+			do {
+			      //$item_id = $diritems[$file_index]["UUID"];
+			      $item = $diritems[$file_index];
+			      if ($item["mime"] != "application/vnd.google-apps.folder") {//ignore and don't move directories, as we dont want contents to be moved with them - we will just delete them when empty as flatening directories
+				    $type = Gdrive_c::getFileType($item);
+				    if ($type == "image") {
+					  $drive->moveFileFromTo($item["UUID"], $targetdirs["photos"]);
+				    }
+				    else if ($type == "video") {
+					  $drive->moveFileFromTo($item["UUID"], $targetdirs["videos"]);
+				    }
+				    else if ($type == "json") {
+					  $drive->moveFileFromTo($item["UUID"], $targetdirs["json"]);
+				    }
+				    else {
+					  $drive->moveFileFromTo($item["UUID"], $targetdirs["other"]);
+				    }
+				    $processed_files++;
+			      }
+			      $msg .= $item["name"] . ", ";
+			      $file_index++;
+			} while ($file_index < count($diritems) && $processed_files < $limit);
+		  }
+		  else {
+			if ($dir_id != $sourcedir) {
+			      $drive->deleteItem($dir_id, ["permanent" => true]);
+			      $msg .= " DELETED EMPTY DIR:" . $dir_id . ",";
+			}
+		  }
+		  $dir_index++;
+	    }
+	    return ["resultcount" => $processed_files, "msg" => "Processed: " . $msg];
       }
 }
 /**legacy 20210830

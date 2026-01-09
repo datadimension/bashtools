@@ -193,6 +193,8 @@ function www-repocreate() {
   wait "Finished database ? Enter to continue"
   www-oauthcreate
   fsys-secure;
+  echo "Now test with:";
+  echo "https://$www_repofocus.$serverid.com/servertest"
 }
 
 function www-oauthcreate() {

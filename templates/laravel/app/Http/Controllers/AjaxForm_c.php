@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\DD_laravelAp\Controllers\BaseController_AjaxForm;
 use App\DD_laravelAp\Helpers\DataB;

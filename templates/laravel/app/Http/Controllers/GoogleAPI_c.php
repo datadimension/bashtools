@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\DD_laravelAp\Controllers\API\google\BaseGoogleAPI_c;
 use App\DD_laravelAp\Helpers\DataB;

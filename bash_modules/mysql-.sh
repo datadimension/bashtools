@@ -143,6 +143,7 @@ function mysql-createrepodatabase() {
     "_iconsource"
     "_listplanner"
     "_location"
+    "_geolocation"
     "_monitor"
     "_notification"
     "_permissions"
