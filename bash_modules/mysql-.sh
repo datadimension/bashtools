@@ -157,6 +157,7 @@ function mysql-createrepodatabase() {
     "_widgets"
     "users"
   )
+
   size=${#sqltables[@]}
   i=0
   echo "use $app_schema;"
