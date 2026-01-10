@@ -213,6 +213,7 @@ function git-reset-repo() {
 function git-push-all() {
   git-push-repo "DD_laraview"
   git-push-repo "DD_libwww"
+  git-push-repo "DD_libmedia"
   git-push-repo "DD_laravelAp"
   git-push-repo "$www_repofocus"
   echo-hr
@@ -224,6 +225,8 @@ function git-push-repo() {
     gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
   elif [ "$gitreponame" == "DD_libwww" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/public"
+elif [ "$gitreponame" == "DD_libmedia" ]; then
+        gitrepopath="$wwwroot/html/$www_repofocus/public"
   elif [ "$gitreponame" == "DD_laravelAp" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/app"
   elif [ "$gitreponame" == "bashtools" ]; then
@@ -250,6 +253,8 @@ function git-pull-repo() {
   if [ "$gitreponame" == "DD_laraview" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
   elif [ "$gitreponame" == "DD_libwww" ]; then
+    gitrepopath="$wwwroot/html/$www_repofocus/public"
+  elif [ "$gitreponame" == "DD_libmedia" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/public"
   elif [ "$gitreponame" == "DD_laravelAp" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/app"
@@ -308,6 +313,7 @@ function git-pull-all() {
   git-pull-repo "bashtools"
   git-pull-repo "DD_laraview"
   git-pull-repo "DD_libwww"
+  git-pull-repo "DD_libmedia"
   git-pull-repo "DD_laravelAp"
   git-pull-repo "$www_repofocus"
 }
@@ -320,6 +326,7 @@ function git-setup() {
 
 function git-deploysubrepos() {
   git-deploysubrepo "$www_repofocus/public" "DD_libwww"
+  git-deploysubrepo "$www_repofocus/public" "DD_libmedia"
   git-deploysubrepo "$www_repofocus/app" "DD_laravelAp"
   git-deploysubrepo "$www_repofocus/resources/views" "DD_laraview"
   echo-hr

@@ -54,10 +54,12 @@ fi
 
   #add in DD  stubs
   	sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app
-  	sudo cp -v -R --update=none $laraveltemplatestore/bootstrap/* $wwwroot/html/$www_repofocus/bootstrap
+  	sudo cp  $laraveltemplatestore/bootstrap/app.php $wwwroot/html/$www_repofocus/bootstrap/app.php
   	sudo cp -v -R --update=none $laraveltemplatestore/routes/* $wwwroot/html/$www_repofocus/routes
 	sudo cp -v -R $laraveltemplatestore/config/* $wwwroot/html/$www_repofocus/config
   	sudo cp -v -R --update=none $laraveltemplatestore/public/* $wwwroot/html/$www_repofocus/public
+  	sudo cp -v -R --update=none $laraveltemplatestore/resources/* $wwwroot/html/$www_repofocus/resources
+
 
   #20250320 not need as copied whole app stubs above  sudo cp -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Console/Commands/*.* $targetroot/app/Console/Commands
 

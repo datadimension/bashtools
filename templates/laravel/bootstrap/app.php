@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 	  $middleware->alias([
-	      'accesslevel' => \app\Http\Middleware\AccessLevel::class,
+	      'accesslevel' => \App\Http\Middleware\AccessLevel::class,
 	  ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
