@@ -1,9 +1,9 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");
 $jsonpath = $wwwroot . "/html/" . $www_repofocus . "/composer.json";
-
 $json = json_decode(file_get_contents($jsonpath), true);
-
+var_dump($json);
+die();
 $includes = [
     "app/DD_laravelAp/Helpers/php_extend/php_extend.php",
     "app/DD_laravelAp/Helpers/php_extend/array_extend.php",

@@ -32,12 +32,12 @@ function laravel-create() {
     return
 fi
   newrepodir=$wwwroot/html/$newrepo
-  echo "creating new repo $newrepo in directory $newreopodir"
+  echo "creating new repo $newrepo in directory $newrepodir"
   if [ -d "$newreopodir" ]; then #abort if directory exists
-    wait clear "Error: repo '$newrepo' already exists at $newreopodir. Enter to exit."
+    wait clear "Error: repo '$newrepo' already exists at $newrepodir. Enter to exit."
     exit
   fi
-  composer create-project laravel/laravel $newreopodir
+  composer create-project laravel/laravel $newrepodir
   www_repofocus=$newrepo
   cd "$wwwroot/html/$www_repofocus"
   bash-writesettings

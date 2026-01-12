@@ -267,18 +267,20 @@ function git-pull-repo() {
 
   echo-hr
   echo "pulling repo $gitreponame $forced"
-  echo "to $gitrepopath/$gitreponame;"
+  echo "to $gitrepopath/$gitreponame"
   echo-hr
 
+
   cd $gitrepopath/$gitreponame
-  if [ "$forced" == "FORCED" ]; then
-    git fetch
-    git reset --hard HEAD
-    git merge '@{u}'
-    git rebase
-  else
-    git pull
-  fi
+  	if [ "$forced" == "FORCED" ]; then
+    	git fetch
+   	 git reset --hard HEAD
+  	  git merge '@{u}'
+   	 git rebase
+  	else
+    	git pull
+  	fi
+
   echo ""
   echo "Finished at:"
   echo-now
