@@ -36,7 +36,7 @@ VIEW `_domain_icons` AS
         `_libmedia`.`UUID` AS `UUID`,
         `_libmedia`.`parentUUID` AS `parentUUID`
     FROM
-        `_libmedia`
+        `_libmedia`;
 ";
 
 echo "\n";
