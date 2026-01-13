@@ -68,8 +68,6 @@ function mysql-createrepousers() {
     echo "Not the DEV server"
     return 0
   fi
-  echo-nl "Create users by pasting the following scripts  (type exit when done)"
-  echo-hr
   app_schema=$1
   if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
     read -p "You need to have a focused repo to do this" wait
@@ -78,13 +76,7 @@ function mysql-createrepousers() {
   if [ "$app_schema" == "" ]; then
     app_schema=$www_repofocus
   fi
-  echo "Generating scripts for $app_schema"
   newpassword="PWD_$(uuidgen)_"
-  echo "YOU WILL HAVE TO RUN SQL TO ACTUALLY ADD THE USER"
-  echo "Password will initially be set as random to avoid unsecurely showing it in script"
-  echo-nl "The script will ask you to change this immediately"
-  echo-nl "SQL Script:"
-  echo-hr
   echo "DROP USER IF EXISTS '"$app_schema"_admin';"
   echo "CREATE USER '"$app_schema"_admin'@'%' IDENTIFIED BY '$newpassword';"
   echo "GRANT SELECT,EXECUTE, SHOW VIEW ON ddDB.* TO '"$www_repofocus"_admin'@'%';"
@@ -185,5 +177,8 @@ mysql-msggen
 function mysql-msggen() {
 	clear;
 	  echo-h1 "MYSQL script generator"
-      echo "you will need to copy and paste and then type exit at each stage"
+      echo "you will need to copy and run SQL script"
+       echo "ON THE DATABASE PRODUCTION SERVER"
+       echo "and then type exit at each stage"
+      echo-hr
 }
