@@ -179,6 +179,7 @@ function bash-cfg() {
 }
 
 function bash-writesettings() {
+	db_app="${www_repofocus//[^[:alnum:]]}"
   csv=""
   for i in {0..9}; do
     csv+="${wwwrepos[$i]},"
