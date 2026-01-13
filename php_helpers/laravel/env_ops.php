@@ -33,7 +33,7 @@ if ($args["method"] == "env_generate") {
 	  "DB_HOST_ddDB" => ["production" => "localhost", "local" => $defaultDatabaseIP],
 	  "DB_PORT_ddDB" => 3306,
 	  "DB_DATABASE_ddDB" => "ddDB",
-	  "DB_USERNAME_ddDB" => $www_repofocus . "_php",
+	  "DB_USERNAME_ddDB" => $db_app . "_php",
 
 	  "DB_HOST_appDB" => ["production" => "localhost", "local" => $defaultDatabaseIP],
 	  "DB_PORT_appDB" => 3306,
