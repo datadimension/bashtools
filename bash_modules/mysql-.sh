@@ -133,6 +133,7 @@ mysql-msggen
     "_iCalendar_eventadditional"
     "_iCalendar_usereventadditional"
     "_iconsource"
+    "_libmedia"
     "_listplanner"
     "_location"
     "_geolocation"
@@ -163,15 +164,14 @@ mysql-msggen
 mysql-msggen
   echo "now create view_domainwidgets"
   echo-hr
-  echo-br "use $app_schema";
   php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
   echo-hr
   echo "Then type exit when done";
   mysql-login
   mysql-msggen
     echo "now create view_domainmedia"
-      echo-br "use $app_schema";
 	php ~/bashtools/php_helpers/mysql/view_domainmedia.php app_schema=$app_schema
+	mysql-login
 }
 
 function mysql-msggen() {
@@ -184,4 +184,5 @@ function mysql-msggen() {
        echo "and then type exit at each stage"
       echo-hr
       echo "MySQL script:"
+      echo-hr
 }
