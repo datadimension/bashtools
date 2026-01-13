@@ -305,6 +305,7 @@ function git-repo_create() {
   git remote add origin git@github.com:$gituname/$www_repofocus.git
   git push -u origin $branchname
   echo "Files set on server"
+    wait clear
 }
 
 function git-clean() {

@@ -189,7 +189,9 @@ function www-repocreate() {
   reponumber=$((reponumber - 1))
   wwwrepos[$reponumber]=$newrepo
   bash-writesettings
-  echo "ssh database server and run mysql-createrepodatabase $www_repofocus"
+  dbname="${www_repofocus//[^[:alnum:]]}"
+  echo "ssh to PRODUCTION database server and run"
+  echo-b "mysql-createrepodatabase $dbname"
   wait "Finished database ? Enter to continue"
   www-oauthcreate
   fsys-secure;

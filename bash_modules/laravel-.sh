@@ -72,9 +72,6 @@ fi
   echo "need to create .env now for nginx setup"
   nginx-setserverblock $www_repofocus
   git-repo_create
-  wait clear
-  echo "Now visit $localurl to test"
-  echo "Now to push to git if all ok"
 }
 
 function laravel-envinstall() {
