@@ -111,15 +111,14 @@ function mysql-createrepodatabase() {
     app_schema=$www_repofocus
   fi
 mysql-msggen
-  echo-nl "Create database by pasting the following scripts (type exit when done)"
-  echo-hr
   echo "create database $app_schema;"
   echo "use $app_schema;"
+  echo-hr
   mysql-login
 mysql-msggen
   mysql-createrepousers $app_schema
+    echo-hr
 mysql-msggen
-  echo-nl "Create tables by pasting the following scripts (type exit when done)"
   echo-hr
   declare -a sqltables=(
     "_account"
@@ -164,13 +163,14 @@ mysql-msggen
 mysql-msggen
   echo "now create view_domainwidgets"
   echo-hr
-  echo-br "use $app_schema;
+  echo-br "use $app_schema";
   php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
   echo-hr
-  echo "Then type exit when done";"
+  echo "Then type exit when done";
   mysql-login
   mysql-msggen
     echo "now create view_domainmedia"
+      echo-br "use $app_schema";
 	php ~/bashtools/php_helpers/mysql/view_domainmedia.php app_schema=$app_schema
 }
 
@@ -178,7 +178,10 @@ function mysql-msggen() {
 	clear;
 	  echo-h1 "MYSQL script generator"
       echo "you will need to copy and run SQL script"
+      echo ""
        echo "ON THE DATABASE PRODUCTION SERVER"
+       echo ""
        echo "and then type exit at each stage"
       echo-hr
+      echo "MySQL script:"
 }
