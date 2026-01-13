@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function git-installrepo() {
+function git-repo_install() {
   env-attributerequire gituname
   reponame=$1
   if [ "$reponame" == "" ]; then
