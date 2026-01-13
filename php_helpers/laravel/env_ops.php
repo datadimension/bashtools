@@ -37,8 +37,8 @@ if ($args["method"] == "env_generate") {
 
 	  "DB_HOST_appDB" => ["production" => "localhost", "local" => $defaultDatabaseIP],
 	  "DB_PORT_appDB" => 3306,
-	  "DB_DATABASE_appDB" => $www_repofocus,
-	  "DB_USERNAME_appDB" => $www_repofocus . "_php",
+	  "DB_DATABASE_appDB" => $db_app,
+	  "DB_USERNAME_appDB" => $db_app . "_php",
 
 	  "BROADCAST_DRIVER" => "log",
 	  "CACHE_DRIVER" => "file",
