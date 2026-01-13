@@ -166,6 +166,7 @@ function mysql-createrepodatabase() {
     echo "create table if not exists $tablename like xontoolbox.$tablename;"
     i=$(($i + 1))
   done
+  echo "-- reminder, now type exit";
   echo-hr
     echo "Then type exit when done"
   mysql-login
@@ -177,5 +178,5 @@ function mysql-createrepodatabase() {
   echo-hr
   echo "Then type exit when done"
   mysql-login
-	php ~/bashtools/php_helpers/mysql/view_domain_icons.php app_schema=$app_schema
+	php ~/bashtools/php_helpers/mysql/view_domainmedia.php app_schema=$app_schema
 }
