@@ -222,4 +222,5 @@ function bash-readsettings() {
   platform=${values[12]}
   wwwrepos=${values[13]}
   www_repofocus=${values[14]}
+  db_app=${values[15]}
 }
