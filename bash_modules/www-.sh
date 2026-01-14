@@ -7,7 +7,7 @@ function www-reposhow() {
   for i in {0..9}; do
     repolabel=${wwwrepos[$i]}
     if [ "$repolabel" != "" ]; then
-    	repodevurl=dev_url="${repolabel//[^[:alnum:]]}.$serverid.com"
+    	repodevurl="${repolabel//[^[:alnum:]]}.$serverid.com"
       repolabel="$repolabel  [dev URL: $repodevurl ]"
     fi
     echo "$((i + 1)): $repolabel"
