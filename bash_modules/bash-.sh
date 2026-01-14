@@ -180,6 +180,9 @@ function bash-cfg() {
 
 function bash-writesettings() {
 	db_app="${www_repofocus//[^[:alnum:]]}"
+	dev_url="${www_repofocus//[^[:alnum:]]}.$serverid.com"
+
+	$repolabel.$serverid.com
   csv=""
   for i in {0..9}; do
     csv+="${wwwrepos[$i]},"
@@ -189,7 +192,7 @@ function bash-writesettings() {
   echo "$csv" >~/bashtoolscfg/wwwrepos
   echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
   echo "$git_ssh" >~/bashtoolscfg/gitcfg
-  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app" >~/bashtoolscfg/bash.env
+  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,$dev_url" >~/bashtoolscfg/bash.env
 }
 
 function bash-readsettings() {
@@ -224,4 +227,6 @@ function bash-readsettings() {
   wwwrepos=${values[13]}
   www_repofocus=${values[14]}
   db_app=${values[15]}
+dev_url=${values[16]}
+
 }
