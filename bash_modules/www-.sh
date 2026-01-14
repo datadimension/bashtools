@@ -14,7 +14,9 @@ function www-reposhow() {
   done
   echo ""
   echo "www-reposwitch to change / www-reposet to configure "
-  echo "selected DEV URL: $dev_url"
+  echo ""
+  echo "selected DEV URL: (note do not use dot ('.') as part of the dev url repo name"
+  echo "$dev_url"
   echo ""
 }
 
