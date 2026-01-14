@@ -7,7 +7,7 @@ function www-reposhow() {
   for i in {0..9}; do
     repolabel=${wwwrepos[$i]}
     if [ "$repolabel" != "" ]; then
-      repolabel="$repolabel  [dev URL: $repolabel.$serverid.com ]"
+      repolabel="$repolabel  [dev URL: $dev_url ]"
     fi
     echo "$((i + 1)): $repolabel"
   done
@@ -209,7 +209,7 @@ function www-oauthcreate() {
   echo "and Create OAuth client ID"
   echo-nl "https://console.cloud.google.com/auth/clients/create"
   echo-nl "and add as per these examples as seperate entries, eg for dev server:"
-  echo "https://$www_repofocus.$serverid.com"
+  echo "https://$dev_url"
   echo "https://$www_repofocus.$serverid.com/auth/google/callback"
   echo-nl "https://$www_repofocus.$serverid.com/google/api_getauth"
 echo "also add for production server at some point"
