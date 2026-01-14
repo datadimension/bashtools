@@ -7,12 +7,14 @@ function www-reposhow() {
   for i in {0..9}; do
     repolabel=${wwwrepos[$i]}
     if [ "$repolabel" != "" ]; then
-      repolabel="$repolabel  [dev URL: $dev_url ]"
+    	repodevurl=dev_url="${repolabel//[^[:alnum:]]}.$serverid.com"
+      repolabel="$repolabel  [dev URL: $repodevurl ]"
     fi
     echo "$((i + 1)): $repolabel"
   done
   echo ""
   echo "www-reposwitch to change / www-reposet to configure "
+  echo "selected DEV URL: $dev_url"
   echo ""
 }
 
@@ -210,8 +212,8 @@ function www-oauthcreate() {
   echo-nl "https://console.cloud.google.com/auth/clients/create"
   echo-nl "and add as per these examples as seperate entries, eg for dev server:"
   echo "https://$dev_url"
-  echo "https://$www_repofocus.$serverid.com/auth/google/callback"
-  echo-nl "https://$www_repofocus.$serverid.com/google/api_getauth"
+  echo "https://$dev_url.com/auth/google/callback"
+  echo-nl "https://$dev_url/google/api_getauth"
 echo "also add for production server at some point"
 }
 
