@@ -15,7 +15,7 @@ function www-reposhow() {
   echo ""
   echo "www-reposwitch to change / www-reposet to configure "
   echo ""
-  echo "selected DEV URL: (note do not use dot ('.') as part of the dev url repo name"
+  echo "selected DEV URL:"
   echo "$dev_url"
   echo ""
 }
@@ -199,7 +199,7 @@ function www-repocreate() {
   www-oauthcreate
   fsys-secure;
   echo "Now test with:";
-  echo "https://$www_repofocus.$serverid.com/servertest"
+  echo "https://$dev_url/servertest"
 }
 
 function www-oauthcreate() {

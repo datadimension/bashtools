@@ -180,7 +180,7 @@ function bash-cfg() {
 
 function bash-writesettings() {
 	db_app="${www_repofocus//[^[:alnum:]]}"
-	dev_url="${www_repofocus//[^[:alnum:]]}.$serverid.com"
+	a1a1a1
 
 	$repolabel.$serverid.com
   csv=""

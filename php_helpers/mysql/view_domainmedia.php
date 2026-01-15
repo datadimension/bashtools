@@ -6,7 +6,7 @@ CREATE
     ALGORITHM = UNDEFINED 
     DEFINER = `" . $args["app_schema"] . "_php`@`%`
     SQL SECURITY INVOKER
-VIEW `_domain_icons` AS
+VIEW `_domainmedia` AS
     SELECT 
         `ddDB`.`_libmedia`.`pk` AS `pk`,
         `ddDB`.`_libmedia`.`name` AS `name`,
