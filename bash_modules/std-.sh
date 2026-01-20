@@ -137,12 +137,9 @@ function std-menu() {
 # Show history or search in history
 function hist() {
   search=$1
+  clear
   echo-hr
-  echo "HISTORY SEARCH"
-  if [ "$search" == "" ]; then
-    echo "enter search text"
-    read search
-  fi
+  echo "HISTORY"
   clear
   echo "history search:"
   echo "$search"
@@ -153,7 +150,12 @@ function hist() {
     history | grep $search
   fi
   echo-hr
+  read -p "Filter: " filter
+    if [ "$filter" != "" ]; then
+      hist filter
+      else
   echo "Use !<number> to execute history item <number>"
+  fi
 }
 
 function uuid() {

@@ -199,6 +199,7 @@ function nginx-cert-createregistered() {
   nginx-setserverblock $www_repofocus $certdomain
 }
 
+#edit current repo block
 function nginx-edit() {
   sudo nano /etc/nginx/sites-enabled/$www_repofocus
   nginx-start
