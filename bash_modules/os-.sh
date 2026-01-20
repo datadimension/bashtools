@@ -374,6 +374,8 @@ function os-sshkeygen() {
 		fi
 			pubkey=$(<~/.ssh/id_rsa.pub)
 		sudo chown -R $currentuser:$currentuser /home/$currentuser/.ssh
+		chmod 600 ~/.ssh/id_rsa
+
 		echo "$pubkey" >/home/$currentuser/.ssh/authorized_keys
 		puttygen /home/$currentuser/.ssh/id_rsa -o /home/$currentuser/.ssh/id_rsa.ppk
 		ppk=$(</home/$currentuser/.ssh/id_rsa.ppk)

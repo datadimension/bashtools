@@ -121,6 +121,10 @@ function nginx-h(){
 	bash-helpformodule nginx
 }
 
+function nginx.h(){
+	bash-helpformodule nginx
+}
+
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
 function nginx-cert-createselfsigned() {
   echo "Making self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server"
