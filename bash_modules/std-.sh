@@ -134,6 +134,28 @@ function std-menu() {
   MENUCHOICE=${values[$choice]}
 }
 
+# Show history or search in history
+function hist() {
+  search=$1
+  echo-hr
+  echo "HISTORY SEARCH"
+  if [ "$search" == "" ]; then
+    echo "enter search text"
+    read search
+  fi
+  clear
+  echo "history search:"
+  echo "$search"
+  echo-hr
+  if [ "$search" == "" ]; then
+    history
+  else
+    history | grep $search
+  fi
+  echo-hr
+  echo "Use !<number> to execute history item <number>"
+}
+
 function uuid() {
   uuid=$(uuidgen)
 }

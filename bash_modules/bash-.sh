@@ -110,7 +110,7 @@ function bash-install-windows() {
 }
 
 # shows bash function categories and functions
-function bash-help() {
+function bash-h() {
   std-menu std,bash,env,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
   echo "Loading help for $MENUCHOICE ..."
   php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
@@ -141,26 +141,6 @@ function bash-logout() {
   read waitb
   clear
   source ~/.bash_profile # this restarts bash as well
-}
-
-# Show history or search in history
-function bash-h() {
-  search=$1
-  if [ "$search" == "" ]; then
-    echo "enter search text"
-    read search
-  fi
-  clear
-  echo "history search:"
-  echo "$search"
-  echo-hr
-  if [ "$search" == "" ]; then
-    history
-  else
-    history | grep $search
-  fi
-  echo-hr
-  echo "Use !<number> to execute history item <number>"
 }
 
 function bash-sudoers() {
