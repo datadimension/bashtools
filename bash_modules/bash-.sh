@@ -116,6 +116,12 @@ function bash-help() {
   php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
 }
 
+#shows functions for specific module eg nginx, net etc
+function bash-helpformodule(){
+	  modulename=$1
+  php ~/bashtools/php_helpers/bash/bash-help.php helptype=$modulename
+}
+
 #restarts bash shell
 function bash-restart() {
   bash-writesettings

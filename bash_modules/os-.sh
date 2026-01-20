@@ -372,7 +372,7 @@ function os-sshkeygen() {
 			#sudo mv /home/$currentuser/.ssh/id_rsa /home/$newuser/.ssh/id_rsa
 			#sudo mv /home/$currentuser/.ssh/id_rsa.pub /home/$newuser/.ssh/id_rsa.pub
 		fi
-		pubkey=$(<~/.ssh/id_rsa.pub)
+			pubkey=$(<~/.ssh/id_rsa.pub)
 		sudo chown -R $currentuser:$currentuser /home/$currentuser/.ssh
 		echo "$pubkey" >/home/$currentuser/.ssh/authorized_keys
 		puttygen /home/$currentuser/.ssh/id_rsa -o /home/$currentuser/.ssh/id_rsa.ppk
