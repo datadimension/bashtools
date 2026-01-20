@@ -153,6 +153,7 @@ function bash-h() {
     history | grep $search
   fi
   echo-hr
+  echo "Use !<number> to execute history item <number>"
 }
 
 function bash-sudoers() {
