@@ -118,6 +118,7 @@ function bash-help() {
 
 #shows functions for specific module eg nginx, net etc
 function bash-helpformodule(){
+	echo-hr
 	  modulename=$1
   php ~/bashtools/php_helpers/bash/bash-help.php helptype=$modulename
 }
