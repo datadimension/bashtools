@@ -47,9 +47,16 @@ function vpn() {
   echo "CTRL C exits VPN setup - if connected will continue running in the background"
 }
 
+#show hosts file, append edit to edit it eg 'net-hosts edit'
 function net-hosts() {
-  sudo nano /etc/hosts
-  sudo resolvectl flush-caches
+	  mode=$1
+      if [ "$mode" == "edit" ]; then
+  		sudo nano /etc/hosts
+  		sudo net-dnsflush
+  	else
+  		tail -1000 /etc/hosts
+      fi
+
 }
 
 function net-sshcheck() {
