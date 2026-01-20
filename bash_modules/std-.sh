@@ -152,7 +152,7 @@ function hist() {
   echo-hr
   read -p "Filter: " filter
     if [ "$filter" != "" ]; then
-      hist filter
+      hist $filter
       else
   echo "Use !<number> to execute history item <number>"
   fi
