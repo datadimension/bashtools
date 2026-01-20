@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+#help for this module
+function git-h(){
+	bash-helpformodule git
+}
+
 function git-repo_install() {
   env-attributerequire gituname
   reponame=$1

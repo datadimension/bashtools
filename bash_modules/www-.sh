@@ -179,6 +179,11 @@ function www-repoinstall() {
   git-repo_install $dir $reponame
 }
 
+#help for this module
+function www-h(){
+	bash-helpformodule www
+}
+
 #creates a new website eg localserver_admin
 function www-repocreate() {
   #based on https://kbroman.org/github_tutorial/pages/init.html

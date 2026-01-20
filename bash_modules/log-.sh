@@ -1,3 +1,9 @@
+
+#help for this module
+function log-h(){
+	bash-helpformodule log
+}
+
 function log-show() {
 	clear
 	path=$1

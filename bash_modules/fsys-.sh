@@ -62,6 +62,11 @@ function file_exists() {
   fi
 }
 
+#help for this module
+function fsys-h(){
+	bash-helpformodule fsys
+}
+
 # change current directory to current focused repo
 function file-cdrepo(){
 	startdir="$wwwroot/html/$www_repofocus"

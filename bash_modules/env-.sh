@@ -6,6 +6,11 @@ function env-setwwwroot() {
   env-attributerequire "wwwroot"
 }
 
+#help for this module
+function env-h(){
+	bash-helpformodule env
+}
+
 function env-about() {
   clear
   echo-h1 "About Server"

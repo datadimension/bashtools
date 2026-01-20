@@ -116,6 +116,7 @@ function nginx-setserverblock() {
   nginx-start
 }
 
+#help for this module
 function nginx-h(){
 	bash-helpformodule nginx
 }

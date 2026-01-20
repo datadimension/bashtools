@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+#help for this module
+function laravel-h(){
+	bash-helpformodule laravel
+}
+
 function laravel-showversion() {
   php artisan --version
 }

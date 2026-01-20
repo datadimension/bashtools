@@ -6,6 +6,11 @@ function composer-stopxdebug() {
   wait
 }
 
+#help for this module
+function composer-h(){
+	bash-helpformodule composer
+}
+
 #sets required DD dependencies
 function composer-create-DD-dependacies() {
   composer-stopxdebug
