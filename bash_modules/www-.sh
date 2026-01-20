@@ -214,7 +214,7 @@ function www-oauthcreate() {
   echo-nl "https://console.cloud.google.com/auth/clients/create"
   echo-nl "and add as per these examples as seperate entries, eg for dev server:"
   echo "https://$dev_url"
-  echo "https://$dev_url.com/auth/google/callback"
+  echo "https://$dev_url/auth/google/callback"
   echo-nl "https://$dev_url/google/api_getauth"
 echo "also add for production server at some point"
 }
