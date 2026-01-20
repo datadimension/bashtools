@@ -15,7 +15,8 @@ function env-about() {
   echo "environment: [production/local]: $environment"
   echo-nl "wwwroot: $wwwroot"
 
-  echo "IP : $('net-wanIP')"
+echo "WAN IP: $wanip"
+  echo "LAN IP : $('net-wanIP')"
   echo-nl "SSH session IP detected as: $('net-sshIP')"
 
   echo-nl "Default Database IP: $defaultDatabaseIP"

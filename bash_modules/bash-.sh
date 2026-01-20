@@ -229,5 +229,5 @@ function bash-readsettings() {
   www_repofocus=${values[14]}
   db_app=${values[15]}
 dev_url=${values[16]}
-
+wanip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 }
