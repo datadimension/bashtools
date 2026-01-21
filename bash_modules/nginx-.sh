@@ -74,12 +74,7 @@ function nginx-testadd() {
 
 #remove the nginx test site
 function nginx-testremove() {
-  read -p "Remove nginxtest ? Y/n" input
-  if [ "$input" != "n" ]; then
-    sudo rm -R /var/www/html/nginxtest
-    sudo rm /etc/nginx/sites-enabled/nginxtest
     echo "Nginx test removed"
-  fi
 }
 
 #sets nginx block for current repo focus by default or specify repo name and sslcertificate repofocus will be changed if set
