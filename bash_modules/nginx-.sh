@@ -50,7 +50,7 @@ function nginx-deploylocalserveradmin(){
 }
 
 #deprecated in favour of installing localserveradmin by defaul  installs an nginx test page to check server is operational
-function nginx-testrepoadd() {
+function nginx-testadd() {
   #read -p "Add nginxtest ? Y/n"  input
   #if [ "$input" != "Y" ]; then
   #	return 1;
@@ -73,7 +73,7 @@ function nginx-testrepoadd() {
 }
 
 #remove the nginx test site
-function nginx-testreporemove() {
+function nginx-testremove() {
   read -p "Remove nginxtest ? Y/n" input
   if [ "$input" != "n" ]; then
     sudo rm -R /var/www/html/nginxtest
