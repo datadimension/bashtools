@@ -33,7 +33,7 @@ $blocktemplate = str_replace("<repo_name />", $args["repo_name"], $blocktemplate
 $blocktemplate = str_replace("<wwwroot />", $wwwroot, $blocktemplate);
 
 $blocktemplate = str_replace("<ssl_certs />", $certs, $blocktemplate);
-
+$fpmversion =
 $blocktemplate = str_replace("<PHP_VERSION />", $PHP_VERSION, $blocktemplate);
-
+die();
 file_put_contents("/etc/nginx/sites-enabled/" . $args["repo_name"], $blocktemplate);
