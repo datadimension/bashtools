@@ -2,14 +2,6 @@
 
 php_defaultvs="8.3";#the default version to use
 
-function php-v(){
-  maj=$(php -r "echo PHP_MAJOR_VERSION ;")
-  min=$(php -r "echo PHP_MINOR_VERSION ;")
-  phpNo="$maj.$min";
-  bash-writesettings;
-  echo "$phpNo";
-}
-
 function php-install() {
 	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update

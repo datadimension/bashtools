@@ -167,7 +167,11 @@ function bash-cfg() {
 }
 
 function bash-writesettings() {
+
+	#ensure detectable values are written
+	php-getversion;
 	db_app="${www_repofocus//[^[:alnum:]]}"
+
   csv=""
   for i in {0..9}; do
     csv+="${wwwrepos[$i]},"
@@ -204,7 +208,7 @@ function bash-readsettings() {
   ssh2=${values[3]}
   defaultDatabaseIP=${values[4]}
   gituname=${values[7]}
-  phpNo=${values[8]}
+  #20260122phpNo=${values[8]}
   ipgateway=${values[9]}
   welcomemsg=${values[10]}
   wwwroot=${values[11]}

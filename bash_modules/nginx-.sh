@@ -27,7 +27,6 @@ function nginx-start() {
   sudo logrotate -f /etc/logrotate.d/nginx
   clear
   echo-h1 "Starting Nginx / PHP-fpm"
-  env-attributerequire phpNo
   sudo service php$php_defaultvs-fpm start
   sudo service nginx start
   sudo /etc/init.d/cron start

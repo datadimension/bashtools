@@ -68,10 +68,7 @@ function env-setservertype() {
 function env-setattribute() {
   varname=$1
   echo "Attempting to reset $varname"
-  if [ "$varname" == "phpNo" ]; then
-    phpNo=""
-    bash-writesettings
-  elif [ "$varname" == "os_status" ]; then
+  if [ "$varname" == "os_status" ]; then
     os_status=""
     bash-writesettings
   elif [ "$varname" == "gituname" ]; then
