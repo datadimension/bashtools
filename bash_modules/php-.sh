@@ -36,7 +36,7 @@ function php-install() {
 
 function php-getversion(){
 		PHP_VERSION=$(php -r "echo PHP_VERSION;")
-		echo "PHP version: $PHP_VERSION";
+		echo "PHP_VERSION: $PHP_VERSION";
 }
 
 function php-edit() {
