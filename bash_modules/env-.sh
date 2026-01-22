@@ -11,6 +11,12 @@ function env-h(){
 	bash-helpformodule env
 }
 
+
+#show full info about the server environment
+function env-() {
+	env-about(
+	}
+
 #show full info about the server environment
 function env-about() {
   clear
@@ -120,4 +126,6 @@ function env-attributerequire() {
 		read wait
   fi
   clear
+}
+
 }
