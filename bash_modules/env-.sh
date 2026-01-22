@@ -16,9 +16,9 @@ function env-h(){
 #show full info about the server environment
 function env-about() {
   clear
-  echo-h1 "About Server"
+  echo "Server Environment"
   echo-now
-  echo ""
+  echo-hr
   echo "serverid: $serverid"
   echo "environment: [production/local]: $environment"
   echo-nl "wwwroot: $wwwroot"
