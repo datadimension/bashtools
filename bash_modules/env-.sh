@@ -12,7 +12,7 @@ function env-h(){
 }
 
 #show full info about the server environment
-function env() {
+function env-() {
   clear
   echo-h1 "About Server"
   echo-now
@@ -36,6 +36,7 @@ echo "WAN IP: $wanip"
   echo "OS:"
   cat /etc/lsb-release
   echo ""
+  env
   echo-hr
 }
 
