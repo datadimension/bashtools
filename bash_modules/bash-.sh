@@ -181,7 +181,7 @@ function bash-writesettings() {
   echo "$csv" >~/bashtoolscfg/wwwrepos
   echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
   echo "$git_ssh" >~/bashtoolscfg/gitcfg
-  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$phpNo,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,$dev_url" >~/bashtoolscfg/bash.env
+  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$PHP_VERSION,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,$dev_url" >~/bashtoolscfg/bash.env
 }
 
 function bash-readsettings() {

@@ -34,6 +34,6 @@ $blocktemplate = str_replace("<wwwroot />", $wwwroot, $blocktemplate);
 
 $blocktemplate = str_replace("<ssl_certs />", $certs, $blocktemplate);
 
-$blocktemplate = str_replace("<phpNo />", $phpNo, $blocktemplate);
+$blocktemplate = str_replace("<PHP_VERSION />", $PHP_VERSION, $blocktemplate);
 
 file_put_contents("/etc/nginx/sites-enabled/" . $args["repo_name"], $blocktemplate);

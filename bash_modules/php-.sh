@@ -35,29 +35,29 @@ function php-install() {
 }
 
 function php-getversion(){
-		phpNo=$(php -r "echo PHP_VERSION;")
-		echo "PHP version: $phpNo";
+		PHP_VERSION=$(php -r "echo PHP_VERSION;")
+		echo "PHP version: $PHP_VERSION";
 }
 
 function php-edit() {
 	echo "You might need the gateway ip:"
 	tail /etc/resolv.conf
 	read waitinput
-	phproot="/etc/php/$phpNo/fpm"
+	phproot="/etc/php/$PHP_VERSION/fpm"
 	inifileName="$phproot/php.ini"
 	sudo nano +9999 $inifileName
 	nginx-start
 }
 
 function phpfpm-edit() {
-	phproot="/etc/php/$phpNo/fpm"
+	phproot="/etc/php/$PHP_VERSION/fpm"
 	confFileName="$phproot/php-fpm.conf"
 	sudo nano $confFileName
 	nginx-start
 }
 
 function ~php() {
-	phproot="/etc/php/$phpNo/fpm"
+	phproot="/etc/php/$PHP_VERSION/fpm"
 	ls -al $phproot
 }
 

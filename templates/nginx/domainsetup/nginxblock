@@ -30,7 +30,7 @@ server {
 		try_files $uri /index.php =404;
 		fastcgi_buffering on;# important - set as off for WSL dev environment
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass unix:/run/php/php<phpNo />-fpm.sock;
+		fastcgi_pass unix:/run/php/php<PHP_VERSION />-fpm.sock;
 		fastcgi_index index.php;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 		fastcgi_read_timeout 60;
