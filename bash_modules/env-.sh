@@ -11,7 +11,8 @@ function env-h(){
 	bash-helpformodule env
 }
 
-function env-about() {
+#show full info about the server environment
+function env() {
   clear
   echo-h1 "About Server"
   echo-now
