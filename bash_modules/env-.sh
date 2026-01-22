@@ -110,17 +110,6 @@ function env-attributerequire() {
     if [ "$wwwroot" == "" ]; then
       env-setwwwroot
     fi
-  elif [ "$varname" == "phpNo" ]; then
-    if [ "$phpNo" == "" ]; then
-      echo ""
-      echo "PHP check:"
-      php -v
-      echo ""
-      echo ""
-      echo "Please confirm the php version to 1 decimal place shown above eg 7.1 or 8.1"
-      read phpNo
-      bash-writesettings
-    fi
   elif [ "$varname" == "welcomemsg" ]; then
     if [ "$welcomemsg" == "" ]; then
       echo "Please enter Welcome Message / server name"
