@@ -154,8 +154,7 @@ function hist() {
     if [ "$filter" != "" ]; then
       hist $filter
       else
-      	echo ""
-      	echo "Results unfiltered";
+      	echo "none"
   echo "Use !<number> to execute history item <number>"
   fi
 }
