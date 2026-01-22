@@ -4,6 +4,12 @@ function log-h(){
 	bash-helpformodule log
 }
 
+function log(){
+	  std-menu nginxerror,app,laravel,cron "Logs Available:"
+	  echo "Loading log for $MENUCHOICE"
+	  eval "log-$MENUCHOICE"
+}
+
 function log-show() {
 	clear
 	path=$1
