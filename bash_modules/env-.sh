@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+
+#set root directory for server www  eg /var/ww
 function env-setwwwroot() {
   echo "Please set www root directory eg /var/www"
   read wwwroot
@@ -10,12 +12,6 @@ function env-setwwwroot() {
 function env-h(){
 	bash-helpformodule env
 }
-
-
-#show full info about the server environment
-function env-() {
-	env-about(
-	}
 
 #show full info about the server environment
 function env-about() {
@@ -73,6 +69,7 @@ function env-setservertype() {
   # cd $wwwroot
 }
 
+#set a particular env attribute
 function env-setattribute() {
   varname=$1
   echo "Attempting to reset $varname"
