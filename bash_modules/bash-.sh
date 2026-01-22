@@ -168,8 +168,6 @@ function bash-cfg() {
 
 function bash-writesettings() {
 	db_app="${www_repofocus//[^[:alnum:]]}"
-	a1a1a1
-
 	$repolabel.$serverid.com
   csv=""
   for i in {0..9}; do
