@@ -16,7 +16,7 @@ function net-firewall-start() {
 function net-dnsflush(){
 	sudo resolvectl flush-caches
 }
-
+ 
 #show history for user ssh sessions
 function net-ssh-history() {
   echo "History for your ssh sessions:"

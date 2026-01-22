@@ -150,7 +150,7 @@ function hist() {
     history | grep $search
   fi
   echo-hr
-  read -p "Filter: " filter
+  read -t 3 -p "Filter: " filter
     if [ "$filter" != "" ]; then
       hist $filter
       else
