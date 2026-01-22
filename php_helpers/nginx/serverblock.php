@@ -37,7 +37,7 @@ $blocktemplate = str_replace("<PHP_VERSION />", $PHP_VERSION, $blocktemplate);
 echo "";
 $fpmversion = $PHP_VERSION;
 $dec1 = strpos($PHP_VERSION, '.');
-$dec2 = strpos($PHP_VERSION, '.', $dec1);
+$dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
 echo $dec1;
 echo $dec2;
 echo substr($fpmversion, 0, $dec2 - $dec1);
