@@ -12,7 +12,7 @@ function env-h(){
 }
 
 #show full info about the server environment
-function env-() {
+function env-about() {
   clear
   echo-h1 "About Server"
   echo-now
