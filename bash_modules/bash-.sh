@@ -214,4 +214,7 @@ function bash-readsettings() {
   db_app=${values[15]}
 dev_url=${values[16]}
 wanip=$(dig +short myip.opendns.com @resolver1.opendns.com)
+
+#set detectable variables
+php-getversion;
 }

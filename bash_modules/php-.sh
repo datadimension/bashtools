@@ -43,8 +43,8 @@ function php-install() {
 }
 
 function php-getversion(){
-		PHP_VERSION=$(php -r "echo PHP_VERSION;")
-		echo $PHP_VERSION;
+		phpNo=$(php -r "echo PHP_VERSION;")
+		echo "PHP version: $phpNo";
 }
 
 function php-edit() {
