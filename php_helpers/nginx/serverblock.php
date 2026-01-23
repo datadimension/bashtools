@@ -44,6 +44,6 @@ $fpmsock = $fpmlocation . $fpmversion . "-fpm.sock";
 echo "fpm " . $fpmsock;
 echo "";
 die();
-//fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+//fastcgi_pass unix:/run/php/php8.3-fpm.sock; /run/php/8.3-fpm.sock
 
 file_put_contents("/etc/nginx/sites-enabled/" . $args["repo_name"], $blocktemplate);
