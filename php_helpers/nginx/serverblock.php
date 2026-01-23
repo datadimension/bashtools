@@ -39,7 +39,7 @@ $dec1 = strpos($PHP_VERSION, '.');
 $dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
 echo $dec1;
 echo $dec2;
-echo "fpm " . substr($PHP_VERSION, 0, $dec2 - 1) . " ";
+echo "fpm " . substr($PHP_VERSION, 0, $dec2) . " ";
 echo $PHP_VERSION;
 echo "";
 die();
