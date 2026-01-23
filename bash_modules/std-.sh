@@ -134,9 +134,11 @@ function std-menu() {
   MENUCHOICE=${values[$choice]}
 }
 
-#shortcut for help
+# shows bash function categories and functions
 function h-(){
-	bash-help
+	  std-menu std,bash,env,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
+      echo "Loading help for $MENUCHOICE ..."
+      php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
 }
 
 # Show history or search in history

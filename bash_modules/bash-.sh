@@ -109,13 +109,6 @@ function bash-install-windows() {
   source ~/.bash_profile
 }
 
-# shows bash function categories and functions
-function bash-h() {
-  std-menu std,bash,env,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
-  echo "Loading help for $MENUCHOICE ..."
-  php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
-}
-
 #shows functions for specific module eg nginx, net etc
 function bash-helpformodule(){
 	echo-hr
