@@ -39,7 +39,7 @@ $dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
 $fpmlocation = "/run/php/";
 $fpmversion = substr($PHP_VERSION, 0, $dec2);
 $fpmsockfile = $fpmlocation . $fpmversion . "php-fpm.sock";
-
+echo $fpmsockfile;
 die();
 
 $blocktemplate = str_replace("<FPM_SOCKFILE />", $fpmsockfile, $blocktemplate);
