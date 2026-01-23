@@ -40,7 +40,8 @@ $dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
 
 $fpmlocation = "/run/php/";
 $fpmversion = substr($PHP_VERSION, 0, $dec2);
-echo "fpm " . $fpmlocation . $fpmversion . " ";
+$fpmsock = $fpmlocation . $fpmversion . "-fpm.sock";
+echo "fpm " . $fpmsock;
 echo "";
 die();
 //fastcgi_pass unix:/run/php/php8.3-fpm.sock;
