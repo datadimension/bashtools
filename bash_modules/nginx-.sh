@@ -21,12 +21,12 @@ function nginx-start() {
   fi
   fsys-secure
   clear
-  echo-h1 "Closing Nginx / PHP"
+  echo-hr "Closing Nginx / PHP"
   sudo service nginx stop
   sudo pkill php-fpm
   sudo logrotate -f /etc/logrotate.d/nginx
   clear
-  echo-h1 "Starting Nginx / PHP-fpm"
+  echo-hr "Starting Nginx / PHP-fpm"
   sudo service php$php_defaultvs-fpm start
   sudo service nginx start
   sudo /etc/init.d/cron start
