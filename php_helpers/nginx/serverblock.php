@@ -37,10 +37,10 @@ $blocktemplate = str_replace("<PHP_VERSION />", $PHP_VERSION, $blocktemplate);
 echo "";
 $dec1 = strpos($PHP_VERSION, '.');
 $dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
-echo $dec1;
-echo $dec2;
-echo "fpm " . substr($PHP_VERSION, 0, $dec2) . " ";
-echo $PHP_VERSION;
+
+$fpmlocation = "/run/php/";
+$fpmversion = substr($PHP_VERSION, 0, $dec2);
+echo "fpm " . $fpmlocation . $fpmversion . " ";
 echo "";
 die();
 //fastcgi_pass unix:/run/php/php8.3-fpm.sock;
