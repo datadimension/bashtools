@@ -38,7 +38,7 @@ $dec1 = strpos($PHP_VERSION, '.');
 $dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
 $fpmlocation = "/run/php/";
 $fpmversion = substr($PHP_VERSION, 0, $dec2);
-$fpmsockfile = $fpmlocation . $fpmversion . "php-fpm.sock";
+$fpmsockfile = $fpmlocation . "php" . $fpmversion . "-fpm.sock";
 echo $fpmsockfile;
 die();
 
