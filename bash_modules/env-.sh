@@ -50,7 +50,7 @@ function test() {
 
 #for per machine settings that do not change
 function env-setservertype() {
-  #bash-envsetwwwroot
+  #bash-envsetwwwrootg
   echo "Enter environment (production / local)"
   read environment
   if [ "$environment" == "local" ]; then
@@ -123,6 +123,4 @@ function env-attributerequire() {
 		read wait
   fi
   clear
-}
-
 }
