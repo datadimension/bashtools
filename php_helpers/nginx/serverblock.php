@@ -42,7 +42,7 @@ $fpmsockfile = $fpmlocation . $fpmversion . "-fpm.sock";
 echo "fpmsockfile " . $fpmsockfile;
 
 die();
-$blocktemplate = str_replace("<FPM_SOCKFILE />", $PHP_VERSION, $blocktemplate);
+$blocktemplate = str_replace("<FPM_SOCKFILE />", $fpmsockfile, $blocktemplate);
 
 //fastcgi_pass unix:/run/php/php8.3-fpm.sock; /run/php/8.3-fpm.sock
 
