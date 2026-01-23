@@ -33,17 +33,17 @@ $blocktemplate = str_replace("<repo_name />", $args["repo_name"], $blocktemplate
 $blocktemplate = str_replace("<wwwroot />", $wwwroot, $blocktemplate);
 
 $blocktemplate = str_replace("<ssl_certs />", $certs, $blocktemplate);
-$blocktemplate = str_replace("<PHP_VERSION />", $PHP_VERSION, $blocktemplate);
-echo "";
+
 $dec1 = strpos($PHP_VERSION, '.');
 $dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
-
 $fpmlocation = "/run/php/";
 $fpmversion = substr($PHP_VERSION, 0, $dec2);
-$fpmsock = $fpmlocation . $fpmversion . "-fpm.sock";
-echo "fpm " . $fpmsock;
-echo "";
+$fpmsockfile = $fpmlocation . $fpmversion . "-fpm.sock";
+echo "fpmsockfile " . $fpmsockfile;
+
 die();
+$blocktemplate = str_replace("<FPM_SOCKFILE />", $PHP_VERSION, $blocktemplate);
+
 //fastcgi_pass unix:/run/php/php8.3-fpm.sock; /run/php/8.3-fpm.sock
 
 file_put_contents("/etc/nginx/sites-enabled/" . $args["repo_name"], $blocktemplate);
