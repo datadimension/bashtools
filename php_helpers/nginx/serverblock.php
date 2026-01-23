@@ -39,7 +39,7 @@ $dec1 = strpos($PHP_VERSION, '.');
 $dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
 echo $dec1;
 echo $dec2;
-echo substr($PHP_VERSION, 0, $dec2 - $dec1);
+echo "fpm " . substr($PHP_VERSION, 0, $dec2 - $dec1);
 echo "";
 die();
 //fastcgi_pass unix:/run/php/php8.3-fpm.sock;
