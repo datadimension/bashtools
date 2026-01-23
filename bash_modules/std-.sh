@@ -134,6 +134,11 @@ function std-menu() {
   MENUCHOICE=${values[$choice]}
 }
 
+#shortcut for help
+function h-(){
+	bash-help
+}
+
 # Show history or search in history
 function hist() {
   search=$1
