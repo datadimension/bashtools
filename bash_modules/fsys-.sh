@@ -18,7 +18,7 @@ function fsys-secure() {
   fi
   www-reposhow
   clear
-  read -p "Conform file permisions at $targetroot ? This can take a few mines [y/n]: " -t 10 input
+  read -p "Conform file permisions at $targetroot ? This can take a few mins depending on size of subdirectories [y/n]: " -t 10 input
   if [ "$input" != "y" ]; then
     return 0
   fi
@@ -26,7 +26,7 @@ function fsys-secure() {
   sec755level=755
   sec770level=770
   echo ""
-  ls -al $wwwroot/html/$dirname
+  ls -al $targetroot;
 
   echo "Reseting global ownership in $targetroot"
   sudo chown -R $USER:www-data $targetroot
