@@ -9,6 +9,7 @@ function fsys-disk() {
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
   dirname=$1
+
   if [ "$dirname" == "" ]; then
     targetroot=$www_repofocus
     else
@@ -35,12 +36,14 @@ function fsys-secure() {
   sudo find $targetroot -type d -exec chmod $sec755level {} \;
 
   # relax some permissions for laravel
+  if [$targetroot = $www_repofocus ]; then
   echo "Securing laravel directory permissions in $targetroot"
   sudo chmod -R $sec755level $targetroot/app
   sudo chmod -R $sec770level $targetroot/storage
   sudo chmod -R $sec770level $targetroot/public/downloads
   sudo chmod -R $sec770level $targetroot/public
   sudo chmod -R $sec770level $targetroot/private
+  fi
 }
 
 function file_exists() {
