@@ -10,9 +10,11 @@ function fsys-disk() {
 function fsys-secure() {
   dirname=$1
   if [ "$dirname" == "" ]; then
-    dirname=$www_repofocus
+    targetroot=$www_repofocus
+    else
+    	currentdir=$(pwd);
+    	targetroot="$currentdir/$dirname"
   fi
-  targetroot=$wwwroot/html/$dirname
   www-reposhow
   clear
   read -p "Conform file permisions at $targetroot ? This can take a few mines [y/n]: " -t 10 input
@@ -24,18 +26,6 @@ function fsys-secure() {
   sec770level=770
   echo ""
   ls -al $wwwroot/html/$dirname
-
-  #20250304 move this tol localserver_admin project
-  #20250304 echo "Securing bash-tools permissions"
-  #20250304 sudo chown -R $USER:www-data $wwwroot/html
-  #20250304 sudo chmod -R $sec755level $wwwroot/html/
-
-  #20250304 echo "Securing bash-tools permissions"
-  #20250304 sudo chmod -R $sec770level ~/bashtools/php_helpers/bash
-
-  #20250304 move this tol localserver_admin project
-  #20250304 sudo chown -R $USER:www-data $wwwroot/certs
-  #20250304 ssudo chmod -R $sec644level $wwwroot/certs
 
   echo "Reseting global ownership in $targetroot"
   sudo chown -R $USER:www-data $targetroot

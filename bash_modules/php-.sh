@@ -20,6 +20,7 @@ function php-install() {
 	sudo apt-get -y install php$php$php_defaultvs-xml
 	sudo apt-get -y install php$php$php_defaultvs-memcached
 		sudo apt-get -y install php$php$php_default-sqlite3
+		sudo apt-get -y install php-dev autoconf automake #allow to build php packages on this system eg xdebug
 
 	echo ""
 	echo ""

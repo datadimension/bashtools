@@ -72,15 +72,13 @@ function env-setservertype() {
 #set a particular env attribute
 function env-setattribute() {
   varname=$1
-  echo "Attempting to reset $varname"
-  if [ "$varname" == "os_status" ]; then
-    os_status=""
-    bash-writesettings
-  elif [ "$varname" == "gituname" ]; then
-    gituname=""
-    bash-writesettings
+  echo "Attempting to set $varname"
+  if [ "$varname" != "" ]; then
+        read -p "Enter value" value
+        printf -v "$varname" "%s" "$value"
+        bash-writesettings
+        env-about
   fi
-  env-attributerequire $varname
 }
 
 function env-attributerequire() {
