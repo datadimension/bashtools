@@ -23,9 +23,11 @@ function fsys-secure() {
   if [ "$input" != "y" ]; then
     return 0
   fi
-  sec644level=644
-  sec755level=755
-  sec770level=770
+
+  #see https://chmodcommand.com/chmod-770/
+  sec644level=644 # https://chmodcommand.com/chmod-644/
+  sec755level=755 # https://chmodcommand.com/chmod-755/
+  sec770level=770 # https://chmodcommand.com/chmod-755/
   echo ""
   ls -al $targetroot;
 

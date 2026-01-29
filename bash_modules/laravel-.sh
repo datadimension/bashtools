@@ -5,7 +5,10 @@ function laravel-h(){
 	bash-helpformodule laravel
 }
 
+#shows laravel version
 function laravel-showversion() {
+  echo "for all laravel functions we are going to site focus root (~www)"
+  cd "$wwwroot/html/$www_repofocus"
   php artisan --version
 }
 

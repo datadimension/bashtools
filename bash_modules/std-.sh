@@ -22,12 +22,17 @@ decoration_underline='\033[4m'
 #echo -e "\x1b[5m blinking"
 #echo -e "\x1b[7m inverted"
 
-function laravel-version() {
-  echo "for all laravel functions we are going to site focus root (~www)"
-  cd "$wwwroot/html/$www_repofocus"
-  php artisan --version
+#prompts a user for input and returns that, or default value if nothing entered
+function read_default(){
+	prompt="$1"
+	defaultval="$2"
+	read -p $prompt $_DEFAULT
+	  if [ "$_DEFAULT" == "" ]; then # assume we are using the gitbash ming shell so sudo does not exist
+        _DEFAULT="$defaultval"
+      fi
 }
 
+#outputs big text with the text as supplied argument
 function echo-h1() {
   textoutput=$1
   if [ "$platform" == "windows" ]; then # assume we are using the gitbash ming shell so sudo does not exist
