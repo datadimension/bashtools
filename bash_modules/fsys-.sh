@@ -18,7 +18,8 @@ function fsys-secure() {
   fi
   www-reposhow
   clear
-  read -p "Conform file permisions at $targetroot ? This can take a few mins depending on size of subdirectories [y/n]: " -t 10 input
+  read -p "Conform file permisions at $targetroot ?"
+   echo "This can take a few mins depending on size of subdirectories [y/n]: " -t 10 input
   if [ "$input" != "y" ]; then
     return 0
   fi
@@ -36,7 +37,7 @@ function fsys-secure() {
   sudo find $targetroot -type d -exec chmod $sec755level {} \;
 
   # relax some permissions for laravel
-  if [$targetroot = $www_repofocus ]; then
+  if [ $targetroot == $www_repofocus ]; then
   echo "Securing laravel directory permissions in $targetroot"
   sudo chmod -R $sec755level $targetroot/app
   sudo chmod -R $sec770level $targetroot/storage
