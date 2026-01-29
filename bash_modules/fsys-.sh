@@ -87,8 +87,8 @@ function file-cdrepo(){
     fi
 }
 
-# combines cd and ls into a single command
-function cdls() {
+# combines cd and ls into a single command to change and list directory
+function cdl() {
   mode=""
   dir=$1
   if [ "$1" == "-al" ]; then
