@@ -7,7 +7,7 @@ function php-install() {
 			echo "no php version stated to install"
 return 0;
 fi
-wait clear  "CURRENT PHP"#remove apache
+wait clear  "CURRENT PHP"
 	    cd /etc/php;
 	    pwd;
         ls;
