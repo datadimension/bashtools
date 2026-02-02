@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 
-
+#removes as much of exisiting php as possible and installs it according to php_defaultvs
 function php-install() {
 	php_defaultvs=$1;
+		if [ "$php_defaultvs" == "" ]; then
+			echo "no php version stated to install"
+return 0;
+fi
+	    		sudo -y apt-get --purge remove php-common
 	sudo apt remove php7* php8* php9* -y
+	  sudo pkill php-fpm
+	sudo rm /lib/systemd/system/php8*
 	sudo rm -R /etc/php/*.*;
-	sudo service apache2 stop;
-	sudo apt-get autoremove
+
 	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update
-	sudo apt-get -y install php$php$php_defaultvs
+    
+    clear;
+	sudo apt-get -y install php$php_defaultvs
+
 
 	#remove apache
-	sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common
-sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common
-sudo apt-get autoremove
+		sudo service apache2 stop;
+	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
+sudo apt-get -y autoremove
 
 	sudo apt-get -y install php$php$php_defaultvs-fpm
 	sudo apt-get -y install php$php$php_defaultvs-zip
@@ -30,15 +39,10 @@ sudo apt-get autoremove
 	sudo apt-get -y install php$php$php_defaultvs-xml
 	sudo apt-get -y install php$php$php_defaultvs-memcached
 		sudo apt-get -y install php$php$php_default-sqlite3
-		sudo apt-get -y install php-dev autoconf automake #allow to build php packages on this system eg xdebug
+        sudo apt-get install php-common php-mysql php-cli
 
-	echo ""
-	echo ""
-	echo ""
-	echo ""
-	php -v;
-	php-getfullversion;
-	php-getdirversion;
+		sudo apt-get -y install php-dev autoconf automake #allow to build php packages on this system eg xdebug
+wait clear
 	clear;
 	echo $PHP_FULL_VERSION;
 	echo $PHP_DIR_VERSION;
