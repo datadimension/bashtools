@@ -14,10 +14,10 @@ echi-hr
 	    pwd;
         ls;
                 echo-hr
-                echo "Continue will remove all"
+                echo "Install will remove all PHP"
                 wait
-	    		sudo -y apt-get --purge remove php-common
-	sudo apt remove php7* php8* php9* -y
+	    		sudo apt-get -y --purge remove php-common
+	sudo apt-get -y remove php7* php8* php9*
 	  sudo pkill php-fpm
 	sudo rm /lib/systemd/system/php8*
 	sudo rm -R /etc/php/*.*;
