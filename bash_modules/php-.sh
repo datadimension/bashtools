@@ -25,8 +25,6 @@ sudo apt-get -y autoremove
 	sudo apt-get -y install php$php_defaultvs
 wait clear
 
-
-
 	sudo apt-get -y install php$php$php_defaultvs-fpm
 	sudo apt-get -y install php$php$php_defaultvs-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
