@@ -37,7 +37,12 @@ sudo apt-get autoremove
 	echo ""
 	echo ""
 	php -v;
+	php-getfullversion;
 	php-getdirversion;
+	clear;
+	echo $PHP_FULL_VERSION;
+	echo $PHP_DIR_VERSION;
+	php -v;
   echo "We will now edit /etc/php/$PHP_DIR_VERSION/fpm/php.ini"
   echo "And for security change line to be"
   echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
