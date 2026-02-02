@@ -15,15 +15,17 @@ fi
 
 	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update
-    
-    clear;
-	sudo apt-get -y install php$php_defaultvs
 
-
+    wait clear;
 	#remove apache
 		sudo service apache2 stop;
 	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
 sudo apt-get -y autoremove
+
+	sudo apt-get -y install php$php_defaultvs
+wait clear
+
+
 
 	sudo apt-get -y install php$php$php_defaultvs-fpm
 	sudo apt-get -y install php$php$php_defaultvs-zip
