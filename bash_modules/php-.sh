@@ -7,6 +7,12 @@ function php-install() {
 			echo "no php version stated to install"
 return 0;
 fi
+wait clear  "CURRENT PHP"#remove apache
+	    cd /etc/php;
+	    pwd;
+        ls;
+                echo-hr
+
 
 	    		sudo -y apt-get --purge remove php-common
 	sudo apt remove php7* php8* php9* -y
@@ -21,6 +27,7 @@ wait clear  "REMOVING APACHE"#remove apache
 	    cd /etc/php;
 	    pwd;
         ls;
+                echo-hr
 
 		sudo service apache2 stop;
 	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
@@ -35,6 +42,7 @@ wait clear  "INSTALLING MODULES"#remove apache
 	    cd /etc/php;
 	    pwd;
         ls;
+                echo-hr
 
 	sudo apt-get -y install php$php$php_defaultvs-fpm
 	sudo apt-get -y install php$php$php_defaultvs-zip
@@ -57,11 +65,13 @@ wait clear  "INSTALLING MODULES"#remove apache
 	    cd /etc/php;
 	    pwd;
         ls;
+                echo-hr
 
 wait clear  "SECURING INSTALLATION"#remove apache
 	    cd /etc/php;
 	    pwd;
         ls;
+        echo-hr
 
 	echo $PHP_FULL_VERSION;
 	echo $PHP_DIR_VERSION;
