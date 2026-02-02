@@ -182,7 +182,7 @@ function wait() {
   action="none"
   prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} -> ${weight_bold}${color_green}CONTINUE${font_reset}"
   echo -e $prompt
- wait
+ read wait
   if [ "$arg1" != "" ]; then
     if [ "$arg1" == "clear" ]; then
       clear
