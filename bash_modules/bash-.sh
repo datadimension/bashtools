@@ -61,7 +61,7 @@ osinstall=0 #control bool to restart bash to loop through setup
 
   MENUCHOICE="" #reserved as a global for menu function
   php-getfullversion;
-  echo "PHP_FULL_VERSION: $PHP_FULLVERSION";
+  echo "PHP_FULL_VERSION: $PHP_FULL_VERSION";
   #env-attributerequire "welcomemsg"
 }
 
