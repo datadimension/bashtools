@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-php_defaultvs="8.3";#the default version to use
 
 function php-install() {
+	php_defaultvs=$1;
 	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update
 	sudo apt-get -y install php$php$php_defaultvs
@@ -27,12 +27,12 @@ function php-install() {
 	echo ""
 	echo ""
 	php -v;
-	php-getfullversion;
-  echo "We will now edit /etc/php/$php_defaultvs/fpm/php.ini"
+	php-getdirversion;
+  echo "We will now edit /etc/php/$PHP_DIR_VERSION/fpm/php.ini"
   echo "And for security change line to be"
   echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
   read wait
-  sudo nano +817 /etc/php/$php_defaultvs/fpm/php.ini
+  sudo nano +817 /etc/php/$PHP_DIR_VERSION/fpm/php.ini
 }
 
 #for the full version id

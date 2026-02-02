@@ -106,7 +106,9 @@ function os-installer() {
 	if [ "$option" == "1" ]; then
 		os-install-additional
 	elif [ "$option" == "2" ]; then
-		php-install
+		echo "Enter php version to install eg 8.5";
+		read php_installversion
+		php-install php_installversion
 	elif [ "$option" == "3" ]; then
 		os-install-composer
 	elif [ "$option" == "4" ]; then
