@@ -184,6 +184,7 @@ function wait() {
   if [ "$arg1" != "" ]; then
     if [ "$arg1" == "clear" ]; then
       	if [ "$arg2" != "" ]; then
+      		clear
        	 echo-hr
        	 echo -e "${weight_bold}${color_green}$arg2${font_reset}"
        	        	     			echo -e $prompt
