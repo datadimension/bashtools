@@ -16,9 +16,9 @@ echi-hr
                 echo-hr
                 echo "Install will remove all PHP"
                 wait
+                	  sudo pkill php-fpm
 	    		sudo apt-get -y --purge remove php-common
 	sudo apt-get -y remove php7* php8* php9*
-	  sudo pkill php-fpm
 	sudo rm /lib/systemd/system/php8*
 	sudo rm -R /etc/php/*.*;
 
