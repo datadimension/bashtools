@@ -7,7 +7,9 @@ function php-install() {
 			echo "no php version stated to install"
 return 0;
 fi
-wait clear  "CURRENT PHP"
+clear
+echo  "CURRENT PHP"
+echi-hr
 	    cd /etc/php;
 	    pwd;
         ls;
