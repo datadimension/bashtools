@@ -27,9 +27,9 @@ function read_default(){
 	prompt="$1"
 	defaultval="$2"
 	read -p $prompt $_DEFAULT
-	  if [ "$_DEFAULT" == "" ]; then # assume we are using the gitbash ming shell so sudo does not exist
+	if [ "$_DEFAULT" == "" ]; then # assume we are using the gitbash ming shell so sudo does not exist
         _DEFAULT="$defaultval"
-      fi
+    fi
 }
 
 #outputs big text with the text as supplied argument

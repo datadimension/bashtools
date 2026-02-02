@@ -60,7 +60,7 @@ osinstall=0 #control bool to restart bash to loop through setup
   env-attributerequire "defaultDatabaseIP"
 
   MENUCHOICE="" #reserved as a global for menu function
-  PHP_VERSION=$(php -r 'echo PHP_VERSION;')
+  PHP_FULLVERSION=$(php -r 'echo PHP_FULLVERSION;')
   #env-attributerequire "welcomemsg"
 }
 
@@ -162,7 +162,7 @@ function bash-cfg() {
 function bash-writesettings() {
 
 	#ensure detectable values are written
-	php-getversion;
+	php-getfullversion;
 	db_app="${www_repofocus//[^[:alnum:]]}"
 
   csv=""
@@ -174,7 +174,7 @@ function bash-writesettings() {
   echo "$csv" >~/bashtoolscfg/wwwrepos
   echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
   echo "$git_ssh" >~/bashtoolscfg/gitcfg
-  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$PHP_VERSION,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,$dev_url" >~/bashtoolscfg/bash.env
+  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$PHP_FULLVERSION,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,$dev_url" >~/bashtoolscfg/bash.env
 }
 
 function bash-readsettings() {
@@ -213,5 +213,6 @@ dev_url=${values[16]}
 wanip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 
 #set detectable variables
-php-getversion;
+php-getfullversion;
+php-getdirversion;
 }

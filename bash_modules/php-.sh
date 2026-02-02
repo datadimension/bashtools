@@ -27,7 +27,7 @@ function php-install() {
 	echo ""
 	echo ""
 	php -v;
-	php-getversion;
+	php-getfullversion;
   echo "We will now edit /etc/php/$php_defaultvs/fpm/php.ini"
   echo "And for security change line to be"
   echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
@@ -35,30 +35,36 @@ function php-install() {
   sudo nano +817 /etc/php/$php_defaultvs/fpm/php.ini
 }
 
-function php-getversion(){
-		PHP_VERSION=$(php -r "echo PHP_VERSION;")
-		echo "PHP_VERSION: $PHP_VERSION";
+#for the full version id
+function php-getfullversion(){
+		PHP_FULLVERSION=$(php -r "echo PHP_VERSION;")
+		echo "PHP_FULLVERSION: $PHP_FULLVERSION";
+}
+
+#for locating eg /php/etc/8.5
+function php-getdirversion(){
+		PHP_DIRVERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
 }
 
 function php-edit() {
 	echo "You might need the gateway ip:"
 	tail /etc/resolv.conf
 	read waitinput
-	phproot="/etc/php/$PHP_VERSION/fpm"
+	phproot="/etc/php/$PHP_DIRVERSION/fpm"
 	inifileName="$phproot/php.ini"
 	sudo nano +9999 $inifileName
 	nginx-start
 }
 
 function phpfpm-edit() {
-	phproot="/etc/php/$PHP_VERSION/fpm"
+	phproot="/etc/php/$PHP_DIRVERSION/fpm"
 	confFileName="$phproot/php-fpm.conf"
 	sudo nano $confFileName
 	nginx-start
 }
 
 function ~php() {
-	phproot="/etc/php/$PHP_VERSION/fpm"
+	phproot="/etc/php/$PHP_DIRVERSION/fpm"
 	ls -al $phproot
 }
 
