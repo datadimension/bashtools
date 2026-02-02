@@ -16,15 +16,21 @@ fi
 	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update
 
-    wait clear;
+	    cd /etc/php;
+        ls;
+wait clear
 	#remove apache
 		sudo service apache2 stop;
 	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
 sudo apt-get -y autoremove
 
 	sudo apt-get -y install php$php_defaultvs
+			sudo service apache2 stop;
+    	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
+    sudo apt-get -y autoremove
+	    cd /etc/php;
+        ls;
 wait clear
-
 	sudo apt-get -y install php$php$php_defaultvs-fpm
 	sudo apt-get -y install php$php$php_defaultvs-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
@@ -42,6 +48,8 @@ wait clear
         sudo apt-get install php-common php-mysql php-cli
 
 		sudo apt-get -y install php-dev autoconf automake #allow to build php packages on this system eg xdebug
+	    cd /etc/php;
+        ls;
 wait clear
 	clear;
 	echo $PHP_FULL_VERSION;
