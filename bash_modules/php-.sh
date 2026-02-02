@@ -9,7 +9,7 @@ return 0;
 fi
 clear
 echo  "CURRENT PHP"
-echi-hr
+echo-hr
 	    cd /etc/php;
 	    pwd;
         ls;
