@@ -187,15 +187,13 @@ function wait() {
       	if [ "$arg2" != "" ]; then
        	 echo-hr
        	 echo -e "${weight_bold}${color_green}$arg2${font_reset}"
-       	 echo-hr
        	        	     			echo -e $prompt
+       	        	     			       	 echo-hr
        	  		read wait
     	else
     			echo -e $prompt
 	 			read wait
-
  		fi
-
 	fi
  		else
  			echo -e $prompt
