@@ -42,28 +42,28 @@ function php-getfullversion(){
 
 #for locating eg /php/etc/8.5
 function php-getdirversion(){
-		PHP_DIRVERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
+		PHP_DIR_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
 }
 
 function php-edit() {
 	echo "You might need the gateway ip:"
 	tail /etc/resolv.conf
 	read waitinput
-	phproot="/etc/php/$PHP_DIRVERSION/fpm"
+	phproot="/etc/php/$PHP_DIR_VERSION/fpm"
 	inifileName="$phproot/php.ini"
 	sudo nano +9999 $inifileName
 	nginx-start
 }
 
 function phpfpm-edit() {
-	phproot="/etc/php/$PHP_DIRVERSION/fpm"
+	phproot="/etc/php/$PHP_DIR_VERSION/fpm"
 	confFileName="$phproot/php-fpm.conf"
 	sudo nano $confFileName
 	nginx-start
 }
 
 function ~php() {
-	phproot="/etc/php/$PHP_DIRVERSION/fpm"
+	phproot="/etc/php/$PHP_DIR_VERSION/fpm"
 	ls -al $phproot
 }
 
