@@ -60,7 +60,8 @@ osinstall=0 #control bool to restart bash to loop through setup
   env-attributerequire "defaultDatabaseIP"
 
   MENUCHOICE="" #reserved as a global for menu function
-  PHP_FULLVERSION=$(php -r 'echo PHP_FULLVERSION;')
+  php-getfullversion;
+  echo "PHP_FULL_VERSION: $PHP_FULLVERSION";
   #env-attributerequire "welcomemsg"
 }
 

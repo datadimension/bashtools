@@ -37,8 +37,7 @@ function php-install() {
 
 #for the full version id
 function php-getfullversion(){
-		PHP_FULLVERSION=$(php -r "echo PHP_VERSION;")
-		echo "PHP_FULLVERSION: $PHP_FULLVERSION";
+		PHP_FULL_VERSION=$(php -r "echo PHP_VERSION;")
 }
 
 #for locating eg /php/etc/8.5
