@@ -14,8 +14,8 @@ echi-hr
 	    pwd;
         ls;
                 echo-hr
-
-
+                echo "Continue will remove all"
+                wait
 	    		sudo -y apt-get --purge remove php-common
 	sudo apt remove php7* php8* php9* -y
 	  sudo pkill php-fpm
