@@ -3,9 +3,19 @@
 
 function php-install() {
 	php_defaultvs=$1;
+	sudo apt remove php7* php8* php9* -y
+	sudo rm -R /etc/php/*.*;
+	sudo service apache2 stop;
+	sudo apt-get autoremove
 	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update
 	sudo apt-get -y install php$php$php_defaultvs
+
+	#remove apache
+	sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common
+sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common
+sudo apt-get autoremove
+
 	sudo apt-get -y install php$php$php_defaultvs-fpm
 	sudo apt-get -y install php$php$php_defaultvs-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
