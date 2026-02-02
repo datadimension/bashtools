@@ -7,6 +7,7 @@ function php-install() {
 			echo "no php version stated to install"
 return 0;
 fi
+
 	    		sudo -y apt-get --purge remove php-common
 	sudo apt remove php7* php8* php9* -y
 	  sudo pkill php-fpm
@@ -16,13 +17,11 @@ fi
 	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update
 
+wait clear  "REMOVING APACHE"#remove apache
 	    cd /etc/php;
 	    pwd;
         ls;
-wait clear
 
-echo "cleaning apache"
-	#remove apache
 		sudo service apache2 stop;
 	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
 sudo apt-get -y autoremove
@@ -32,11 +31,11 @@ sudo apt-get -y autoremove
     	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
     sudo apt-get -y autoremove
 
+wait clear  "INSTALLING MODULES"#remove apache
 	    cd /etc/php;
 	    pwd;
         ls;
-wait clear
-        echo "........ installing modules"
+
 	sudo apt-get -y install php$php$php_defaultvs-fpm
 	sudo apt-get -y install php$php$php_defaultvs-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
@@ -58,7 +57,11 @@ wait clear
 	    cd /etc/php;
 	    pwd;
         ls;
-wait clear
+
+wait clear  "SECURING INSTALLATION"#remove apache
+	    cd /etc/php;
+	    pwd;
+        ls;
 
 	echo $PHP_FULL_VERSION;
 	echo $PHP_DIR_VERSION;
@@ -66,7 +69,7 @@ wait clear
   echo "We will now edit /etc/php/$PHP_DIR_VERSION/fpm/php.ini"
   echo "And for security change line to be"
   echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
-  read wait
+ wait
   sudo nano +817 /etc/php/$PHP_DIR_VERSION/fpm/php.ini
 }
 

@@ -132,7 +132,7 @@ function bash-who() {
 function bash-logout() {
   bash-writesettings
   echo "Written out settings, press enter to exit"
-  read waitb
+ waitb
   clear
   source ~/.bash_profile # this restarts bash as well
 }

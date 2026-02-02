@@ -41,7 +41,7 @@ function www-siteremove() {
     sudo rm -R $repodir
     wwwsites[$sitenumber]=""
     bash-writesettings
-    read wait -t 3
+   wait -t 3
     bash-start
   else
     echo "cannot proceed until written confirmation"

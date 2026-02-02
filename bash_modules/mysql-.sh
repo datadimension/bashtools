@@ -26,7 +26,7 @@ bind-address            = 0.0.0.0 #remove 127.0.0.1
 bind-address            = <wan ip address>
 Enter to edit conf ....
 "
-  read wait
+ wait
   sudo nano +31 /etc/mysql/mysql.conf.d/mysqld.cnf
   sudo systemctl restart mysql
   sudo ufw allow mysql
