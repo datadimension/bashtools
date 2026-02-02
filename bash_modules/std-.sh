@@ -175,27 +175,22 @@ function uuid() {
   uuid=$(uuidgen)
 }
 
-#wait for execution, use 'clear' for argument 1 to clear screen and msg for argument 2 to change prompt, or simply give a prompt for argument 1 that is not 'clear'
+#wait for execution, use 'clear' for argument 1 to clear screen and msg for argument 2 to title the cleared screen
 function wait() {
   arg1=$1
   arg2=$2
   action="none"
-  prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} -> ${weight_bold}${color_green}NEXT${font_reset}"
-  if [ "$arg1" != "" ]; then
-    if [ "$arg1" == "clear" ]; then
-      action="clear"
-      if [ "$arg2" != "" ]; then
-        prompt=$arg2
-      fi
-    else
-      prompt=$arg1
-    fi
-  fi
-  echo ""
+  prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} -> ${weight_bold}${color_green}CONTINUE${font_reset}"
   echo -e $prompt
   read wait
-  echo ""
-  if [ "$action" == "clear" ]; then
-    clear
-  fi
+  if [ "$arg1" != "" ]; then
+    if [ "$arg1" == "clear" ]; then
+      clear
+      if [ "$arg2" != "" ]; then
+        echo-hr
+        echo $arg2
+        echo-hr
+      fi
+  	fi
+fi
 }
