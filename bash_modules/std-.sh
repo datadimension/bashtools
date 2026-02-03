@@ -60,7 +60,7 @@ function echo-nl() {
   echo ""
 }
 
-function echo-newpagetitle() {
+function echo-newpage() {
   textoutput=""$1""
   clear
   printf "${weight_bold}${color_cyan}"

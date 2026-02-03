@@ -94,7 +94,7 @@ function nginx-setserverblock() {
   if [ "$sslcertificate" == "" ]; then
     sslcertificate="sslselfsigned"
   fi
-  echo-newpagetitle "Setting up NGINX Server block"
+  echo-newpage "Setting up NGINX Server block"
   echo "Using $www_repofocus.$serverid.com with certificate $sslcertificate"
   echo ""
   echo "Add a line to your local hosts file: "

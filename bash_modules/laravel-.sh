@@ -90,7 +90,7 @@ fi
 }
 
 function laravel-envinstall() {
-  echo-newpagetitle "Creating .env file in project $www_repofocus"
+  echo-newpage "Creating .env file in project $www_repofocus"
   echo ""
   php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate user=$USER
   echo ""

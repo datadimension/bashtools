@@ -8,7 +8,6 @@ function fsys-disk() {
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
-	echo-hr
   dirname=$1
   if [ "$dirname" == "" ]; then
     targetroot=$wwwroot/html/$www_repofocus
@@ -16,11 +15,10 @@ function fsys-secure() {
     	currentdir=$(pwd);
     	targetroot="$currentdir/$dirname"
   fi
-  echo $targetroot;
-
-  echo-hr
+  echo-newpage $targetroot
   cd $targetroot
   ls
+  echo-hr
   echo "Conform file permisions at $targetroot ?"
    read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 10  input
   if [ "$input" != "y" ]; then
