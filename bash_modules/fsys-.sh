@@ -8,6 +8,7 @@ function fsys-disk() {
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
+	echo-hr
   dirname=$1
   if [ "$dirname" == "" ]; then
     targetroot=$wwwroot/html/$www_repofocus
