@@ -17,7 +17,6 @@ echo-hr
 	sudo rm /lib/systemd/system/php8*
 	sudo rm /lib/systemd/system/php9*
 	sudo rm -R /etc/php/*.*;
-	php-removeapache
 sudo apt-get -y autoremove
     sudo apt update
 	sudo add-apt-repository -y ppa:ondrej/php
@@ -25,8 +24,7 @@ wait clear  "INSTALLING php version $PHP_DD_VERSION"
                 echo-hr
 
 	sudo apt-get -y install php$PHP_DD_VERSION
-	php-removeapache $PHP_DD_VERSION
-
+		sudo apt-get -y install php$PHP_DD_VERSION-fpm
 	    cd /etc/php;
 	    pwd;
         ls;
@@ -54,6 +52,7 @@ wait clear  "INSTALLING MODULES"#remove apache
 		sudo apt-get -y install php$PHP_DD_VERSION-sqlite3
         #installs extra php versions sudo apt-get -y install php-common php$PHP_DD_VERSION-mysql
 		sudo apt-get -y install php$PHP_DD_VERSION-dev autoconf automake #allow to build php packages on this system eg xdebug
+	php-removeapache
 
 	    cd /etc/php;
 	    pwd;
@@ -71,7 +70,10 @@ wait clear  "SECURING INSTALLATION"
 	php -v;
   echo "We will now edit /etc/php/$PHP_DD_VERSION/fpm/php.ini"
   echo "And for security change line to be"
+  echo ""
   echo "cgi.fix_pathinfo=0; [eg uncomment ';' and set value to 0]"
+   echo ""
+
  wait
   sudo nano +817 /etc/php/$PHP_DD_VERSION/fpm/php.ini
 }
@@ -128,6 +130,7 @@ function php-start() {
 	sudo pkill php-fpm
 	clear
 	echo-h1 "Starting PHP"
-	sudo service php7.4-fpm start
+	sudo service php$PHP_DIR_VERSION-fpm start
+	sudo systemctl restart php$PHP_DIR_VERSION-fpm
 	ps aux | grep php
 }
