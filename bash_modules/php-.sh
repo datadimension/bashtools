@@ -126,7 +126,7 @@ function ~php() {
 
 function php-restart() {
 	clear
-	echo-h1 "Closing PHP"
+	echo "Closing PHP"
 	ps aux | grep php
 	sudo pkill php-fpm
 	echo "Starting PHP"

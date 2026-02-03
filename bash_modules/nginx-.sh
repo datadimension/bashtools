@@ -29,8 +29,6 @@ echo ""
   php-restart
   sudo service nginx start
   sudo /etc/init.d/cron start
-  ps aux | grep php
-  echo ""
   if [ -e /var/run/nginx.pid ]; then
     echo "finished restart"
   else
