@@ -1,10 +1,9 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");
 include(getenv('HOME') . "/bashtools/php_helpers/bash/env-parse.php");
-echo $PHP_DIR_VERSION;
-die();
+\
 //20241103args to $_GET https://www.php.net/manual/en/features.commandline.php#:~:text=Even%20better%2C%20instead%20of%20putting%20that%20line%20in%20every%20file%2C%20take%20advantage%20of%20PHP%27s%20auto_prepend_file%20directive.%C2%A0%20Put%20that%20line%20in%20its%20own%20file%20and%20set%20the%20auto_prepend_file%20directive%20in%20your%20cli%2Dspecific%20php.ini%20like%20so%3A
-parse_str(implode('&', array_slice($argv, 1)), $args);
+    parse_str(implode('&', array_slice($argv, 1)), $args);
 
 if ($args["APP_URL"]) {
       $app_url = $args["APP_URL"];
@@ -37,13 +36,10 @@ $blocktemplate = str_replace("<wwwroot />", $wwwroot, $blocktemplate);
 
 $blocktemplate = str_replace("<ssl_certs />", $certs, $blocktemplate);
 
-$dec1 = strpos($PHP_VERSION, '.');
-$dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
-$fpmlocation = "/run/php/";
-$fpmversion = substr($PHP_VERSION, 0, $dec2);
-$fpmsockfile = $fpmlocation . "php" . $fpmversion . "-fpm.sock";
-$blocktemplate = str_replace("<FPM_SOCKFILE />", $fpmsockfile, $blocktemplate);
-
-//fastcgi_pass unix:/run/php/php8.3-fpm.sock; /run/php/8.3-fpm.sock
-
+//x20260203$dec1 = strpos($PHP_VERSION, '.');
+//x20260203$$dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
+//x20260203$$fpmlocation = "/run/php/";
+//x20260203$$fpmversion = substr($PHP_VERSION, 0, $dec2);
+//x20260203$$fpmsockfile = $fpmlocation . "php" . $fpmversion . "-fpm.sock";
+$blocktemplate = str_replace("<PHP_DIR_VERSION />", $PHP_DIR_VERSION, $blocktemplate);
 file_put_contents("/etc/nginx/sites-enabled/" . $args["repo_name"], $blocktemplate);
