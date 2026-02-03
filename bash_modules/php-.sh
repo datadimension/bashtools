@@ -9,7 +9,7 @@ echo-hr
 	    pwd;
         ls;
                 echo-hr
-                echo "Install will remove all PHP and install $PHP_DD_VERSION"
+                echo "Install will remove all PHP and install PHP version $PHP_DD_VERSION"
                 wait
                 	  sudo pkill php-fpm
 	    		sudo apt-get -y --purge remove php-common
@@ -21,14 +21,16 @@ echo-hr
 sudo apt-get -y autoremove
     sudo apt update
 	sudo add-apt-repository -y ppa:ondrej/php
-wait clear  "INSTALLING php PHP_DD_VERSION"
-	    cd /etc/php;
-	    pwd;
-        ls;
+wait clear  "INSTALLING php version $PHP_DD_VERSION"
                 echo-hr
 
 	sudo apt-get -y install php$PHP_DD_VERSION
-	php-removeapache PHP_DD_VERSION
+	php-removeapache $PHP_DD_VERSION
+
+	    cd /etc/php;
+	    pwd;
+        ls;
+        wait
 
 wait clear  "INSTALLING MODULES"#remove apache
 	    cd /etc/php;
@@ -50,8 +52,7 @@ wait clear  "INSTALLING MODULES"#remove apache
 	sudo apt-get -y install php$PHP_DD_VERSION-xml
 	sudo apt-get -y install php$PHP_DD_VERSION-memcached
 		sudo apt-get -y install php$PHP_DD_VERSION-sqlite3
-        sudo apt-get -y install php-common php$php_default-mysql php$php_default-cli
-vs
+        sudo apt-get -y install php-common php$PHP_DD_VERSION-mysql
 		sudo apt-get -y install php$PHP_DD_VERSION-dev autoconf automake #allow to build php packages on this system eg xdebug
 
 	    cd /etc/php;
@@ -68,11 +69,11 @@ wait clear  "SECURING INSTALLATION"
 	echo $PHP_FULL_VERSION;
 	echo $PHP_DIR_VERSION;
 	php -v;
-  echo "We will now edit /etc/php/$PHP_DIR_VERSION/fpm/php.ini"
+  echo "We will now edit /etc/php/$PHP_DD_VERSION/fpm/php.ini"
   echo "And for security change line to be"
-  echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
+  echo "cgi.fix_pathinfo=0; [eg uncomment ';' and set value to 0]"
  wait
-  sudo nano +817 /etc/php/$PHP_DIR_VERSION/fpm/php.ini
+  sudo nano +817 /etc/php/$PHP_DD_VERSION/fpm/php.ini
 }
 
 function php-removeapache(){

@@ -28,6 +28,7 @@ echo "WAN IP: $wanip"
   echo-nl "SSH session IP detected as: $('net-sshIP')"
 
   echo-nl "Default Database IP: $defaultDatabaseIP"
+  echo "PHP_DD_VERSION: $PHP_DD_VERSION"
   echo "PHP_FULLVERSION: $PHP_FULL_VERSION"
     echo "PHP_DIR_VERSION: $PHP_DIR_VERSION"
 
