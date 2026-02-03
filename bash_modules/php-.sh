@@ -76,6 +76,7 @@ wait clear  "SECURING INSTALLATION"
 
  wait
   sudo nano +817 /etc/php/$PHP_DD_VERSION/fpm/php.ini
+  php-restart
 }
 
 function php-removeapache(){
@@ -123,14 +124,12 @@ function ~php() {
 	ls -al $phproot
 }
 
-function php-start() {
+function php-restart() {
 	clear
 	echo-h1 "Closing PHP"
 	ps aux | grep php
 	sudo pkill php-fpm
-	clear
-	echo-h1 "Starting PHP"
+	echo "Starting PHP"
 	sudo service php$PHP_DIR_VERSION-fpm start
-	sudo systemctl restart php$PHP_DIR_VERSION-fpm
 	ps aux | grep php
 }
