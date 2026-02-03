@@ -52,7 +52,7 @@ wait clear  "INSTALLING MODULES"#remove apache
 	sudo apt-get -y install php$PHP_DD_VERSION-xml
 	sudo apt-get -y install php$PHP_DD_VERSION-memcached
 		sudo apt-get -y install php$PHP_DD_VERSION-sqlite3
-        sudo apt-get -y install php-common php$PHP_DD_VERSION-mysql
+        #installs extra php versions sudo apt-get -y install php-common php$PHP_DD_VERSION-mysql
 		sudo apt-get -y install php$PHP_DD_VERSION-dev autoconf automake #allow to build php packages on this system eg xdebug
 
 	    cd /etc/php;
