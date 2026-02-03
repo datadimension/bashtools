@@ -29,6 +29,7 @@ function fsys-secure() {
   sec644level=644 # https://chmodcommand.com/chmod-644/
   sec755level=755 # https://chmodcommand.com/chmod-755/
   sec770level=770 # https://chmodcommand.com/chmod-770/
+	sec770level=775 # https://chmodcommand.com/chmod-770/
   echo ""
   ls -al $targetroot;
 
@@ -43,7 +44,7 @@ function fsys-secure() {
   if [ $targetroot == $wwwroot/html/$www_repofocus ]; then
   echo "Securing laravel directory permissions in $targetroot"
   sudo chmod -R $sec755level $targetroot/app
-  sudo chmod -R $sec770level $targetroot/storage
+  sudo chmod -R $sec775level $targetroot/storage
   sudo chmod -R $sec770level $targetroot/public/downloads
   sudo chmod -R $sec770level $targetroot/public
   sudo chmod -R $sec770level $targetroot/private
@@ -78,7 +79,7 @@ function file-cdrepo(){
     	www_repofocus=""
     	bash-writesettings;
     fi
-	www-reposhow
+	repo-show
 	 if [ "$www_repofocus" == "" ]; then
     	echo "";
     	echo "NOTE:"

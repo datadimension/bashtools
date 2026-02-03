@@ -13,9 +13,44 @@ function repo-show() {
     echo "$((i + 1)): $repolabel"
   done
   echo ""
-  echo "www-reposwitch to change / www-reposet to configure "
+  echo "repo-switch to change / www-reposet to configure "
   echo ""
   echo "selected DEV URL:"
   echo "$dev_url"
   echo ""
+}
+
+#switch the repo to work on
+function repo-switch() {
+  repo-show
+  echo "Please select a repo number to chose for operations"
+  read option
+  reponumber=$(($option - 1))
+  echo "Auto sync with GIT (recommended) ? n=no"
+  read -t 5 input
+  if [ "$environment" != "production" ]; then #never push from production
+    if [ "$input" != "n" ]; then
+      git-push
+    fi
+  fi
+  www_repofocus=${wwwrepos[reponumber]}
+  cd "$wwwroot/html/$www_repofocus"
+  echo "setting repo to $www_repofocus"
+  bash-writesettings
+  if [ "$input" != "n" ]; then
+    git-pull
+  fi
+  bash-start
+}
+
+#installs a named repo
+function repo-install() {
+  dir=$1
+  reponame=$2
+  echo "repoinstall"
+  echo "Please enter the git reponame to put here"
+  read reponame
+  echo "Installing '$reponame' under $wwwroot/html/$dir"
+  git-repo_install $dir $reponame
+  composer-update
 }

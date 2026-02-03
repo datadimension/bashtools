@@ -1,30 +1,10 @@
 #!/usr/bin/env bash
 
-# shows site selection
-# list to pick from for various funcs
-function www-reposhow() {
-  echo-br "Current repos are:"
-  for i in {0..9}; do
-    repolabel=${wwwrepos[$i]}
-    if [ "$repolabel" != "" ]; then
-    	repodevurl="${repolabel//[^[:alnum:]]}.$serverid.com"
-      repolabel="$repolabel  [dev URL: $repodevurl ]"
-    fi
-    echo "$((i + 1)): $repolabel"
-  done
-  echo ""
-  echo "www-reposwitch to change / www-reposet to configure "
-  echo ""
-  echo "selected DEV URL:"
-  echo "$dev_url"
-  echo ""
-}
-
 function www-siteremove() {
   clear
   echo-h1 "Site Removal"
   echo "To remove from this server, you will still be able to reinstate from git using www-setsite"
-  www-reposhow
+  repo-show
   echo "if not on the list you will need to assign it to an option with www-reposet"
   echo "Enter site number to remove"
   read option
@@ -73,7 +53,7 @@ function www-reposet() {
   echo-hr
   ls $wwwroot/html
   echo-hr
-  www-reposhow
+  repo-show
   echo ""
   echo "NOTE: Reassigning repo number will not delete the repo - you will need to run www-reporemove"
   echo ""
@@ -138,45 +118,12 @@ function www-sitesqluserinstall() {
   echo "FLUSH PRIVILEGES;"
 }
 
-#switch the repo to work on
-function www-reposwitch() {
-  www-reposhow
-  echo "Please select a repo number to chose for operations"
-  read option
-  reponumber=$(($option - 1))
-  echo "Auto sync with GIT (recommended) ? n=no"
-  read -t 5 input
-  if [ "$environment" != "production" ]; then #never push from production
-    if [ "$input" != "n" ]; then
-      git-push
-    fi
-  fi
-  www_repofocus=${wwwrepos[reponumber]}
-  cd "$wwwroot/html/$www_repofocus"
-  echo "setting repo to $www_repofocus"
-  bash-writesettings
-  if [ "$input" != "n" ]; then
-    git-pull
-  fi
-  bash-start
-}
-
 function www-routes() {
   php artisan route:list
 }
 
 function os-certificategen() {
   echo "This will install a self signed certificate"
-}
-
-function www-repoinstall() {
-  dir=$1
-  reponame=$2
-  echo "repoinstall"
-  echo "Please enter the git reponame to put here"
-  read reponame
-  echo "Installing '$reponame' under $wwwroot/html/$dir"
-  git-repo_install $dir $reponame
 }
 
 #help for this module
@@ -189,7 +136,7 @@ function www-repocreate() {
   #based on https://kbroman.org/github_tutorial/pages/init.html
   clear
   echo "This will create a new laravel project"
-  www-reposhow
+  repo-show
   echo-br "Please enter new repo name (no special chars / underscore)"
   read newrepo
   read -p "Please enter index for '$newrepo' : " reponumber
