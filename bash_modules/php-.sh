@@ -27,7 +27,7 @@ wait clear  "INSTALLING php PHP_DD_VERSION"
         ls;
                 echo-hr
 
-	sudo apt-get -y install phpPHP_DD_VERSION
+	sudo apt-get -y install php$PHP_DD_VERSION
 	php-removeapache PHP_DD_VERSION
 
 wait clear  "INSTALLING MODULES"#remove apache
@@ -36,23 +36,23 @@ wait clear  "INSTALLING MODULES"#remove apache
         ls;
                 echo-hr
 
-	sudo apt-get -y install phpPHP_DD_VERSION-fpm
-	sudo apt-get -y install phpPHP_DD_VERSION-zip
+	sudo apt-get -y install php$PHP_DD_VERSION-fpm
+	sudo apt-get -y install php$PHP_DD_VERSION-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
-	sudo apt-get -y install phpPHP_DD_VERSION-soap
-	sudo apt-get -y install phpPHP_DD_VERSION-curl
-	sudo apt-get -y install phpPHP_DD_VERSION-bcmath
-	sudo apt-get -y install phpPHP_DD_VERSION-bz2
-	sudo apt-get -y install phpPHP_DD_VERSION-intl
-	sudo apt-get -y install phpPHP_DD_VERSION-mbstring
-	sudo apt-get -y install phpPHP_DD_VERSION-mysql
-	sudo apt-get -y install phpPHP_DD_VERSION-readline
-	sudo apt-get -y install phpPHP_DD_VERSION-xml
-	sudo apt-get -y install phpPHP_DD_VERSION-memcached
-		sudo apt-get -y install phpPHP_DD_VERSION-sqlite3
+	sudo apt-get -y install php$PHP_DD_VERSION-soap
+	sudo apt-get -y install php$PHP_DD_VERSION-curl
+	sudo apt-get -y install php$PHP_DD_VERSION-bcmath
+	sudo apt-get -y install php$PHP_DD_VERSION-bz2
+	sudo apt-get -y install php$PHP_DD_VERSION-intl
+	sudo apt-get -y install php$PHP_DD_VERSION-mbstring
+	sudo apt-get -y install php$PHP_DD_VERSION-mysql
+	sudo apt-get -y install php$PHP_DD_VERSION-readline
+	sudo apt-get -y install php$PHP_DD_VERSION-xml
+	sudo apt-get -y install php$PHP_DD_VERSION-memcached
+		sudo apt-get -y install php$PHP_DD_VERSION-sqlite3
         sudo apt-get -y install php-common php$php_default-mysql php$php_default-cli
 vs
-		sudo apt-get -y install phpPHP_DD_VERSION-dev autoconf automake #allow to build php packages on this system eg xdebug
+		sudo apt-get -y install php$PHP_DD_VERSION-dev autoconf automake #allow to build php packages on this system eg xdebug
 
 	    cd /etc/php;
 	    pwd;
@@ -84,7 +84,7 @@ function php-removeapache(){
                     echo-hr
 				sudo service apache2 stop;
         	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
-        sudo apt-get -y purge libapache2-mod-phpPHP_DD_VERSION
+        sudo apt-get -y purge libapache2-mod-php$PHP_DD_VERSION
         sudo apt-get -y autoremove
 }
 
