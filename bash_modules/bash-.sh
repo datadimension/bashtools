@@ -40,6 +40,8 @@ function bash-start-ubuntu() {
   bash-start-ubuntu-osconfigcheck
   env-about
       read wait
+      
+      clear
   echo "BashTools [$platform - $serverid]"
   echo-hr
   if [ "$welcomemsg" != "" ]; then
