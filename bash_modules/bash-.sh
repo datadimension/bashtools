@@ -40,8 +40,6 @@ function bash-start-ubuntu() {
 env-parse
   bash-start-ubuntu-osconfigcheck
   env-about
-      read wait
-
       clear
   echo "BashTools [$platform - $serverid]"
   echo-hr
