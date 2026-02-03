@@ -17,6 +17,7 @@ function bash-start() {
 function bash-start-windows() {
   source ~/bashtools/bash_modules/windows/git-.sh
   source ~/bashtools/bash_modules//windows/fsys-.sh
+  env-parse
   echo "BashTools [Windows IDE version]"
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
@@ -36,11 +37,11 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/laravel-.sh
   source ~/bashtools/bash_modules/fsys-.sh
   source ~/bashtools/bash_modules/composer-.sh
-
+env-parse
   bash-start-ubuntu-osconfigcheck
   env-about
       read wait
-      
+
       clear
   echo "BashTools [$platform - $serverid]"
   echo-hr
