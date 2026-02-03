@@ -1,9 +1,9 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");
 include(getenv('HOME') . "/bashtools/php_helpers/bash/env-parse.php");
-\
+
 //20241103args to $_GET https://www.php.net/manual/en/features.commandline.php#:~:text=Even%20better%2C%20instead%20of%20putting%20that%20line%20in%20every%20file%2C%20take%20advantage%20of%20PHP%27s%20auto_prepend_file%20directive.%C2%A0%20Put%20that%20line%20in%20its%20own%20file%20and%20set%20the%20auto_prepend_file%20directive%20in%20your%20cli%2Dspecific%20php.ini%20like%20so%3A
-    parse_str(implode('&', array_slice($argv, 1)), $args);
+parse_str(implode('&', array_slice($argv, 1)), $args);
 
 if ($args["APP_URL"]) {
       $app_url = $args["APP_URL"];
@@ -42,7 +42,8 @@ $blocktemplate = str_replace("<ssl_certs />", $certs, $blocktemplate);
 //x20260203$$fpmversion = substr($PHP_VERSION, 0, $dec2);
 //x20260203$$fpmsockfile = $fpmlocation . "php" . $fpmversion . "-fpm.sock";
 $blocktemplate = str_replace("<PHP_DIR_VERSION />", $PHP_DIR_VERSION, $blocktemplate);
-echo $args["repo_name"];
 var_dump($blocktemplate);
+echo $args["repo_name"];
+
 die();
 file_put_contents("/etc/nginx/sites-enabled/" . $args["repo_name"], $blocktemplate);
