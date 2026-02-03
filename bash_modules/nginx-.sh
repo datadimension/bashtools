@@ -107,6 +107,7 @@ function nginx-setserverblock() {
   echo-hr
   echo ""
   php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
+  return 1;
   cat /etc/nginx/sites-enabled/$www_repofocus
   echo ""
   echo-hr
