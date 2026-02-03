@@ -20,8 +20,8 @@ function fsys-secure() {
 
   echo-hr
   www-reposhow
-  read -p "Conform file permisions at $targetroot ?"
-   echo "This can take a few mins depending on size of subdirectories [y/n]: " -t 10 input
+  echo "Conform file permisions at $targetroot ?"
+   read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 10  input
   if [ "$input" != "y" ]; then
     return 0
   fi
