@@ -129,7 +129,7 @@ function php-restart() {
 	echo "Closing PHP"
 	ps aux | grep php
 	sudo pkill php-fpm
-	echo "Starting PHP"
+	echo "Starting PHP" 
 	sudo service php$PHP_DIR_VERSION-fpm start
 	ps aux | grep php
 }
