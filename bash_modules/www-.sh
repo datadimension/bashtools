@@ -73,20 +73,3 @@ function os-certificategen() {
 function www-h(){
 	bash-helpformodule www
 }
-
-function www-oauthcreate() {
-  clear
-  echo-br "now to set up in Google Developer Console ... visit ..."
-  echo-br "https://console.cloud.google.com/projectcreate"
-  echo "and set up project for $www_repofocus"
-  echo "note it will advise removing special characters from project name"
-  echo "then configure OAuth screen"
-  echo "https://console.cloud.google.com/apis/credentials/consent"
-  echo "and Create OAuth client ID"
-  echo-nl "https://console.cloud.google.com/auth/clients/create"
-  echo-nl "and add as per these examples as seperate entries, eg for dev server:"
-  echo "https://$dev_url"
-  echo "https://$dev_url/auth/google/callback"
-  echo-nl "https://$dev_url/google/api_getauth"
-echo "also add for production server at some point"
-}

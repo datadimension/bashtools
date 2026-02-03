@@ -107,7 +107,7 @@ function repo-create() {
   echo "ssh to PRODUCTION database server and run"
   echo-b "mysql-createrepodatabase $db_app"
   wait "Finished database ? Enter to continue"
-  www-oauthcreate
+  repo-setoauth
   fsys-secure;
   echo "Now test with:";
   echo "https://$dev_url/servertest"
@@ -134,5 +134,22 @@ function repo-frombackup() {
   # * * * * * cd /var/www/html/liveinfo247.com/app && ./cron.sh
 
   # * * * * * php /var/www/html/xonhealth/artisan schedule:run >> /dev/null 2>&1
+}
+
+function repo-setoauth() {
+  clear
+  echo-br "now to set up in Google Developer Console ... visit ..."
+  echo-br "https://console.cloud.google.com/projectcreate"
+  echo "and set up project for $www_repofocus"
+  echo "note it will advise removing special characters from project name"
+  echo "then configure OAuth screen"
+  echo "https://console.cloud.google.com/apis/credentials/consent"
+  echo "and Create OAuth client ID"
+  echo-nl "https://console.cloud.google.com/auth/clients/create"
+  echo-nl "and add as per these examples as seperate entries, eg for dev server:"
+  echo "https://$dev_url"
+  echo "https://$dev_url/auth/google/callback"
+  echo-nl "https://$dev_url/google/api_getauth"
+echo "also add for production server at some point"
 }
 
