@@ -15,6 +15,7 @@ function fsys-secure() {
     	currentdir=$(pwd);
     	targetroot="$currentdir/$dirname"
   fi
+  echo $targetroot;
   return 1;
   echo-hr
   www-reposhow
