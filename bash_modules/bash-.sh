@@ -6,6 +6,7 @@ function bash-start() {
   source ~/bashtools/bash_modules/env-.sh
   source ~/bashtools/bash_modules/www-.sh
   bash-readsettings
+    env-parse
   env-attributerequire "welcomemsg"
 env-about
     read wait
@@ -100,6 +101,7 @@ function bash-install-ubuntu() {
   echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
   cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
   bash-writesettings
+    env-parse
   source ~/.bash_profile
 }
 
@@ -110,6 +112,7 @@ function bash-install-windows() {
   echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
   cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
   bash-writesettings
+    env-parse
   source ~/.bash_profile
 }
 
@@ -216,7 +219,4 @@ function bash-readsettings() {
 dev_url=${values[16]}
 wanip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 
-#set detectable variables
-php-getfullversion;
-php-getdirversion;
 }

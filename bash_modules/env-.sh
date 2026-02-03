@@ -13,6 +13,13 @@ function env-h(){
 	bash-helpformodule env
 }
 
+#detects env attributes and loads them into static variables like bash-readsettings does
+function env-parse(){
+	#set detectable variables
+    php-getfullversion;
+    php-getdirversion;
+}
+
 #show full info about the server environment
 function env-about() {
   clear
