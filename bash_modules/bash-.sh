@@ -39,7 +39,9 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/composer-.sh
 env-parse
   bash-start-ubuntu-osconfigcheck
+  clear
   env-about
+  read -t 1 wait
       clear
   echo "BashTools [$platform - $serverid]"
   echo-hr
