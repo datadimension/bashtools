@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+function repo-h(){
+	bash-helpformodule repo
+}
+
 # shows site selection
 # list to pick from for various funcs
 function repo-show() {
@@ -121,6 +125,7 @@ function repo-frombackup() {
   cp -a -v --update=none $wwwroot/html/$backupdir/private $wwwroot/html/$targetdir
 }
 
+#info for setting up outh on Google Dev
 function repo-setoauth() {
   echo-newpage "Set up in Google Developer Console"
   echo "visit"
