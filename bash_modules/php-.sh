@@ -126,10 +126,10 @@ function ~php() {
 }
 
 function php-restart() {
-	clear
 	echo "Closing PHP"
 	ps aux | grep php
 	sudo pkill php-fpm
+	echo-hr
 	echo "Starting PHP"
 	sudo service php$PHP_DIR_VERSION-fpm start
 	ps aux | grep php

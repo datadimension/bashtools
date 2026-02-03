@@ -9,21 +9,20 @@ function fsys-disk() {
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
   dirname=$1
-
   if [ "$dirname" == "" ]; then
     targetroot=$www_repofocus
     else
     	currentdir=$(pwd);
     	targetroot="$currentdir/$dirname"
   fi
+  return 1;
+  echo-hr
   www-reposhow
-  clear
   read -p "Conform file permisions at $targetroot ?"
    echo "This can take a few mins depending on size of subdirectories [y/n]: " -t 10 input
   if [ "$input" != "y" ]; then
     return 0
   fi
-
 
   #see https://chmodcommand.com/chmod-770/
   sec644level=644 # https://chmodcommand.com/chmod-644/
