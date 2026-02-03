@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 #help for this module
 function log-h(){

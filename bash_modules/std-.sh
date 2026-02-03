@@ -141,7 +141,7 @@ function std-menu() {
 
 # shows bashtools function categories and functions
 function h-(){
-	  std-menu std,bash,env,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
+	  std-menu std,bash,env,repo,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
       echo "Loading help for $MENUCHOICE ..."
       php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
 }

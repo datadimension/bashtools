@@ -2,7 +2,7 @@
 
 function bash-start() {
   #load modules optimised for all os
-  source ~/bashtools/bash_modules/std-.sh #standard for a platforms
+  source ~/bashtools/bash_modules/std-.sh #standard for all platforms
   source ~/bashtools/bash_modules/env-.sh
   source ~/bashtools/bash_modules/www-.sh
   bash-readsettings
@@ -34,6 +34,7 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/git-.sh
   source ~/bashtools/bash_modules/net-.sh
   source ~/bashtools/bash_modules/log-.sh
+	source ~/bashtools/bash_modules/repo-.sh
   source ~/bashtools/bash_modules/laravel-.sh
   source ~/bashtools/bash_modules/fsys-.sh
   source ~/bashtools/bash_modules/composer-.sh

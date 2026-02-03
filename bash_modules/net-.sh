@@ -53,7 +53,7 @@ function net-hosts() {
       if [ "$mode" == "edit" ]; then
   		sudo nano /etc/hosts
   		sudo net-dnsflush
-  	else 
+  	else
   		tail -1000 /etc/hosts
       fi
 
