@@ -2,11 +2,6 @@
 
 #removes as much of exisiting php as possible and installs it according to php_defaultvs
 function php-install() {
-	php_defaultvs=$1;
-		if [ "$php_defaultvs" == "" ]; then
-			echo "no php version stated to install"
-return 0;
-fi
 clear
 echo  "CURRENT PHP"
 echo-hr
@@ -20,19 +15,20 @@ echo-hr
 	    		sudo apt-get -y --purge remove php-common
 	sudo apt-get -y remove php7* php8* php9*
 	sudo rm /lib/systemd/system/php8*
+	sudo rm /lib/systemd/system/php9*
 	sudo rm -R /etc/php/*.*;
 	php-removeapache
 sudo apt-get -y autoremove
     sudo apt update
 	sudo add-apt-repository -y ppa:ondrej/php
-wait clear  "INSTALLING php $php_defaultvs"
+wait clear  "INSTALLING php PHP_DD_VERSION"
 	    cd /etc/php;
 	    pwd;
         ls;
                 echo-hr
 
-	sudo apt-get -y install php$php_defaultvs
-	php-removeapache $php_defaultvs
+	sudo apt-get -y install phpPHP_DD_VERSION
+	php-removeapache PHP_DD_VERSION
 
 wait clear  "INSTALLING MODULES"#remove apache
 	    cd /etc/php;
@@ -40,23 +36,23 @@ wait clear  "INSTALLING MODULES"#remove apache
         ls;
                 echo-hr
 
-	sudo apt-get -y install php$php_defaultvs-fpm
-	sudo apt-get -y install php$php_defaultvs-zip
+	sudo apt-get -y install phpPHP_DD_VERSION-fpm
+	sudo apt-get -y install phpPHP_DD_VERSION-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
-	sudo apt-get -y install php$php_defaultvs-soap
-	sudo apt-get -y install php$php_defaultvs-curl
-	sudo apt-get -y install php$php_defaultvs-bcmath
-	sudo apt-get -y install php$php_defaultvs-bz2
-	sudo apt-get -y install php$php_defaultvs-intl
-	sudo apt-get -y install php$php_defaultvs-mbstring
-	sudo apt-get -y install php$php_defaultvs-mysql
-	sudo apt-get -y install php$php_defaultvs-readline
-	sudo apt-get -y install php$php_defaultvs-xml
-	sudo apt-get -y install php$php_defaultvs-memcached
-		sudo apt-get -y install php$php_default-sqlite3
-        sudo apt-get -y install php-common php-mysql php-cli
-
-		sudo apt-get -y install php-dev autoconf automake #allow to build php packages on this system eg xdebug
+	sudo apt-get -y install phpPHP_DD_VERSION-soap
+	sudo apt-get -y install phpPHP_DD_VERSION-curl
+	sudo apt-get -y install phpPHP_DD_VERSION-bcmath
+	sudo apt-get -y install phpPHP_DD_VERSION-bz2
+	sudo apt-get -y install phpPHP_DD_VERSION-intl
+	sudo apt-get -y install phpPHP_DD_VERSION-mbstring
+	sudo apt-get -y install phpPHP_DD_VERSION-mysql
+	sudo apt-get -y install phpPHP_DD_VERSION-readline
+	sudo apt-get -y install phpPHP_DD_VERSION-xml
+	sudo apt-get -y install phpPHP_DD_VERSION-memcached
+		sudo apt-get -y install phpPHP_DD_VERSION-sqlite3
+        sudo apt-get -y install php-common php$php_default-mysql php$php_default-cli
+vs
+		sudo apt-get -y install phpPHP_DD_VERSION-dev autoconf automake #allow to build php packages on this system eg xdebug
 
 	    cd /etc/php;
 	    pwd;
@@ -88,7 +84,7 @@ function php-removeapache(){
                     echo-hr
 				sudo service apache2 stop;
         	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
-        sudo apt-get -y purge libapache2-mod-php$php_defaultvs
+        sudo apt-get -y purge libapache2-mod-phpPHP_DD_VERSION
         sudo apt-get -y autoremove
 }
 

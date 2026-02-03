@@ -8,7 +8,7 @@ declare -ag os_install_steps=(
 )
 
 os_install_step_size=${#os_install_steps[@]}
-
+PHP_DD_VERSION=8.3
 #defaults to use
 
 function os-() {
@@ -106,9 +106,7 @@ function os-installer() {
 	if [ "$option" == "1" ]; then
 		os-install-additional
 	elif [ "$option" == "2" ]; then
-		echo "Enter php version to install eg 8.5";
-		read php_installversion
-		php-install php_installversion
+		php-install
 	elif [ "$option" == "3" ]; then
 		os-install-composer
 	elif [ "$option" == "4" ]; then
