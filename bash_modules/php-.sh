@@ -23,11 +23,8 @@ echo-hr
 	sudo rm -R /etc/php/*.*;
 	php-removeapache
 sudo apt-get -y autoremove
-
-	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update
-
-\
+	sudo add-apt-repository -y ppa:ondrej/php
 wait clear  "INSTALLING php $php_defaultvs"
 	    cd /etc/php;
 	    pwd;
@@ -35,6 +32,7 @@ wait clear  "INSTALLING php $php_defaultvs"
                 echo-hr
 
 	sudo apt-get -y install php$php_defaultvs
+	php-removeapache $php_defaultvs
 
 wait clear  "INSTALLING MODULES"#remove apache
 	    cd /etc/php;
@@ -55,7 +53,7 @@ wait clear  "INSTALLING MODULES"#remove apache
 	sudo apt-get -y install php$php_defaultvs-readline
 	sudo apt-get -y install php$php_defaultvs-xml
 	sudo apt-get -y install php$php_defaultvs-memcached
-		sudo apt-get -y install php$php$php_default-sqlite3
+		sudo apt-get -y install php$php_default-sqlite3
         sudo apt-get -y install php-common php-mysql php-cli
 
 		sudo apt-get -y install php-dev autoconf automake #allow to build php packages on this system eg xdebug
@@ -82,6 +80,7 @@ wait clear  "SECURING INSTALLATION"
 }
 
 function php-removeapache(){
+		php_defaultvs=$1;
 	wait clear  "REMOVING APACHE"
     	    cd /etc/php;
     	    pwd;
@@ -89,6 +88,7 @@ function php-removeapache(){
                     echo-hr
 				sudo service apache2 stop;
         	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
+        sudo apt-get -y purge libapache2-mod-php$php_defaultvs
         sudo apt-get -y autoremove
 }
 
