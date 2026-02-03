@@ -6,11 +6,7 @@ function bash-start() {
   source ~/bashtools/bash_modules/env-.sh
   source ~/bashtools/bash_modules/www-.sh
   bash-readsettings
-    env-parse
   env-attributerequire "welcomemsg"
-env-about
-    read wait
-
   if [ "$platform" == "ubuntu" ]; then
     bash-start-ubuntu
   else
@@ -42,6 +38,8 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/composer-.sh
 
   bash-start-ubuntu-osconfigcheck
+  env-about
+      read wait
   echo "BashTools [$platform - $serverid]"
   echo-hr
   if [ "$welcomemsg" != "" ]; then
@@ -65,7 +63,6 @@ osinstall=0 #control bool to restart bash to loop through setup
 
   MENUCHOICE="" #reserved as a global for menu function
   php-getfullversion;
-  echo "PHP_FULL_VERSION: $PHP_FULL_VERSION";
   #env-attributerequire "welcomemsg"
 }
 
