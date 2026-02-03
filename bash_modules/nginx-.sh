@@ -23,9 +23,11 @@ function nginx-start() {
   clear
   echo-hr "Closing Nginx / PHP"
   sudo service nginx stop
+  sudo pkill -f nginx & wait $!
+
   sudo logrotate -f /etc/logrotate.d/nginx
-echo ""
-  echo-hr "Starting Nginx / PHP-fpm"
+echo-nl ""
+  echo "Starting Nginx / PHP-fpm"
   php-restart
   sudo service nginx start
   sudo /etc/init.d/cron start

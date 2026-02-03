@@ -80,15 +80,16 @@ wait clear  "SECURING INSTALLATION"
 }
 
 function php-removeapache(){
-		php_defaultvs=$1;
+					sudo service apache2 stop;
+					sudo rm -r /usr/sbin/apache2
 	wait clear  "REMOVING APACHE"
     	    cd /etc/php;
     	    pwd;
             ls;
                     echo-hr
-				sudo service apache2 stop;
+                    sudo apt-get purge apache2
         	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
-        sudo apt-get -y purge libapache2-mod-php$PHP_DD_VERSION
+        sudo apt-get -y purge libapache2-mod-php$PHP_DIR_VERSION
         sudo apt-get -y autoremove
 }
 
@@ -123,7 +124,7 @@ function ~php() {
 	phproot="/etc/php/$PHP_DIR_VERSION/fpm"
 	ls -al $phproot
 }
- 
+
 function php-restart() {
 	clear
 	echo "Closing PHP"

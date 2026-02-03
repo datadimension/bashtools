@@ -6,6 +6,7 @@ function bash-start() {
   source ~/bashtools/bash_modules/env-.sh
   source ~/bashtools/bash_modules/www-.sh
   bash-readsettings
+  read wait
   env-attributerequire "welcomemsg"
   if [ "$platform" == "ubuntu" ]; then
     bash-start-ubuntu
