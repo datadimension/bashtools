@@ -29,7 +29,7 @@ function fsys-secure() {
   sec644level=644 # https://chmodcommand.com/chmod-644/
   sec755level=755 # https://chmodcommand.com/chmod-755/
   sec770level=770 # https://chmodcommand.com/chmod-770/
-	sec770level=775 # https://chmodcommand.com/chmod-770/
+	sec775level=775 # https://chmodcommand.com/chmod-770/
   echo ""
   ls -al $targetroot;
 

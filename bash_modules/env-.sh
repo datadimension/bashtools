@@ -74,7 +74,7 @@ function env-setservertype() {
   #echo "Enter dev site project names ? y/n"
   #read doset
   # if [ "$doset" = "y" ]; then
-  #   www-reposet
+  #   repo-set
   # fi
   # cd $wwwroot
 }
