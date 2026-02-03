@@ -20,7 +20,7 @@ function fsys-secure() {
   ls
   echo-hr
   echo "Conform file permisions at $targetroot ?"
-   read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 10  input
+   read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 3  input
   if [ "$input" != "y" ]; then
     return 0
   fi

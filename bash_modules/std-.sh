@@ -60,10 +60,6 @@ function echo-nl() {
   echo ""
 }
 
-function sudonoop(){
-	$noop=1;
-}
-
 function echo-newpage() {
   textoutput=""$1""
   clear
