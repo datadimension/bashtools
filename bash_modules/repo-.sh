@@ -137,7 +137,8 @@ function repo-frombackup() {
 }
 
 function repo-setoauth() {
-  echo-newpage "now to set up in Google Developer Console ... visit ..."
+  echo-newpage "Set up in Google Developer Console"
+  echo "visit"
   echo-br "https://console.cloud.google.com/projectcreate"
   echo "and set up project for $www_repofocus"
   echo "note it will advise removing special characters from project name"

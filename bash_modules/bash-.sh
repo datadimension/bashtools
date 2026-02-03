@@ -168,7 +168,6 @@ function bash-cfg() {
 }
 
 function bash-writesettings() {
-
 	#ensure detectable values are written
 	php-getfullversion;
 	db_app="${www_repofocus//[^[:alnum:]]}"
@@ -182,7 +181,7 @@ function bash-writesettings() {
   echo "$csv" >~/bashtoolscfg/wwwrepos
   echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
   echo "$git_ssh" >~/bashtoolscfg/gitcfg
-  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$PHP_FULLVERSION,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,$dev_url" >~/bashtoolscfg/bash.env
+  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$PHP_FULLVERSION,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,," >~/bashtoolscfg/bash.env
 }
 
 function bash-readsettings() {
@@ -217,7 +216,7 @@ function bash-readsettings() {
   wwwrepos=${values[13]}
   www_repofocus=${values[14]}
   db_app=${values[15]}
-dev_url=${values[16]}
+#20260203dev_url=${values[16]}
 wanip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 
 }
