@@ -1,4 +1,4 @@
 <?php
 
-echo "included";
-die();
+$PHP_FULL_VERSION = PHP_VERSION;
+$PHP_DIR_VERSION = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
