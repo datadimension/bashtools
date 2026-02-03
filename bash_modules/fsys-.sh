@@ -10,7 +10,7 @@ function fsys-disk() {
 function fsys-secure() {
   dirname=$1
   if [ "$dirname" == "" ]; then
-    targetroot=$www_repofocus
+    targetroot=$wwwroot/html/$www_repofocus
     else
     	currentdir=$(pwd);
     	targetroot="$currentdir/$dirname"
