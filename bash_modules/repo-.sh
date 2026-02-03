@@ -16,7 +16,7 @@ function repo-show() {
   echo "repo-switch to change / repo-set to configure "
   echo ""
   echo "selected DEV URL:"
-  echo "$dev_url"
+  echo "$LOCAL_URL"
   echo ""
 }
 
@@ -110,7 +110,7 @@ function repo-create() {
   repo-setoauth
   fsys-secure;
   echo "Now test with:";
-  echo "https://$dev_url/servertest"
+  echo "https://$LOCAL_URL/servertest"
 }
 
 #copies all fies from backup
@@ -147,9 +147,14 @@ function repo-setoauth() {
   echo "and Create OAuth client ID"
   echo-nl "https://console.cloud.google.com/auth/clients/create"
   echo-nl "and add as per these examples as seperate entries, eg for dev server:"
-  echo "https://$dev_url"
-  echo "https://$dev_url/auth/google/callback"
-  echo-nl "https://$dev_url/google/api_getauth"
+  echo "https://$LOCAL_URL"
+  echo "https://$LOCAL_URL/auth/google/callback"
+  echo-nl "https://$LOCAL_URL/google/api_getauth"
 echo "also add for production server at some point"
 }
+
+function repo-getlocalurl(){
+	LOCAL_URL=$www_repofocus.$serverid.com;
+}
+
 

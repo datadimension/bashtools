@@ -18,6 +18,7 @@ function env-parse(){
 	#set detectable variables
     php-getfullversion;
     php-getdirversion;
+    repo-getlocalurl;
 }
 
 #show full info about the server environment

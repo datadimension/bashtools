@@ -22,7 +22,7 @@ $platform = $csv[12];
 //$wwwrepos=$csv[13];
 //$www_repofocus=$csv[14];
 $db_app = $csv[15];
-$dev_url = $csv[16];
+//20260203$dev_url = $csv[16];
 
 if (file_exists($wwwroot . "/html/" . $www_repofocus . "/.env")) {
       $repo_env_file = explode(PHP_EOL, file_get_contents($wwwroot . "/html/" . $www_repofocus . "/.env"));
