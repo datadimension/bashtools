@@ -21,24 +21,20 @@ echo-hr
 	sudo apt-get -y remove php7* php8* php9*
 	sudo rm /lib/systemd/system/php8*
 	sudo rm -R /etc/php/*.*;
+	php-removeapache
+sudo apt-get -y autoremove
 
 	sudo add-apt-repository -y ppa:ondrej/php
     sudo apt update
 
-wait clear  "REMOVING APACHE"#remove apache
+\
+wait clear  "INSTALLING php $php_defaultvs"
 	    cd /etc/php;
 	    pwd;
         ls;
                 echo-hr
 
-		sudo service apache2 stop;
-	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
-sudo apt-get -y autoremove
-
 	sudo apt-get -y install php$php_defaultvs
-			sudo service apache2 stop;
-    	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
-    sudo apt-get -y autoremove
 
 wait clear  "INSTALLING MODULES"#remove apache
 	    cd /etc/php;
@@ -46,21 +42,21 @@ wait clear  "INSTALLING MODULES"#remove apache
         ls;
                 echo-hr
 
-	sudo apt-get -y install php$php$php_defaultvs-fpm
-	sudo apt-get -y install php$php$php_defaultvs-zip
+	sudo apt-get -y install php$php_defaultvs-fpm
+	sudo apt-get -y install php$php_defaultvs-zip
 	#https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
-	sudo apt-get -y install php$php$php_defaultvs-soap
-	sudo apt-get -y install php$php$php_defaultvs-curl
-	sudo apt-get -y install php$php$php_defaultvs-bcmath
-	sudo apt-get -y install php$php$php_defaultvs-bz2
-	sudo apt-get -y install php$php$php_defaultvs-intl
-	sudo apt-get -y install php$php$php_defaultvs-mbstring
-	sudo apt-get -y install php$php$php_defaultvs-mysql
-	sudo apt-get -y install php$php$php_defaultvs-readline
-	sudo apt-get -y install php$php$php_defaultvs-xml
-	sudo apt-get -y install php$php$php_defaultvs-memcached
+	sudo apt-get -y install php$php_defaultvs-soap
+	sudo apt-get -y install php$php_defaultvs-curl
+	sudo apt-get -y install php$php_defaultvs-bcmath
+	sudo apt-get -y install php$php_defaultvs-bz2
+	sudo apt-get -y install php$php_defaultvs-intl
+	sudo apt-get -y install php$php_defaultvs-mbstring
+	sudo apt-get -y install php$php_defaultvs-mysql
+	sudo apt-get -y install php$php_defaultvs-readline
+	sudo apt-get -y install php$php_defaultvs-xml
+	sudo apt-get -y install php$php_defaultvs-memcached
 		sudo apt-get -y install php$php$php_default-sqlite3
-        sudo apt-get install php-common php-mysql php-cli
+        sudo apt-get -y install php-common php-mysql php-cli
 
 		sudo apt-get -y install php-dev autoconf automake #allow to build php packages on this system eg xdebug
 
@@ -69,7 +65,7 @@ wait clear  "INSTALLING MODULES"#remove apache
         ls;
                 echo-hr
 
-wait clear  "SECURING INSTALLATION"#remove apache
+wait clear  "SECURING INSTALLATION"
 	    cd /etc/php;
 	    pwd;
         ls;
@@ -83,6 +79,17 @@ wait clear  "SECURING INSTALLATION"#remove apache
   echo "cgi.fix_pathinfo=0; [eg uncomment and set value to 0]"
  wait
   sudo nano +817 /etc/php/$PHP_DIR_VERSION/fpm/php.ini
+}
+
+function php-removeapache(){
+	wait clear  "REMOVING APACHE"
+    	    cd /etc/php;
+    	    pwd;
+            ls;
+                    echo-hr
+				sudo service apache2 stop;
+        	sudo apt-get -y purge apache2 apache2-utils apache2.2-bin apache2-data libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 apache2-common  apache2-utils apache2-bin apache2.2-common
+        sudo apt-get -y autoremove
 }
 
 #for the full version id
