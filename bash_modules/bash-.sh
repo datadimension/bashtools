@@ -201,14 +201,14 @@ function bash-readsettings() {
 
   csv=$(<~/bashtoolscfg/bash.env)
   IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
-  serverid=${values[5]}
   environment=${values[0]}
   www_repofocus=${values[1]}
   ssh1=${values[2]}
   ssh2=${values[3]}
   defaultDatabaseIP=${values[4]}
+  serverid=${values[5]}
   gituname=${values[7]}
-  #20260122phpNo=${values[8]}
+    #20260122phpNo=${values[8]}
   ipgateway=${values[9]}
   welcomemsg=${values[10]}
   wwwroot=${values[11]}

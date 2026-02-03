@@ -75,6 +75,12 @@ function nginx-testremove() {
     echo "Nginx test removed"
 }
 
+function nginx-testfunc(){
+    reponame=$www_repofocus
+      php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
+
+}
+
 #sets nginx block for current repo focus by default or specify repo name and sslcertificate repofocus will be changed if set
 function nginx-setserverblock() {
   reponame=$1
@@ -82,7 +88,7 @@ function nginx-setserverblock() {
     reponame=$www_repofocus
   else
     www_repofocus=$reponame #set focus or .env will be read wrong by php
-    bash-writesettingsipiiu
+    bash-writesettings
   fi
   sslcertificate=$2
   if [ "$sslcertificate" == "" ]; then
@@ -107,6 +113,10 @@ function nginx-setserverblock() {
   echo "setting file permissions for server block and restarting nginx"
   sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
   nginx-start
+}
+
+function nginx-testfunc(){
+
 }
 
 #help for this module
