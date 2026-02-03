@@ -118,22 +118,7 @@ function repo-frombackup() {
   read -p "Enter backup dir " backupdir
   read -p "Enter target dir " targetdir
   cd "$wwwroot/html/"
-
   cp -a -v --update=none $wwwroot/html/$backupdir/private $wwwroot/html/$targetdir
-
-  #  cp -r 2024_xonhealth/app/Http/Controllers xonhealth/app/Http/xControllers
-  # cp -r 2024_xonhealth/private xonhealth/private
-  # cp -r 2024_xonhealth/public xonhealth/xpublic
-  # cp 2024_xonhealth/.env xonhealth/.env
-  # cp 2024_xonhealth/routes/web.php xonhealth/routes/web.php
-  # cp -r 2024_xonhealth/resources/views xonhealth/resources/xviews
-
-  # * * * * * php /var/www/html/sc.liveinfo247.com/artisan schedule:run
-
-  # * * * * * php /var/www/html/liveinfo247.com/artisan schedule:run >> /dev/null 2>&1
-  # * * * * * cd /var/www/html/liveinfo247.com/app && ./cron.sh
-
-  # * * * * * php /var/www/html/xonhealth/artisan schedule:run >> /dev/null 2>&1
 }
 
 function repo-setoauth() {
