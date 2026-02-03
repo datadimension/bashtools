@@ -9,7 +9,7 @@ echo-hr
 	    pwd;
         ls;
                 echo-hr
-                echo "Install will remove all PHP"
+                echo "Install will remove all PHP and install PHP_DD_VERSION"
                 wait
                 	  sudo pkill php-fpm
 	    		sudo apt-get -y --purge remove php-common
