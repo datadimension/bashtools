@@ -42,9 +42,7 @@ $blocktemplate = str_replace("<ssl_certs />", $certs, $blocktemplate);
 //x20260203$$fpmversion = substr($PHP_VERSION, 0, $dec2);
 //x20260203$$fpmsockfile = $fpmlocation . "php" . $fpmversion . "-fpm.sock";
 $blocktemplate = str_replace("<PHP_DIR_VERSION />", $PHP_DIR_VERSION, $blocktemplate);
-var_dump($blocktemplate);
-$path = "/etc/nginx/sites-enabled/" . $args["repo_name"];
-echo $path;
-echo "";
-die();
-file_put_contents("/etc/nginx/sites-enabled/" . $args["repo_name"], $blocktemplate);
+//var_dump($blocktemplate);
+$filename = "/etc/nginx/sites-enabled/" . $args["repo_name"];
+
+file_put_contents($filename, $blocktemplate);
