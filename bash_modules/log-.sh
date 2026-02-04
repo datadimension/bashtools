@@ -6,7 +6,7 @@ function log-h(){
 }
 
 function log(){
-	  std-menu nginxerror,app,laravel,cron "Logs Available:"
+	  std-menu nginxerror,app,laravel,xdebug,cron "Logs Available:"
 	  echo "Loading log for $MENUCHOICE"
 	  eval "log-$MENUCHOICE"
 }
