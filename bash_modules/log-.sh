@@ -6,9 +6,11 @@ function log-h(){
 }
 
 function log(){
+		lines=$2
+    	action=$3
 	  std-menu nginxerror,app,laravel,xdebug,cron "Logs Available:"
 	  echo "Loading log for $MENUCHOICE"
-	  eval "log-$MENUCHOICE"
+	  eval "log-$MENUCHOICE $lines $action"
 }
 
 function log-show() {
@@ -62,7 +64,7 @@ function log-nginxaccess() {
 
 
 function log-xdebug() {
-	log-show /var/log/xdebug.log
+	log-show /var/log/xdebug.log $1 $2
 }
 
 #https://logtail.com/tutorials/how-to-manage-log-files-with-logrotate-on-ubuntu-20-04/
