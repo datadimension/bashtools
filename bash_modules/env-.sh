@@ -66,7 +66,7 @@ function env-setservertype() {
   read environment
   if [ "$environment" == "local" ]; then
     environment="local"
-    os-install-xdebug
+    php-install-xdebug
   else
     environment="production"
   fi

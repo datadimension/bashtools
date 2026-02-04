@@ -189,47 +189,6 @@ function os-download() {
 	curl $url --create-dirs -o ~/downloads/$path
 }
 
-function os-install-xdebug() {
-	echo "Do not install Xdebug on production servers. Install Xdebug here ? y/n"
-	read input
-	if [ "$input" == "y" ]; then
-		clear
- #sudo apt-get install php-xdebug;
- echo-br;
-  #20260203php --ini;
-		echo-br "See the xdebug Install Wizard Instructions for full details at https://xdebug.org/docs/install."
- echo-br "First configure PHP.";
- echo ""
- echo "from the above list copy and paste the file name with xdebug in it so we can locate the file to edit".
- echo "Usually /etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini "
-  xdebugpath="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
-
-echo "Hit enter if this differs or use the default above";
- read xdebugpathedit;
- if ($xdebugpathedit != "") then {
- 	xdebugpath=$xdebugpathedit;
- 	}
-fi
- #20260203sudo bash -c "echo 'zend_extension=xdebug' >> $xdebugpath"
- #20260203sudo bash -c "echo 'xdebug.mode = debug' >> $xdebugpath"
- #20260203sudo bash -c "echo 'xdebug.start_with_request = yes' >> $xdebugpath"
- #20260203sudo bash -c "echo 'xdebug.client_port = 9003' >> $xdebugpath"
- #20260203sudo bash -c "echo xdebug.log = \"/var/log/xdebug.log\" >> $xdebugpath"
- #20260203sudo bash -c "echo 'xdebug.idekey = PHPSTORM' >> $xdebugpath"
-
- #20260203sudo tail -100 $xdebugpath;
-#20260203sudo touch /var/log/xdebug.log
-#20260203sudo chown -R $USER:www-data /var/log/xdebug.log
-#20260203sudo chmod -R 770  /var/log/xdebug.log
-
-#20260203nginx-start;
-# echo "/etc/php/8.3/fpm/php.ini";
-#20260203echo-br "To check installed - visit the xdebug info at:"
-#20260203echo-nl "$www_repofocus/xdebuginfo.php";
-#20260203echo "and check for errors";
-	fi
-}
-
 #create sudo user
 function os-sudo-create(){
   echo "Please enter new sudo name"

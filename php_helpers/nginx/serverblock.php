@@ -28,21 +28,21 @@ else {
 	  "	ssl_stapling off;#switch to on if real cert" . PHP_EOL .
 	  "	ssl_stapling_verify off;#switch to on if real cert";
 }
-$blocktemplate = file_get_contents(getenv('HOME') . "/bashtools/templates/nginx/domainsetup/nginxblock");
-$blocktemplate = str_replace("<app_url />", $app_url, $blocktemplate);
-$blocktemplate = str_replace("<repo_name />", $args["repo_name"], $blocktemplate);
+$template = file_get_contents(getenv('HOME') . "/bashtools/templates/nginx/domainsetup/nginxblock");
+$template = str_replace("<app_url />", $app_url, $template);
+$template = str_replace("<repo_name />", $args["repo_name"], $template);
 
-$blocktemplate = str_replace("<wwwroot />", $wwwroot, $blocktemplate);
+$template = str_replace("<wwwroot />", $wwwroot, $template);
 
-$blocktemplate = str_replace("<ssl_certs />", $certs, $blocktemplate);
+$template = str_replace("<ssl_certs />", $certs, $template);
 
 //x20260203$dec1 = strpos($PHP_VERSION, '.');
 //x20260203$$dec2 = strpos($PHP_VERSION, '.', $dec1 + 1);
 //x20260203$$fpmlocation = "/run/php/";
 //x20260203$$fpmversion = substr($PHP_VERSION, 0, $dec2);
 //x20260203$$fpmsockfile = $fpmlocation . "php" . $fpmversion . "-fpm.sock";
-$blocktemplate = str_replace("<PHP_DIR_VERSION />", $PHP_DIR_VERSION, $blocktemplate);
-//var_dump($blocktemplate);
+$template = str_replace("<PHP_DIR_VERSION />", $PHP_DIR_VERSION, $template);
+//var_dump($template);
 $filename = "/etc/nginx/sites-enabled/" . $args["repo_name"];
 
-file_put_contents($filename, $blocktemplate);
+file_put_contents($filename, $template);
