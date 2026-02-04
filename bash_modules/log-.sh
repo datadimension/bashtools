@@ -14,9 +14,7 @@ function log(){
 }
 
 function log-show() {
-	clear
 	path=$1
-	lines=$2
 	action=$3
 	read -p "How many lines of $path ? [100]" $lines
 	if [ "$lines" == "" ]; then
@@ -28,8 +26,10 @@ function log-show() {
 	fi
 	lines=-$lines
 	echo "Showing $path with $lines lines:"
+		echo-hr
 	sudo tail $lines $path
-	echo $path;
+	echo-hr
+	read -t 2 -p "Clear log [clear/no]?" action
 	if [ "$action" == "clear" ]; then
 		echo "Clearing log at %pat"
 		>$path
