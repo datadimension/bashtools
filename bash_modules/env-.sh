@@ -21,14 +21,14 @@ function env-parse(){
     repo-getlocalurl;
 }
 
-#show full info about the server environment
+#show full info about the server SERVER_ENVTYPE
 function env-about() {
   clear
-  echo "Server Environment"
+  echo "Server SERVER_ENVTYPE"
   echo-now
   echo-hr
   echo "serverid: $serverid"
-  echo "environment: [production/local]: $environment"
+  echo "SERVER_ENVTYPE: [production/local]: $SERVER_ENVTYPE"
   echo-nl "wwwroot: $wwwroot"
 
 echo "WAN IP: $wanip"
@@ -62,15 +62,15 @@ function test() {
 #for per machine settings that do not change
 function env-setservertype() {
   #bash-envsetwwwrootg
-  echo "Enter environment (production / local)"
-  read environment
-  if [ "$environment" == "local" ]; then
-    environment="local"
+  echo "Enter SERVER_ENVTYPE (production / local)"
+  read SERVER_ENVTYPE
+  if [ "$SERVER_ENVTYPE" == "local" ]; then
+    SERVER_ENVTYPE="local"
     php-install-xdebug
   else
-    environment="production"
+    SERVER_ENVTYPE="production"
   fi
-  echo "Environment set to $environment"
+  echo "SERVER_ENVTYPE set to $SERVER_ENVTYPE"
   bash-writesettings
   #echo "Enter dev site project names ? y/n"
   #read doset
@@ -95,8 +95,8 @@ function env-setattribute() {
 function env-attributerequire() {
   # shellcheck disable=SC2317
   varname=$1
-  if [ "$varname" == "environment" ]; then
-    if [ "$environment" == "" ]; then
+  if [ "$varname" == "SERVER_ENVTYPE" ]; then
+    if [ "$SERVER_ENVTYPE" == "" ]; then
       env-setservertype
     fi
   elif [ "$varname" == "serverid" ]; then

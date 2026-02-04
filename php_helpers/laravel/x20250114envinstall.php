@@ -8,12 +8,12 @@ parse_str(implode('&', array_slice($argv, 1)), $args);
 
 $envtemplate = file_get_contents(getenv('HOME') . "/bashtools/templates/laravel/env");//dont use
 
-if ($environment == "development") {
-      $envtemplate = str_replace("<environment />", "local", $envtemplate);
+if ($SERVER_ENVTYPE == "development") {
+      $envtemplate = str_replace("<SERVER_ENVTYPE />", "local", $envtemplate);
       $envtemplate = str_replace("<appdebug />", "true", $envtemplate);
 }
 else {
-      $envtemplate = str_replace("<environment />", $environment, $envtemplate);
+      $envtemplate = str_replace("<SERVER_ENVTYPE />", $SERVER_ENVTYPE, $envtemplate);
       $envtemplate = str_replace("<appdebug />", "false", $envtemplate);
 }
 $envtemplate = str_replace("<serverid />", $serverid, $envtemplate);

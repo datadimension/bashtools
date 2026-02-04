@@ -32,7 +32,7 @@ function repo-switch() {
   reponumber=$(($option - 1))
   echo "Auto sync with GIT (recommended) ? n=no"
   read -t 5 input
-  if [ "$environment" != "production" ]; then #never push from production
+  if [ "$SERVER_ENVTYPE" != "production" ]; then #never push from production
     if [ "$input" != "n" ]; then
       git-push
     fi

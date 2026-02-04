@@ -12,7 +12,7 @@ if ($args["method"] == "env_generate") {
 	  "APP_KEY" => "",
 	  "APP_URL" => $www_repofocus . "." . $serverid . ".com",
 	  "TTL_CACHE" => 7200,
-	  "APP_ENV" => $environment,
+	  "APP_ENV" => $SERVER_ENVTYPE,
 	  "GIT_SYNC_TIMESTAMP" => 0,
 	  "SERVER_ID" => ["production" => $serverid, "local" => $serverid],
 	  "DEFAULT_TIMEZONE" => "Europe/London",
@@ -55,7 +55,7 @@ if ($args["method"] == "env_generate") {
 	  "TTL_CACHE" => 7200,
 
 	  "#server details" => "",
-	  "APP_ENV" => $environment,
+	  "APP_ENV" => $SERVER_ENVTYPE,
 	  "SERVER_ID" => ["production" => $serverid, "local" => $serverid],
 	  "DEFAULT_TIMEZONE" => "Europe/London",
 	  "APP_DEBUG" => ["production" => "false", "local" => "true"],
@@ -117,7 +117,7 @@ if ($args["method"] == "env_generate") {
 	    if (substr($key, 0, 1) != "#") {
 		  if ($envminimums && array_key_exists($key, $autovals)) {
 			if (is_array($autovals[$key])) {
-			      $autoval = $autovals[$key][$environment];
+			      $autoval = $autovals[$key][$SERVER_ENVTYPE];
 			}
 			else {
 			      $autoval = $autovals[$key];
@@ -126,7 +126,7 @@ if ($args["method"] == "env_generate") {
 		  }
 		  else {
 			if (is_array($default)) {
-			      $default = $default[$environment];
+			      $default = $default[$SERVER_ENVTYPE];
 			}
 			$value = getinput($key, $default);
 		  }

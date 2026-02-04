@@ -1,14 +1,14 @@
 <?php
 include(getenv('HOME') . "/bashtools/php_helpers/bash/repoenvfiletoarray.php");
 include("php_cli.php");
-echo "Server Environment: " . $environment . "\n";
+echo "Server SERVER_ENVTYPE: " . $SERVER_ENVTYPE . "\n";
 
 $autovals = [
     "APP_NAME" => $www_repofocus,
     "APP_KEY" => "",
     "APP_URL" => $www_repofocus . "." . $serverid . ".com",
     "TTL_CACHE" => 7200,
-    "APP_ENV" => $environment,
+    "APP_ENV" => $SERVER_ENVTYPE,
     "SERVER_ID" => ["production" => $serverid, "local" => $serverid],
     "DEFAULT_TIMEZONE" => "Europe/London",
     "APP_DEBUG" => ["production" => "false", "local" => "true"],
@@ -53,7 +53,7 @@ $keys = [
     "TTL_CACHE" => 7200,
 
     "#server details" => "",
-    "APP_ENV" => $environment,
+    "APP_ENV" => $SERVER_ENVTYPE,
     "SERVER_ID" => ["production" => $serverid, "local" => $serverid],
     "DEFAULT_TIMEZONE" => "Europe/London",
     "APP_DEBUG" => ["production" => "false", "local" => "true"],
@@ -114,7 +114,7 @@ foreach ($keys as $key => $default) {
       if (substr($key, 0, 1) != "#") {
 	    if ($envminimums && array_key_exists($key, $autovals)) {
 		  if (is_array($autovals[$key])) {
-			$autoval = $autovals[$key][$environment];
+			$autoval = $autovals[$key][$SERVER_ENVTYPE];
 		  }
 		  else {
 			$autoval = $autovals[$key];
@@ -123,7 +123,7 @@ foreach ($keys as $key => $default) {
 	    }
 	    else {
 		  if (is_array($default)) {
-			$default = $default[$environment];
+			$default = $default[$SERVER_ENVTYPE];
 		  }
 		  $value = getinput($key, $default);
 	    }

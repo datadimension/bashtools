@@ -61,7 +61,7 @@ osinstall=0 #control bool to restart bash to loop through setup
     bash-restart
   fi
   env-attributerequire "serverid"
-  env-attributerequire "environment"
+  env-attributerequire "SERVER_ENVTYPE"
   env-attributerequire "wwwroot"
   env-attributerequire "defaultDatabaseIP"
 
@@ -181,7 +181,7 @@ function bash-writesettings() {
   echo "$csv" >~/bashtoolscfg/wwwrepos
   echo "$os_status,$sshsecure" >~/bashtoolscfg/os_status
   echo "$git_ssh" >~/bashtoolscfg/gitcfg
-  echo "$environment,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$PHP_FULLVERSION,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,," >~/bashtoolscfg/bash.env
+  echo "$SERVER_ENVTYPE,$www_repofocus,$ssh1,$ssh2,$defaultDatabaseIP,$serverid,,$gituname,$PHP_FULLVERSION,$ipgateway,$welcomemsg,$wwwroot,$platform,$wwwrepos,$www_repofocus,$db_app,," >~/bashtoolscfg/bash.env
 }
 
 function bash-readsettings() {
@@ -201,7 +201,7 @@ function bash-readsettings() {
 
   csv=$(<~/bashtoolscfg/bash.env)
   IFS=', ' read -r -a values <<<"$csv" #read back in same order as written
-  environment=${values[0]}
+  SERVER_ENVTYPE=${values[0]}
   www_repofocus=${values[1]}
   ssh1=${values[2]}
   ssh2=${values[3]}

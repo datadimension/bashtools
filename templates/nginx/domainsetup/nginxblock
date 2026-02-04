@@ -28,7 +28,7 @@ server {
 
 	location ~ \.php$ {
 		try_files $uri /index.php =404;
-		fastcgi_buffering on;# important - set as off for WSL dev environment
+		fastcgi_buffering on;# important - set as off for WSL dev SERVER_ENVTYPE
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_pass unix:/run/php/php<PHP_DIR_VERSION />-fpm.sock;
 		fastcgi_index index.php;

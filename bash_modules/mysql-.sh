@@ -61,7 +61,7 @@ function mysql-getversion() {
 
 #generates users and permissions php and admin, note the users are named after the focused repo, however if a schema argument is supplied then this is used for the appschema
 function mysql-createrepousers() {
-  if [ "$environment" != "production" ]; then
+  if [ "$SERVER_ENVTYPE" != "production" ]; then
     echo-h1 "YOU ARE NOT"
     echo "RUNNING THIS ON PRODUCTION SERVER"
     echo-h1 "RUN ON DATABASE SERVER"

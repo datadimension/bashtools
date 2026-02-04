@@ -155,7 +155,7 @@ echo "Hit enter to use this or enter a different value";
  	if [ "$xdebugpathedit" != "" ]; then
  	xdebugpath=$xdebugpathedit;
 fi
-
+sudo rm $xdebugpath;
   php ~/bashtools/php_helpers/nginx/xdebugini.php xdebugpath=$xdebugpath
 
  #20260203sudo bash -c "echo 'zend_extension=xdebug' >> $xdebugpath"
