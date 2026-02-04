@@ -136,11 +136,14 @@ function php-restart() {
 }
 
 function php-install-xdebug() {
-	echo "Do not install Xdebug on production servers. Install Xdebug here ? y/n"
-	read input
+	echo-hr
+	if [ "$SERVER_ENVTYPE" != "production" ]; then
+		echo "Installing xdebug on production server will degrade performance"
+		read -p "Continue ?" input
+		if [ "$input" != "y" ]; then
+			return 0;
+	fi
 
-	if [ "$input" == "y" ]; then
-		clear
  #sudo apt-get install php-xdebug;
  echo-br;
   #20260203php --ini;
@@ -175,6 +178,5 @@ sudo rm $xdebugpath;
 #20260203echo-br "To check installed - visit the xdebug info at:"
 #20260203echo-nl "$www_repofocus/xdebuginfo.php";
 #20260203echo "and check for errors";
-	fi
 }
 
