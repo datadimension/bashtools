@@ -138,6 +138,7 @@ function php-restart() {
 function php-install-xdebug() {
 	echo "Do not install Xdebug on production servers. Install Xdebug here ? y/n"
 	read input
+
 	if [ "$input" == "y" ]; then
 		clear
  #sudo apt-get install php-xdebug;

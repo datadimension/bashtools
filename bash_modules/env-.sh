@@ -24,7 +24,7 @@ function env-parse(){
 #show full info about the server SERVER_ENVTYPE
 function env-about() {
   clear
-  echo "Server SERVER_ENVTYPE"
+  echo "Server $SERVER_ENVTYPE"
   echo-now
   echo-hr
   echo "serverid: $serverid"
