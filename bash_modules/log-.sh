@@ -10,7 +10,7 @@ function log(){
     	action=$3
 	  std-menu nginxerror,app,laravel,xdebug,cron "Logs Available:"
 	  echo "Loading log for $MENUCHOICE"
-	  eval "log-$MENUCHOICE $lines $action"
+	  eval "log-$MENUCHOICE"  $lines $action
 }
 
 function log-show() {
