@@ -129,11 +129,9 @@ function repo-frombackup() {
 function repo-setoauth() {
   echo-newpage "Set up in Google Developer Console"
   echo "visit the project to include dev oauth"
-    echo-br "https://console.cloud.google.com/projectcreate"
-echo ""
-  echo "or if this is a brand new project"
+    echo-br "https://console.cloud.google.com/apis/credentials?project=$www_repofocus"
+      echo "or if this is a brand new project"
   echo-br "https://console.cloud.google.com/projectcreate"
-  echo ""
   echo "and set up project for $www_repofocus"
   echo "note it will advise removing special characters from project name"
   echo "then configure OAuth screen"

@@ -194,57 +194,39 @@ function os-install-xdebug() {
 	read input
 	if [ "$input" == "y" ]; then
 		clear
- sudo apt-get install php-xdebug;
+ #sudo apt-get install php-xdebug;
  echo-br;
   php --ini;
 		echo-br "See the xdebug Install Wizard Instructions for full details at https://xdebug.org/docs/install."
  echo-br "First configure PHP.";
+ echo ""
  echo "from the above list copy and paste the file name with xdebug in it so we can locate the file to edit".
- read xdebugpath;
- #echo "To check installed - visit the xdebug info at:"
- #echo "$www_sitefocus/xdebuginfo.php";
- #echo "Scroll down to Settings and enter the path for  the .ini file for fpm eg"
- sudo bash -c "echo 'zend_extension=xdebug' >> $xdebugpath"
- sudo bash -c "echo 'xdebug.mode = debug' >> $xdebugpath"
- sudo bash -c "echo 'xdebug.start_with_request = yes' >> $xdebugpath"
- sudo bash -c "echo 'xdebug.client_port = 9003' >> $xdebugpath"
- sudo bash -c "echo xdebug.log = \"/var/log/xdebug.log\" >> $xdebugpath"
- sudo bash -c "echo 'xdebug.idekey = PHPSTORM' >> $xdebugpath"
+ echo "Usually /etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini "
+  xdebugpath="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
 
- sudo tail -100 $xdebugpath;
-sudo touch /var/log/xdebug.log
-sudo chown -R $USER:www-data /var/log/xdebug.log
-sudo chmod -R 770  /var/log/xdebug.log
+echo "Hit enter if this differs or use the default above";
+ read xdebugpathedit;
+ if ($xdebugpathedit != "") then {
+ 	xdebugpath=$xdebugpathedit;
+ 	}
+fi
+ #20260203sudo bash -c "echo 'zend_extension=xdebug' >> $xdebugpath"
+ #20260203sudo bash -c "echo 'xdebug.mode = debug' >> $xdebugpath"
+ #20260203sudo bash -c "echo 'xdebug.start_with_request = yes' >> $xdebugpath"
+ #20260203sudo bash -c "echo 'xdebug.client_port = 9003' >> $xdebugpath"
+ #20260203sudo bash -c "echo xdebug.log = \"/var/log/xdebug.log\" >> $xdebugpath"
+ #20260203sudo bash -c "echo 'xdebug.idekey = PHPSTORM' >> $xdebugpath"
 
-nginx-start;
+ #20260203sudo tail -100 $xdebugpath;
+#20260203sudo touch /var/log/xdebug.log
+#20260203sudo chown -R $USER:www-data /var/log/xdebug.log
+#20260203sudo chmod -R 770  /var/log/xdebug.log
+
+#20260203nginx-start;
 # echo "/etc/php/8.3/fpm/php.ini";
-echo-br "To check installed - visit the xdebug info at:"
-echo-nl "$www_repofocus/xdebuginfo.php";
-echo "and check for errors";
-
- 	#	echo "as stated please enter the version number required eg 3.2.2 if we require xdebug-3.2.2.tgz"
-	#	read xvers
-	#	echo "Please enter the Zend Module Api No"
-	#	echo "eg Configuring for:     Zend Module Api No:  20210902"
-	#	echo "Just the number please"
-	#	read zendapi_no
-	#	echo "Finally enter the FULL xdebug.ini path given eg /etc/php/8.1/fpm/conf.d/99-xdebug.ini"
-	#	read inipath
-	#	os-download https://xdebug.org/files/xdebug-$xvers.tgz tmp/xdebug-$xvers.tgz
-	#	cd ~/downloads/tmp
-	#	tar -xvzf xdebug-$xvers.tgz
-	#	cd xdebug-$xvers
-	#	phpize
-	#	./configure
-	#	make
-	#	#to generic echo "zend_extension = xdebug" >conf
-	#	echo "zend_extension = /usr/lib/php/$zendapi_no/xdebug.so" >conf
-	#	sudo cp modules/xdebug.so /usr/lib/php/$zendapi_no
-	#	sudo cp conf $inipath
-	#	sudo net-firewall-start
-	#	echo "make sure port 9003 is enabled"
-	#	read wait
-	#	nginx-start
+#20260203echo-br "To check installed - visit the xdebug info at:"
+#20260203echo-nl "$www_repofocus/xdebuginfo.php";
+#20260203echo "and check for errors";
 	fi
 }
 
