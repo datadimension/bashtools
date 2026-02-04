@@ -5,64 +5,64 @@ function log-h(){
 	bash-helpformodule log
 }
 
-function log(){
-		lines=$2
-    	action=$3
-	  std-menu nginxerror,app,laravel,xdebug,cron "Logs Available:"
-	  echo "Loading log for $MENUCHOICE"
-	  eval "log-$MENUCHOICE"  $lines $action
+function test-menuclient(){
+			declare -A menuoptions
+            menuoptions["nginxaccess"]="/var/log/nginx/access.log"
+            menuoptions["nginxerror"]=" /var/log/nginx/error.log"
+            test-menushow $menuoptions
 }
 
-function log-show() {
-	path=$1
-	action=$3
-	read -p "How many lines of $path ? [100]" lines
+function test-menushow(){
+	menuoptions=$1
+    for key in ${!menuoptions[@]}; do
+        echo ${key} ${menuoptions[${key}]}
+    done
+
+}
+
+function log(){
+		declare -A options
+        options["nginxaccess"]="/var/log/nginx/access.log"
+        options["nginxerror"]=" /var/log/nginx/error.log"
+        options["laravel"]="$wwwroot/html/$www_repofocus/storage/logs/laravel.log"
+        options["apperror"]="$wwwroot/html/$www_repofocus/storage/logs/apperror.log"
+        options["cron"]="$wwwroot/html/$www_repofocus/storage/logs/cronlog.log"
+        options["phperror"]="/var/log/php_errors.log"
+        options["phpfpm"]="/etc/php/8.3/fpm/php.ini"
+        options["xdebug"]="/var/log/xdebug.log"
+
+    	std-menu-array options "Logs Available:"
+
+
+    	#std-menu nginxaccess,nginxerror,app,laravel,xdebug,cron,apperror,cron,phperror,phpfpm "Logs Available:"
+    	#cfgfile=${options[$MENUCHOICE]}
+    	#sudo nano $cfgfile
+		logfile=${options[$MENUCHOICE]}
+
+		echo "logfile $logfile"
+
+		lines=$2
+    	action=$3
+
+	  	echo "Loading log for $MENUCHOICE"
+	  	#eval "log-$MENUCHOICE"  $lines $action
+
+	read -p "How many lines of $logfile ? [100]" lines
 	if [ "$lines" == "" ]; then
 		lines=100
 	fi
 	lines=-$lines
-	echo "Showing $path with $lines lines:"
+	echo "Showing $logfile with $lines lines:"
 		echo-hr
-	sudo tail $lines $path
+	sudo tail $lines $logfile
 	echo-hr
-	read -t 5 -p "Clear log [clear/no]?" action
+	read -t 4 -p "Clear log [clear/no]?" action
 	if [ "$action" == "clear" ]; then
-		echo "Clearing log at %pat"
+		echo "Clearing log at $logfile"
 		>$path
 	fi
 }
 
-function log-laravel() {
-	log-show $wwwroot/html/$www_repofocus/storage/logs/laravel.log $1 $2
-}
-
-function log-nginxerror() {
-		log-show /var/log/nginx/error.log
-}
-
-function log-app() {
-	sudo tail -30 $wwwroot/html/$www_repofocus/storage/logs/apperror.log
-}
-
-function log-cron() {
-	log-show $wwwroot/html/$www_repofocus/storage/logs/cronlog.log $1 $2
-}
-
-function log-sys-php() {
-	echo-h1 "PHP SYS LOG"
-	sudo tail -30 /var/log/php_errors.log
-}
-
-function log-nginxaccess() {
-	echo-h1 "NGINX ACCESS LOG"
-	sudo tail -n 100 /var/log/nginx/access.log
-}
-
-
-
-function log-xdebug() {
-	log-show /var/log/xdebug.log $1 $2
-}
 
 #https://logtail.com/tutorials/how-to-manage-log-files-with-logrotate-on-ubuntu-20-04/
 function log-rotatedeploy() {

@@ -189,6 +189,15 @@ function os-download() {
 	curl $url --create-dirs -o ~/downloads/$path
 }
 
+function os-cfg(){
+	declare -A options
+    options["xdebug"]="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
+    options["php"]="/etc/php/8.3/fpm/php.ini"
+	std-menu-array options "CFG Available:"
+	cfgfile=${options[$MENUCHOICE]}
+	sudo nano $cfgfile
+}
+
 #create sudo user
 function os-sudo-create(){
   echo "Please enter new sudo name"
