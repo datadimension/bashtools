@@ -7,7 +7,4 @@ parse_str(implode('&', array_slice($argv, 1)), $args);
 
 $template = file_get_contents(getenv('HOME') . "/bashtools/templates/php/phpsetup/xdebug.ini");
 $filename = $args["xdebugpath"];
-echo $filename;
-var_dump($template);
-
 file_put_contents($filename, $template);

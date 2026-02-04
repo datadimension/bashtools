@@ -158,7 +158,8 @@ echo "Hit enter to use this or enter a different value";
 fi
 sudo rm $xdebugpath;
   php ~/bashtools/php_helpers/nginx/xdebugini.php xdebugpath=$xdebugpath
-ls $xdebugpath
+  ls "/etc/php/$PHP_DIR_VERSION/fpm/conf.d/"
+tail -100 $debugpath
  #20260203sudo bash -c "echo 'zend_extension=xdebug' >> $xdebugpath"
  #20260203sudo bash -c "echo 'xdebug.mode = debug' >> $xdebugpath"
  #20260203sudo bash -c "echo 'xdebug.start_with_request = yes' >> $xdebugpath"
