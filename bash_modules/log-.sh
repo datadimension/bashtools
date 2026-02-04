@@ -16,13 +16,9 @@ function log(){
 function log-show() {
 	path=$1
 	action=$3
-	read -p "How many lines of $path ? [100]" $lines
+	read -p "How many lines of $path ? [100]" lines
 	if [ "$lines" == "" ]; then
 		lines=100
-	fi
-	if [ "$lines" == "clear" ]; then
-		lines=500
-		action="clear"
 	fi
 	lines=-$lines
 	echo "Showing $path with $lines lines:"
