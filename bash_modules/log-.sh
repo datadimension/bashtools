@@ -18,6 +18,7 @@ function log-show() {
 	path=$1
 	lines=$2
 	action=$3
+	read -p "How many lines of $path ? [100]" $lines
 	if [ "$lines" == "" ]; then
 		lines=100
 	fi
@@ -40,7 +41,7 @@ function log-laravel() {
 }
 
 function log-nginxerror() {
-		log-show /var/log/nginx/error.log $1 $2
+		log-show /var/log/nginx/error.log
 }
 
 function log-app() {
@@ -64,8 +65,7 @@ function log-nginxaccess() {
 
 
 function log-xdebug() {
-	echo $1;
-	#log-show /var/log/xdebug.log $1 $2
+	log-show /var/log/xdebug.log $1 $2
 }
 
 #https://logtail.com/tutorials/how-to-manage-log-files-with-logrotate-on-ubuntu-20-04/
