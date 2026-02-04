@@ -196,7 +196,7 @@ function os-install-xdebug() {
 		clear
  #sudo apt-get install php-xdebug;
  echo-br;
-  php --ini;
+  #20260203php --ini;
 		echo-br "See the xdebug Install Wizard Instructions for full details at https://xdebug.org/docs/install."
  echo-br "First configure PHP.";
  echo ""
