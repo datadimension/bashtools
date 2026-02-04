@@ -149,7 +149,6 @@ function php-install-xdebug() {
  echo "from the above list copy and paste the file name with xdebug in it so we can locate the file to edit".
   xdebugpath="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
  echo "Usually "$xdebugpath;
-
 echo "Hit enter to use this or enter a different value";
  read xdebugpathedit;
  	if [ "$xdebugpathedit" != "" ]; then

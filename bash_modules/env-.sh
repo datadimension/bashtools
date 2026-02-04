@@ -28,7 +28,7 @@ function env-about() {
   echo-now
   echo-hr
   echo "serverid: $serverid"
-  echo "SERVER_ENVTYPE: [production/local]: $SERVER_ENVTYPE"
+  echo "SERVER_ENVTYPE: $SERVER_ENVTYPE"
   echo-nl "wwwroot: $wwwroot"
 
 echo "WAN IP: $wanip"
