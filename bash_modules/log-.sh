@@ -64,7 +64,8 @@ function log-nginxaccess() {
 
 
 function log-xdebug() {
-	log-show /var/log/xdebug.log $1 $2
+	echo $1;
+	#log-show /var/log/xdebug.log $1 $2
 }
 
 #https://logtail.com/tutorials/how-to-manage-log-files-with-logrotate-on-ubuntu-20-04/
