@@ -137,7 +137,7 @@ function php-restart() {
 
 function php-install-xdebug() {
 	echo-hr
-	if [ "$SERVER_ENVTYPE" != "production" ]; then
+	if [ "$SERVER_ENVTYPE" == "production" ]; then
 		echo "Installing xdebug on production server will degrade performance"
 		read -p "Continue ?" input
 		if [ "$input" != "y" ]; then
@@ -158,7 +158,7 @@ echo "Hit enter to use this or enter a different value";
 fi
 sudo rm $xdebugpath;
   php ~/bashtools/php_helpers/nginx/xdebugini.php xdebugpath=$xdebugpath
-
+ls $xdebugpath
  #20260203sudo bash -c "echo 'zend_extension=xdebug' >> $xdebugpath"
  #20260203sudo bash -c "echo 'xdebug.mode = debug' >> $xdebugpath"
  #20260203sudo bash -c "echo 'xdebug.start_with_request = yes' >> $xdebugpath"

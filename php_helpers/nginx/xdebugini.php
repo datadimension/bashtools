@@ -10,4 +10,4 @@ $filename = $args["xdebugpath"];
 echo $filename;
 var_dump($template);
 
-//file_put_contents($filename, $template);
+file_put_contents($filename, $template);
