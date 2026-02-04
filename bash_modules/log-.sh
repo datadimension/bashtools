@@ -25,7 +25,7 @@ function log-show() {
 		echo-hr
 	sudo tail $lines $path
 	echo-hr
-	read -t 2 -p "Clear log [clear/no]?" action
+	read -t 5 -p "Clear log [clear/no]?" action
 	if [ "$action" == "clear" ]; then
 		echo "Clearing log at %pat"
 		>$path
