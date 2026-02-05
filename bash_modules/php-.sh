@@ -132,6 +132,8 @@ function php-restart() {
 
 function php-install-xdebug() {
 	echo-hr
+	echo "dont forget there is a config for local files and local server"
+	return 0;
 	if [ "$SERVER_ENVTYPE" == "production" ]; then
 		echo "Installing xdebug on production server will degrade performance"
 		read -p "Continue ?" input

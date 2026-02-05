@@ -189,7 +189,7 @@ function git-reset() {
   cd $curpwd
 }
 
-#forces file overwrite from server, untracked files remain
+#given reponame (or no argument for main repo) forces file overwrite from server, untracked files remain
 function git-reset-repo() {
   gitreponame=$1
   if [ "$gitreponame" == "DD_laraview" ]; then
@@ -313,6 +313,7 @@ function git-repo_create() {
     wait clear
 }
 
+#https://stackoverflow.com/questions/46273032/is-there-a-way-to-remove-all-ignored-files-from-a-local-git-working-tree"
 function git-clean() {
   echo "to set repo to ignore local files with new .gitignore see https://stackoverflow.com/questions/46273032/is-there-a-way-to-remove-all-ignored-files-from-a-local-git-working-tree"
 }
