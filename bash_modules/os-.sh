@@ -194,7 +194,8 @@ function os-cfg(){
     options["xdebug"]="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
     options["php"]="/etc/php/8.3/fpm/php.ini"
 	std-menu-array options "CFG Available:"
-	cfgfile=${options[$MENUCHOICE]}
+	cfgfile=$MENUCHOICE;
+    echo "CFG file $cfgfile"
 	sudo nano $cfgfile
 }
 

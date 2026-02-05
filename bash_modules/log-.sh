@@ -31,13 +31,8 @@ function log(){
         options["nginxerror"]=" /var/log/nginx/error.log"
         options["xdebug"]="/var/log/xdebug.log"
     	std-menu-array options "Log Viewer"
-    	#std-menu nginxaccess,nginxerror,app,laravel,xdebug,cron,apperror,cron,phperror,phpfpm "Logs Available:"
-    	#cfgfile=${options[$MENUCHOICE]}
-    	#sudo nano $cfgfile
 		logfile=$MENUCHOICE;
-
 	  	echo "Loading log for $logfile"
-	  	#eval "log-$MENUCHOICE"  $lines $action
 
 	read -t 2 -p "How many lines of $logfile ? [100]" lines
 	if [ "$lines" == "" ]; then
