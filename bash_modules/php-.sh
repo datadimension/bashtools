@@ -125,6 +125,17 @@ function ~php() {
 	ls -al $phproot
 }
 
+#open standard php configuration files for editting
+function php-cfg(){
+	declare -A options
+    options["xdebug"]="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
+    options["php"]="/etc/php/8.3/fpm/php.ini"
+	std-menu-array options "CFG Available:"
+	cfgfile=$MENUCHOICE;
+    echo "CFG file $cfgfile"
+	sudo nano $cfgfile
+}
+
 function php-restart() {
 	echo "Closing PHP"
 	ps aux | grep php
