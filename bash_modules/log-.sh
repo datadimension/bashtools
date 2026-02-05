@@ -39,7 +39,7 @@ function log(){
 	  	echo "Loading log for $logfile"
 	  	#eval "log-$MENUCHOICE"  $lines $action
 
-	read -p "How many lines of $logfile ? [100]" lines
+	read -t 3 -p "How many lines of $logfile ? [100]" lines
 	if [ "$lines" == "" ]; then
 		lines=100
 	fi
@@ -48,7 +48,7 @@ function log(){
 		echo-hr
 	sudo tail $lines $logfile
 	echo-hr
-	read -t 4 -p "Clear log [clear/no]?" action
+	read -t 3 -p "Clear log [clear/no]?" action
 	if [ "$action" == "clear" ]; then
 		echo "Clearing log at $logfile"
 		>$path
