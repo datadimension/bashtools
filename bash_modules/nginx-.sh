@@ -116,7 +116,7 @@ function nginx-setserverblock() {
 }
 
 function nginx-testfunc(){
-
+noop=1;
 }
 
 #help for this module
