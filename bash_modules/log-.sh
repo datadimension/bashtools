@@ -22,29 +22,21 @@ function test-menushow(){
 
 function log(){
 		declare -A options
-        options["nginxaccess"]="/var/log/nginx/access.log"
-        options["nginxerror"]=" /var/log/nginx/error.log"
-        options["laravel"]="$wwwroot/html/$www_repofocus/storage/logs/laravel.log"
         options["apperror"]="$wwwroot/html/$www_repofocus/storage/logs/apperror.log"
         options["cron"]="$wwwroot/html/$www_repofocus/storage/logs/cronlog.log"
+        options["laravel"]="$wwwroot/html/$www_repofocus/storage/logs/laravel.log"
         options["phperror"]="/var/log/php_errors.log"
         options["phpfpm"]="/etc/php/8.3/fpm/php.ini"
+        options["nginxaccess"]="/var/log/nginx/access.log"
+        options["nginxerror"]=" /var/log/nginx/error.log"
         options["xdebug"]="/var/log/xdebug.log"
-
-    	std-menu-array options "Logs Available:"
-
-
+    	std-menu-array options "Log Viewer"
     	#std-menu nginxaccess,nginxerror,app,laravel,xdebug,cron,apperror,cron,phperror,phpfpm "Logs Available:"
     	#cfgfile=${options[$MENUCHOICE]}
     	#sudo nano $cfgfile
-		logfile=${options[$MENUCHOICE]}
+		logfile=$MENUCHOICE;
 
-		echo "logfile $logfile"
-
-		lines=$2
-    	action=$3
-
-	  	echo "Loading log for $MENUCHOICE"
+	  	echo "Loading log for $logfile"
 	  	#eval "log-$MENUCHOICE"  $lines $action
 
 	read -p "How many lines of $logfile ? [100]" lines

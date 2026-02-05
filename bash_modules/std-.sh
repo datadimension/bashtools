@@ -111,32 +111,31 @@ function logv() {
   tail -f -n 100 $wwwroot/$www_repofocus/storage/logs/$logname.log
 }
 
-## allow a list of options, then selection via number, the menu value being stored in MENUCHOICE
+#accepts an associative array, lists keys by number then returns the value of the chosen option
 # example call:
-# menu a,b,c,d "Menu Title Text"
-# echo MENUCHOICE
-# would give 'c' if option 3 selected
+# log-.sh function log
 function std-menu-array() {
-  options=$1
-  title=$2
-  if [ $title != "" ]; then
+	local -n menuoptions=$1
+  	title=$2
+  	  if [ "$title" != "" ]; then
     echo ""
     echo-b "$title"
     echo ""
   fi
-  IFS=',' read -r -a values <<<"$options"
-  optioncount=${#options[@]} #note no space in assignation
-  optioncount=$optioncount-1
-  #for i in {0..$optioncount}; do
-  start=0
-  for ((i = $start; i <= $optioncount; i++)); do
-    echo "$((i + 1)): ${values[$i]}"
-  done
-  echo ""
-  echo-b "Enter Choice:"
-  read choice
-  choice=$choice-1
-  MENUCHOICE=${values[$choice]}
+  	keyindex=1
+  	declare -A menukeys
+	for i in "${!menuoptions[@]}"
+	do
+		echo "$keyindex: $i"
+		menukeys[$keyindex]=$i;
+		keyindex=$((keyindex+1))
+  #echo "key  : $i"
+  #echo "value: ${menuoptions[$i]}"
+	done
+	  echo-b "Enter Choice:"
+      read choice
+    	keychoice=${menukeys[$choice]}
+    	MENUCHOICE=${menuoptions[$keychoice]}
 }
 
 ## allow a list of options, then selection via number, the menu value being stored in MENUCHOICE
@@ -144,7 +143,7 @@ function std-menu-array() {
 # menu a,b,c,d "Menu Title Text"
 # echo MENUCHOICE
 # would give 'c' if option 3 selected
-function std-menu() {
+function std-menu-string() {
   options=""$1""
   title=""$2""
   if [ "$title" != "" ]; then
@@ -169,7 +168,7 @@ function std-menu() {
 
 # shows bashtools function categories and functions
 function h-(){
-	  std-menu std,bash,env,repo,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
+	  std-menu-string std,bash,env,repo,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
       echo "Loading help for $MENUCHOICE ..."
       php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
 }
