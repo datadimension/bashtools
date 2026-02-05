@@ -103,37 +103,21 @@ function php-getdirversion(){
 		PHP_DIR_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
 }
 
-function php-edit() {
-	echo "You might need the gateway ip:"
-	tail /etc/resolv.conf
-	read waitinput
-	phproot="/etc/php/$PHP_DIR_VERSION/fpm"
-	inifileName="$phproot/php.ini"
-	sudo nano +9999 $inifileName
-	nginx-start
-}
-
-function phpfpm-edit() {
-	phproot="/etc/php/$PHP_DIR_VERSION/fpm"
-	confFileName="$phproot/php-fpm.conf"
-	sudo nano $confFileName
+#open standard php configuration files for editting
+function php-cfg(){
+	declare -A options
+    options["xdebug"]="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
+    options["php-fpm"]="/etc/php/$PHP_DIR_VERSION/fpm/php.ini"
+	std-menu-array options "CFG Available:"
+	cfgfile=$MENUCHOICE;
+    echo "CFG file $cfgfile"
+	sudo nano $cfgfile
 	nginx-start
 }
 
 function ~php() {
 	phproot="/etc/php/$PHP_DIR_VERSION/fpm"
 	ls -al $phproot
-}
-
-#open standard php configuration files for editting
-function php-cfg(){
-	declare -A options
-    options["xdebug"]="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
-    options["php"]="/etc/php/8.3/fpm/php.ini"
-	std-menu-array options "CFG Available:"
-	cfgfile=$MENUCHOICE;
-    echo "CFG file $cfgfile"
-	sudo nano $cfgfile
 }
 
 function php-restart() {
