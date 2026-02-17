@@ -130,36 +130,7 @@ function php-restart() {
 	ps aux | grep php
 }
 
-function php-install-xdebug() {
-	echo-hr
-	echo "dont forget there is a config for local files and local server"
-	return 0;
-	if [ "$SERVER_ENVTYPE" == "production" ]; then
-		echo "Installing xdebug on production server will degrade performance"
-		read -p "Continue ?" input
-		if [ "$input" != "y" ]; then
-			return 0;
-	fi
 
- #sudo apt-get install php-xdebug;
- echo-br;
-  #20260203php --ini;
-		echo-br "See the xdebug Install Wizard Instructions for full details at https://xdebug.org/docs/install."
- echo "from the above list copy and paste the file name with xdebug in it so we can locate the file to edit".
-  xdebugpath="/etc/php/$PHP_DIR_VERSION/fpm/conf.d/99-xdebug.ini"
- echo "Usually "$xdebugpath;
-echo "Hit enter to use this or enter a different value";
- read xdebugpathedit;
- 	if [ "$xdebugpathedit" != "" ]; then
- 	xdebugpath=$xdebugpathedit;
-fi
-sudo rm $xdebugpath;
-sudo touch $xdebugpath;
-sudo chown $USER:www-data $xdebugpath;
-   php ~/bashtools/php_helpers/nginx/xdebugini.php xdebugpath=$xdebugpath
-  ls "/etc/php/$PHP_DIR_VERSION/fpm/conf.d/"
-tail -100 $xdebugpath;
-}
  #20260203sudo bash -c "echo 'zend_extension=xdebug' >> $xdebugpath"
  #20260203sudo bash -c "echo 'xdebug.mode = debug' >> $xdebugpath"
  #20260203sudo bash -c "echo 'xdebug.start_with_request = yes' >> $xdebugpath"
