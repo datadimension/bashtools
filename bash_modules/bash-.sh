@@ -126,10 +126,10 @@ function bash-helpformodule(){
 
 #restarts bash shell
 function bash-restart() {
-php-stop;
   bash-writesettings
   clear
   source ~/.bash_profile # this restarts bash as well
+  nginx-start
 }
 
 function bash-who() {
