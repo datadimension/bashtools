@@ -93,7 +93,8 @@ function git-pull-select() {
 }
 
 function git-pull() {
-xdebug_stop_code_coverage();
+  php ~/bashtools/php_helpers/bash/xdebugkill.php
+
   curpwd=$(pwd)
   clear
   echo-hr
@@ -103,7 +104,7 @@ xdebug_stop_code_coverage();
   echo-hr
   git-pull-all
   cd $curpwd
-  setSyncTimestamp
+  setSyncTimestamp;
 }
 
 function git-push-select() {
@@ -133,7 +134,6 @@ function git-push-select() {
 }
 
 function git-push() {
-xdebug_stop_code_coverage();
   curpwd=$(pwd)
   clear
   echo-hr
