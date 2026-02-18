@@ -121,13 +121,21 @@ function ~php() {
 }
 
 function php-restart() {
+php-stop;
+	echo-hr
+	echo "Starting PHP"
+	php-start;
+}
+
+function php-start(){
+	sudo service php$PHP_DIR_VERSION-fpm start
+	ps aux | grep php
+}
+
+function php-stop(){
 	echo "Closing PHP"
 	ps aux | grep php
 	sudo pkill php-fpm
-	echo-hr
-	echo "Starting PHP"
-	sudo service php$PHP_DIR_VERSION-fpm start
-	ps aux | grep php
 }
 
 function php-install-xdebug() {
@@ -154,7 +162,7 @@ echo "Hit enter to use this or enter a different value";
 fi
 sudo rm $xdebugpath;
 sudo touch $xdebugpath;
-sudo chown $USER:www-data $xdebugpath; 
+sudo chown $USER:www-data $xdebugpath;
    php ~/bashtools/php_helpers/nginx/xdebugini.php xdebugpath=$xdebugpath
   ls "/etc/php/$PHP_DIR_VERSION/fpm/conf.d/"
 tail -100 $xdebugpath;

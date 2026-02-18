@@ -93,6 +93,7 @@ function git-pull-select() {
 }
 
 function git-pull() {
+php-stop;
   curpwd=$(pwd)
   clear
   echo-hr
@@ -103,7 +104,6 @@ function git-pull() {
   git-pull-all
   cd $curpwd
   setSyncTimestamp;
-  nginx-start;# to stop xdebug
 }
 
 function git-push-select() {
