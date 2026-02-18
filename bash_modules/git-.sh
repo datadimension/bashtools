@@ -93,8 +93,6 @@ function git-pull-select() {
 }
 
 function git-pull() {
-  php ~/bashtools/php_helpers/bash/xdebugkill.php
-
   curpwd=$(pwd)
   clear
   echo-hr
@@ -105,6 +103,7 @@ function git-pull() {
   git-pull-all
   cd $curpwd
   setSyncTimestamp;
+    php ~/bashtools/php_helpers/bash/xdebugkill.php;
 }
 
 function git-push-select() {
