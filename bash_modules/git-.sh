@@ -103,7 +103,7 @@ function git-pull() {
   git-pull-all
   cd $curpwd
   setSyncTimestamp;
-   sudo php ~/bashtools/php_helpers/bash/xdebugkill.php;
+  nginx-start;# to stop xdebug
 }
 
 function git-push-select() {
