@@ -93,6 +93,7 @@ function git-pull-select() {
 }
 
 function git-pull() {
+xdebug_stop_code_coverage();
   curpwd=$(pwd)
   clear
   echo-hr
@@ -132,6 +133,7 @@ function git-push-select() {
 }
 
 function git-push() {
+xdebug_stop_code_coverage();
   curpwd=$(pwd)
   clear
   echo-hr
