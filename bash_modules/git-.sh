@@ -93,7 +93,6 @@ function git-pull-select() {
 }
 
 function git-pull() {
-php-stop;
   curpwd=$(pwd)
   clear
   echo-hr

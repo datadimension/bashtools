@@ -129,7 +129,6 @@ function bash-restart() {
   bash-writesettings
   clear
   source ~/.bash_profile # this restarts bash as well
-  nginx-start
 }
 
 function bash-who() {
