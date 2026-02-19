@@ -10,7 +10,7 @@ function nginx-install() {
   sudo mkdir -p /var/www/html
   sudo mkdir -p /var/www/certs
   php-install
-  net-firewall-start
+  net-firewall start
 }
 
 # restart nginx and php completely

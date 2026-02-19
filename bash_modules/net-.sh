@@ -8,8 +8,38 @@ function net-firewall-start() {
   sudo ufw allow 3306 #mysql database
   sudo ufw allow 'Nginx Full'
   sudo ufw allow 9003
+    sudo ufw allow 9003
   sudo ufw reload
   sudo ufw status
+}
+
+function net-rdp(){
+	mode=$1
+      if [ "$mode" == "on" ]; then
+    		sudo ufw allow 3389
+  		sudo ufw reload
+  		sudo ufw status
+  	else
+		net-firewall start
+      fi
+}
+
+#show firewall status, optional argument of 'start' to restart firewall locked down to only specified ports and services
+function net-firewall() {
+	mode=$1
+      if [ "$mode" == "start" ]; then
+  sudo ufw --force reset
+  sudo ufw enable
+  sudo ufw allow ssh
+  sudo ufw allow 3306 #mysql database
+  sudo ufw allow 'Nginx Full'
+  sudo ufw allow 9003
+    sudo ufw allow 9003
+  sudo ufw reload
+  sudo ufw status
+  	else
+  sudo ufw status
+      fi
 }
 
 #flush dns cache
@@ -27,11 +57,6 @@ function net-ssh-history() {
 function net-ssh-log-session() {
   echo-now >>~/bashtoolscfg/sshclient.log
   echo $SSH_CLIENT | awk '{ print $1}' >>~/bashtoolscfg/sshclient.log
-}
-
-#show firewall status
-function net-firewall-status() {
-  sudo ufw status
 }
 
 #installs vpn functionality
@@ -56,7 +81,6 @@ function net-hosts() {
   	else
   		tail -1000 /etc/hosts
       fi
-
 }
 
 function net-sshcheck() {

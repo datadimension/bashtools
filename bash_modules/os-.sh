@@ -290,7 +290,7 @@ function os-sshsecure() {
   fi
 	echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root"
 	read wait
-	net-firewall-start
+	net-firewall start
 	sudo service ssh reload
 	exit;
 }
