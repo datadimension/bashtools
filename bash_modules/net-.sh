@@ -26,6 +26,7 @@ function net-rdp(){
 
 #show firewall status, optional argument of 'start' to restart firewall locked down to only specified ports and services
 function net-firewall() {
+#https://phoenixnap.com/kb/ubuntu-remote-desktop-from-windows
 	mode=$1
       if [ "$mode" == "start" ]; then
   sudo ufw --force reset
