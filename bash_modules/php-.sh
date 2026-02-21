@@ -79,6 +79,10 @@ wait clear  "SECURING INSTALLATION"
   php-restart
 }
 
+function php-ini(){
+sudo nano  /etc/php/8.3/fpm/conf.d 99-xdebug.ini
+}
+
 function php-removeapache(){
 					sudo service apache2 stop;
 					sudo rm -r /usr/sbin/apache2
