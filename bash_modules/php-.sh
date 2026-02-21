@@ -80,7 +80,7 @@ wait clear  "SECURING INSTALLATION"
 }
 
 function php-ini(){
-sudo nano  /etc/php/8.3/fpm/conf.d 99-xdebug.ini
+sudo nano  /etc/php/8.3/fpm/conf.d/99-xdebug.ini
 }
 
 function php-removeapache(){
