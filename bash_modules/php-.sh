@@ -80,6 +80,7 @@ wait clear  "SECURING INSTALLATION"
 }
 
 function php-ini(){
+#make menu for other ini s
 sudo nano  /etc/php/8.3/fpm/conf.d/99-xdebug.ini
 }
 
