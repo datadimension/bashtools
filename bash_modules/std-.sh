@@ -23,13 +23,13 @@ decoration_underline='\033[4m'
 #echo -e "\x1b[7m inverted"
 
 #prompts a user for input and returns that, or default value if nothing entered
-function read_default(){
-	prompt="$1"
-	defaultval="$2"
-	read -p $prompt $_DEFAULT
-	if [ "$_DEFAULT" == "" ]; then # assume we are using the gitbash ming shell so sudo does not exist
-        _DEFAULT="$defaultval"
-    fi
+function read_default() {
+  prompt="$1"
+  defaultval="$2"
+  read -p $prompt $_DEFAULT
+  if [ "$_DEFAULT" == "" ]; then # assume we are using the gitbash ming shell so sudo does not exist
+    _DEFAULT="$defaultval"
+  fi
 }
 
 #outputs big text with the text as supplied argument
@@ -115,27 +115,26 @@ function logv() {
 # example call:
 # log-.sh function log
 function std-menu-array() {
-	local -n menuoptions=$1
-  	title=$2
-  	  if [ "$title" != "" ]; then
+  local -n menuoptions=$1
+  title=$2
+  if [ "$title" != "" ]; then
     echo ""
     echo-b "$title"
     echo ""
   fi
-  	keyindex=1
-  	declare -A menukeys
-	for i in "${!menuoptions[@]}"
-	do
-		echo "$keyindex: $i"
-		menukeys[$keyindex]=$i;
-		keyindex=$((keyindex+1))
-  #echo "key  : $i"
-  #echo "value: ${menuoptions[$i]}"
-	done
-	  echo-b "Enter Choice:"
-      read choice
-    	keychoice=${menukeys[$choice]}
-    	MENUCHOICE=${menuoptions[$keychoice]}
+  keyindex=1
+  declare -A menukeys
+  for i in "${!menuoptions[@]}"; do
+    echo "$keyindex: $i"
+    menukeys[$keyindex]=$i
+    keyindex=$((keyindex + 1))
+    #echo "key  : $i"
+    #echo "value: ${menuoptions[$i]}"
+  done
+  echo-b "Enter Choice:"
+  read choice
+  keychoice=${menukeys[$choice]}
+  MENUCHOICE=${menuoptions[$keychoice]}
 }
 
 ## allow a list of options, then selection via number, the menu value being stored in MENUCHOICE
@@ -167,10 +166,22 @@ function std-menu-string() {
 }
 
 # shows bashtools function categories and functions
-function h-(){
-	  std-menu-string std,bash,env,repo,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
-      echo "Loading help for $MENUCHOICE ..."
-      php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
+function h-() {
+  std-menu-string std,bash,env,repo,fsys,git,log,net,os,nginx,php,www,composer,mysql,laravel,google "Help Categories:"
+  echo "Loading help for $MENUCHOICE ..."
+  php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
+}
+
+#menu function for selecting from menu  ini, cfg files
+function cfg-edit() {
+  std-menu-string fpm/php-ini,xdebug-ini "CFG Categories:"
+  #php ~/bashtools/php_helpers/bash/bash-help.php helptype=$MENUCHOICE
+  echo "you chose $MENUCHOICE "
+  if [ "$MENUCHOICE" == "xdebug-ini" ]; then
+    sudo nano /etc/php/$PHP_DD_VERSION/fpm/conf.d/99-xdebug.ini
+  elif [ "$MENUCHOICE" == "fpm/php-ini" ]; then
+    sudo nano /etc/php/$PHP_DD_VERSION/fpm/php.ini
+  fi
 }
 
 # Show history or search in history
@@ -190,11 +201,11 @@ function hist() {
   fi
   echo-hr
   read -t 4 -p "Filter: " filter
-    if [ "$filter" != "" ]; then
-      hist $filter
-      else
-      	echo "none"
-  echo "Use !<number> to execute history item <number>"
+  if [ "$filter" != "" ]; then
+    hist $filter
+  else
+    echo "none"
+    echo "Use !<number> to execute history item <number>"
   fi
 }
 
@@ -210,21 +221,21 @@ function wait() {
   prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} -> ${weight_bold}${color_green}CONTINUE${font_reset}"
   if [ "$arg1" != "" ]; then
     if [ "$arg1" == "clear" ]; then
-      	if [ "$arg2" != "" ]; then
-      		clear
-       	 echo-hr
-       	 echo -e "${weight_bold}${color_green}$arg2${font_reset}"
-       	        	     			echo -e $prompt
-       	        	     			       	 echo-hr
-       	  		read wait
-    	else
-    			echo -e $prompt
-	 			read wait
-	 			clear
- 		fi
-	fi
- 		else
- 			echo -e $prompt
- 			read wait
-fi
+      if [ "$arg2" != "" ]; then
+        clear
+        echo-hr
+        echo -e "${weight_bold}${color_green}$arg2${font_reset}"
+        echo -e $prompt
+        echo-hr
+        read wait
+      else
+        echo -e $prompt
+        read wait
+        clear
+      fi
+    fi
+  else
+    echo -e $prompt
+    read wait
+  fi
 }
