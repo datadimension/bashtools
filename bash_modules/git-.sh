@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 #help for this module
-function git-h(){
-	bash-helpformodule git
+function git-h() {
+  bash-helpformodule git
 }
 
 function git-repo_install() {
@@ -20,7 +20,7 @@ function git-repo_install() {
   git-deploysubrepos
   git-addlocalexcludedfiles
   composer-create-DD-dependacies
-    laravel-envinstall
+  laravel-envinstall
 
   # cd "$wwwroot/html/$www_repofocus"
   # echo "set focused repo to '$www_repofocus'"
@@ -63,7 +63,6 @@ function git-addlocalexcludedfiles() {
   sudo mkdir -p $repodir/private/
   sudo mkdir -p $repodir/public/downloads/
 
-
   cat $templatestore/gitignoreadd >>$targetroot/.gitignore
 
 }
@@ -93,6 +92,7 @@ function git-pull-select() {
 }
 
 function git-pull() {
+  forced=$1
   curpwd=$(pwd)
   clear
   echo-hr
@@ -100,9 +100,9 @@ function git-pull() {
   echo-b $www_repofocus
   echo "Pulling to $www_repofocus"
   echo-hr
-  git-pull-all
+  git-pull-all $forced
   cd $curpwd
-  setSyncTimestamp;
+  setSyncTimestamp
 }
 
 function git-push-select() {
@@ -230,8 +230,8 @@ function git-push-repo() {
     gitrepopath="$wwwroot/html/$www_repofocus/resources/views"
   elif [ "$gitreponame" == "DD_libwww" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/public"
-elif [ "$gitreponame" == "DD_libmedia" ]; then
-        gitrepopath="$wwwroot/html/$www_repofocus/public"
+  elif [ "$gitreponame" == "DD_libmedia" ]; then
+    gitrepopath="$wwwroot/html/$www_repofocus/public"
   elif [ "$gitreponame" == "DD_laravelAp" ]; then
     gitrepopath="$wwwroot/html/$www_repofocus/app"
   elif [ "$gitreponame" == "bashtools" ]; then
@@ -275,16 +275,15 @@ function git-pull-repo() {
   echo "to $gitrepopath/$gitreponame"
   echo-hr
 
-
   cd $gitrepopath/$gitreponame
-  	if [ "$forced" == "FORCED" ]; then
-    	git fetch
-   	 git reset --hard HEAD
-  	  git merge '@{u}'
-   	 git rebase
-  	else
-    	git pull
-  	fi
+  if [ "$forced" == "FORCED" ]; then
+    git fetch
+    git reset --hard HEAD
+    git merge '@{u}'
+    git rebase
+  else
+    git pull
+  fi
 
   echo ""
   echo "Finished at:"
@@ -310,7 +309,7 @@ function git-repo_create() {
   git remote add origin git@github.com:$gituname/$www_repofocus.git
   git push -u origin $branchname
   echo "Files set on server"
-    wait clear
+  wait clear
 }
 
 #https://stackoverflow.com/questions/46273032/is-there-a-way-to-remove-all-ignored-files-from-a-local-git-working-tree"
@@ -319,12 +318,13 @@ function git-clean() {
 }
 
 function git-pull-all() {
-  git-pull-repo "bashtools"
-  git-pull-repo "DD_laraview"
-  git-pull-repo "DD_libwww"
-  git-pull-repo "DD_libmedia"
-  git-pull-repo "DD_laravelAp"
-  git-pull-repo "$www_repofocus"
+  forced=$1
+  git-pull-repo "bashtools" $forced
+  git-pull-repo "DD_laraview" $forced
+  git-pull-repo "DD_libwww" $forced
+  git-pull-repo "DD_libmedia" $forced
+  git-pull-repo "DD_laravelAp" $forced
+  git-pull-repo "$www_repofocus" $forced
 }
 
 function git-setup() {
@@ -353,6 +353,7 @@ function git-deploysubrepo() {
   echo "cloning subrepo $subreponame"
   echo-hr
   echo ""
+  mkdir $subrepopath/$subreponame
   git clone git@github.com:$gituname/$subreponame.git $subrepopath/$subreponame
   echo ""
   echo "subrepo deployment of $subreponame finished at:"
