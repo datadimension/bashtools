@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 #help for this module
-function laravel-h(){
-	bash-helpformodule laravel
+function laravel-h() {
+  bash-helpformodule laravel
 }
 
 #shows laravel version
@@ -14,6 +14,12 @@ function laravel-showversion() {
 
 function laravel-configcheck() {
   echo "config check"
+  echo $wwwroot
+  echo $www_repofocus
+
+  $promisedir= $wwwroot/html/$www_repofocus/app/BizClasses
+  # sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app
+
 }
 
 function laravel-getenv_value() {
@@ -35,11 +41,11 @@ function laravel-create() {
   # https://www.appfinz.com/blogs/laravel-middleware-for-auth-admin-users-roles/
   #https://www.itsolutionstuff.com/post/laravel-11-user-roles-and-permissions-tutorialexample.html
   newrepo=$1
-    if [ "$newrepo" == "" ]; then #abort if no new reponame given
+  if [ "$newrepo" == "" ]; then #abort if no new reponame given
     wait clear "No repo create name specified, Aborting"
     bash-restart
     return
-fi
+  fi
   newrepodir=$wwwroot/html/$newrepo
   echo "creating new repo $newrepo in directory $newrepodir"
   if [ -d "$newreopodir" ]; then #abort if directory exists
@@ -63,18 +69,17 @@ fi
   #20260108 sudo cp -v --update=none $laraveltemplatestore/routes/*.* $targetroot/routes
 
   #add in DD  stubs
-  	sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app
+  sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app
 
-  	sudo cp -v -R --update=none $laraveltemplatestore/bootstrap/* $wwwroot/html/$www_repofocus/bootstrap
-  	sudo cp  $laraveltemplatestore/bootstrap/app.php $wwwroot/html/$www_repofocus/bootstrap/app.php
+  sudo cp -v -R --update=none $laraveltemplatestore/bootstrap/* $wwwroot/html/$www_repofocus/bootstrap
+  sudo cp $laraveltemplatestore/bootstrap/app.php $wwwroot/html/$www_repofocus/bootstrap/app.php
 
-  	sudo cp -v -R --update=none $laraveltemplatestore/routes/* $wwwroot/html/$www_repofocus/routes
-  	sudo cp  $laraveltemplatestore/routes/web.php $wwwroot/html/$www_repofocus/routes/web.php
+  sudo cp -v -R --update=none $laraveltemplatestore/routes/* $wwwroot/html/$www_repofocus/routes
+  sudo cp $laraveltemplatestore/routes/web.php $wwwroot/html/$www_repofocus/routes/web.php
 
-	sudo cp -v -R $laraveltemplatestore/config/* $wwwroot/html/$www_repofocus/config
-  	sudo cp -v -R --update=none $laraveltemplatestore/public/* $wwwroot/html/$www_repofocus/public
-  	sudo cp -v -R --update=none $laraveltemplatestore/resources/* $wwwroot/html/$www_repofocus/resources
-
+  sudo cp -v -R $laraveltemplatestore/config/* $wwwroot/html/$www_repofocus/config
+  sudo cp -v -R --update=none $laraveltemplatestore/public/* $wwwroot/html/$www_repofocus/public
+  sudo cp -v -R --update=none $laraveltemplatestore/resources/* $wwwroot/html/$www_repofocus/resources
 
   #20250320 not need as copied whole app stubs above  sudo cp -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Console/Commands/*.* $targetroot/app/Console/Commands
 
@@ -95,7 +100,7 @@ function laravel-envinstall() {
   php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate user=$USER
   echo ""
   echo "Set permissions for the .env file"
- sudo chown $user:www-data $wwwroot/html/$www_repofocus/.env
+  sudo chown $user:www-data $wwwroot/html/$www_repofocus/.env
   echo-hr
   echo-hr
   cd $wwwroot/html/$www_repofocus

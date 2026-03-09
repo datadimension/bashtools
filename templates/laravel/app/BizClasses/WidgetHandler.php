@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BizClasses;
+namespace app\BizClasses;
 
 use App\DD_laravelAp\BizClasses;
 
