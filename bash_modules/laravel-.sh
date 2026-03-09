@@ -12,12 +12,14 @@ function laravel-showversion() {
   php artisan --version
 }
 
-function laravel-configcheck() {
+function laravel-dependancy-set() {
   echo "config check"
-  echo $wwwroot
-  echo $www_repofocus
+  laraveltemplate_source=~/bashtools/templates/laravel
+  root_target=$wwwroot/html/$www_repofocus/app
+  sudo cp -v -R --update=none $laraveltemplate_source/app/BizClasses* $wwwroot/html/$www_repofocus/app/
+  fsys-secure
 
-  $promisedir= $wwwroot/html/$www_repofocus/app/BizClasses
+  sourcedir=
   # sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app
 
 }

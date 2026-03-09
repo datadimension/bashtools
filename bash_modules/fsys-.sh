@@ -5,22 +5,23 @@ function fsys-disk() {
   df -H
 }
 #reset permission levels to minimal required
+# relative to current repo focused directory eg app/BizClasses
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
 function fsys-secure() {
   dirname=$1
   if [ "$dirname" == "" ]; then
     targetroot=$wwwroot/html/$www_repofocus
-    else
-    	currentdir=$(pwd);
-    	targetroot="$currentdir/$dirname"
+  else
+    basedir=$wwwroot/html/$www_repofocus
+    targetroot="$basedir/$dirname"
   fi
   echo-newpage $targetroot
   cd $targetroot
   ls
   echo-hr
   echo "Conform file permisions at $targetroot ?"
-   read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 3  input
+  read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 3 input
   if [ "$input" != "y" ]; then
     return 0
   fi
@@ -29,9 +30,9 @@ function fsys-secure() {
   sec644level=644 # https://chmodcommand.com/chmod-644/
   sec755level=755 # https://chmodcommand.com/chmod-755/
   sec770level=770 # https://chmodcommand.com/chmod-770/
-	sec775level=775 # https://chmodcommand.com/chmod-770/
+  sec775level=775 # https://chmodcommand.com/chmod-770/
   echo ""
-  ls -al $targetroot;
+  ls -al $targetroot
 
   echo "Reseting global ownership in $targetroot"
   sudo chown -R $USER:www-data $targetroot
@@ -42,12 +43,12 @@ function fsys-secure() {
 
   # relax some permissions for laravel
   if [ $targetroot == $wwwroot/html/$www_repofocus ]; then
-  echo "Securing laravel directory permissions in $targetroot"
-  sudo chmod -R $sec755level $targetroot/app
-  sudo chmod -R $sec775level $targetroot/storage
-  sudo chmod -R $sec770level $targetroot/public/downloads
-  sudo chmod -R $sec770level $targetroot/public
-  sudo chmod -R $sec770level $targetroot/private
+    echo "Securing laravel directory permissions in $targetroot"
+    sudo chmod -R $sec755level $targetroot/app
+    sudo chmod -R $sec775level $targetroot/storage
+    sudo chmod -R $sec770level $targetroot/public/downloads
+    sudo chmod -R $sec770level $targetroot/public
+    sudo chmod -R $sec770level $targetroot/private
   fi
 }
 
@@ -61,34 +62,34 @@ function file_exists() {
 }
 
 #help for this module
-function fsys-h(){
-	bash-helpformodule fsys
+function fsys-h() {
+  bash-helpformodule fsys
 }
 
 # change current directory to current focused repo
-function file-cdrepo(){
-	startdir="$wwwroot/html/$www_repofocus"
-	if [ -d "$startdir" ]; then
-        echo ""
-        cd $startdir;
-    else
-    	echo ""
-    	echo "Error: Current reponame set at '$www_repofocus'"
-    	echo "Directory: $startdir does not exist";
-    	 echo "Reseting www_repofocus"
-    	www_repofocus=""
-    	bash-writesettings;
-    fi
-	repo-show
-	 if [ "$www_repofocus" == "" ]; then
-    	echo "";
-    	echo "NOTE:"
-    	echo "If your repo list is empty you can add the nginx test repo with"
-    	echo "nginx-testrepoadd";
-    	echo "and remove later with"
-    	echo "nginx-testreporemove"
-    	echo ""
-    fi
+function file-cdrepo() {
+  startdir="$wwwroot/html/$www_repofocus"
+  if [ -d "$startdir" ]; then
+    echo ""
+    cd $startdir
+  else
+    echo ""
+    echo "Error: Current reponame set at '$www_repofocus'"
+    echo "Directory: $startdir does not exist"
+    echo "Reseting www_repofocus"
+    www_repofocus=""
+    bash-writesettings
+  fi
+  repo-show
+  if [ "$www_repofocus" == "" ]; then
+    echo ""
+    echo "NOTE:"
+    echo "If your repo list is empty you can add the nginx test repo with"
+    echo "nginx-testrepoadd"
+    echo "and remove later with"
+    echo "nginx-testreporemove"
+    echo ""
+  fi
 }
 
 # combines cd and ls into a single command to change and list directory
