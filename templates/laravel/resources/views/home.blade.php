@@ -13,7 +13,7 @@
 @section('body-pre')
 	<div id="logoframe">
 		<a href="/" target="_blank">
-			<img class='icon-5' src="/img/nav_sitelogo.jpg"/><br/>
+			<img class='icon-5' src="{{Cache('appsettings')['site_image_nav_side_icon']['value']}}"/><br/>
 		</a>
 		{{Config::get('app.name')}}
 	</div>

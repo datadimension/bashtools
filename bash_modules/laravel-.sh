@@ -17,7 +17,7 @@ function laravel-dependancy-set() {
   laraveltemplate_source=~/bashtools/templates/laravel
   root_target=$wwwroot/html/$www_repofocus/app
   sudo cp -v -R --update=none $laraveltemplate_source/app/BizClasses* $wwwroot/html/$www_repofocus/app/
-  fsys-secure
+  fsys-secure app/BizClasses
 
   sourcedir=
   # sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app

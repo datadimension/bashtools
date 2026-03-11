@@ -11,7 +11,7 @@
 	</style>
 @endsection
 @section("sitelogo")
-	<img class='icon-10 loginlogo' src="https://mediastore247.com/DD_libmedia/iconpacks/google//action/exit_to_app/materialicons/48dp/2x/baseline_exit_to_app_black_48dp.png/img/liveinfologo.jpg"/><br/>
+	<img class='loginlogo' src="{{Cache('appsettings')['site_image_login_icon']['value']}}"/><br/>
 @endsection
 @section("sitename")
 @endsection

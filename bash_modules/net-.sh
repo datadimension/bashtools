@@ -1,5 +1,90 @@
 #!/usr/bin/env bash
 
+# installs ssh
+function net-installssh() {
+  sudo apt update
+  sudo apt install openssh-server
+  sudo apt install putty-tools
+}
+
+#creates a new keypair on the server
+function net-sshkeygen() {
+  currentuser=$USER
+  touch /home/$currentuser/.ssh/authorized_keys
+  echo "Do you want to generate NEW ssh keys or are you using EXISTING"
+  echo "[new/existing]"
+  read confirm
+  if [ "$confirm" == "new" ]; then
+    sudo apt install putty-tools
+    clear
+    echo "Now generating ssh keys, you are ok to accept defaults"
+    echo "Enter your email to personalise the keys"
+    read email
+    ssh-keygen -t rsa -b 4096 -C $email
+  fi
+  pubkey=$(<~/.ssh/id_rsa.pub)
+  sudo chown -R $currentuser:$currentuser /home/$currentuser/.ssh
+  chmod 600 ~/.ssh/id_rsa
+  echo "$pubkey" >/home/$currentuser/.ssh/authorized_keys
+  puttygen /home/$currentuser/.ssh/id_rsa -o /home/$currentuser/.ssh/id_rsa.ppk
+  ppk=$(</home/$currentuser/.ssh/id_rsa.ppk)
+  echo-hr
+  echo "Public key (eg for git) for this server"
+  echo-hr
+  echo $pubkey
+  echo-hr
+  echo "Putty (windows) key"
+  echo "with .ppk extension and tell Putty where to find it"
+  echo-hr
+  cat /home/$currentuser/.ssh/id_rsa.ppk
+  echo-hr
+  wait
+}
+
+#secures ssh settings
+function net-sshsecure() {
+  echo "Installing SSH"
+  echo "Please write TESTED to confirm you have logged in via ssh with key access not password  - otherwise you might get blocked as we will secure ssh access in the next step"
+  read confirm
+  if [ "$confirm" != "TESTED" ]; then
+    echo "You can try running os-sshaccess again or try logging in via ssh"
+    read wait
+    bash-restart
+  fi
+  echo "Between EACH, press ENTER to go to relevant line to edit ssh config"
+  echo ""
+  echo "1/4 Comment out the following to make this config file the only  config file used"
+  echo "Include/etc/ssh/sshd_config.d/*.conf":
+  read wait
+  sudo nano +12 /etc/ssh/sshd_config
+  echo "2/4 stop ssh access via root for security uncomment / set"
+  echo "PermitRootLogin no"
+  read wait
+  sudo sudo nano +33 /etc/ssh/sshd_config
+  echo "3/4 set authentication by public key only uncomment / set"
+  echo "PubkeyAuthentication yes"
+  read wait
+  sudo nano +38 /etc/ssh/sshd_config
+  echo "4/4 remove password access uncomment / set"
+  echo "PasswordAuthentication no"
+  read wait
+  sudo nano +57 /etc/ssh/sshd_config
+  os_status=$((os_status + 1)) #we exit so need to update pointer here
+  bash-writesettings
+  read -p "Can you log in using keypair y/n ?"
+  read yn
+  if [ "$yn" != "y" ]; then
+    echo "You can try running os-sshaccess again or try logging in via ssh"
+    read wait
+    bash-restart
+  fi
+  echo "Any key to restart sshd - you will get booted - make sure you set up ssh which is not root"
+  read wait
+  net-firewall start
+  sudo service ssh reload
+  exit
+}
+
 #locks down firewall to only specified ports and services
 function net-firewall-start() {
   sudo ufw --force reset
@@ -8,44 +93,44 @@ function net-firewall-start() {
   sudo ufw allow 3306 #mysql database
   sudo ufw allow 'Nginx Full'
   sudo ufw allow 9003
-    sudo ufw allow 9003
+  sudo ufw allow 9003
   sudo ufw reload
   sudo ufw status
 }
 
-function net-rdp(){
-	mode=$1
-      if [ "$mode" == "on" ]; then
-    		sudo ufw allow 3389
-  		sudo ufw reload
-  		sudo ufw status
-  	else
-		net-firewall start
-      fi
+function net-rdp() {
+  mode=$1
+  if [ "$mode" == "on" ]; then
+    sudo ufw allow 3389
+    sudo ufw reload
+    sudo ufw status
+  else
+    net-firewall start
+  fi
 }
 
 #show firewall status, optional argument of 'start' to restart firewall locked down to only specified ports and services
 function net-firewall() {
-#https://phoenixnap.com/kb/ubuntu-remote-desktop-from-windows
-	mode=$1
-      if [ "$mode" == "start" ]; then
-  sudo ufw --force reset
-  sudo ufw enable
-  sudo ufw allow ssh
-  sudo ufw allow 3306 #mysql database
-  sudo ufw allow 'Nginx Full'
-  sudo ufw allow 9003
+  #https://phoenixnap.com/kb/ubuntu-remote-desktop-from-windows
+  mode=$1
+  if [ "$mode" == "start" ]; then
+    sudo ufw --force reset
+    sudo ufw enable
+    sudo ufw allow ssh
+    sudo ufw allow 3306 #mysql database
+    sudo ufw allow 'Nginx Full'
     sudo ufw allow 9003
-  sudo ufw reload
-  sudo ufw status
-  	else
-  sudo ufw status
-      fi
+    sudo ufw allow 9003
+    sudo ufw reload
+    sudo ufw status
+  else
+    sudo ufw status
+  fi
 }
 
 #flush dns cache
-function net-dnsflush(){
-	sudo resolvectl flush-caches;
+function net-dnsflush() {
+  sudo resolvectl flush-caches
 }
 
 #show history for user ssh sessions
@@ -61,8 +146,8 @@ function net-ssh-log-session() {
 }
 
 #installs vpn functionality
-function net-vpninstall(){
-sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome;
+function net-vpninstall() {
+  sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome
 }
 
 function vpn() {
@@ -75,13 +160,13 @@ function vpn() {
 
 #show hosts file, append edit to edit it eg 'net-hosts edit'
 function net-hosts() {
-	  mode=$1
-      if [ "$mode" == "edit" ]; then
-  		sudo nano /etc/hosts
-  		sudo net-dnsflush
-  	else
-  		tail -1000 /etc/hosts
-      fi
+  mode=$1
+  if [ "$mode" == "edit" ]; then
+    sudo nano /etc/hosts
+    sudo net-dnsflush
+  else
+    tail -1000 /etc/hosts
+  fi
 }
 
 function net-sshcheck() {
