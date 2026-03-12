@@ -11,23 +11,29 @@ function net-installssh() {
 function net-sshkeygen() {
   currentuser=$USER
   touch /home/$currentuser/.ssh/authorized_keys
-  echo "Do you want to generate NEW ssh keys or are you using EXISTING"
-  echo "[new/existing]"
+  echo "Do you want to generate NEW ssh keys ? [y/n]"
   read confirm
-  if [ "$confirm" == "new" ]; then
-    sudo apt install putty-tools
-    clear
-    echo "Now generating ssh keys, you are ok to accept defaults"
-    echo "Enter your email to personalise the keys"
-    read email
-    ssh-keygen -t rsa -b 4096 -C $email
+  if [ "$confirm" != "y" ]; then
+    return 0
   fi
-  pubkey=$(<~/.ssh/id_rsa.pub)
+  clear
+  echo "Now generating ssh keys, you are ok to accept defaults"
+  echo "Enter your email to personalise the keys"
+  read email
+  read -p "Enter prefix for keys" prefix
+  cd ~/.ssh
+  today=$(date +%Y%m%d)
+  keyname=$prefix"_"$today"_rsapublickey"
+  ssh-keygen -t rsa -f $keyname -C $email
+  pubkey=$(<$keyname.pub)
+
+  to here
+
   sudo chown -R $currentuser:$currentuser /home/$currentuser/.ssh
   chmod 600 ~/.ssh/id_rsa
   echo "$pubkey" >/home/$currentuser/.ssh/authorized_keys
   puttygen /home/$currentuser/.ssh/id_rsa -o /home/$currentuser/.ssh/id_rsa.ppk
-  ppk=$(</home/$currentuser/.ssh/id_rsa.ppk)
+  #ppk=$(</home/$currentuser/.ssh/id_rsa.ppk)
   echo-hr
   echo "Public key (eg for git) for this server"
   echo-hr
@@ -39,6 +45,7 @@ function net-sshkeygen() {
   cat /home/$currentuser/.ssh/id_rsa.ppk
   echo-hr
   wait
+  cd ~/
 }
 
 #secures ssh settings

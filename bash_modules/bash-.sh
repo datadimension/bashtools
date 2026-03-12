@@ -22,7 +22,7 @@ function bash-start-windows() {
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
- file-cdrepo
+  file-cdrepo
 }
 
 # initialises the bash shell #
@@ -34,27 +34,28 @@ function bash-start-ubuntu() {
   source ~/bashtools/bash_modules/git-.sh
   source ~/bashtools/bash_modules/net-.sh
   source ~/bashtools/bash_modules/log-.sh
-	source ~/bashtools/bash_modules/repo-.sh
+  source ~/bashtools/bash_modules/repo-.sh
   source ~/bashtools/bash_modules/laravel-.sh
   source ~/bashtools/bash_modules/fsys-.sh
   source ~/bashtools/bash_modules/composer-.sh
-env-parse
+  source ~/bashtools/bash_modules/input-.sh
+  env-parse
   bash-start-ubuntu-osconfigcheck
   clear
   env-about
   read -t 1 wait
-      clear
+  clear
   echo "BashTools [$platform - $serverid]"
   echo-hr
   if [ "$welcomemsg" != "" ]; then
     echo "$welcomemsg"
   fi
-file-cdrepo
+  file-cdrepo
 }
 
 bash-start-ubuntu-osconfigcheck() {
   mysql-getversion
-osinstall=0 #control bool to restart bash to loop through setup
+  osinstall=0 #control bool to restart bash to loop through setup
   os-checkstatus
   if [ $osinstall == 1 ]; then
     read -p "Any key to restart" wait
@@ -66,7 +67,7 @@ osinstall=0 #control bool to restart bash to loop through setup
   env-attributerequire "defaultDatabaseIP"
 
   MENUCHOICE="" #reserved as a global for menu function
-  php-getfullversion;
+  php-getfullversion
   #env-attributerequire "welcomemsg"
 }
 
@@ -102,7 +103,7 @@ function bash-install-ubuntu() {
   echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
   cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
   bash-writesettings
-    env-parse
+  env-parse
   source ~/.bash_profile
 }
 
@@ -113,14 +114,14 @@ function bash-install-windows() {
   echo -e "Detected:\nPlatform=$platform\nUser=$username\nwwwroot=$wwwroot"
   cp ~/bashtools/templates/bash/bash_profile.sh ~/.bash_profile #overwrite with potention changes
   bash-writesettings
-    env-parse
+  env-parse
   source ~/.bash_profile
 }
 
 #shows functions for specific module eg nginx, net etc
-function bash-helpformodule(){
-	echo-hr
-	  modulename=$1
+function bash-helpformodule() {
+  echo-hr
+  modulename=$1
   php ~/bashtools/php_helpers/bash/bash-help.php helptype=$modulename
 }
 
@@ -139,7 +140,7 @@ function bash-who() {
 function bash-logout() {
   bash-writesettings
   echo "Written out settings, press enter to exit"
- waitb
+  waitb
   clear
   source ~/.bash_profile # this restarts bash as well
 }
@@ -168,9 +169,9 @@ function bash-cfg() {
 }
 
 function bash-writesettings() {
-	#ensure detectable values are written
-	php-getfullversion;
-	db_app="${www_repofocus//[^[:alnum:]]}"
+  #ensure detectable values are written
+  php-getfullversion
+  db_app="${www_repofocus//[^[:alnum:]]/}"
 
   csv=""
   for i in {0..9}; do
@@ -208,7 +209,7 @@ function bash-readsettings() {
   defaultDatabaseIP=${values[4]}
   serverid=${values[5]}
   gituname=${values[7]}
-    #20260122phpNo=${values[8]}
+  #20260122phpNo=${values[8]}
   ipgateway=${values[9]}
   welcomemsg=${values[10]}
   wwwroot=${values[11]}
@@ -216,7 +217,7 @@ function bash-readsettings() {
   wwwrepos=${values[13]}
   www_repofocus=${values[14]}
   db_app=${values[15]}
-#20260203dev_url=${values[16]}
-wanip=$(dig +short myip.opendns.com @resolver1.opendns.com)
+  #20260203dev_url=${values[16]}
+  wanip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 
 }

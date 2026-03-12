@@ -23,10 +23,11 @@ function nginx-start() {
   clear
   echo-hr "Closing Nginx / PHP"
   sudo service nginx stop
-  sudo pkill -f nginx & wait $!
+  sudo pkill -f nginx &
+  wait $!
 
   sudo logrotate -f /etc/logrotate.d/nginx
-echo-hr
+  echo-hr
   echo "Starting Nginx / PHP-fpm"
   php-restart
   sudo service nginx start
@@ -42,17 +43,13 @@ echo-hr
   echo-hr
 }
 
-function nginx-deploylocalserveradmin(){
-	sudo chown datadimension:www-data /etc/nginx/sites-enabled
-	git-repo_install localserveradmin;
+function nginx-deploylocalserveradmin() {
+  sudo chown datadimension:www-data /etc/nginx/sites-enabled
+  git-repo_install localserveradmin
 }
 
 #deprecated in favour of installing localserveradmin by defaul  installs an nginx test page to check server is operational
 function nginx-testadd() {
-  #read -p "Add nginxtest ? Y/n"  input
-  #if [ "$input" != "Y" ]; then
-  #	return 1;
-  #fi
   sudo cp -R ~/bashtools/templates/nginx/nginxtest /var/www/html
   sudo chown -R $USER:www-data /var/www/html/nginxtest
 
@@ -72,12 +69,12 @@ function nginx-testadd() {
 
 #remove the nginx test site
 function nginx-testremove() {
-    echo "Nginx test removed"
+  echo "Nginx test removed"
 }
 
-function nginx-testfunc(){
-    reponame=$www_repofocus
-      php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
+function nginx-testfunc() {
+  reponame=$www_repofocus
+  php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
 
 }
 
@@ -115,17 +112,17 @@ function nginx-setserverblock() {
   nginx-start
 }
 
-function nginx-testfunc(){
-noop=1;
+function nginx-testfunc() {
+  noop=1
 }
 
 #help for this module
-function nginx-h(){
-	bash-helpformodule nginx
+function nginx-h() {
+  bash-helpformodule nginx
 }
 
-function nginx.h(){
-	bash-helpformodule nginx
+function nginx.h() {
+  bash-helpformodule nginx
 }
 
 # Makes self signed cert so dev server can run  HTTPS- note this is an insecure certificate and will not be valid on live server
