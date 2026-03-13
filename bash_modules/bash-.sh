@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#https://deepai.org/chat/ai-code#dd3c6362-a219-449e-adea-802cd7d89a6c
+
 function bash-start() {
   #load modules optimised for all os
   source ~/bashtools/bash_modules/std-.sh #standard for all platforms

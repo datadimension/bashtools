@@ -10,7 +10,6 @@ function net-installssh() {
 #creates a new keypair on the server
 function net-sshkeygen() {
   currentuser=$USER
-  touch /home/$currentuser/.ssh/authorized_keys
   echo "Do you want to generate NEW ssh keys ? [y/n]"
   read confirm
   if [ "$confirm" != "y" ]; then
@@ -18,31 +17,42 @@ function net-sshkeygen() {
   fi
   clear
   echo "Now generating ssh keys, you are ok to accept defaults"
-  echo "Enter your email to personalise the keys"
-  read email
-  read -p "Enter prefix for keys" prefix
-  cd ~/.ssh
+  input-required "Enter your email to personalise the key file content" email
+  input-required "Enter a prefix to label the key file names" filelabel
+  #sshdir=~/.ssh
+  mkdir $sshdir
+  touch $sshdir/authorized_keys
+  sudo chown -R $currentuser:$currentuser $sshdir
+
+  cd $sshdir
+
   today=$(date +%Y%m%d)
-  keyname=$prefix"_"$today"_rsapublickey"
-  ssh-keygen -t rsa -f $keyname -C $email
-  pubkey=$(<$keyname.pub)
+  keyidprefix=$filelabel"_"$today"_"
 
-  to here
+  publickeyname=$keyidprefix"publicrsakey"
+  ssh-keygen -t rsa -f $publickeyname -C $email
+  chmod 600 $publickeyname
+  chmod 600 $publickeyname.pub
+  publickey=$(<$keyidprefix"publicrsakey".pub)
+  echo "$publickey" >>$sshdir/authorized_keys
+  echo "" >>$sshdir/authorized_keys
+  echo "" >>$sshdir/authorized_keys
 
-  sudo chown -R $currentuser:$currentuser /home/$currentuser/.ssh
-  chmod 600 ~/.ssh/id_rsa
-  echo "$pubkey" >/home/$currentuser/.ssh/authorized_keys
-  puttygen /home/$currentuser/.ssh/id_rsa -o /home/$currentuser/.ssh/id_rsa.ppk
-  #ppk=$(</home/$currentuser/.ssh/id_rsa.ppk)
+  clear
+
+  echo-hr
+  puttykeyname=$keyidprefix"puttyrsakey"
+  puttygen $sshdir/$publickeyname -o $sshdir/$puttykeyname.ppk
+  echo "Putty (windows) key"
+  echo "save with .ppk extension and tell Putty where to find it"
+  echo-hr
+  cat $sshdir/$puttykeyname.ppk
+  echo-hr
+
   echo-hr
   echo "Public key (eg for git) for this server"
   echo-hr
-  echo $pubkey
-  echo-hr
-  echo "Putty (windows) key"
-  echo "with .ppk extension and tell Putty where to find it"
-  echo-hr
-  cat /home/$currentuser/.ssh/id_rsa.ppk
+  echo $publickey
   echo-hr
   wait
   cd ~/
