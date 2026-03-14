@@ -15,11 +15,10 @@ function net-sshkeygen() {
   if [ "$confirm" != "y" ]; then
     return 0
   fi
-  clear
   echo "Now generating ssh keys, you are ok to accept defaults"
   input-required "Enter your email to personalise the key file content" email
   input-required "Enter a prefix to label the key file names" filelabel
-  #sshdir=~/.ssh
+  sshdir=~/.ssh
   mkdir $sshdir
   touch $sshdir/authorized_keys
   sudo chown -R $currentuser:$currentuser $sshdir
@@ -35,7 +34,6 @@ function net-sshkeygen() {
   chmod 600 $publickeyname.pub
   publickey=$(<$keyidprefix"publicrsakey".pub)
   echo "$publickey" >>$sshdir/authorized_keys
-  echo "" >>$sshdir/authorized_keys
   echo "" >>$sshdir/authorized_keys
 
   clear
