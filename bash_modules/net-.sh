@@ -19,38 +19,44 @@ function net-sshkeygen() {
   input-required "Enter your email to personalise the key file content" email
   input-required "Enter a prefix to label the key file names" filelabel
   sshdir=~/.ssh
-  mkdir $sshdir
-  touch $sshdir/authorized_keys
-  sudo chown -R $currentuser:$currentuser $sshdir
+  mkdir -p $sshdir
+  chown -R $currentuser:$currentuser $sshdir
 
   cd $sshdir
+  touch authorized_keys
 
-  today=$(date +%Y%m%d)
-  keyidprefix=$filelabel"_"$today"_"
+  timestamp=$(date +%Y%m%d%H%M)
+  keyidprefix=$filelabel"_"$timestamp"_"
 
-  publickeyname=$keyidprefix"publicrsakey"
-  ssh-keygen -t rsa -f $publickeyname -C $email
-  chmod 600 $publickeyname
-  chmod 600 $publickeyname.pub
-  publickey=$(<$keyidprefix"publicrsakey".pub)
-  echo "$publickey" >>$sshdir/authorized_keys
-  echo "" >>$sshdir/authorized_keys
+  serverkeyname=$keyidprefix"server_rsakey"
+
+  ssh-keygen -t rsa -f $serverkeyname -C $email
+  sharedkeyname=$keyidprefix"shared_rsakey"
+mv $serverkeyname $sharedkeyname;
+
+  chmod 600 $serverkeyname
+  authkey=$(<$serverkeyname.pub)
+  echo "$authkey" >>authorized_keys
+  echo "" >>authorized_keys
+
+  sharedkeyname=$keyidprefix"shared_rsakey"
+  chmod 600 $sharedkeyname
 
   clear
-
   echo-hr
-  puttykeyname=$keyidprefix"puttyrsakey"
-  puttygen $sshdir/$publickeyname -o $sshdir/$puttykeyname.ppk
+
+  puttykeyname=$keyidprefix"putty_rsakey"
+  puttygen $sharedkeyname -o $puttykeyname.ppk
   echo "Putty (windows) key"
   echo "save with .ppk extension and tell Putty where to find it"
   echo-hr
-  cat $sshdir/$puttykeyname.ppk
+  cat $puttykeyname.ppk
   echo-hr
 
   echo-hr
-  echo "Public key (eg for git) for this server"
+  echo "Shared key (eg for git) for this server"
   echo-hr
-  echo $publickey
+  echo $authkey
   echo-hr
   wait
   cd ~/
