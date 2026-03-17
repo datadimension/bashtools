@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-function mysql-datagrip(){
- ./home/$USER/software/datagrip/DataGrip-2025.2.2/bin/datagrip.sh
-}
-
 function mysql-install() {
   #https://support.rackspace.com/how-to/installing-mysql-server-on-ubuntu/
   #ignore part about ufw, we will do that seperate
