@@ -32,15 +32,13 @@ function net-sshkeygen() {
 
   ssh-keygen -t rsa -f $serverkeyname -C $email
   sharedkeyname=$keyidprefix"shared_rsakey"
-mv $serverkeyname $sharedkeyname;
+  mv $serverkeyname $sharedkeyname
 
-  chmod 600 $serverkeyname
-  authkey=$(<$serverkeyname.pub)
-  echo "$authkey" >>authorized_keys
-  echo "" >>authorized_keys
-
-  sharedkeyname=$keyidprefix"shared_rsakey"
+  chmod 600 $serverkeyname.pub
   chmod 600 $sharedkeyname
+
+  echo "$serverkeyname.pub" >>authorized_keys
+  echo "" >>authorized_keys
 
   clear
   echo-hr
