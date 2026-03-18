@@ -16,35 +16,36 @@ function net-sshkeygen() {
     return 0
   fi
   echo "Now generating ssh keys, you are ok to accept defaults"
-  input-required "Enter your email to personalise the key file content" email
-  input-required "Enter a prefix to label the key file names" filelabel
+  #20260318input-required "Enter text to personalise the key file content" email
+  #20260318input-required "Enter a prefix to label the key file names" filelabel
   sshdir=~/.ssh
   mkdir -p $sshdir
   cd $sshdir
 
   touch authorized_keys
 
+  #20260318 serverkeyname=$timestamp"_SharedRSAkey_"$keyidprefix # rename shared - private - key for clarity
+  #20260318  serverkeyname=$keyidprefix"ServerRsaKey:"
+  #20260318keystamp=$keyidprefix
+
   timestamp=$(date +%Y%m%d%H%M)
-  keyidprefix="Server:"$filelabel"_Timestamp:"$timestamp"_User:"
-  serverkeyname=$keyidprefix"server_rsakey"
-  keystamp=$keyidprefix$email
+  serverkeyname=$timestamp"_serverRSAkey_"$serverid"_"$USER
+  sharedkeyname=$timestamp"_sharedRSAkey_"$serverid"_"$USER
+  puttykeyname=$timestamp"_puttyRSAkey_"$serverid"_"$USER
 
-  ssh-keygen -t rsa -f $serverkeyname -C $keystamp
-
-  sharedkeyname=$keyidprefix"shared_rsakey"
-
-  mv $serverkeyname $sharedkeyname
-
-  chmod 600 $serverkeyname.pub
-  chmod 600 $sharedkeyname
-
+  passphrase=""
+  ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $keyidprefix
   cat $serverkeyname.pub >>authorized_keys
   echo "" >>authorized_keys
 
-  clear
-  puttykeyname=$keyidprefix"putty_rsakey"
+  cp $serverkeyname $sharedkeyname
   puttygen $sharedkeyname -o $puttykeyname.ppk
 
+  chmod 600 $serverkeyname.pub
+  chmod 600 $sharedkeyname
+  chmod 600 $puttykeyname.ppk
+
+  clear
   echo "Putty desktop .ppk key"
   echo "copy this below output between the lines. Navigate to where you want it on your PC and 'right click, new notepad."
   echo "Paste in to this and save as $puttykeyname.ppk"
@@ -53,14 +54,14 @@ function net-sshkeygen() {
   cat $puttykeyname.ppk
   echo-hr
   wait
-
+  clear
   echo-hr
   echo "Shared key (eg for git) for this server"
   echo-hr
   cat $sharedkeyname
   echo-hr
   wait
-  cd ~/
+  cd ~/ 
 }
 
 #secures ssh settings
