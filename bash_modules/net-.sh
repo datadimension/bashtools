@@ -40,24 +40,24 @@ function net-sshkeygen() {
 
   cat $serverkeyname.pub >>authorized_keys
   echo "" >>authorized_keys
-  clear
-  echo-hr
 
+  clear
   puttykeyname=$keyidprefix"putty_rsakey"
   puttygen $sharedkeyname -o $puttykeyname.ppk
-  echo "Putty (windows) key"
+
+  echo "Putty desktop .ppk key"
   echo "copy this below output between the lines. Navigate to where you want it on your PC and 'right click, new notepad."
   echo "Paste in to this and save as $puttykeyname.ppk"
   echo "Tell Putty where to find it"
   echo-hr
   cat $puttykeyname.ppk
   echo-hr
-  wait "Continue with ENTER"
+  wait
 
   echo-hr
   echo "Shared key (eg for git) for this server"
   echo-hr
-  echo $authkey
+  cat $sharedkeyname
   echo-hr
   wait
   cd ~/
