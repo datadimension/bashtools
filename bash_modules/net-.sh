@@ -34,8 +34,9 @@ function net-sshkeygen() {
   sharedkeyname=$timestamp"_sharedRSAkey_"$userstamp
   puttykeyname=$timestamp"_puttyRSAkey_"$userstamp
 
+  keycomment=$userstamp"_"$timestamp
   passphrase=""
-  ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $userstamp
+  ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $keycomment
   cat $serverkeyname.pub >>authorized_keys
   echo "" >>authorized_keys
 
