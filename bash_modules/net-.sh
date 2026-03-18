@@ -25,7 +25,7 @@ function net-sshkeygen() {
   touch authorized_keys
 
   timestamp=$(date +%Y%m%d%H%M)
-  keyidprefix=$filelabel"_"$timestamp"_"
+  keyidprefix="Server:"$filelabel"_Timestamp:"$timestamp"_User:"
   serverkeyname=$keyidprefix"server_rsakey"
   keystamp=$keyidprefix$email
 
