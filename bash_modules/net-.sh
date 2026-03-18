@@ -10,10 +10,10 @@ function net-installssh() {
 #creates a new keypair on the server
 function net-sshkeygen() {
   currentuser=$USER
-  echo "Do you want to generate NEW ssh keys ? [y/n]"
+  echo "Do you want to remove existing key access ? [y/n]"
   read confirm
-  if [ "$confirm" != "y" ]; then
-    return 0
+  if [ "$confirm" == "y" ]; then
+    echo "" >authorized_keys
   fi
   echo "Now generating ssh keys, you are ok to accept defaults"
   #20260318input-required "Enter text to personalise the key file content" email
@@ -38,7 +38,7 @@ function net-sshkeygen() {
   passphrase=""
   ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $keycomment
   cat $serverkeyname.pub >>authorized_keys
-  echo "" >>authorized_keys
+  echo "" >authorized_keys
 
   cp $serverkeyname $sharedkeyname
   puttygen $sharedkeyname -o $puttykeyname.ppk
