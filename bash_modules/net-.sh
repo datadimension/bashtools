@@ -37,11 +37,12 @@ function net-sshkeygen() {
   passphrase=""
   ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $userstamp
   cat $serverkeyname.pub >>authorized_keys
-  echo "" >>authorized_keys 
+  echo "" >>authorized_keys
 
   cp $serverkeyname $sharedkeyname
   puttygen $sharedkeyname -o $puttykeyname.ppk
 
+  chmod 600 $serverkeyname
   chmod 600 $serverkeyname.pub
   chmod 600 $sharedkeyname
   chmod 600 $puttykeyname.ppk
