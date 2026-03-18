@@ -20,33 +20,35 @@ function net-sshkeygen() {
   input-required "Enter a prefix to label the key file names" filelabel
   sshdir=~/.ssh
   mkdir -p $sshdir
-  chown -R $currentuser:$currentuser $sshdir
-
   cd $sshdir
+
   touch authorized_keys
 
   timestamp=$(date +%Y%m%d%H%M)
   keyidprefix=$filelabel"_"$timestamp"_"
-
   serverkeyname=$keyidprefix"server_rsakey"
+  keystamp=$keyidprefix$email 
 
-  ssh-keygen -t rsa -f $serverkeyname -C $email
+  ssh-keygen -t rsa -f $serverkeyname -C $keystamp
+
   sharedkeyname=$keyidprefix"shared_rsakey"
+
   mv $serverkeyname $sharedkeyname
 
   chmod 600 $serverkeyname.pub
   chmod 600 $sharedkeyname
 
-  echo "$serverkeyname.pub" >>authorized_keys
+  cat $serverkeyname.pub >>authorized_keys
   echo "" >>authorized_keys
-
   clear
   echo-hr
 
   puttykeyname=$keyidprefix"putty_rsakey"
   puttygen $sharedkeyname -o $puttykeyname.ppk
   echo "Putty (windows) key"
-  echo "save with .ppk extension and tell Putty where to find it"
+  echo "copy this below output between the lines. Navigate to where you want it on your PC and 'right click, new notepad."
+  echo "Paste in to this and save as $puttykeyname.ppk"
+  echo "Tell Putty where to find it"
   echo-hr
   cat $puttykeyname.ppk
   echo-hr
