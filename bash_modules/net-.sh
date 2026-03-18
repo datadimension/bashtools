@@ -29,14 +29,15 @@ function net-sshkeygen() {
   #20260318keystamp=$keyidprefix
 
   timestamp=$(date +%Y%m%d%H%M)
-  serverkeyname=$timestamp"_serverRSAkey_"$serverid"_"$USER
-  sharedkeyname=$timestamp"_sharedRSAkey_"$serverid"_"$USER
-  puttykeyname=$timestamp"_puttyRSAkey_"$serverid"_"$USER
+  userstamp=$serverid"_"$USER
+  serverkeyname=$timestamp"_serverRSAkey_"$userstamp
+  sharedkeyname=$timestamp"_sharedRSAkey_"$userstamp
+  puttykeyname=$timestamp"_puttyRSAkey_"$userstamp
 
   passphrase=""
-  ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $keyidprefix
+  ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $userstamp
   cat $serverkeyname.pub >>authorized_keys
-  echo "" >>authorized_keys
+  echo "" >>authorized_keys 
 
   cp $serverkeyname $sharedkeyname
   puttygen $sharedkeyname -o $puttykeyname.ppk
@@ -61,7 +62,7 @@ function net-sshkeygen() {
   cat $sharedkeyname
   echo-hr
   wait
-  cd ~/ 
+  cd ~/
 }
 
 #secures ssh settings
