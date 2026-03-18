@@ -218,7 +218,7 @@ function wait() {
   arg1=$1
   arg2=$2
   action="none"
-  prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} -> ${weight_bold}${color_green}CONTINUE${font_reset}"
+  prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} ${weight_bold}${color_green}to continue${font_reset}"
   if [ "$arg1" != "" ]; then
     if [ "$arg1" == "clear" ]; then
       if [ "$arg2" != "" ]; then

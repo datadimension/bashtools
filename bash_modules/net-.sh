@@ -27,7 +27,7 @@ function net-sshkeygen() {
   timestamp=$(date +%Y%m%d%H%M)
   keyidprefix=$filelabel"_"$timestamp"_"
   serverkeyname=$keyidprefix"server_rsakey"
-  keystamp=$keyidprefix$email 
+  keystamp=$keyidprefix$email
 
   ssh-keygen -t rsa -f $serverkeyname -C $keystamp
 
@@ -52,6 +52,7 @@ function net-sshkeygen() {
   echo-hr
   cat $puttykeyname.ppk
   echo-hr
+  wait "Continue with ENTER"
 
   echo-hr
   echo "Shared key (eg for git) for this server"
