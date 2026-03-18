@@ -12,7 +12,7 @@ function net-sshkeygen() {
   currentuser=$USER
   echo "Do you want to remove existing key access ? [y/n]"
   read confirm
-  if [ "$confirm" == "y" ]; then
+  if [ "$confirm" == "y" ]; then 
     echo "" >authorized_keys
   fi
   echo "Now generating ssh keys, you are ok to accept defaults"
