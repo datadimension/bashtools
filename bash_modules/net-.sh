@@ -19,7 +19,7 @@ net-sshkeyempty() {
 #creates a new keypair on the server
 function net-sshkeygen() {
   currentuser=$USER
-  echo "Now generating ssh keys. Hit enter to accept defaults"
+  echo "To generate ssh keys, hit enter to accept defaults"
   wait
   #20260318input-required "Enter text to personalise the key file content" email
   #20260318input-required "Enter a prefix to label the key file names" filelabel
@@ -57,7 +57,8 @@ function net-sshkeygen() {
   clear
   echo "Putty desktop .ppk key"
   echo "copy this below output between the lines. Navigate to where you want it on your PC and 'right click, new notepad."
-  echo "Paste in to this and save as $puttykeyname.ppk"
+  echo "HINT: create a permantent .txt file called eg keychange.txt which can be reused"
+  echo "Paste in to the textfile and save as $puttykeyname.ppk"
   echo "Tell Putty where to find it"
   echo-hr
   cat $puttykeyname.ppk
@@ -67,6 +68,7 @@ function net-sshkeygen() {
   echo-hr
   echo "Shared key (eg for git) for this server"
   echo "go to https://github.com/settings/keys"
+  echo "Suggest naming it as "
   echo ""
   echo-hr
   cat $sharedkeyname
