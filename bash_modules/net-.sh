@@ -56,6 +56,7 @@ function net-sshkeygen() {
 
   clear
   echo "Putty desktop .ppk key"
+  echo-hr
   echo "copy this below output between the lines. Navigate to where you want it on your PC and 'right click, new notepad."
   echo "HINT: create a permantent .txt file called eg keychange.txt which can be reused"
   echo "Paste in to the textfile and save as $puttykeyname.ppk"
@@ -65,13 +66,13 @@ function net-sshkeygen() {
   echo-hr
   wait
   clear
+  echo "GIT shared key"
   echo-hr
-  echo "Shared key (eg for git) for this server"
   echo "go to https://github.com/settings/keys"
-  echo "Suggest naming it as "
+  echo "Suggest naming it as $sharedkeyname"
   echo ""
   echo-hr
-  cat $sharedkeyname
+  cat $serverkeyname.pub
   echo-hr
   wait
   cd ~/
