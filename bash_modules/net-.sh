@@ -7,15 +7,20 @@ function net-installssh() {
   sudo apt install putty-tools
 }
 
-#creates a new keypair on the server
-function net-sshkeygen() {
-  currentuser=$USER
+#empties .ssh of all keys except the current one
+net-sshkeyempty() {
   echo "Do you want to remove existing key access ? [y/n]"
   read confirm
   if [ "$confirm" == "y" ]; then
     echo "" >authorized_keys
   fi
-  echo "Now generating ssh keys, you are ok to accept defaults"
+}
+
+#creates a new keypair on the server
+function net-sshkeygen() {
+  currentuser=$USER
+  echo "Now generating ssh keys. Hit enter to accept defaults"
+  wait
   #20260318input-required "Enter text to personalise the key file content" email
   #20260318input-required "Enter a prefix to label the key file names" filelabel
   sshdir=~/.ssh
