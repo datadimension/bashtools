@@ -12,7 +12,7 @@ function net-sshkeygen() {
   currentuser=$USER
   echo "Do you want to remove existing key access ? [y/n]"
   read confirm
-  if [ "$confirm" == "y" ]; then 
+  if [ "$confirm" == "y" ]; then
     echo "" >authorized_keys
   fi
   echo "Now generating ssh keys, you are ok to accept defaults"
@@ -38,7 +38,7 @@ function net-sshkeygen() {
   passphrase=""
   ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $keycomment
   cat $serverkeyname.pub >>authorized_keys
-  echo "" >authorized_keys
+  echo "" >>authorized_keys
 
   cp $serverkeyname $sharedkeyname
   puttygen $sharedkeyname -o $puttykeyname.ppk
@@ -60,6 +60,8 @@ function net-sshkeygen() {
   clear
   echo-hr
   echo "Shared key (eg for git) for this server"
+  echo "go to https://github.com/settings/keys"
+  echo ""
   echo-hr
   cat $sharedkeyname
   echo-hr
