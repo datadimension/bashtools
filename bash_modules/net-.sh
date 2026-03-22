@@ -33,13 +33,14 @@ function net-sshkeygen() {
   #20260318  serverkeyname=$keyidprefix"ServerRsaKey:"
   #20260318keystamp=$keyidprefix
 
-  timestamp=$(date +%Y%m%d%H%M)
-  userstamp=$serverid"_"$USER
-  serverkeyname=$timestamp"_serverRSAkey_"$userstamp
-  sharedkeyname=$timestamp"_sharedRSAkey_"$userstamp
-  puttykeyname=$timestamp"_puttyRSAkey_"$userstamp
+  timestamp=$(date +%y%m%d%H%M)
+  keypre=$timestamp$serverid
+  
+  serverkeyname=$keypre"_svr_"$USER
+  sharedkeyname=$keypre"_shr_"$USER
+  puttykeyname=$keypre"_pty_"$USER
 
-  keycomment=$userstamp"_"$timestamp
+  keycomment=$USER"_"$timestamp
   passphrase=""
   ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $keycomment
   cat $serverkeyname.pub >>authorized_keys
