@@ -73,6 +73,7 @@ function net-sshkeygen() {
   echo ""
   echo-hr
   cat $serverkeyname.pub
+  echo ""
   echo-hr
   wait
   cd ~/
