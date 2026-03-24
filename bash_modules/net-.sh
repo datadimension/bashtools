@@ -80,7 +80,9 @@ function net-sshkeygen() {
   echo "Putty desktop .ppk key"
   echo-hr
   echo "copy this below output between the lines. Navigate to where you want it on your PC and 'right click, new notepad."
-  echo "HINT: create a permantent .txt file called eg keychange.txt which can be reused then paste in to the textfile and save as $puttykeyname.ppk .Tell Putty where to find it"
+  echo "HINT: create a permantent .txt file called eg keychange.txt which can be reused"
+  echo "Paste in to the textfile and save as $puttykeyname.ppk"
+  echo "Tell Putty where to find it"
   echo-hr
   cat $puttykeyname.ppk
   echo-hr
