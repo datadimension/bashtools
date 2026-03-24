@@ -8,19 +8,39 @@ function net-installssh() {
 }
 
 #empties .ssh of all keys except the current one
-net-sshkeyempty() {
+net-sshkeyclean() {
+  cd ~/
   echo "Do you want to remove existing key access ? [y/n]"
   read confirm
-  if [ "$confirm" == "y" ]; then
-    echo "" >authorized_keys
+  if [ "$confirm" != "y" ]; then
+    return 0
   fi
+  cd ~/
+  bukeypre=$(cat .ssh/currentkeypre)
+  mkdir -p sshbu
+  rm sshbu/*
+  cp .ssh/$bukeypre* sshbu
+  cp .ssh/id_rsa sshbu
+  cp .ssh/id_rsa.pub sshbu
+  cp .ssh/authorized_keys sshbu
+  cp .ssh/known_hosts* sshbu
+  rm .ssh/*
+  cp sshbu/* .ssh
 }
 
 #creates a new keypair on the server
 function net-sshkeygen() {
   currentuser=$USER
-  echo "To generate ssh keys, hit enter to accept defaults"
-  wait
+  clear
+  echo "New SSH Keygen"
+  echo "only do this with 2 sessions open in case something goes wrong and you get lockked out of server"
+  echo "please enter your email to personalise (required at least by GITHUB)"
+  echo "or ENTER to exit"
+  read email
+  if [ "$email" == "" ]; then
+    echo "EXIT"
+    return 0
+  fi
   #20260318input-required "Enter text to personalise the key file content" email
   #20260318input-required "Enter a prefix to label the key file names" filelabel
   sshdir=~/.ssh
@@ -35,14 +55,16 @@ function net-sshkeygen() {
 
   timestamp=$(date +%y%m%d%H%M)
   keypre=$timestamp$serverid
-  
+
   serverkeyname=$keypre"_svr_"$USER
   sharedkeyname=$keypre"_shr_"$USER
   puttykeyname=$keypre"_pty_"$USER
+  keycomment=$timestamp"_"$email
 
-  keycomment=$USER"_"$timestamp
   passphrase=""
-  ssh-keygen -t rsa -f $serverkeyname -P "$passphrase" -C $keycomment
+  ssh-keygen -b 4096 -t rsa -f $serverkeyname -P "$passphrase" -C $keycomment
+  echo $keypre >currentkeypre
+
   cat $serverkeyname.pub >>authorized_keys
   echo "" >>authorized_keys
 
@@ -58,21 +80,24 @@ function net-sshkeygen() {
   echo "Putty desktop .ppk key"
   echo-hr
   echo "copy this below output between the lines. Navigate to where you want it on your PC and 'right click, new notepad."
-  echo "HINT: create a permantent .txt file called eg keychange.txt which can be reused"
-  echo "Paste in to the textfile and save as $puttykeyname.ppk"
-  echo "Tell Putty where to find it"
+  echo "HINT: create a permantent .txt file called eg keychange.txt which can be reused then paste in to the textfile and save as $puttykeyname.ppk .Tell Putty where to find it"
   echo-hr
   cat $puttykeyname.ppk
   echo-hr
   wait
+  echo "Now to generate GIT key"
+  rm id_rsa
+  rm id_rsa.pub
+  ssh-keygen -b 4096 -t rsa -f id_rsa -P "$passphrase" -C $keycomment
   clear
   echo "GIT shared key"
   echo-hr
   echo "go to https://github.com/settings/keys"
   echo "Suggest naming it as $sharedkeyname"
   echo ""
+  echo "Just hit enter for defaults"
   echo-hr
-  cat $serverkeyname.pub
+  tail -1000 id_rsa.pub
   echo ""
   echo-hr
   wait
