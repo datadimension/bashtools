@@ -27,7 +27,7 @@ function log() {
 	options["cron"]="$wwwroot/html/$www_repofocus/storage/logs/cronlog.log"
 	options["phperror"]="/var/log/php_errors.log"
 	options["phpfpm"]="/etc/php/8.3/fpm/php.ini"
-	options["nginxaccess"]="/var/log/nginx/access.log"
+	options["nginxaccess"]="/var/log/nginx/access.log" 
 	options["nginxerror"]=" /var/log/nginx/error.log"
 	options["xdebug"]="/var/log/xdebug.log"
 	std-menu-array options "Log Viewer"
