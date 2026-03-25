@@ -34,7 +34,7 @@ function log() {
 	logfile=$MENUCHOICE
 	echo "Loading log for $logfile"
 
-	read -t 2 -p "How many lines of $logfile ? [100]" lines
+	read -t 5 -p "How many lines of $logfile ? [100]" lines
 	if [ "$lines" == "" ]; then
 		lines=100
 	fi
