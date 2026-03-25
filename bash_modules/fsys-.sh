@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# emptys the contents of a file eg clearing a log, keeps the user of the orig file
+function fsys-filesetempty() {
+  filepath=$1
+  fileuser=$(stat -c '%U' $filepath)
+  sudo chown $USER $filepath
+  >$filepath
+  sudo chown $fileuser $filepath
+}
+
 # shows disk partition usage
 function fsys-disk() {
   df -H
