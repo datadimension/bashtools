@@ -72,7 +72,7 @@ function echo-newpage() {
 
 function echo-error() {
   textoutput=""$1""
-  printf "${weight_bold}${color_cyan}"
+  printf "${weight_bold}${color_red}"
   echo-hr
   echo $textoutput
   echo-hr
