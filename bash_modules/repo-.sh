@@ -92,24 +92,6 @@ function repo-set() {
   fi
 }
 
-#removes specified repo from this server - but not from GIT
-function repo-clear() {
-  newrepo=$1
-  if [ "$newrepo" == "" ]; then #abort if no new reponame given
-    wait clear "No repo create name specified, Aborting"
-    bash-restart
-    return
-  fi
-  newrepodir=$wwwroot/html/$newrepo
-  echo "creating new repo $newrepo in directory $newrepodir"
-
-  if [ -d "$newrepodir" ]; then
-    echo-error "Error: repo '$newrepo' already exists at $newrepodir."
-    return 0
-  fi
-  echo "creating"
-}
-
 #creates a new repo eg localserver_admin
 function repo-create() {
   #based on https://kbroman.org/github_tutorial/pages/init.html

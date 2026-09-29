@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-function www-siteremove() {
+#removes a site from this server, nginx and logs but will not remove repo from git
+function www-remove() {
   clear
   echo-h1 "Site Removal"
   echo "To remove from this server, you will still be able to reinstate from git using www-setsite"
@@ -21,7 +22,7 @@ function www-siteremove() {
     sudo rm -R $repodir
     wwwsites[$sitenumber]=""
     bash-writesettings
-   wait -t 3
+    wait -t 3
     bash-start
   else
     echo "cannot proceed until written confirmation"
@@ -29,21 +30,6 @@ function www-siteremove() {
 }
 
 # create extra requirements such as storage .env etc
-function x20241122www-createnonrepofiles() {
-  sudo mkdir -p $wwwroot/html/$dir/storage/framework/views/
-  sudo mkdir -p $wwwroot/html/$dir/storage/framework/sessions/
-  sudo mkdir -p $wwwroot/html/$dir/storage/framework/cache/
-  sudo mkdir -p $wwwroot/html/$dir/storage/app/cache/
-
-  sudo mkdir -p $wwwroot/html/$dir/storage/logs/
-  sudo touch $wwwroot/html/$dir/storage/logs/cronresult.log
-  sudo touch $wwwroot/html/$dir/storage/logs/apperror.log
-  sudo touch $wwwroot/html/$dir/storage/logs/ssh.log
-
-  sudo mkdir -p $wwwroot/html/$dir/bootstrap/cache
-  sudo mkdir -p $wwwroot/html/$dir/public/downloads/
-  sudo mkdir -p $wwwroot/html/$dir/private/
-}
 
 function www-sitesqluserinstall() {
   appname=$1
@@ -70,6 +56,6 @@ function os-certificategen() {
 }
 
 #help for this module
-function www-h(){
-	bash-helpformodule www
+function www-h() {
+  bash-helpformodule www
 }
