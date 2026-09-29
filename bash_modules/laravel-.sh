@@ -49,10 +49,10 @@ function laravel-create() {
     return
   fi
   newrepodir=$wwwroot/html/$newrepo
-  echo "creating new repo $newrepo in directory $newrepodir"
+  echo "creating new laravel project $newrepo in directory $newrepodir"
 
   if [ -d "$newrepodir" ]; then
-    echo-error "Error: repo '$newrepo' already exists at $newrepodir."
+    echo-error "Error: project '$newrepo' already exists at $newrepodir. Use www-remove to remove it from this server if its not an existing GIT repo."
     return 0
   fi
   echo "creating"

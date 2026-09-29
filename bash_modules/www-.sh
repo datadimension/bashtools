@@ -10,22 +10,23 @@ function www-remove() {
   echo "Enter site number to remove"
   read option
   sitenumber=$(($option - 1))
-  repodir=${wwwsites[$sitenumber]}
-  echo "This will remove $repodir"
+  repodir=${wwwrepos[$sitenumber]}
+  echo-warn "This will remove $repodir"
   echo "Please type '$repodir' to confirm"
   read confirm
   if [ "$repodir" == "$confirm" ]; then
     echo "removing"
     ~nginx
+
     sudo rm $repodir
     cd $wwwroot/html
     sudo rm -R $repodir
-    wwwsites[$sitenumber]=""
+    wwwrepos[$sitenumber]=""
     bash-writesettings
     wait -t 3
     bash-start
   else
-    echo "cannot proceed until written confirmation"
+    echo-error "cannot proceed until written confirmation"
   fi
 }
 

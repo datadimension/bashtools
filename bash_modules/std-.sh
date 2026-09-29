@@ -70,6 +70,15 @@ function echo-newpage() {
   echo -e "${font_reset}"
 }
 
+function echo-warn() {
+  textoutput=""$1""
+  printf "${weight_bold}${color_yellow}"
+  echo-hr
+  echo $textoutput
+  echo-hr
+  echo -e "${font_reset}"
+}
+
 function echo-error() {
   textoutput=""$1""
   printf "${weight_bold}${color_red}"
