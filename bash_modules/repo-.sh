@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-function repo-h(){
-	bash-helpformodule repo
+function repo-h() {
+  bash-helpformodule repo
 }
 
 # shows site selection
@@ -11,7 +11,7 @@ function repo-show() {
   for i in {0..9}; do
     repolabel=${wwwrepos[$i]}
     if [ "$repolabel" != "" ]; then
-    	repodevurl="${repolabel//[^[:alnum:]]}.$serverid.com"
+      repodevurl="${repolabel//[^[:alnum:]]/}.$serverid.com"
       repolabel="$repolabel  [dev URL: $repodevurl ]"
     fi
     echo "$((i + 1)): $repolabel"
@@ -59,7 +59,6 @@ function repo-install() {
   composer-update
 }
 
-
 # sets up and assigns site to site index list, installing if needed
 function repo-set() {
   clear
@@ -93,8 +92,25 @@ function repo-set() {
   fi
 }
 
+#removes specified repo from this server - but not from GIT
+function repo-clear() {
+  newrepo=$1
+  if [ "$newrepo" == "" ]; then #abort if no new reponame given
+    wait clear "No repo create name specified, Aborting"
+    bash-restart
+    return
+  fi
+  newrepodir=$wwwroot/html/$newrepo
+  echo "creating new repo $newrepo in directory $newrepodir"
 
-#creates a new website eg localserver_admin
+  if [ -d "$newrepodir" ]; then
+    echo-error "Error: repo '$newrepo' already exists at $newrepodir."
+    return 0
+  fi
+  echo "creating"
+}
+
+#creates a new repo eg localserver_admin
 function repo-create() {
   #based on https://kbroman.org/github_tutorial/pages/init.html
   clear
@@ -112,8 +128,8 @@ function repo-create() {
   echo-b "mysql-createrepodatabase $db_app"
   wait "Finished database ? Enter to continue"
   repo-setoauth
-  fsys-secure;
-  echo "Now test with:";
+  fsys-secure
+  echo "Now test with:"
   echo "https://$LOCAL_URL/servertest"
 }
 
@@ -129,8 +145,8 @@ function repo-frombackup() {
 function repo-setoauth() {
   echo-newpage "Set up in Google Developer Console"
   echo "visit the project to include dev oauth"
-    echo-br "https://console.cloud.google.com/apis/credentials?project=$www_repofocus"
-      echo "or if this is a brand new project"
+  echo-br "https://console.cloud.google.com/apis/credentials?project=$www_repofocus"
+  echo "or if this is a brand new project"
   echo-br "https://console.cloud.google.com/projectcreate"
   echo "and set up project for $www_repofocus"
   echo "note it will advise removing special characters from project name"
@@ -142,11 +158,9 @@ function repo-setoauth() {
   echo "https://$LOCAL_URL"
   echo "https://$LOCAL_URL/auth/google/callback"
   echo-nl "https://$LOCAL_URL/google/api_getauth"
-echo "also add for production server at some point"
+  echo "also add for production server at some point"
 }
 
-function repo-getlocalurl(){
-	LOCAL_URL=$www_repofocus.$serverid.com;
+function repo-getlocalurl() {
+  LOCAL_URL=$www_repofocus.$serverid.com
 }
-
-
