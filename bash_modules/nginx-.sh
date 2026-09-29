@@ -22,6 +22,7 @@ function nginx-start() {
   fsys-secure
   clear
   echo-hr "Closing Nginx / PHP"
+  php-stop;
   sudo service nginx stop
   sudo pkill -f nginx &
   wait $!

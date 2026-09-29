@@ -50,10 +50,15 @@ function laravel-create() {
   fi
   newrepodir=$wwwroot/html/$newrepo
   echo "creating new repo $newrepo in directory $newrepodir"
-  if [ -d "$newreopodir" ]; then #abort if directory exists
-    wait clear "Error: repo '$newrepo' already exists at $newrepodir. Enter to exit."
-    exit
+
+
+  if [ -d "$newrepodir" ]; then
+    echo-error "Error: repo '$newrepo' already exists at $newrepodir."
+    return 0;
   fi
+  echo "creating";
+  }
+
   composer create-project laravel/laravel $newrepodir
   www_repofocus=$newrepo
   cd "$wwwroot/html/$www_repofocus"

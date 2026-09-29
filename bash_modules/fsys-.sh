@@ -70,6 +70,20 @@ function file_exists() {
   fi
 }
 
+function dir-exists() {
+  path=$1
+  if [ -d "$path" ]; then
+    echo "$path does exist."
+  fi
+
+
+  if test -d $path; then
+    echo "Directory exists: $path"
+  else
+    echo "Directory does not exist: $path"
+  fi
+}
+
 #help for this module
 function fsys-h() {
   bash-helpformodule fsys
