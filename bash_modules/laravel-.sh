@@ -112,7 +112,7 @@ function laravel-envinstall() {
     echo "Require mysql password in memory for env install."
     read -p "Reset mysql code credentials(y/n]? " nomysqlpwd
     if [ "$nomysqlpwd" == "y" ]; then #abort if no new reponame given
-      mysql-setrepoaccess_admin_php $repoenv
+      mysql-setrepoaccess_credentials $repoenv
     else
       exception "For security, mysql password required in memory for env install"
     fi

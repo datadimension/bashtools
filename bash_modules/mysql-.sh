@@ -78,7 +78,7 @@ function mysql-projectsetupguide() {
 function mysql-projectcreate() {
   app_schema=$1
   mysql-createrepodatabase $app_schema
-  mysql-setrepoaccess_admin_php $app_schema
+  mysql-setrepoaccess_credentials $app_schema
   mysql-create_tabledefaults $app_schema
 }
 
@@ -95,7 +95,7 @@ function mysql-createrepodatabase() {
 }
 
 #generates user and permissions php and mysql admin log on for current bash user, reseting all permissions for previous user
-function mysql-setrepoaccess_admin_php() {
+function mysql-setrepoaccess_credentials() {
   app_schema=$1
   if [ "$app_schema" == "" ]; then
     exception "You need to specify a repo name to create users for it"
@@ -106,7 +106,7 @@ function mysql-setrepoaccess_admin_php() {
   fi
   newmysqlpassword="PWD_$(uuidgen)_"
   clear
-  mysql-scriptgen_messageheader
+  mysql-scriptgen_messageheader "For reseting admin and php credentials"
   echo "DROP USER IF EXISTS '"$app_schema"_admin';"
   echo "CREATE USER '"$app_schema"_admin'@'%' IDENTIFIED BY '$newmysqlpassword';"
   echo "GRANT SELECT,EXECUTE, SHOW VIEW ON ddDB.* TO '"$app_schema"_admin'@'%';"
@@ -126,7 +126,7 @@ function mysql-create_tabledefaults() {
   if [ "$app_schema" == "" ]; then
     exception "You need to specify a repo name to create tables for it"
   fi
-  mysql-scriptgen_messageheader
+  mysql-scriptgen_messageheader "for creating tables"
   echo-hr
   declare -a sqltables=(
     "_account"
@@ -167,7 +167,6 @@ function mysql-create_tabledefaults() {
     echo "create table if not exists $tablename like liveinfo247.$tablename;"
     i=$(($i + 1))
   done
-  echo "-- type exit when done"
   mysql-login
 }
 
@@ -176,20 +175,51 @@ function mysql-create_viewdefaults() {
   if [ "$app_schema" == "" ]; then
     exception "You need to specify a repo name to create views for it"
   fi
-  mysql-scriptgen_messageheader
-  echo "now create view_domainwidgets"
-  echo-hr
-  php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
-  echo-hr
-  echo "Then type exit when done"
-  mysql-login
-  mysql-scriptgen_messageheader
-  echo "now create view_domainmedia"
-  php ~/bashtools/php_helpers/mysql/view_domainmedia.php app_schema=$app_schema
-  mysql-login
+  declare -a sqlviewnames=(
+    "_domainwidgets"
+  )
+  declare -a sqlviewtables=(
+    "_widgets"
+  )
+  size=${#sqlviewnames[@]}
+  i=0
+  mysql-scriptgen_messageheader "for view $viewname"
+  echo "use $app_schema;"
+  while [ $i -lt $size ]; do
+    viewname="${sqlviewnames[$i]}"
+    viewtable="${sqlviewnames[$i]}"
+    echo "CREATE"
+    echo "ALGORITHM = UNDEFINED"
+    echo "DEFINER = '$app_schema_admin'@'%'"
+    echo "SQL SECURITY INVOKER"
+    echo "VIEW $app_schema.$viewname AS"
+    echo "select * from ddDB.$viewtable"
+    echo "union all"
+    echo "select * from $app_schema.$viewtable"
+    i=$(($i + 1))
+  done
 }
+#echo "CREATE"
+#echo "ALGORITHM = UNDEFINED"
+#echo "DEFINER = '$app_schema_admin'@'%'"
+#echo "SQL SECURITY INVOKER"
+#echo "VIEW $app_schema._testdomainwidgets AS"
+#echo "select * from ddDB._widgets"
+#echo "union all"
+#echo "select * from $app_schema._widgets"
+
+#echo "now create view_domainwidgets"
+# echo-hr
+# php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
+# echo-hr
+#echo "Then type exit when done"
+# mysql-login
+#echo "now create view_domainmedia"
+#php ~/bashtools/php_helpers/mysql/view_domainmedia.php app_schema=$app_schema
+#mysql-login
 
 function mysql-scriptgen_messageheader() {
+  msg=$1
   clear
   echo "MYSQL script generator"
   echo "you will need to copy and run SQL script"
@@ -197,6 +227,6 @@ function mysql-scriptgen_messageheader() {
   echo "and then type exit at each stage"
   echo ""
   echo-hr
-  echo "MySQL script:"
+  echo "MySQL script $msg:"
   echo-hr
 }
