@@ -60,12 +60,12 @@ function mysql-getversion() {
 
 function mysql-login() {
   mysql-getversion
-  echo "Running MySQL login"
   if [ "$__RESULT" == "not installed" ]; then #abort if no new reponame given
     exception "cannot log in, MYSQL not installed"
   fi
   echo ""
   echo-hr
+  echo "Running MySQL login"
   echo "opening MYSQL [exit to return] ---->"
   sudo mysql
 }
