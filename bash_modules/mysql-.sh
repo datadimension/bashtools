@@ -64,6 +64,7 @@ function mysql-login() {
   if [ "$__RESULT" == "not installed" ]; then #abort if no new reponame given
     exception "cannot log in, MYSQL not installed"
   fi
+  echo ""
   echo-hr
   echo "opening MYSQL [exit to return] ---->"
   sudo mysql
