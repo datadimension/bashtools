@@ -79,6 +79,7 @@ function mysql-projectcreate() {
   app_schema=$1
   mysql-createrepodatabase $app_schema
   mysql-setrepoaccess_admin_php $app_schema
+  mysql-create_tabledefaults $app_schema
 }
 
 function mysql-createrepodatabase() {
@@ -116,13 +117,40 @@ function mysql-setrepoaccess_admin_php() {
   echo "GRANT SELECT,EXECUTE on ddDB.* TO '"$app_schema"_php'@'%';"
   echo-nl "GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON $app_schema.* TO '"$app_schema"_php'@'%' WITH GRANT OPTION;"
   echo "FLUSH PRIVILEGES;"
+  echo ""
   mysql-login
 }
 
-function mysql-createnewtables() {
+function mysql-create_xontabledefaults() {
+  app_schema=$1
+  if [ "$app_schema" == "" ]; then
+    exception "You need to specify a repo name to create tables for it"
+  fi
   mysql-scriptgen_messageheader
-  mysql-setrepo_admin $app_schema
   echo-hr
+  declare -a sqltables=(
+    "_iCalendar_event"
+    "_iCalendar_eventadditional"
+    "_iCalendar_usereventadditional"
+  )
+
+  size=${#sqltables[@]}
+  i=0
+  echo "use $app_schema;"
+  while [ $i -lt $size ]; do
+    tablename="${sqltables[$i]}"
+    echo "create table if not exists $tablename like xontoolbox.$tablename;"
+    i=$(($i + 1))
+  done
+  echo "-- type exit when done"
+  mysql-login
+}
+
+function mysql-create_tabledefaults() {
+  app_schema=$1
+  if [ "$app_schema" == "" ]; then
+    exception "You need to specify a repo name to create tables for it"
+  fi
   mysql-scriptgen_messageheader
   echo-hr
   declare -a sqltables=(
@@ -134,9 +162,9 @@ function mysql-createnewtables() {
     "_dbquery"
     "_ddapiauth"
     "_emailq"
-    "_iCalendar_event"
-    "_iCalendar_eventadditional"
-    "_iCalendar_usereventadditional"
+    # temp ignore, need to grab from xontoolbox "_iCalendar_event"
+    # temp ignore, need to grab from xontoolbox "_iCalendar_eventadditional"
+    # temp ignore, need to grab from xontoolbox "_iCalendar_usereventadditional"
     "_iconsource"
     "_libmedia"
     "_listplanner"
@@ -166,6 +194,13 @@ function mysql-createnewtables() {
   done
   echo "-- type exit when done"
   mysql-login
+}
+
+function mysql-create_viewdefaults() {
+  app_schema=$1
+  if [ "$app_schema" == "" ]; then
+    exception "You need to specify a repo name to create views for it"
+  fi
   mysql-scriptgen_messageheader
   echo "now create view_domainwidgets"
   echo-hr
