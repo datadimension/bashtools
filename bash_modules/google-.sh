@@ -19,10 +19,21 @@ function set-ssh() {
 }
 
 function google-projectcreate(){
-	echo "Go to https://console.cloud.google.com/"
-	echo "Create a new project, and once created, go to its project page"
+	clear
+	echo "Go to"
+	echo "https://console.cloud.google.com/projectcreate"
+	echo "Create a new project for $www_repofocus and once created, go to its project page"
+	echo "https://console.cloud.google.com/apis/credentials/consent"
 	echo "set up OAuth screen, Create OAuth client ID as a web application"
 	echo "also Create Credential > API key for javascript and enable eg maps"
+	echo ""
+	echo-nl "https://console.cloud.google.com/auth/clients/create"
+	echo-nl "and add as per these examples as seperate entries, eg for dev server:"
+	echo "https://$LOCAL_URL"
+	echo "https://$LOCAL_URL/auth/google/callback"
+	echo-nl "https://$LOCAL_URL/google/api_getauth"
+	echo "also add for production server at some point"
+	echo ""
 	echo "you will need to create and get 3 credentials from here"
 	echo "GOOGLE_CLIENT_ID (click the edit icon on the oauth screen to see )"
 	echo "GOOGLE_CLIENT_SECRET(click the edit icon on the oauth screen to see )"

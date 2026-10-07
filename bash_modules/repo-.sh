@@ -108,13 +108,12 @@ function repo-create() {
   fi
   read -p "Please enter index for '$newrepo' : " reponumber
   google-projectcreate
-  mysql-projectsetupinfo
+  mysql-projectsetupguide
   laravel-create $newrepo
   cd "$wwwroot/html"
   reponumber=$((reponumber - 1))
   wwwrepos[$reponumber]=$newrepo
   bash-writesettings
-  repo-setoauth
   fsys-secure
   echo "Now test with:"
   echo "https://$LOCAL_URL/servertest"
@@ -126,26 +125,6 @@ function repo-frombackup() {
   read -p "Enter target dir " targetdir
   cd "$wwwroot/html/"
   cp -a -v --update=none $wwwroot/html/$backupdir/private $wwwroot/html/$targetdir
-}
-
-#info for setting up outh on Google Dev
-function repo-setoauth() {
-  echo-newpage "Set up in Google Developer Console"
-  echo "visit the project to include dev oauth"
-  echo-br "https://console.cloud.google.com/apis/credentials?project=$www_repofocus"
-  echo "or if this is a brand new project"
-  echo-br "https://console.cloud.google.com/projectcreate"
-  echo "and set up project for $www_repofocus"
-  echo "note it will advise removing special characters from project name"
-  echo "then configure OAuth screen"
-  echo "https://console.cloud.google.com/apis/credentials/consent"
-  echo "and Create OAuth client ID"
-  echo-nl "https://console.cloud.google.com/auth/clients/create"
-  echo-nl "and add as per these examples as seperate entries, eg for dev server:"
-  echo "https://$LOCAL_URL"
-  echo "https://$LOCAL_URL/auth/google/callback"
-  echo-nl "https://$LOCAL_URL/google/api_getauth"
-  echo "also add for production server at some point"
 }
 
 function repo-getlocalurl() {

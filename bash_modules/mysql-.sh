@@ -80,6 +80,7 @@ function mysql-projectcreate() {
   mysql-createrepodatabase $app_schema
   mysql-setrepoaccess_credentials $app_schema
   mysql-create_tabledefaults $app_schema
+  mysql-create_viewdefaults $app_schema
 }
 
 function mysql-createrepodatabase() {
@@ -185,42 +186,17 @@ function mysql-create_viewdefaults() {
   )
   size=${#sqlviewnames[@]}
   i=0
-  mysql-scriptgen_messageheader "$((i+1)) of $size - Table view '$viewname' under database '$app_schema'"
   echo "use $app_schema;"
   while [ $i -lt $size ]; do
+    mysql-scriptgen_messageheader "$((i + 1)) of $size - Table view '$viewname' under database '$app_schema'"
     viewname="${sqlviewnames[$i]}"
-    viewtable="${sqlviewnames[$i]}"
-    echo "CREATE"
-    echo "ALGORITHM = UNDEFINED"
-    echo "DEFINER = '$app_schema_admin'@'%'"
-    echo "SQL SECURITY INVOKER"
-    echo "VIEW $app_schema.$viewname AS"
-    echo "select * from ddDB.$viewtable"
-    echo "union all"
-    echo "select * from $app_schema.$viewtable"
+    viewtable="${sqlviewtables[$i]}"
+    echo "CREATE ALGORITHM = UNDEFINED DEFINER = '$app_schema_admin'@'%' SQL SECURITY INVOKER VIEW $app_schema.$viewname AS select * from ddDB.$viewtable union all select * from $app_schema.$viewtable;"
     i=$(($i + 1))
     echo-hr
     mysql-login
   done
 }
-#echo "CREATE"
-#echo "ALGORITHM = UNDEFINED"
-#echo "DEFINER = '$app_schema_admin'@'%'"
-#echo "SQL SECURITY INVOKER"
-#echo "VIEW $app_schema._testdomainwidgets AS"
-#echo "select * from ddDB._widgets"
-#echo "union all"
-#echo "select * from $app_schema._widgets"
-
-#echo "now create view_domainwidgets"
-# echo-hr
-# php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
-# echo-hr
-#echo "Then type exit when done"
-# mysql-login
-#echo "now create view_domainmedia"
-#php ~/bashtools/php_helpers/mysql/view_domainmedia.php app_schema=$app_schema
-#mysql-login
 
 function mysql-scriptgen_messageheader() {
   msg=$1
