@@ -126,7 +126,7 @@ function mysql-create_tabledefaults() {
   if [ "$app_schema" == "" ]; then
     exception "You need to specify a repo name to create tables for it"
   fi
-  mysql-scriptgen_messageheader "for creating tables under $app_schema"
+  mysql-scriptgen_messageheader "for creating tables under database '$app_schema'"
   echo-hr
   declare -a sqltables=(
     "_account"
@@ -185,7 +185,7 @@ function mysql-create_viewdefaults() {
   )
   size=${#sqlviewnames[@]}
   i=0
-  mysql-scriptgen_messageheader "for creating the table view '$viewname' under $app_schema"
+  mysql-scriptgen_messageheader "for creating the table view '$viewname' under database '$app_schema'"
   echo "use $app_schema;"
   while [ $i -lt $size ]; do
     viewname="${sqlviewnames[$i]}"
