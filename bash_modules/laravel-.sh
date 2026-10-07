@@ -44,9 +44,7 @@ function laravel-create() {
   #https://www.itsolutionstuff.com/post/laravel-11-user-roles-and-permissions-tutorialexample.html
   newrepo=$1
   if [ "$newrepo" == "" ]; then #abort if no new reponame given
-    wait clear "No repo create name specified, Aborting"
-    bash-restart
-    return
+    exception "No repo create name specified, Aborting"
   fi
   newrepodir=$wwwroot/html/$newrepo
   echo "creating new laravel project $newrepo in directory $newrepodir"
@@ -70,8 +68,6 @@ function laravel-create() {
 
   #would be better here to have php func to add array element to the config file
   laraveltemplatestore=~/bashtools/templates/laravel
-  #20250824 already created mkdir $targetroot/config
-  #20260108 sudo cp -v --update=none $laraveltemplatestore/routes/*.* $targetroot/routes
 
   #add in DD  stubs
   sudo cp -v -R --update=none $laraveltemplatestore/app/* $wwwroot/html/$www_repofocus/app
@@ -86,22 +82,45 @@ function laravel-create() {
   sudo cp -v -R --update=none $laraveltemplatestore/public/* $wwwroot/html/$www_repofocus/public
   sudo cp -v -R --update=none $laraveltemplatestore/resources/* $wwwroot/html/$www_repofocus/resources
 
-  #20250320 not need as copied whole app stubs above  sudo cp -v --update=none $laraveltemplatestore/DD_laravelAppComponents/app/Console/Commands/*.* $targetroot/app/Console/Commands
-
   #add project files that use DD files
-
   #add other eg bootstrap
   ~www
   composer-create-DD-dependacies
-  laravel-envinstall
   echo "need to create .env now for nginx setup"
+  laravel-envinstall $newrepo
   nginx-setserverblock $www_repofocus
   git-repo_create
 }
 
 function laravel-envinstall() {
+  repoenv=$1
+  if [ "$repoenv" == "" ]; then #abort if no new reponame given
+    exception "Repo name required to set its env"
+  fi
   echo-newpage "Creating .env file in project $www_repofocus"
   echo ""
+  echo "You will need as a minimum:"
+  echo "DATA_CONTROLLER_EMAIL"
+  echo "GOOGLE_CLIENT_ID"
+  echo "GOOGLE_CLIENT_SECRET"
+  echo "GOOGLE_JAVASCRIPT_APIKEY"
+  echo "DB_PASSWORD_ddDB"
+  echo "DB_PASSWORD_appDB"
+
+  if [ "$newmysqlpassword" == "" ]; then #abort if no new reponame given
+    echo ""
+    echo "Require mysql password in memory for env install."
+    read -p "Reset mysql code credentials(y/n]? " nomysqlpwd
+    if [ "$nomysqlpwd" == "y" ]; then #abort if no new reponame given
+      mysql-setrepoaccess_admin_php $repoenv
+    else
+      exception "For security, mysql password required in memory for env install"
+    fi
+  fi
+  echo $newmysqlpassword
+}
+
+function stoptest_laravel-envinstall() {
   php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate user=$USER
   echo ""
   echo "Set permissions for the .env file"

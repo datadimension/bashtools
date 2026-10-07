@@ -91,6 +91,7 @@ function repo-set() {
     git-repo_install $www_repofocus
   fi
 }
+newrepodir=$wwwroot/html/$newrepo
 
 #creates a new repo eg localserver_admin
 function repo-create() {
@@ -100,15 +101,19 @@ function repo-create() {
   repo-show
   echo-br "Please enter new repo name (no special chars / underscore)"
   read newrepo
+  newrepodir=$wwwroot/html/$newrepo
+  git-repoexists $newrepodir
+  if [ "$__RESULT" == "TRUE" ]; then #abort if no new reponame given
+    exception "Repo already exists"
+  fi
   read -p "Please enter index for '$newrepo' : " reponumber
+  google-projectcreate
+  mysql-projectsetupinfo
   laravel-create $newrepo
   cd "$wwwroot/html"
   reponumber=$((reponumber - 1))
   wwwrepos[$reponumber]=$newrepo
   bash-writesettings
-  echo "ssh to PRODUCTION database server and run"
-  echo-b "mysql-createrepodatabase $db_app"
-  wait "Finished database ? Enter to continue"
   repo-setoauth
   fsys-secure
   echo "Now test with:"

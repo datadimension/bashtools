@@ -291,6 +291,22 @@ function git-pull-repo() {
   echo-hr
 }
 
+#return TRUE if remote repo exists at the directory path, else FALSE
+function git-repoexists() {
+  targetpath=$1
+  if [ -d "$targetpath" ]; then
+    cd $targetpath
+    repocheck=$(git remote 2>&1)
+    if [ "$repocheck" != "fatal: not a git repository (or any of the parent directories): .git" ]; then #repo does not exist
+      __RESULT="TRUE"
+    else
+      __RESULT="FALSE"
+    fi
+  else
+    __RESULT="NOT A DIRECTORY"
+  fi
+}
+
 # after laravel-create, this will add it as a new git repo
 function git-repo_create() {
   echo "Vist https://github.com/new to create new repo under $www_repofocus"

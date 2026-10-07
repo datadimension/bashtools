@@ -38,7 +38,9 @@ function echo-h1() {
   if [ "$platform" == "windows" ]; then # assume we are using the gitbash ming shell so sudo does not exist
     echo $textoutput
   else
-    figlet $textoutput
+    echo-hr
+    echo-b $textoutput
+    echo-hr
   fi
 }
 
@@ -239,6 +241,7 @@ function wait() {
   prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} ${weight_bold}${color_green}to continue${font_reset}"
   if [ "$arg1" != "" ]; then
     if [ "$arg1" == "clear" ]; then
+
       if [ "$arg2" != "" ]; then
         clear
         echo-hr
@@ -251,9 +254,28 @@ function wait() {
         read wait
         clear
       fi
+    else
+      echo -e "${weight_bold}${color_green}$arg1${font_reset}"
+      echo -e $prompt
+      read wait
     fi
   else
     echo -e $prompt
     read wait
   fi
+}
+
+function exception() {
+  arg1=$1
+  echo-hr
+  echo ""
+  echo -e "${weight_bold}${color_red}FATAL EXCEPTION${font_reset}"
+  echo $arg1
+  echo-hr
+  prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} ${weight_bold}${color_green}to quit${font_reset}"
+  echo -e $prompt
+  prompt="${weight_bold}${color_cyan}[CTRL] + C${font_reset} ${weight_bold}${color_green}to stop script${font_reset}"
+  echo -e $prompt
+  read pause
+  exit
 }

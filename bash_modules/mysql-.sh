@@ -26,7 +26,7 @@ bind-address            = 0.0.0.0 #remove 127.0.0.1
 bind-address            = <wan ip address>
 Enter to edit conf ....
 "
- wait
+  wait
   sudo nano +31 /etc/mysql/mysql.conf.d/mysqld.cnf
   sudo systemctl restart mysql
   sudo ufw allow mysql
@@ -52,31 +52,60 @@ add user
 
 function mysql-getversion() {
   if [ -f /etc/init.d/mysql* ]; then
-    MYSQL_VERSION=$(mysql -V)
+    __RESULT=$(mysql -V)
   else
-    MYSQL_VERSION="not installed"
+    __RESULT="not installed"
   fi
-  echo $MYSQL_VERSION
 }
 
-#generates users and permissions php and admin, note the users are named after the focused repo, however if a schema argument is supplied then this is used for the appschema
-function mysql-createrepousers() {
-  if [ "$SERVER_ENVTYPE" != "production" ]; then
-    echo-h1 "YOU ARE NOT"
-    echo "RUNNING THIS ON PRODUCTION SERVER"
-    echo-h1 "RUN ON DATABASE SERVER"
-    echo "Not the DEV server"
-    return 0
+function mysql-login() {
+  mysql-getversion
+  echo "Running MySQL login"
+  if [ "$__RESULT" == "not installed" ]; then #abort if no new reponame given
+    exception "cannot log in, MYSQL not installed"
   fi
+  echo-hr
+  echo "opening MYSQL [exit to return] ---->"
+  sudo mysql
+}
+
+function mysql-projectsetupguide() {
+  echo "ssh to PRODUCTION database server and run as directed"
+  echo-b "mysql-projectcreate $db_app"
+  wait "Finished database ? Enter to continue"
+}
+
+function mysql-projectcreate() {
   app_schema=$1
-  if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
-    read -p "You need to have a focused repo to do this" wait
-    return 1
-  fi
+  mysql-createrepodatabase $app_schema
+  mysql-setrepoaccess_admin_php $app_schema
+}
+
+function mysql-createrepodatabase() {
+  app_schema=$1
   if [ "$app_schema" == "" ]; then
-    app_schema=$www_repofocus
+    exception "You need to specify a repo name to create a database for it"
   fi
-  newpassword="PWD_$(uuidgen)_"
+  mysql-scriptgen_messageheader
+  echo "create database $app_schema;"
+  echo "use $app_schema;"
+  echo-hr
+  mysql-login
+}
+
+#generates user and permissions php and mysql admin log on for current bash user, reseting all permissions for previous user
+function mysql-setrepoaccess_admin_php() {
+  app_schema=$1
+  if [ "$app_schema" == "" ]; then
+    exception "You need to specify a repo name to create users for it"
+  fi
+  read -p "Confirm you want to set / reset mysql priviledges for $app_schema [y/n]" app_schema_permission_reset
+  if [ "$app_schema_permission_reset" != "y" ]; then
+    exception "cancelled reset mysql permissions"
+  fi
+  newmysqlpassword="PWD_$(uuidgen)_"
+  clear
+  mysql-scriptgen_messageheader
   echo "DROP USER IF EXISTS '"$app_schema"_admin';"
   echo "CREATE USER '"$app_schema"_admin'@'%' IDENTIFIED BY '$newpassword';"
   echo "GRANT SELECT,EXECUTE, SHOW VIEW ON ddDB.* TO '"$www_repofocus"_admin'@'%';"
@@ -95,30 +124,11 @@ function mysql-createrepousers() {
   mysql-login
 }
 
-function mysql-login() {
+function mysql-createnewtables() {
+  mysql-scriptgen_messageheader
+  mysql-setrepo_admin $app_schema
   echo-hr
-  echo-nl "opening MYSQL [exit to return] ---->"
-  sudo mysql
-}
-
-function mysql-createrepodatabase() {
-  app_schema=$1
-  if [ "$www_repofocus" == "" ] && [ "$app_schema" == "" ]; then
-    read -p "You need to have a focused repo to do this" wait
-    return 1
-  fi
-  if [ "$app_schema" == "" ]; then
-    app_schema=$www_repofocus
-  fi
-mysql-msggen
-  echo "create database $app_schema;"
-  echo "use $app_schema;"
-  echo-hr
-  mysql-login
-mysql-msggen
-  mysql-createrepousers $app_schema
-    echo-hr
-mysql-msggen
+  mysql-scriptgen_messageheader
   echo-hr
   declare -a sqltables=(
     "_account"
@@ -159,30 +169,29 @@ mysql-msggen
     echo "create table if not exists $tablename like liveinfo247.$tablename;"
     i=$(($i + 1))
   done
-  echo "-- type exit when done";
+  echo "-- type exit when done"
   mysql-login
-mysql-msggen
+  mysql-scriptgen_messageheader
   echo "now create view_domainwidgets"
   echo-hr
   php ~/bashtools/php_helpers/mysql/view_domainwidgets.php app_schema=$app_schema
   echo-hr
-  echo "Then type exit when done";
+  echo "Then type exit when done"
   mysql-login
-  mysql-msggen
-    echo "now create view_domainmedia"
-	php ~/bashtools/php_helpers/mysql/view_domainmedia.php app_schema=$app_schema
-	mysql-login
+  mysql-scriptgen_messageheader
+  echo "now create view_domainmedia"
+  php ~/bashtools/php_helpers/mysql/view_domainmedia.php app_schema=$app_schema
+  mysql-login
 }
 
-function mysql-msggen() {
-	clear;
-	  echo-h1 "MYSQL script generator"
-      echo "you will need to copy and run SQL script"
-      echo ""
-       echo "ON THE DATABASE PRODUCTION SERVER"
-       echo ""
-       echo "and then type exit at each stage"
-      echo-hr
-      echo "MySQL script:"
-      echo-hr
+function mysql-scriptgen_messageheader() {
+  clear
+  echo "MYSQL script generator"
+  echo "you will need to copy and run SQL script"
+  echo "ON THE DATABASE PRODUCTION SERVER"
+  echo "and then type exit at each stage"
+  echo ""
+  echo-hr
+  echo "MySQL script:"
+  echo-hr
 }
