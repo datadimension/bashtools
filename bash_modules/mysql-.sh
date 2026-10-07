@@ -185,7 +185,7 @@ function mysql-create_viewdefaults() {
   )
   size=${#sqlviewnames[@]}
   i=0
-  mysql-scriptgen_messageheader "for creating the table view '$viewname' under database '$app_schema'"
+  mysql-scriptgen_messageheader "$((i+1)) of $size - Table view '$viewname' under database '$app_schema'"
   echo "use $app_schema;"
   while [ $i -lt $size ]; do
     viewname="${sqlviewnames[$i]}"
