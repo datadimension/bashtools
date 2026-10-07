@@ -97,6 +97,7 @@ function mysql-createrepodatabase() {
 
 #generates user and permissions php and mysql admin log on for current bash user, reseting all permissions for previous user
 function mysql-setrepoaccess_credentials() {
+  clear
   app_schema=$1
   if [ "$app_schema" == "" ]; then
     exception "You need to specify a repo name to create users for it"
@@ -120,6 +121,7 @@ function mysql-setrepoaccess_credentials() {
   echo "FLUSH PRIVILEGES;"
   echo ""
   mysql-login
+  __RESULT=$newmysqlpassword
 }
 
 function mysql-create_tabledefaults() {
@@ -203,9 +205,10 @@ function mysql-scriptgen_messageheader() {
   clear
   echo "MYSQL script generator"
   echo "you will need to copy and run SQL script"
-  echo "ON THE DATABASE PRODUCTION SERVER"
-  echo "and then type exit at each stage"
   echo ""
+  echo -e "${weight_bold}${color_red}ON THE DATABASE PRODUCTION SERVER${font_reset}"
+  echo ""
+  echo "and then type exit at each stage"
   echo-hr
   echo "MySQL script $msg:"
   echo-hr

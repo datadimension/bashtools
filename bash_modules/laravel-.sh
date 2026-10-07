@@ -87,25 +87,17 @@ function laravel-create() {
   ~www
   composer-create-DD-dependacies
   echo "need to create .env now for nginx setup"
-  laravel-envinstall $newrepo
+  laravel-newenv_create $newrepo
   nginx-setserverblock $www_repofocus
   git-repo_create
 }
 
-function laravel-envinstall() {
+function laravel-newenv_create() {
   repoenv=$1
   if [ "$repoenv" == "" ]; then #abort if no new reponame given
     exception "Repo name required to set its env"
   fi
-  echo-newpage "Creating .env file in project $www_repofocus"
-  echo ""
-  echo "You will need as a minimum:"
-  echo "DATA_CONTROLLER_EMAIL"
-  echo "GOOGLE_CLIENT_ID"
-  echo "GOOGLE_CLIENT_SECRET"
-  echo "GOOGLE_JAVASCRIPT_APIKEY"
-  echo "DB_PASSWORD_ddDB"
-  echo "DB_PASSWORD_appDB"
+  echo-newpage "Create .env file in project $repoenv"
 
   if [ "$newmysqlpassword" == "" ]; then #abort if no new reponame given
     echo ""
@@ -113,11 +105,24 @@ function laravel-envinstall() {
     read -p "Reset mysql code credentials(y/n]? " nomysqlpwd
     if [ "$nomysqlpwd" == "y" ]; then #abort if no new reponame given
       mysql-setrepoaccess_credentials $repoenv
+      input-required "Copy new password into memory"
+      newmysqlpassword=__RESULT
     else
       exception "For security, mysql password required in memory for env install"
     fi
   fi
-  echo $newmysqlpassword
+
+  echo "Please enter mandatory values:"
+
+  input-required "DATA_CONTROLLER_EMAIL"
+  dc_email=$__RESULT
+  input-required "GOOGLE_CLIENT_ID"
+  input-required "GOOGLE_CLIENT_SECRET"
+  input-required "GOOGLE_JAVASCRIPT_APIKEY"
+  input-required "DB_PASSWORD_ddDB"
+  input-required "DB_PASSWORD_appDB"
+
+  php ~/bashtools/php_helpers/laravel/newenv_create.php method=env_generate user=$USER
 }
 
 function stoptest_laravel-envinstall() {

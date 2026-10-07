@@ -1,10 +1,8 @@
 #!/bin/bash
 
-#ensure input is not blank
-#the second argument is the variable to put the input into, also the value is available as $INPUT
+#ensure input is not blank, returns the input as the STD variable __RESULT
 function input-required() {
   prompt="$1"
-  returnvar="$2"
   if [[ -z "$prompt" ]]; then
     prompt='Enter a value'
   fi
@@ -18,6 +16,5 @@ function input-required() {
     break
   done
   # this lines will be executed only if the conditions passed - https://unix.stackexchange.com/questions/670755/bash-while-loop-for-user-input-and-error-prompt-with-a-counter-for-max-tries
-  evalcmd="$returnvar=$INPUT"
-  eval "$evalcmd"
+  __RESULT=$INPUT
 }
