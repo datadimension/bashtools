@@ -126,7 +126,7 @@ function mysql-create_tabledefaults() {
   if [ "$app_schema" == "" ]; then
     exception "You need to specify a repo name to create tables for it"
   fi
-  mysql-scriptgen_messageheader "for creating tables"
+  mysql-scriptgen_messageheader "for creating tables under $app_schema"
   echo-hr
   declare -a sqltables=(
     "_account"
