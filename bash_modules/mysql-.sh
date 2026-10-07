@@ -177,13 +177,15 @@ function mysql-create_viewdefaults() {
   fi
   declare -a sqlviewnames=(
     "_domainwidgets"
+    "_domainmedia"
   )
   declare -a sqlviewtables=(
     "_widgets"
+    "_libmedia"
   )
   size=${#sqlviewnames[@]}
   i=0
-  mysql-scriptgen_messageheader "for view $viewname"
+  mysql-scriptgen_messageheader "for the view '$viewname'"
   echo "use $app_schema;"
   while [ $i -lt $size ]; do
     viewname="${sqlviewnames[$i]}"
@@ -197,7 +199,10 @@ function mysql-create_viewdefaults() {
     echo "union all"
     echo "select * from $app_schema.$viewtable"
     i=$(($i + 1))
+    echo-hr
+    wait
   done
+  mysql-login
 }
 #echo "CREATE"
 #echo "ALGORITHM = UNDEFINED"
