@@ -64,8 +64,7 @@ function mysql-login() {
     exception "cannot log in, MYSQL not installed"
   fi
   echo ""
-  echo-hr
-  echo "Running MySQL login"
+  echo ""
   echo "opening MYSQL [exit to return] ---->"
   sudo mysql
 }
@@ -108,19 +107,14 @@ function mysql-setrepoaccess_admin_php() {
   clear
   mysql-scriptgen_messageheader
   echo "DROP USER IF EXISTS '"$app_schema"_admin';"
-  echo "CREATE USER '"$app_schema"_admin'@'%' IDENTIFIED BY '$newpassword';"
-  echo "GRANT SELECT,EXECUTE, SHOW VIEW ON ddDB.* TO '"$www_repofocus"_admin'@'%';"
+  echo "CREATE USER '"$app_schema"_admin'@'%' IDENTIFIED BY '$newmysqlpassword';"
+  echo "GRANT SELECT,EXECUTE, SHOW VIEW ON ddDB.* TO '"$app_schema"_admin'@'%';"
   echo-nl "GRANT ALL PRIVILEGES ON $app_schema.* TO '"$app_schema"_admin'@'%' WITH GRANT OPTION;"
 
   echo "DROP USER IF EXISTS '"$app_schema"_php';"
-  echo "CREATE USER '"$app_schema"_php'@'%' IDENTIFIED BY '$newpassword';"
+  echo "CREATE USER '"$app_schema"_php'@'%' IDENTIFIED BY '$newmysqlpassword';"
   echo "GRANT SELECT,EXECUTE on ddDB.* TO '"$app_schema"_php'@'%';"
   echo-nl "GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON $app_schema.* TO '"$app_schema"_php'@'%' WITH GRANT OPTION;"
-  #echo-hr
-  #echo "now to set actual passwords:"
-  #echo-hr
-  #echo-nl "ALTER USER '"$app_schema"_admin'@'%' IDENTIFIED BY 'New-Password-Here"
-  #echo-nl "ALTER USER '"$app_schema"_php'@'%' IDENTIFIED BY 'New-Password-Here"
   echo "FLUSH PRIVILEGES;"
   mysql-login
 }
