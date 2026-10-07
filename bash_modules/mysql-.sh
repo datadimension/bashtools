@@ -121,31 +121,6 @@ function mysql-setrepoaccess_admin_php() {
   mysql-login
 }
 
-function mysql-create_xontabledefaults() {
-  app_schema=$1
-  if [ "$app_schema" == "" ]; then
-    exception "You need to specify a repo name to create tables for it"
-  fi
-  mysql-scriptgen_messageheader
-  echo-hr
-  declare -a sqltables=(
-    "_iCalendar_event"
-    "_iCalendar_eventadditional"
-    "_iCalendar_usereventadditional"
-  )
-
-  size=${#sqltables[@]}
-  i=0
-  echo "use $app_schema;"
-  while [ $i -lt $size ]; do
-    tablename="${sqltables[$i]}"
-    echo "create table if not exists $tablename like xontoolbox.$tablename;"
-    i=$(($i + 1))
-  done
-  echo "-- type exit when done"
-  mysql-login
-}
-
 function mysql-create_tabledefaults() {
   app_schema=$1
   if [ "$app_schema" == "" ]; then
@@ -162,9 +137,9 @@ function mysql-create_tabledefaults() {
     "_dbquery"
     "_ddapiauth"
     "_emailq"
-    # temp ignore, need to grab from xontoolbox "_iCalendar_event"
-    # temp ignore, need to grab from xontoolbox "_iCalendar_eventadditional"
-    # temp ignore, need to grab from xontoolbox "_iCalendar_usereventadditional"
+    "_iCalendar_event"
+    "_iCalendar_eventadditional"
+    "_iCalendar_usereventadditional"
     "_iconsource"
     "_libmedia"
     "_listplanner"
