@@ -200,9 +200,8 @@ function mysql-create_viewdefaults() {
     echo "select * from $app_schema.$viewtable"
     i=$(($i + 1))
     echo-hr
-    wait
+    mysql-login
   done
-  mysql-login
 }
 #echo "CREATE"
 #echo "ALGORITHM = UNDEFINED"
