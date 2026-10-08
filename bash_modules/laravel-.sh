@@ -105,7 +105,7 @@ function laravel-newenv_create() {
     read -p "Reset mysql code credentials(y/n]? " nomysqlpwd
     if [ "$nomysqlpwd" == "y" ]; then #abort if no new reponame given
       mysql-setrepoaccess_credentials $repoenv
-      input-required "Copy new password into memory"
+      input-required "Paste new password from Production MySQL server"
       newmysqlpassword=__RESULT
     else
       exception "For security, mysql password required in memory for env install"
