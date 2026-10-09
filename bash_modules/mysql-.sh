@@ -121,7 +121,9 @@ function mysql-setrepoaccess_credentials() {
   echo "FLUSH PRIVILEGES;"
   echo ""
   mysql-login
-  __RESULT=$newmysqlpassword
+  echo-hr
+  echo "Password to note:"
+  echo $newmysqlpassword
 }
 
 function mysql-create_tabledefaults() {

@@ -93,36 +93,34 @@ function laravel-create() {
 }
 
 function laravel-newenv_create() {
-  repoenv=$1
-  if [ "$repoenv" == "" ]; then #abort if no new reponame given
+  reponame=$1
+  if [ "$reponame" == "" ]; then #abort if no new reponame given
     exception "Repo name required to set its env"
   fi
-  echo-newpage "Create .env file in project $repoenv"
-
-  if [ "$newmysqlpassword" == "" ]; then #abort if no new reponame given
-    echo ""
-    echo "Require mysql password in memory for env install."
-    read -p "Reset mysql code credentials(y/n]? " nomysqlpwd
-    if [ "$nomysqlpwd" == "y" ]; then #abort if no new reponame given
-      mysql-setrepoaccess_credentials $repoenv
-      input-required "Paste new password from Production MySQL server"
-      newmysqlpassword=__RESULT
-    else
-      exception "For security, mysql password required in memory for env install"
-    fi
-  fi
+  echo-newpage "Create .env file in project $reponame"
+  echo "Require mysql password in memory for env install."
+  echo "On production server run:"
+  echo "mysql-setrepoaccess_credentials $reponame"
+  input-required "Paste new password from Production MySQL server"
+  mysql_PWD=$__RESULT
 
   echo "Please enter mandatory values:"
-
   input-required "DATA_CONTROLLER_EMAIL"
   dc_email=$__RESULT
   input-required "GOOGLE_CLIENT_ID"
+  google_CID=$__RESULT
   input-required "GOOGLE_CLIENT_SECRET"
+  google_SEC=$__RESULT
   input-required "GOOGLE_JAVASCRIPT_APIKEY"
-  input-required "DB_PASSWORD_ddDB"
-  input-required "DB_PASSWORD_appDB"
+  google_JS=$__RESULT
+  db_usr="$reponame_php"
+  ddDB_pwd=$mysql_PWD
+  appDB_pwd=$mysql_PWD
+  appkey=$(uuidgen)
 
-  php ~/bashtools/php_helpers/laravel/newenv_create.php method=env_generate user=$USER
+  echo ""
+  echo "Creating ......"
+  php ~/bashtools/php_helpers/laravel/newenv_create.php reponame=$reponame email=$dc_email google_CID=$google_CID google_SEC=$google_SEC appkey=$appkey google_JS=$google_JS db_usr=$db_usr appDB_pwd=$appDB_pwd ddDB_pwd=$ddDB_pwd
 }
 
 function stoptest_laravel-envinstall() {
