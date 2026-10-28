@@ -7,6 +7,7 @@ parse_str(implode('&', array_slice($argv, 1)), $args);
 $csv = file_get_contents(getenv('HOME') . "/bashtoolscfg/bash.env");
 $csv = explode(",", $csv);
 $SERVER_ENVTYPE = $csv[0];
+
 $www_repofocus = $csv[1];
 $ssh1 = $csv[2];
 $ssh2 = $csv[3];

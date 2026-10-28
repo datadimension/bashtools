@@ -81,35 +81,35 @@ function nginx-testfunc() {
 
 #sets nginx block for current repo focus by default or specify repo name and sslcertificate repofocus will be changed if set
 function nginx-setserverblock() {
+
   reponame=$1
-  if [ "$reponame" == "" ]; then
-    reponame=$www_repofocus
-  else
-    www_repofocus=$reponame #set focus or .env will be read wrong by php
-    bash-writesettings
+  if [ "$reponame" == "" ]; then #abort if no new reponame given
+    exception "No repo create name specified, Aborting"
   fi
   sslcertificate=$2
   if [ "$sslcertificate" == "" ]; then
-    sslcertificate="sslselfsigned"
+    sslcertificate="selfsigned"
   fi
-  echo-newpage "Setting up NGINX Server block"
-  echo "Using $www_repofocus.$serverid.com with certificate $sslcertificate"
+
+  echo-newpage "NGINX Server block Set Up"
+  echo "Using:"
+  echo "$reponame.$serverid.com with certificate $sslcertificate"
   echo ""
   echo "Add a line to your local hosts file: "
   localurl="$www_repofocus.$serverid.com"
   echo "$('net-wanIP')   $localurl"
-  echo "and run this in windows CMD terminal where applicable (eg on dev laptop)"
+  echo ""
+  echo "and run this in windows CMD terminal where applicable (eg on dev laptop):"
+  echo ""
   echo "ipconfig /flushdns"
   wait clear
   echo "Creating NGINX server block"
   echo-hr
   echo ""
-  php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl
-  cat /etc/nginx/sites-enabled/$www_repofocus
-  echo ""
-  echo-hr
+  }
+  clear;php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl PHP_DD_VERSION=$PHP_DD_VERSIO
   echo "setting file permissions for server block and restarting nginx"
-  sudo chown $USER:www-data /etc/nginx/sites-enabled/$www_repofocus
+  sudo chown $USER:www-data /etc/nginx/sites-enabled/$reponame
   nginx-start
 }
 

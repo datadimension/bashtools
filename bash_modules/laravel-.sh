@@ -88,7 +88,7 @@ function laravel-create() {
   composer-create-DD-dependacies
   echo "need to create .env now for nginx setup"
   laravel-newenv_create $newrepo
-  nginx-setserverblock $www_repofocus
+  nginx-setserverblock $newrepo
   git-repo_create
 }
 
@@ -113,7 +113,7 @@ function laravel-newenv_create() {
   google_SEC=$__RESULT
   input-required "GOOGLE_JAVASCRIPT_APIKEY"
   google_JS=$__RESULT
-  db_usr="$reponame_php"
+  db_usr=$reponame"_php"
   ddDB_pwd=$mysql_PWD
   appDB_pwd=$mysql_PWD
   appkey=$(uuidgen)
@@ -123,7 +123,7 @@ function laravel-newenv_create() {
   php ~/bashtools/php_helpers/laravel/newenv_create.php reponame=$reponame email=$dc_email google_CID=$google_CID google_SEC=$google_SEC appkey=$appkey google_JS=$google_JS db_usr=$db_usr appDB_pwd=$appDB_pwd ddDB_pwd=$ddDB_pwd
 }
 
-function stoptest_laravel-envinstall() {
+function x20261009_laravel-envinstall() {
   php ~/bashtools/php_helpers/laravel/env_ops.php method=env_generate user=$USER
   echo ""
   echo "Set permissions for the .env file"

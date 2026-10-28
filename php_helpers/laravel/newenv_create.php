@@ -73,5 +73,6 @@ $envcontent =
 
     "";
 
-
+$envpath = $wwwroot . "/html/" . $reponame . "/.env";
+file_put_contents($envpath, $envcontent);
 echo $envcontent;

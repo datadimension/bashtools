@@ -15,7 +15,7 @@ server {
 	# error_log    /var/www/html/<repo_name />/storage/logs/nginxerror.log error;
 
 
-	# ssl_certificates
+	# ssl_certificate type:<ssl_cert_type />
 	<ssl_certs />
 
 	fastcgi_buffers 16 16k;
