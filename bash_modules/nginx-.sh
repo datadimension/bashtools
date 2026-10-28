@@ -107,6 +107,7 @@ function nginx-setserverblock() {
   echo-hr
   echo ""
   }
+function endblockfunc(){
   clear;php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl PHP_DD_VERSION=$PHP_DD_VERSIO
   echo "setting file permissions for server block and restarting nginx"
   sudo chown $USER:www-data /etc/nginx/sites-enabled/$reponame
