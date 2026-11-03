@@ -91,6 +91,7 @@ function git-pull-select() {
   cd $curpwd
 }
 
+#pulls the git repo, used FORCED to force update from remote and lose local changes
 function git-pull() {
   forced=$1
   curpwd=$(pwd)
