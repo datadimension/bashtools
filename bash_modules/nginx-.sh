@@ -19,7 +19,7 @@ function nginx-start() {
   if [ "$input" == "n" ]; then
     return 0
   fi
-  fsys-secure $www_repofocus
+  fsys-securerepo $www_repofocus
   clear
   echo-hr "Closing Nginx / PHP"
   php-stop
