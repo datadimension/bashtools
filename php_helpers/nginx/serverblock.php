@@ -58,6 +58,8 @@ echo "\n";
 echo "\n";
 
 $filename = "/etc/nginx/sites-enabled/" . $args["repo_name"];
+file_put_contents($filename, $template);
+
 echo "RESULT for " . $filename . ":";
 echo "\n";
 echo $template;

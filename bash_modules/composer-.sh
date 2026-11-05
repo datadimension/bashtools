@@ -7,8 +7,8 @@ function composer-stopxdebug() {
 }
 
 #help for this module
-function composer-h(){
-	bash-helpformodule composer
+function composer-h() {
+  bash-helpformodule composer
 }
 
 #sets required DD dependencies
@@ -17,7 +17,7 @@ function composer-create-DD-dependacies() {
   composer require laravel/ui
   composer require laravel/socialite
   composer require google/apiclient
-  echo "google photolibrary skipped";
+  echo "google photolibrary skipped"
   #composer require google/photos-library
   composer-update
 }
@@ -35,5 +35,5 @@ function composer-update() {
   php artisan key:generate
   php artisan view:clear
   php artisan --version
-  fsys-secure
+  fsys-securerepo $www_repofocus
 }

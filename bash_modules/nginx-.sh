@@ -19,7 +19,7 @@ function nginx-start() {
   if [ "$input" == "n" ]; then
     return 0
   fi
-  fsys-secure
+  fsys-secure $www_repofocus
   clear
   echo-hr "Closing Nginx / PHP"
   php-stop
@@ -95,7 +95,9 @@ function nginx-setserverblock() {
   echo "Using:"
   echo "$reponame.$serverid.com with certificate $sslcertificate"
   echo ""
-  echo "Add a line to your local hosts file: "
+  echo "You need to edit hosts file as described at"
+  echo "https://www.howtogeek.com/784196/how-to-edit-the-hosts-file-on-windows-10-or-11/"
+  echo "Add a line to your local hosts file (in directory C:\Windows\System32\drivers\etc): "
   localurl="$www_repofocus.$serverid.com"
   echo "$('net-wanIP')   $localurl"
   echo ""
@@ -106,9 +108,7 @@ function nginx-setserverblock() {
   echo "Creating NGINX server block"
   echo-hr
   echo ""
-  }
-function endblockfunc(){
-  clear;php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl PHP_DD_VERSION=$PHP_DD_VERSIO
+  php ~/bashtools/php_helpers/nginx/serverblock.php repo_name=$reponame sslcertificate=$sslcertificate APP_URL=$localurl PHP_DD_VERSION=$PHP_DD_VERSION
   echo "setting file permissions for server block and restarting nginx"
   sudo chown $USER:www-data /etc/nginx/sites-enabled/$reponame
   nginx-start

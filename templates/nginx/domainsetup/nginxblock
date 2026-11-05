@@ -10,10 +10,9 @@ server {
 	server_name <app_url />;
 	root <wwwroot />/html/<repo_name />/public/;
 
-	# log files - disabled as log rotation needed
-	# access_log   /var/www/html/<repo_name />/storage/logs/nginxaccess.log;
-	# error_log    /var/www/html/<repo_name />/storage/logs/nginxerror.log error;
-
+	# log files - log rotation needed
+	access_log   /var/www/html/<repo_name />/storage/logs/nginxaccess.log;
+	error_log    /var/www/html/<repo_name />/storage/logs/nginxerror.log error;
 
 	# ssl_certificate type:<ssl_cert_type />
 	<ssl_certs />

@@ -114,7 +114,7 @@ function repo-create() {
   reponumber=$((reponumber - 1))
   wwwrepos[$reponumber]=$newrepo
   bash-writesettings
-  fsys-secure
+  fsys-secure $newrepo
   echo "Now test with:"
   echo "https://$LOCAL_URL/servertest"
 }

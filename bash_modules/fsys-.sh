@@ -17,22 +17,25 @@ function fsys-disk() {
 # relative to current repo focused directory eg app/BizClasses
 #need to check if permisions can be tightened
 #https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel
-function fsys-secure() {
-  dirname=$1
-  if [ "$dirname" == "" ]; then
-    targetroot=$wwwroot/html/$www_repofocus
-  else
-    basedir=$wwwroot/html/$www_repofocus
-    targetroot="$basedir/$dirname"
+#resets file permissions for all in the repo, client functions can use FORCED to remove user choice
+function fsys-securerepo() {
+  reponame=$1
+  forced=$2
+  if [ "$reponame" == "" ]; then #abort if no new reponame given
+    exception "Repo not specified"
   fi
+  targetroot=$wwwroot/html/$reponame
   echo-newpage $targetroot
   cd $targetroot
   ls
   echo-hr
-  echo "Conform file permisions at $targetroot ?"
-  read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 3 input
-  if [ "$input" != "y" ]; then
-    return 0
+
+  if [ "$forced" != "FORCED" ]; then #abort if no new reponame given
+    echo "Conform file permisions at $targetroot ?"
+    read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 3 input
+    if [ "$input" != "y" ]; then
+      return 0
+    fi
   fi
 
   #see https://chmodcommand.com/chmod-770/
@@ -75,7 +78,6 @@ function dir-exists() {
   if [ -d "$path" ]; then
     echo "$path does exist."
   fi
-
 
   if test -d $path; then
     echo "Directory exists: $path"
