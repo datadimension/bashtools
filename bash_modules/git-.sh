@@ -326,7 +326,8 @@ function git-repo_create() {
   git remote add origin git@github.com:$gituname/$www_repofocus.git
   git push -u origin $branchname
   echo "Files set on server"
-  wait clear
+  clear
+  wait
 }
 
 #https://stackoverflow.com/questions/46273032/is-there-a-way-to-remove-all-ignored-files-from-a-local-git-working-tree"

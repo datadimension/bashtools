@@ -233,35 +233,19 @@ function uuid() {
   uuid=$(uuidgen)
 }
 
-#wait for execution, use 'clear' for argument 1 to clear screen and msg for argument 2 to title the cleared screen
+#wait for execution use msg to display a message, timeout to continue without input
 function wait() {
-  arg1=$1
-  arg2=$2
-  action="none"
+  msg=$1
+  timeout=$2
   prompt="${weight_bold}${color_cyan}[ENTER]${font_reset} ${weight_bold}${color_green}to continue${font_reset}"
+  if [ "$timeout" != "" ]; then
+    prompt_timeout=" ... auto continue in $timeout"
+    prompt="$prompt $prompt_timeout"
+  fi
   if [ "$arg1" != "" ]; then
-    if [ "$arg1" == "clear" ]; then
-
-      if [ "$arg2" != "" ]; then
-        clear
-        echo-hr
-        echo -e "${weight_bold}${color_green}$arg2${font_reset}"
-        echo -e $prompt
-        echo-hr
-        read wait
-      else
-        echo -e $prompt
-        read wait
-        clear
-      fi
-    else
-      echo -e "${weight_bold}${color_green}$arg1${font_reset}"
-      echo -e $prompt
-      read wait
-    fi
-  else
+    echo -e "${weight_bold}${color_green}$msg${font_reset}"
     echo -e $prompt
-    read wait
+    read -t $timeout wait
   fi
 }
 

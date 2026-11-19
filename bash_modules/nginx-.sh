@@ -104,7 +104,8 @@ function nginx-setserverblock() {
   echo "and run this in windows CMD terminal where applicable (eg on dev laptop):"
   echo ""
   echo "ipconfig /flushdns"
-  wait clear
+  clear
+  wait
   echo "Creating NGINX server block"
   echo-hr
   echo ""
