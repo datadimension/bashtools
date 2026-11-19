@@ -117,6 +117,8 @@ function repo-create() {
   fsys-secure $newrepo
   echo "Now test with:"
   echo "https://$LOCAL_URL/servertest"
+  echo "For seperating browsers in PHPStorm according to project see"
+  echo "https://docs.google.com/document/d/1bMTcUt6DQW70PZvOneYKQEtTy_3UYQZ2VWJ8JlJAldE/edit?tab=t.dflqqqio6k06#heading=h.cbr7eq5amvaf"
 }
 
 #copies all fies from backup

@@ -1,8 +1,8 @@
 <?php
 
-namespace app\BizClasses;
+namespace App\BizClasses;
 
-use App\DD_laravelAp\BizClasses;
+use App\DD_laravelAp\BizClasses\BaseWidgetHandler;
 
-class Rest extends BizClasses\BaseRest {
+class WidgetHandler extends BaseWidgetHandler {
 }

@@ -1,9 +1,11 @@
+#!/usr/bin/env bash
+
 function google-deploy() {
 	clear
 	sudo php $wwwroot/html/$www_repofocus/app/DD_laravelAp/API/google/CLItokengen.php
 }
 
-function ~g_drive() {
+function g-drive() {
 	cd $wwwroot/html/$www_repofocus/public/g_drive
 	ls
 }
@@ -18,7 +20,7 @@ function set-ssh() {
 	bash-writesettings
 }
 
-function google-projectcreate(){
+function google-projectcreate() {
 	clear
 	echo "Go to"
 	echo "https://console.cloud.google.com/projectcreate"
@@ -28,15 +30,27 @@ function google-projectcreate(){
 	echo "also Create Credential > API key for javascript and enable eg maps"
 	echo ""
 	echo-nl "https://console.cloud.google.com/auth/clients/create"
-	echo-nl "and add as per these examples as seperate entries, eg for dev server:"
-	echo "https://$LOCAL_URL"
-	echo "https://$LOCAL_URL/auth/google/callback"
-	echo-nl "https://$LOCAL_URL/google/api_getauth"
-	echo "also add for production server at some point"
+	echo-nl "and check console configuration:"
+	google-redirect-URIs
 	echo ""
-	echo "you will need to create and get 3 credentials from here"
+	wait "make a note of these for .env install when project is created"
+	google-getcredentials
+}
+
+#helper to direct for details for google API credentials
+function google-getcredentials() {
+	echo "Get 3 required credentials from here for .env files"
 	echo "GOOGLE_CLIENT_ID (click the edit icon on the oauth screen to see )"
 	echo "GOOGLE_CLIENT_SECRET(click the edit icon on the oauth screen to see )"
 	echo "GOOGLE_JAVASCRIPT_APIKEY"
-	wait "make a note of these for .env install when project is created"
+}
+
+#helper to display details for google auth
+function google-redirect-URIs() {
+	echo "Under Authorised redirect URIs for every production server / test server"
+	echo "make sure of the following entries (run google-redirect-URIs in a terminal on the server to get the entries) :"
+	echo ""
+	echo "https://$LOCAL_URL"
+	echo "https://$LOCAL_URL/auth/google/callback"
+	echo-nl "https://$LOCAL_URL/google/api_getauth"
 }

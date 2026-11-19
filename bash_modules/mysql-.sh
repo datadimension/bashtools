@@ -110,14 +110,15 @@ function mysql-setrepoaccess_credentials() {
   clear
   mysql-scriptgen_messageheader "For reseting admin and php credentials"
   echo "DROP USER IF EXISTS '"$app_schema"_admin';"
+  echo "DROP USER IF EXISTS '"$app_schema"_php';"
+  echo ""
   echo "CREATE USER '"$app_schema"_admin'@'%' IDENTIFIED BY '$newmysqlpassword';"
+  echo "CREATE USER '"$app_schema"_php'@'%' IDENTIFIED BY '$newmysqlpassword';"
+  echo ""
   echo "GRANT SELECT,EXECUTE, SHOW VIEW ON ddDB.* TO '"$app_schema"_admin'@'%';"
   echo-nl "GRANT ALL PRIVILEGES ON $app_schema.* TO '"$app_schema"_admin'@'%' WITH GRANT OPTION;"
-
-  echo "DROP USER IF EXISTS '"$app_schema"_php';"
-  echo "CREATE USER '"$app_schema"_php'@'%' IDENTIFIED BY '$newmysqlpassword';"
   echo "GRANT SELECT,EXECUTE on ddDB.* TO '"$app_schema"_php'@'%';"
-  echo-nl "GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON $app_schema.* TO '"$app_schema"_php'@'%' WITH GRANT OPTION;"
+  echo-nl "GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE on $app_schema.* TO '"$app_schema"_php'@'%';"
   echo "FLUSH PRIVILEGES;"
   echo ""
   mysql-login

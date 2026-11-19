@@ -87,6 +87,7 @@ function laravel-create() {
   composer-create-DD-dependacies
   echo "need to create .env now for nginx setup"
   laravel-newenv_create $newrepo
+  php artisan key:generate
   nginx-setserverblock $newrepo
   git-repo_create
 }
