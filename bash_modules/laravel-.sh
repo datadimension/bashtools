@@ -89,7 +89,6 @@ function laravel-create() {
   laravel-newenv_create $newrepo
   php artisan key:generate
   nginx-setserverblock $newrepo
-  git-repo_create
 }
 
 function laravel-newenv_create() {

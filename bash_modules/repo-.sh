@@ -110,6 +110,7 @@ function repo-create() {
   google-projectcreate
   mysql-projectsetupguide
   laravel-create $newrepo
+  git-repo_create
   cd "$wwwroot/html"
   reponumber=$((reponumber - 1))
   wwwrepos[$reponumber]=$newrepo
@@ -117,6 +118,7 @@ function repo-create() {
   fsys-secure $newrepo
   echo "Now test with:"
   echo "https://$LOCAL_URL/servertest"
+  echo ""
   echo "For seperating browsers in PHPStorm according to project see"
   echo "https://docs.google.com/document/d/1bMTcUt6DQW70PZvOneYKQEtTy_3UYQZ2VWJ8JlJAldE/edit?tab=t.dflqqqio6k06#heading=h.cbr7eq5amvaf"
 }
