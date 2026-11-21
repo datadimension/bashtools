@@ -318,18 +318,22 @@ function git-repo_create() {
   echo "license: no license"
   echo "When done enter the initial branch name eg main"
   echo "if already created, use git-clean "
-  read branchname
+  input-required "Enter the git branchname eg 'main' ?"
+  branchname=$__RESULT
   git init
   git branch -m $branchname
   git add -A
   git commit -m "first commit"
   git remote add origin git@github.com:$gituname/$www_repofocus.git
   git push -u origin $branchname
+  wait "Repo created" 5
+
   echo "Files set on server"
   clear
   wait
 }
 
+# remove all ignored files from local git repo
 #https://stackoverflow.com/questions/46273032/is-there-a-way-to-remove-all-ignored-files-from-a-local-git-working-tree"
 function git-clean() {
   echo "to set repo to ignore local files with new .gitignore see https://stackoverflow.com/questions/46273032/is-there-a-way-to-remove-all-ignored-files-from-a-local-git-working-tree"
