@@ -138,6 +138,7 @@ function mysql-create_tabledefaults() {
     "_account"
     "_apisettings"
     "_appsettings"
+    "_appconfig"
     "_cron"
     "_dbTableMap"
     "_dbquery"
@@ -170,7 +171,7 @@ function mysql-create_tabledefaults() {
   echo "use $app_schema;"
   while [ $i -lt $size ]; do
     tablename="${sqltables[$i]}"
-    echo "create table if not exists $tablename like liveinfo247.$tablename;"
+    echo "create table if not exists $tablename like ddDB.$tablename;"
     i=$(($i + 1))
   done
   mysql-login
