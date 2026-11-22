@@ -91,11 +91,6 @@ function laravel-create() {
   nginx-setserverblock $newrepo
 }
 
-#terminal way of clearing cache
-function laravel-recache() {
-  php artisan cache:clear
-}
-
 function laravel-newenv_create() {
   reponame=$1
   if [ "$reponame" == "" ]; then #abort if no new reponame given

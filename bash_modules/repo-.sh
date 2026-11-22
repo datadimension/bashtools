@@ -134,3 +134,8 @@ function repo-frombackup() {
 function repo-getlocalurl() {
   LOCAL_URL=$www_repofocus.$serverid.com
 }
+
+#terminal way of clearing cache
+function repo-recache() {
+  php artisan cache:clear
+}
