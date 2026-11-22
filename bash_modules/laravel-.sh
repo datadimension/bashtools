@@ -92,7 +92,7 @@ function laravel-create() {
 }
 
 #terminal way of clearing cache
-function laravel-cacheclear() {
+function laravel-recache() {
   php artisan cache:clear
 }
 
