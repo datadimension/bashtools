@@ -32,7 +32,7 @@ function fsys-securerepo() {
 
   if [ "$forced" != "FORCED" ]; then #abort if no new reponame given
     echo "Conform file permisions at $targetroot ?"
-    read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 3 input
+    read -p "This can take a few mins depending on size of subdirectories [y/n]: " -t 5 input
     if [ "$input" != "y" ]; then
       return 0
     fi
@@ -58,6 +58,7 @@ function fsys-securerepo() {
     echo "Securing laravel directory permissions in $targetroot"
     sudo chmod -R $sec755level $targetroot/app
     sudo chmod -R $sec775level $targetroot/storage
+    sudo chmod -R $sec775level $targetroot/bootstrap
     sudo chmod -R $sec770level $targetroot/public/downloads
     sudo chmod -R $sec770level $targetroot/public
     sudo chmod -R $sec770level $targetroot/private
