@@ -208,6 +208,7 @@ function mysql-scriptgen_messageheader() {
   msg=$1
   clear
   echo "MYSQL script generator"
+  echo "Please also see known issues at https://docs.google.com/document/d/1bMTcUt6DQW70PZvOneYKQEtTy_3UYQZ2VWJ8JlJAldE/edit?tab=t.nuyadt813088#heading=h.f2siiedaie44"
   echo "you will need to copy and run SQL script"
   echo ""
   echo -e "${weight_bold}${color_red}ON THE DATABASE PRODUCTION SERVER${font_reset}"

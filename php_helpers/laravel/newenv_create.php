@@ -20,7 +20,8 @@ $envcontent =
     "APP_KEY=" . $appkey . "\n" .
     "APP_URL=" . $reponame . "." . $serverid . ".com" . "\n" .
     "DATA_CONTROLLER_EMAIL=" . $email . "\n" .
-
+    "#root domain to inherit default values from" .
+    "ROOT_DOMAIN_UUID=" . "26e7709c-e682-11f1-8c03-fa163e4337e0" . "\n" .
     "\n" .
     "#server details" . "\n" .
     "APP_ENV=" . $SERVER_ENVTYPE . "\n" .
