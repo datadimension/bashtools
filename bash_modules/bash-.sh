@@ -75,16 +75,16 @@ bash-start-ubuntu-osconfigcheck() {
 }
 
 function bash-push() {
+  wait "uploading bashtools to git" 3
   git-push-repo bashtools
-  wait "uploaded bashtools to git" 5
   bash-pull
   ~www
 }
 
 function bash-pull() {
+  wait "updating bashtools from git" 3
   echo "updating bash"
   git-pull-repo bashtools
-  wait "downloaded bashtools from git" 5
   bash-install
 }
 
