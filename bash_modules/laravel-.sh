@@ -102,7 +102,6 @@ function laravel-newenv_create() {
   echo "mysql-setrepoaccess_credentials $reponame"
   input-required "Paste new password from Production MySQL server"
   mysql_PWD=$__RESULT
-
   echo "Please enter mandatory values:"
   input-required "DATA_CONTROLLER_EMAIL"
   dc_email=$__RESULT

@@ -242,10 +242,16 @@ function wait() {
     prompt_timeout=" ... auto continue in $timeout"
     prompt="$prompt $prompt_timeout"
   fi
-  if [ "$arg1" != "" ]; then
+  if [ "$msg" != "" ]; then
     echo -e "${weight_bold}${color_green}$msg${font_reset}"
-    echo -e $prompt
-    read -t $timeout wait
+    if [ "$timeout" != "" ]; then
+      echo -e $prompt
+      prompt="$prompt $prompt_timeout"
+      read -t $timeout waittime
+    else
+      echo -e $prompt
+      read waittime
+    fi
   fi
 }
 

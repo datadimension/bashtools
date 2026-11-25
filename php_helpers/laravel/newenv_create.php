@@ -13,7 +13,6 @@ else {//for production server
 }
 
 $envcontent =
-
     "#app details" . "\n" .
     "APP_NAME=" . $reponame . "\n" .
     "APP_SCREEN_NAME=" . $reponame . "\n" .

@@ -81,6 +81,7 @@ function mysql-projectcreate() {
   mysql-setrepoaccess_credentials $app_schema
   mysql-create_tabledefaults $app_schema
   mysql-create_viewdefaults $app_schema
+  mysql-create_triggerdefaults $app_schema
 }
 
 function mysql-createrepodatabase() {
@@ -174,7 +175,24 @@ function mysql-create_tabledefaults() {
     echo "create table if not exists $tablename like ddDB.$tablename;"
     i=$(($i + 1))
   done
+  echo ""
+  echo "set domain UUID"
+  echo "insert into _appconfig(cfg_class,cfg_name,value,$(UUID),info) values('domain','UUID',UUID(),UUID(),'unique id of this domain')"
   mysql-login
+}
+
+function mysql-create_triggerdefaults() {
+  echo "";
+  echo "MYSQL script generator"
+  echo "for triggers:"
+  echo "Please see known issues at https://docs.google.com/document/d/1bMTcUt6DQW70PZvOneYKQEtTy_3UYQZ2VWJ8JlJAldE/edit?tab=t.nuyadt813088#heading=h.f2siiedaie44"
+  echo "you will need to copy and run SQL script"
+
+  app_schema=$1
+  if [ "$app_schema" == "" ]; then
+    exception "You need to specify a repo name to create views for it"
+  fi
+  wait "OK?"
 }
 
 function mysql-create_viewdefaults() {
@@ -208,6 +226,7 @@ function mysql-scriptgen_messageheader() {
   msg=$1
   clear
   echo "MYSQL script generator"
+  echo "for triggers:"
   echo "Please also see known issues at https://docs.google.com/document/d/1bMTcUt6DQW70PZvOneYKQEtTy_3UYQZ2VWJ8JlJAldE/edit?tab=t.nuyadt813088#heading=h.f2siiedaie44"
   echo "you will need to copy and run SQL script"
   echo ""
