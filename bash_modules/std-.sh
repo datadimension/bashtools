@@ -233,6 +233,13 @@ function uuid() {
   uuid=$(uuidgen)
 }
 
+#standard way to create a prompt
+function msg-styled() {
+  msg=$1
+  prompt="${weight_bold}${color_cyan}$msg${font_reset}"
+  echo -e $prompt
+}
+
 #wait for execution use msg to display a message, timeout to continue without input
 function wait() {
   msg=$1
