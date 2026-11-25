@@ -82,7 +82,7 @@ function bash-push() {
 }
 
 function bash-pull() {
-  wait "updating bashtools from git" 3
+  wait "downloading bashtools from git" 3
   echo "updating bash"
   git-pull-repo bashtools
   bash-install
