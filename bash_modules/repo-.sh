@@ -26,6 +26,7 @@ function repo-show() {
 
 #switch the repo to work on
 function repo-switch() {
+  clear;
   repo-show
   echo "Please select a repo number to chose for operations"
   read option
