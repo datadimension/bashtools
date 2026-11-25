@@ -26,7 +26,7 @@ function repo-show() {
 
 #switch the repo to work on
 function repo-switch() {
-  clear;
+  clear
   repo-show
   echo "Please select a repo number to chose for operations"
   read option
@@ -35,6 +35,7 @@ function repo-switch() {
   read -t 5 input
   if [ "$SERVER_ENVTYPE" != "production" ]; then #never push from production
     if [ "$input" != "n" ]; then
+      bash-push
       git-push
     fi
   fi
