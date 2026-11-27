@@ -75,7 +75,8 @@ bash-start-ubuntu-osconfigcheck() {
 }
 
 function bash-push() {
-  wait "uploading bashtools to git" 3
+  echo-styled "uploading bashtools to git"
+  wait "" 3
   git-push-repo bashtools
   bash-pull
   ~www

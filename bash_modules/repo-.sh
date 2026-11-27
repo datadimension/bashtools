@@ -139,5 +139,5 @@ function repo-getlocalurl() {
 
 #terminal way of clearing cache
 function repo-recache() {
-  php artisan cache:clear
+  sudo php artisan cache:clear
 }

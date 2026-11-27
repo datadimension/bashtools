@@ -11,7 +11,7 @@
 	</style>
 @endsection
 @section("sitelogo")
-	<img class='loginlogo' src="{{Cache('appsettings')['site_image_login_icon']['value']}}"/><br/>
+	<img class='loginlogo' src="{{Cache('appconfig')['UI']['login_icon']}}"/><br/>
 @endsection
 @section("sitename")
 @endsection

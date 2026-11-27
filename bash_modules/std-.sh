@@ -234,7 +234,7 @@ function uuid() {
 }
 
 #standard way to create a prompt
-function msg-styled() {
+function echo-styled() {
   msg=$1
   prompt="${weight_bold}${color_cyan}$msg${font_reset}"
   echo -e $prompt
